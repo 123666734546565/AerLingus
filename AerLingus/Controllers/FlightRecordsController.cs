@@ -14,30 +14,7 @@ namespace AerLingus.Controllers
             return View();
         }
 
-
-        Skip to content
-        Using Gmail with screen readers
-Enable desktop notifications for Gmail.
-   OK No thanks
-
-1 of 10
-Upload action.txt
-Inbox
-x
-
-Aleksa Shahgoli (via Google Drive) <drive-shares-noreply @google.com>
-2:12 PM (0 minutes ago)
-to me
-
-aleksa7917 @its.edu.rs has shared the following file:
-
-Upload action.txt
-Open
-Google Drive: Have all your files within reach from any device.
-Google LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA Logo for Google Drive
-Attachments area
-
-        [HttpPost]
+        //0000000000000000000000000000000000000000000
         public ActionResult Upload(HttpPostedFileBase file)
         {
             if (file == null)
@@ -85,7 +62,7 @@ Attachments area
                                 {
                                     bodyArray = tempRecord.Split('|');
 
-                                    if (bodyArray[1] != string.Empty)
+                                    if (bodyArray[1] != string.Empty && bodyArray[1].Length <= 16)
                                     {
                                         record.identifierNo = bodyArray[1];
                                     }
@@ -94,7 +71,7 @@ Attachments area
                                         record.identifierNo = null;
                                     }
 
-                                    if (bodyArray[2] != string.Empty)
+                                    if (bodyArray[2] != string.Empty && bodyArray[2].Length <= 2)
                                     {
                                         record.transactionType = bodyArray[2];
                                     }
@@ -103,7 +80,7 @@ Attachments area
                                         record.transactionType = null;
                                     }
 
-                                    if (bodyArray[3] != string.Empty)
+                                    if (bodyArray[3] != string.Empty && bodyArray[3].Length <= 30)
                                     {
                                         record.otherFFPNo = bodyArray[3];
                                     }
@@ -359,14 +336,21 @@ Attachments area
 
                                     if (bodyArray[30] != string.Empty)
                                     {
-                                        //record.exchangeRate = Convert.ToSingle()
+                                        record.exchangeRate = Convert.ToSingle(bodyArray[30]);
                                     }
                                     else
                                     {
                                         record.exchangeRate = null;
                                     }
 
-                                    record.customerType = bodyArray[26] != string.Empty && (bodyArray[26][0] == 'A' || bodyArray[26][0] == 'C' || bodyArray[26][0] == 'I') ? bodyArray[26] : null;
+                                    if (bodyArray[31] != string.Empty)
+                                    {
+                                        record.fareBasis = bodyArray[31];
+                                    }
+                                    else
+                                    {
+                                        record.fareBasis = null;
+                                    }
 
 
 
@@ -389,7 +373,5 @@ Attachments area
                 return Content("Something went wrong." + ex.Message);
             }
         }
-        Upload action.txt
-        Displaying Upload action.txt.
     }
 }
