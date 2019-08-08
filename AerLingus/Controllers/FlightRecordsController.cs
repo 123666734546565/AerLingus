@@ -90,7 +90,7 @@ namespace AerLingus.Controllers
                                         record.otherFFPNo = null;
                                     }
 
-                                    if (bodyArray[4] != string.Empty)
+                                    if (bodyArray[4] != string.Empty && bodyArray[4].Length <= 30)
                                     {
                                         record.otherFFPScheme = bodyArray[4];
                                     }
@@ -99,7 +99,7 @@ namespace AerLingus.Controllers
                                         record.otherFFPScheme = null;
                                     }
 
-                                    if (bodyArray[5] != string.Empty)
+                                    if (bodyArray[5] != string.Empty && bodyArray[5].Length <= 30)
                                     {
                                         record.firstName = bodyArray[5];
                                     }
@@ -108,7 +108,7 @@ namespace AerLingus.Controllers
                                         record.firstName = null;
                                     }
 
-                                    if (bodyArray[6] != string.Empty)
+                                    if (bodyArray[6] != string.Empty && bodyArray[6].Length <= 30)
                                     {
                                         record.lastName = bodyArray[6];
                                     }
@@ -117,7 +117,7 @@ namespace AerLingus.Controllers
                                         record.lastName = null;
                                     }
 
-                                    if (bodyArray[7] != string.Empty)
+                                    if (bodyArray[7] != string.Empty && bodyArray[7].Length <= 100)
                                     {
                                         record.partnerTransactionNo = bodyArray[7];
                                     }
@@ -144,7 +144,7 @@ namespace AerLingus.Controllers
                                         record.departureDate = default(DateTime);
                                     }
 
-                                    if (bodyArray[10] != string.Empty)
+                                    if (bodyArray[10] != string.Empty && bodyArray[10].Length <= 3)
                                     {
                                         record.origin = bodyArray[10];
                                     }
@@ -153,7 +153,7 @@ namespace AerLingus.Controllers
                                         record.origin = null;
                                     }
 
-                                    if (bodyArray[11] != string.Empty)
+                                    if (bodyArray[11] != string.Empty && bodyArray[11].Length <= 3)
                                     {
                                         record.destination = bodyArray[11];
                                     }
@@ -162,7 +162,7 @@ namespace AerLingus.Controllers
                                         record.destination = null;
                                     }
 
-                                    if (bodyArray[12] != string.Empty)
+                                    if (bodyArray[12] != string.Empty && bodyArray[12].Length <= 2)
                                     {
                                         record.bookingClass = bodyArray[12];
                                     }
@@ -171,7 +171,7 @@ namespace AerLingus.Controllers
                                         record.bookingClass = null;
                                     }
 
-                                    if (bodyArray[13] != string.Empty)
+                                    if (bodyArray[13] != string.Empty && bodyArray[1].Length <= 1)
                                     {
                                         record.cabinClass = bodyArray[13];
                                     }
@@ -181,7 +181,7 @@ namespace AerLingus.Controllers
                                     }
 
                                     if (bodyArray[14] != string.Empty &&
-                                        Information.IsNumeric(bodyArray[14]))
+                                        Information.IsNumeric(bodyArray[14]) && bodyArray[14].Length <= 4)
                                     {
                                         record.marketingFlightNo = bodyArray[14];
                                     }
@@ -352,8 +352,7 @@ namespace AerLingus.Controllers
                                     {
                                         record.fareBasis = null;
                                     }
-
-
+                                   
 
                                     break;
                                 }
