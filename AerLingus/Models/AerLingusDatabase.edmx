@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx">
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
   <!-- EF Runtime content -->
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="AerLingusDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2006/04/edm/ssdl">
+      <Schema Namespace="AerLingusDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <!--Errors Found During Generation:
 warning 6002: The table/view 'AerLingus_database.dbo.Flight_Records' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Flight_Records">
@@ -66,45 +66,45 @@ warning 6002: The table/view 'AerLingus_database.dbo.Flight_Records' does not ha
           <EntitySet Name="FR_Batch_Files" EntityType="Self.FR_Batch_Files" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Flight_Records" EntityType="Self.Flight_Records" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
-[Flight_Records].[identifierNo] AS [identifierNo], 
-[Flight_Records].[transactionType] AS [transactionType], 
-[Flight_Records].[otherFFPNo] AS [otherFFPNo], 
-[Flight_Records].[otherFFPScheme] AS [otherFFPScheme], 
-[Flight_Records].[firstName] AS [firstName], 
-[Flight_Records].[lastName] AS [lastName], 
-[Flight_Records].[partnerTransactionNo] AS [partnerTransactionNo], 
-[Flight_Records].[bookingDate] AS [bookingDate], 
-[Flight_Records].[departureDate] AS [departureDate], 
-[Flight_Records].[origin] AS [origin], 
-[Flight_Records].[destination] AS [destination], 
-[Flight_Records].[bookingClass] AS [bookingClass], 
-[Flight_Records].[cabinClass] AS [cabinClass], 
-[Flight_Records].[marketingFlightNo] AS [marketingFlightNo], 
-[Flight_Records].[marketingAirline] AS [marketingAirline], 
-[Flight_Records].[operatingFlightNo] AS [operatingFlightNo], 
-[Flight_Records].[operatingAirline] AS [operatingAirline], 
-[Flight_Records].[ticketNo] AS [ticketNo], 
-[Flight_Records].[externalPaxID] AS [externalPaxID], 
-[Flight_Records].[couponNo] AS [couponNo], 
-[Flight_Records].[pnrNo] AS [pnrNo], 
-[Flight_Records].[distance] AS [distance], 
-[Flight_Records].[baseFare] AS [baseFare], 
-[Flight_Records].[discountBase] AS [discountBase], 
-[Flight_Records].[exciseTax] AS [exciseTax], 
-[Flight_Records].[customerType] AS [customerType], 
-[Flight_Records].[promotionCode] AS [promotionCode], 
-[Flight_Records].[ticketCurrency] AS [ticketCurrency], 
-[Flight_Records].[targetCurrency] AS [targetCurrency], 
-[Flight_Records].[exchangeRate] AS [exchangeRate], 
-[Flight_Records].[fareBasis] AS [fareBasis]
-FROM [dbo].[Flight_Records] AS [Flight_Records]</DefiningQuery>
+    [Flight_Records].[identifierNo] AS [identifierNo], 
+    [Flight_Records].[transactionType] AS [transactionType], 
+    [Flight_Records].[otherFFPNo] AS [otherFFPNo], 
+    [Flight_Records].[otherFFPScheme] AS [otherFFPScheme], 
+    [Flight_Records].[firstName] AS [firstName], 
+    [Flight_Records].[lastName] AS [lastName], 
+    [Flight_Records].[partnerTransactionNo] AS [partnerTransactionNo], 
+    [Flight_Records].[bookingDate] AS [bookingDate], 
+    [Flight_Records].[departureDate] AS [departureDate], 
+    [Flight_Records].[origin] AS [origin], 
+    [Flight_Records].[destination] AS [destination], 
+    [Flight_Records].[bookingClass] AS [bookingClass], 
+    [Flight_Records].[cabinClass] AS [cabinClass], 
+    [Flight_Records].[marketingFlightNo] AS [marketingFlightNo], 
+    [Flight_Records].[marketingAirline] AS [marketingAirline], 
+    [Flight_Records].[operatingFlightNo] AS [operatingFlightNo], 
+    [Flight_Records].[operatingAirline] AS [operatingAirline], 
+    [Flight_Records].[ticketNo] AS [ticketNo], 
+    [Flight_Records].[externalPaxID] AS [externalPaxID], 
+    [Flight_Records].[couponNo] AS [couponNo], 
+    [Flight_Records].[pnrNo] AS [pnrNo], 
+    [Flight_Records].[distance] AS [distance], 
+    [Flight_Records].[baseFare] AS [baseFare], 
+    [Flight_Records].[discountBase] AS [discountBase], 
+    [Flight_Records].[exciseTax] AS [exciseTax], 
+    [Flight_Records].[customerType] AS [customerType], 
+    [Flight_Records].[promotionCode] AS [promotionCode], 
+    [Flight_Records].[ticketCurrency] AS [ticketCurrency], 
+    [Flight_Records].[targetCurrency] AS [targetCurrency], 
+    [Flight_Records].[exchangeRate] AS [exchangeRate], 
+    [Flight_Records].[fareBasis] AS [fareBasis]
+    FROM [dbo].[Flight_Records] AS [Flight_Records]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="AerLingusDatabaseModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2006/04/edm">
+      <Schema Namespace="AerLingusDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="FR_Batch_Files">
           <Key>
             <PropertyRef Name="File_ID" />
@@ -160,7 +160,7 @@ FROM [dbo].[Flight_Records] AS [Flight_Records]</DefiningQuery>
           <Property Name="exchangeRate" Type="Single" />
           <Property Name="fareBasis" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityContainer Name="AerLingusDatabaseEntities">
+        <EntityContainer Name="AerLingusDatabaseEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="FR_Batch_Files" EntityType="Self.FR_Batch_Files" />
           <EntitySet Name="Flight_Records" EntityType="Self.Flight_Records" />
         </EntityContainer>
@@ -168,7 +168,7 @@ FROM [dbo].[Flight_Records] AS [Flight_Records]</DefiningQuery>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-      <Mapping Space="C-S" xmlns="urn:schemas-microsoft-com:windows:storage:mapping:CS">
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="AerLingusDatabaseModelStoreContainer" CdmEntityContainer="AerLingusDatabaseEntities">
           <EntitySetMapping Name="FR_Batch_Files">
             <EntityTypeMapping TypeName="AerLingusDatabaseModel.FR_Batch_Files">
@@ -220,7 +220,7 @@ FROM [dbo].[Flight_Records] AS [Flight_Records]</DefiningQuery>
     </edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
-  <Designer xmlns="http://schemas.microsoft.com/ado/2007/06/edmx">
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <Connection>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
@@ -231,7 +231,7 @@ FROM [dbo].[Flight_Records] AS [Flight_Records]</DefiningQuery>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="true" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
-        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>
