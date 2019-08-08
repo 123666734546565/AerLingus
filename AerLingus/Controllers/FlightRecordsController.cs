@@ -14,8 +14,12 @@ namespace AerLingus.Controllers
             return View();
         }
 
-
-        [HttpPost]
+        //0000000000000000000000000000000000000000000
+        /// <summary>
+        /// 7
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
         public ActionResult Upload(HttpPostedFileBase file)
         {
             if (file == null)
@@ -63,7 +67,7 @@ namespace AerLingus.Controllers
                                 {
                                     bodyArray = tempRecord.Split('|');
 
-                                    if (bodyArray[1] != string.Empty)
+                                    if (bodyArray[1] != string.Empty && bodyArray[1].Length <= 16)
                                     {
                                         record.identifierNo = bodyArray[1];
                                     }
@@ -72,7 +76,7 @@ namespace AerLingus.Controllers
                                         record.identifierNo = null;
                                     }
 
-                                    if (bodyArray[2] != string.Empty)
+                                    if (bodyArray[2] != string.Empty && bodyArray[2].Length <= 2)
                                     {
                                         record.transactionType = bodyArray[2];
                                     }
@@ -81,7 +85,7 @@ namespace AerLingus.Controllers
                                         record.transactionType = null;
                                     }
 
-                                    if (bodyArray[3] != string.Empty)
+                                    if (bodyArray[3] != string.Empty && bodyArray[3].Length <= 30)
                                     {
                                         record.otherFFPNo = bodyArray[3];
                                     }
@@ -337,14 +341,21 @@ namespace AerLingus.Controllers
 
                                     if (bodyArray[30] != string.Empty)
                                     {
-                                        //record.exchangeRate = Convert.ToSingle()
+                                        record.exchangeRate = Convert.ToSingle(bodyArray[30]);
                                     }
                                     else
                                     {
                                         record.exchangeRate = null;
                                     }
 
-                                    record.customerType = bodyArray[26] != string.Empty && (bodyArray[26][0] == 'A' || bodyArray[26][0] == 'C' || bodyArray[26][0] == 'I') ? bodyArray[26] : null;
+                                    if (bodyArray[31] != string.Empty)
+                                    {
+                                        record.fareBasis = bodyArray[31];
+                                    }
+                                    else
+                                    {
+                                        record.fareBasis = null;
+                                    }
 
 
 
@@ -367,6 +378,5 @@ namespace AerLingus.Controllers
                 return Content("Something went wrong." + ex.Message);
             }
         }
-      
     }
 }
