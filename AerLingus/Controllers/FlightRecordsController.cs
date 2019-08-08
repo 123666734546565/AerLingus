@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.VisualBasic;
+using AerLingus.Models;
 
 namespace AerLingus.Controllers
 {
@@ -14,12 +16,6 @@ namespace AerLingus.Controllers
             return View();
         }
 
-        //0000000000000000000000000000000000000000000
-        /// <summary>
-        /// 7
-        /// </summary>
-        /// <param name="file"></param>
-        /// <returns></returns>
         public ActionResult Upload(HttpPostedFileBase file)
         {
             if (file == null)
