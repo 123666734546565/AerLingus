@@ -15,28 +15,6 @@ namespace AerLingus.Controllers
         }
 
 
-        Skip to content
-        Using Gmail with screen readers
-Enable desktop notifications for Gmail.
-   OK No thanks
-
-1 of 10
-Upload action.txt
-Inbox
-x
-
-Aleksa Shahgoli (via Google Drive) <drive-shares-noreply @google.com>
-2:12 PM (0 minutes ago)
-to me
-
-aleksa7917 @its.edu.rs has shared the following file:
-
-Upload action.txt
-Open
-Google Drive: Have all your files within reach from any device.
-Google LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA Logo for Google Drive
-Attachments area
-
         [HttpPost]
         public ActionResult Upload(HttpPostedFileBase file)
         {
@@ -389,7 +367,6 @@ Attachments area
                 return Content("Something went wrong." + ex.Message);
             }
         }
-        Upload action.txt
-        Displaying Upload action.txt.
+      
     }
 }
