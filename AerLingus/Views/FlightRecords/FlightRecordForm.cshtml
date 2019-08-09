@@ -38,48 +38,54 @@
         @Html.TextBoxFor(fr => fr.otherFFPNo, new { @class = "form-control" })
     </div>
     <div class="form-group">
-        @Html.LabelFor(fr => fr.otherFFPScheme )
-        @Html.TextBoxFor(fr => fr.otherFFPScheme , new { @class = "form-control" })
+        @Html.LabelFor(fr => fr.otherFFPScheme)
+        @Html.TextBoxFor(fr => fr.otherFFPScheme, new { @class = "form-control" })
     </div>
     <div class="form-group">
-        @Html.LabelFor(fr => fr.firstName )       
-        @Html.TextBoxFor(fr => fr.firstName , new { @class = "form-control" })
+        @Html.LabelFor(fr => fr.firstName)
+        @Html.TextBoxFor(fr => fr.firstName, new { @class = "form-control" })
     </div>
     <div class="form-group">
-        @Html.LabelFor(fr => fr.lastName)       
+        @Html.LabelFor(fr => fr.lastName)
         @Html.TextBoxFor(fr => fr.lastName, new { @class = "form-control" })
     </div>
     <div class="form-group">
-        @Html.LabelFor(fr => fr.partnerTransactionNo )       
-        @Html.TextBoxFor(fr => fr.partnerTransactionNo , new { @class = "form-control" })
+        @Html.LabelFor(fr => fr.partnerTransactionNo)
+        @Html.TextBoxFor(fr => fr.partnerTransactionNo, new { @class = "form-control" })
     </div>
+    //potreban datetimepicker!!!
     <div class="form-group">
-        
-        @Html.EditorFor(fr => fr.bookingDate , new {htmlAttributes = new { @class = "datepicker form-control" } })
+        @Html.LabelFor(fr => fr.departureDate)
+        @Html.EditorFor(fr => fr.departureDate, new { htmlAttributes = new { @class = "datepicker form-control" } })
+    </div>
+    //dodat datepicker
+    <div class="form-group">
+        @Html.LabelFor(fr => fr.departureDate)
+        @Html.EditorFor(fr => fr.departureDate, new { htmlAttributes = new { @class = "datepicker form-control" } })
     </div>
 
 }
 
-    <link href="~/Content/jquery-ui.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+<link href="~/Content/jquery-ui.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 
 
-    @section scripts { 
-        <script src="~/Scripts/jquery-ui.min.js" ></script>
-        <script>
-            $(function () {
-                $(".datepicker").datepicker({
-                    dateFormat: "dd/mm/yy",
-                    changeMonth: true ,
-                    changeYear: true,
-                    yearRange: "-10:+10",
-                    showOn: "both",
-                    buttonText: "<i class='fa fa-calendar' style='font - size:74x'></i>"
+@section scripts {
+    <script src="~/Scripts/jquery-ui.min.js"></script>
+    <script>
+        $(function () {
+            $(".datepicker").datepicker({
+                dateFormat: "dd/mm/yy",
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "-10:+10",
+                showOn: "both",
+                buttonText: "<i class='fa fa-calendar' style='font - size:74x'></i>"
 
-                })
             })
-        </script>
-        }
+        })
+    </script>
+}
 
 @*@using (Html.BeginForm("DodavanjePutnika", "Putnik"))
     {
