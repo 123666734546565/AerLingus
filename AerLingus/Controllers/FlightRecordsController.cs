@@ -16,7 +16,10 @@ namespace AerLingus.Controllers
             return View();
         }
 
-
+        public ActionResult FlightRecordForm()
+        {
+            return View();
+        }
         /*  public ActionResult Upload(HttpPostedFileBase file)
           {
               if (file == null)
