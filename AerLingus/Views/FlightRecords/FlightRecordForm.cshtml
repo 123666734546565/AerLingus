@@ -20,6 +20,70 @@
 
     });
 
+    List<SelectListItem> listItems2 = new List<SelectListItem>();
+    listItems.Add(new SelectListItem
+    {
+        Text = "F",
+        Value = "F"
+    });
+    listItems.Add(new SelectListItem
+    {
+        Text = "J",
+        Value = "J",
+
+    });
+    listItems.Add(new SelectListItem
+    {
+        Text = "W",
+        Value = "W",
+
+    });
+    listItems.Add(new SelectListItem
+    {
+        Text = "Y",
+        Value = "Y",
+
+    });
+
+    List<SelectListItem> listItems3 = new List<SelectListItem>();
+    listItems.Add(new SelectListItem
+    {
+        Text = "A",
+        Value = "A"
+    });
+    listItems.Add(new SelectListItem
+    {
+        Text = "C",
+        Value = "C",
+
+    });
+    listItems.Add(new SelectListItem
+    {
+        Text = "I",
+        Value = "I",
+
+    });
+
+    List<SelectListItem> listItems4 = new List<SelectListItem>();
+    listItems.Add(new SelectListItem
+    {
+        Text = "EUR",
+        Value = "EUR"
+    });
+    listItems.Add(new SelectListItem
+    {
+        Text = "GBP",
+        Value = "GBP",
+
+    });
+    listItems.Add(new SelectListItem
+    {
+        Text = "USD",
+        Value = "USD",
+
+    });
+
+
 }
 
 @using (Html.BeginForm("FlightRecordForm", "FlightRecordsController"))
@@ -55,15 +119,104 @@
     </div>
     //potreban datetimepicker!!!
     <div class="form-group">
-        @Html.LabelFor(fr => fr.departureDate)
-        @Html.EditorFor(fr => fr.departureDate, new { htmlAttributes = new { @class = "datepicker form-control" } })
+        @Html.LabelFor(fr => fr.bookingDate)
+        @Html.EditorFor(fr => fr.bookingDate, new { htmlAttributes = new { @class = "datepicker form-control" } })
     </div>
     //dodat datepicker
     <div class="form-group">
         @Html.LabelFor(fr => fr.departureDate)
         @Html.EditorFor(fr => fr.departureDate, new { htmlAttributes = new { @class = "datepicker form-control" } })
     </div>
+    <div class="form-group">
+        @Html.LabelFor(fr => fr.origin)
+        @Html.TextBoxFor(fr => fr.origin, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(fr => fr.destination)
+        @Html.TextBoxFor(fr => fr.destination, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(fr => fr.bookingClass)
+        @Html.TextBoxFor(fr => fr.bookingClass, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(fr => fr.cabinClass)
+        @Html.DropDownListFor(fr => fr.transactionType, listItems2, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(fr => fr.marketingFlightNo)
+        @Html.TextBoxFor(fr => fr.marketingFlightNo, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(fr => fr.marketingAirline)
+        @Html.TextBoxFor(fr => fr.marketingAirline, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(fr => fr.operatingFlightNo)
+        @Html.TextBoxFor(fr => fr.operatingFlightNo, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(fr => fr.operatingAirline)
+        @Html.TextBoxFor(fr => fr.operatingAirline, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(fr => fr.ticketNo)
+        @Html.TextBoxFor(fr => fr.ticketNo, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(fr => fr.externalPaxID)
+        @Html.TextBoxFor(fr => fr.externalPaxID, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(fr => fr.couponNo)
+        @Html.TextBoxFor(fr => fr.couponNo, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(fr => fr.pnrNo)
+        @Html.TextBoxFor(fr => fr.pnrNo, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(fr => fr.distance)
+        @Html.TextBoxFor(fr => fr.distance, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(fr => fr.baseFare)
+        @Html.TextBoxFor(fr => fr.baseFare, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(fr => fr.discountBase)
+        @Html.TextBoxFor(fr => fr.discountBase, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(fr => fr.exciseTax)
+        @Html.TextBoxFor(fr => fr.exciseTax, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(fr => fr.customerType)
+        @Html.DropDownListFor(fr => fr.customerType, listItems3, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(fr => fr.promotionCode)
+        @Html.TextBoxFor(fr => fr.promotionCode, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(fr => fr.ticketCurrency)
+        @Html.DropDownListFor(fr => fr.ticketCurrency, listItems4, new { @class = "form-control" })
+    </div>
 
+    <div class="form-group">
+        @Html.LabelFor(fr => fr.targetCurrency)
+        @Html.DropDownListFor(fr => fr.targetCurrency, listItems4, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(fr => fr.exchangeRate)
+        @Html.TextBoxFor(fr => fr.exchangeRate, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(fr => fr.fareBasis)
+        @Html.DropDownListFor(fr => fr.fareBasis, listItems4, new { @class = "form-control" })
+    </div>
+   
 }
 
 <link href="~/Content/jquery-ui.min.css" rel="stylesheet" />
@@ -87,21 +240,7 @@
     </script>
 }
 
-@*@using (Html.BeginForm("DodavanjePutnika", "Putnik"))
-    {
-        <div class="form-group">
-            @Html.LabelFor(p => p.PutnikID)
-            @Html.TextBoxFor(p => p.PutnikID, new { @class = "form-control" })
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(p => p.Ime)
-            @Html.TextBoxFor(p => p.Ime, new { @class = "form-control" })
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(p => p.LetID)
-            @Html.DropDownListFor(p => p.LetID, new SelectList(ViewBag.Letovi, "LetID", "Naziv"), "Select Let", new { @class = "form-control" })
-        </div>
-        <button type="submit" class="btn btn-success">Sacuvaj</button>}*@
+
 
 
 
