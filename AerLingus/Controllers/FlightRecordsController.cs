@@ -23,7 +23,7 @@ namespace AerLingus.Controllers
         {
             //Ako je sfr formular popunjen salju se podaci u API kako bi se sacuvali u bazu
             HttpClient hc = new HttpClient();
-            hc.BaseAddress = new Uri(@"http://localhost:50607/api/PutnikApi/DodavanjePutnika");
+            hc.BaseAddress = new Uri(@"http://localhost:54789/api/FlightRecordsAPI/AddFlightRecord");
             var insertRecord = hc.PostAsJsonAsync<Flight_Records>("", sfr);
             insertRecord.Wait();
             var recorddisplay = insertRecord.Result;
