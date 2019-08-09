@@ -5,21 +5,37 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.VisualBasic;
 using AerLingus.Models;
+using System.Net.Http;
 
 namespace AerLingus.Controllers
 {
     public class FlightRecordsController : Controller
     {
+        List<Flight_Records> flight_Records = new List<Flight_Records>();
+
         // GET: FlightRecords
         public ActionResult Index()
         {
             return View();
         }
 
-        public ActionResult FlightRecordForm()
+        public ActionResult FlightRecordForm(Flight_Records sfr)
         {
+            //Ako je sfr formular popunjen salju se podaci u API kako bi se sacuvali u bazu
+            HttpClient hc = new HttpClient();
+            hc.BaseAddress = new Uri(@"http://localhost:50607/api/PutnikApi/DodavanjePutnika");
+            var insertRecord = hc.PostAsJsonAsync<Flight_Records>("", sfr);
+            insertRecord.Wait();
+            var recorddisplay = insertRecord.Result;
+            if (recorddisplay.IsSuccessStatusCode)
+            {
+                //redirekcija u listu svih flight rekorda
+                return RedirectToAction("Home", "Home");
+            }
+            //Prikazuje formular za dodavanje single flight rekorda ako zeli da doda novi sfr ili ako prethodno popunjavanje nije proslo kako treba
             return View();
         }
+
         /*  public ActionResult Upload(HttpPostedFileBase file)
           {
               if (file == null)
