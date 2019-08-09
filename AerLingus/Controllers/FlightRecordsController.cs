@@ -63,43 +63,60 @@ namespace AerLingus.Controllers
                                 {
                                     bodyArray = tempRecord.Split('|');
 
-                                    if (bodyArray[1] != string.Empty && bodyArray[1].Length <= 16)
+                                    if (bodyArray[1] != string.Empty && 
+                                        bodyArray[1].Length <= 16)
                                     {
                                         record.identifierNo = bodyArray[1];
                                     }
                                     else
                                     {
-                                        record.identifierNo = null;
+                                        record.identifierNo = null;              
                                     }
 
-                                    if (bodyArray[2] != string.Empty && bodyArray[2].Length <= 2)
+                                    if (bodyArray[2] != string.Empty && 
+                                        bodyArray[2].Length <= 2)
                                     {
                                         record.transactionType = bodyArray[2];
                                     }
                                     else
                                     {
                                         record.transactionType = null;
+
+                                        failedToAddRecords = failedToAddRecords + tempRecord + "\n";
+
+                                        break;
                                     }
 
-                                    if (bodyArray[3] != string.Empty && bodyArray[3].Length <= 30)
+                                    if (bodyArray[3] != string.Empty && 
+                                        bodyArray[3].Length <= 30)
                                     {
                                         record.otherFFPNo = bodyArray[3];
                                     }
                                     else
                                     {
                                         record.otherFFPNo = null;
+
+                                        failedToAddRecords = failedToAddRecords + tempRecord + "\n";
+
+                                        break;
                                     }
 
-                                    if (bodyArray[4] != string.Empty && bodyArray[4].Length <= 30)
+                                    if (bodyArray[4] != string.Empty && 
+                                        bodyArray[4].Length <= 30)
                                     {
                                         record.otherFFPScheme = bodyArray[4];
                                     }
                                     else
                                     {
                                         record.otherFFPScheme = null;
+
+                                        failedToAddRecords = failedToAddRecords + tempRecord + "\n";
+
+                                        break;
                                     }
 
-                                    if (bodyArray[5] != string.Empty && bodyArray[5].Length <= 30)
+                                    if (bodyArray[5] != string.Empty && 
+                                        bodyArray[5].Length <= 30)
                                     {
                                         record.firstName = bodyArray[5];
                                     }
@@ -108,7 +125,8 @@ namespace AerLingus.Controllers
                                         record.firstName = null;
                                     }
 
-                                    if (bodyArray[6] != string.Empty && bodyArray[6].Length <= 30)
+                                    if (bodyArray[6] != string.Empty && 
+                                        bodyArray[6].Length <= 30)
                                     {
                                         record.lastName = bodyArray[6];
                                     }
@@ -117,7 +135,8 @@ namespace AerLingus.Controllers
                                         record.lastName = null;
                                     }
 
-                                    if (bodyArray[7] != string.Empty && bodyArray[7].Length <= 100)
+                                    if (bodyArray[7] != string.Empty && 
+                                        bodyArray[7].Length <= 100)
                                     {
                                         record.partnerTransactionNo = bodyArray[7];
                                     }
@@ -144,7 +163,8 @@ namespace AerLingus.Controllers
                                         record.departureDate = default(DateTime);
                                     }
 
-                                    if (bodyArray[10] != string.Empty && bodyArray[10].Length <= 3)
+                                    if (bodyArray[10] != string.Empty && 
+                                        bodyArray[10].Length <= 3)
                                     {
                                         record.origin = bodyArray[10];
                                     }
@@ -153,7 +173,8 @@ namespace AerLingus.Controllers
                                         record.origin = null;
                                     }
 
-                                    if (bodyArray[11] != string.Empty && bodyArray[11].Length <= 3)
+                                    if (bodyArray[11] != string.Empty && 
+                                        bodyArray[11].Length <= 3)
                                     {
                                         record.destination = bodyArray[11];
                                     }
@@ -162,7 +183,8 @@ namespace AerLingus.Controllers
                                         record.destination = null;
                                     }
 
-                                    if (bodyArray[12] != string.Empty && bodyArray[12].Length <= 2)
+                                    if (bodyArray[12] != string.Empty && 
+                                        bodyArray[12].Length <= 2)
                                     {
                                         record.bookingClass = bodyArray[12];
                                     }
@@ -171,7 +193,8 @@ namespace AerLingus.Controllers
                                         record.bookingClass = null;
                                     }
 
-                                    if (bodyArray[13] != string.Empty && bodyArray[1].Length <= 1)
+                                    if (bodyArray[13] != string.Empty && 
+                                        bodyArray[1].Length <= 1)
                                     {
                                         record.cabinClass = bodyArray[13];
                                     }
@@ -181,7 +204,8 @@ namespace AerLingus.Controllers
                                     }
 
                                     if (bodyArray[14] != string.Empty &&
-                                        Information.IsNumeric(bodyArray[14]) && bodyArray[14].Length <= 4)
+                                        Information.IsNumeric(bodyArray[14]) && 
+                                        bodyArray[14].Length <= 4)
                                     {
                                         record.marketingFlightNo = bodyArray[14];
                                     }
@@ -190,7 +214,8 @@ namespace AerLingus.Controllers
                                         record.marketingFlightNo = null;
                                     }
 
-                                    if (bodyArray[15] != string.Empty)
+                                    if (bodyArray[15] != string.Empty &&
+                                        bodyArray[15].Length <= 2)
                                     {
                                         record.marketingAirline = bodyArray[15];
                                     }
@@ -200,7 +225,8 @@ namespace AerLingus.Controllers
                                     }
 
                                     if (bodyArray[16] != string.Empty &&
-                                        Information.IsNumeric(bodyArray[16]))
+                                        Information.IsNumeric(bodyArray[16]) &&
+                                        bodyArray[16].Length <= 4)
                                     {
                                         record.operatingFlightNo = bodyArray[16];
                                     }
@@ -209,7 +235,8 @@ namespace AerLingus.Controllers
                                         record.operatingFlightNo = null;
                                     }
 
-                                    if (bodyArray[17] != string.Empty)
+                                    if (bodyArray[17] != string.Empty &&
+                                        bodyArray[2].Length <= 2)
                                     {
                                         record.operatingAirline = bodyArray[17];
                                     }
@@ -229,7 +256,8 @@ namespace AerLingus.Controllers
                                         record.ticketNo = null;
                                     }
 
-                                    if (bodyArray[19] != string.Empty)
+                                    if (bodyArray[19] != string.Empty &&
+                                        bodyArray[19].Length <= 25)
                                     {
                                         record.externalPaxID = bodyArray[19];
                                     }
@@ -238,7 +266,8 @@ namespace AerLingus.Controllers
                                         record.externalPaxID = null;
                                     }
 
-                                    if (bodyArray[20] != string.Empty)
+                                    if (bodyArray[20] != string.Empty &&
+                                        bodyArray[20].Length <= 2)
                                     {
                                         record.couponNo = bodyArray[20];
                                     }
@@ -248,6 +277,7 @@ namespace AerLingus.Controllers
                                     }
 
                                     if (bodyArray[21] != string.Empty &&
+                                        bodyArray[21].Length == 6 &&
                                         (char.IsUpper(bodyArray[21][0]) && char.IsLetter(bodyArray[21][0])) &&
                                         char.IsLetterOrDigit(bodyArray[21][1]) &&
                                         char.IsLetterOrDigit(bodyArray[21][2]) &&
@@ -262,7 +292,8 @@ namespace AerLingus.Controllers
                                         record.pnrNo = null;
                                     }
 
-                                    if (bodyArray[22] != string.Empty)
+                                    if (bodyArray[22] != string.Empty &&
+                                        bodyArray[22].Length <= 5)
                                     {
                                         record.distance = Convert.ToInt64(bodyArray[22]);
                                     }
@@ -271,7 +302,8 @@ namespace AerLingus.Controllers
                                         record.distance = default(long);
                                     }
 
-                                    if (bodyArray[23] != string.Empty)
+                                    if (bodyArray[23] != string.Empty && 
+                                        bodyArray[23].Length <= 8)
                                     {
                                         record.baseFare = Convert.ToSingle(bodyArray[23]);
                                     }
@@ -280,7 +312,8 @@ namespace AerLingus.Controllers
                                         record.baseFare = default(float);
                                     }
 
-                                    if (bodyArray[24] != string.Empty)
+                                    if (bodyArray[24] != string.Empty &&
+                                        bodyArray[24].Length <= 8)
                                     {
                                         record.discountBase = Convert.ToSingle(bodyArray[24]);
                                     }
@@ -289,7 +322,8 @@ namespace AerLingus.Controllers
                                         record.discountBase = default(float);
                                     }
 
-                                    if (bodyArray[25] != string.Empty)
+                                    if (bodyArray[25] != string.Empty &&
+                                        bodyArray[25].Length <= 8)
                                     {
                                         record.exciseTax = Convert.ToSingle(bodyArray[25]);
                                     }
@@ -299,6 +333,7 @@ namespace AerLingus.Controllers
                                     }
 
                                     if (bodyArray[26] != string.Empty &&
+                                        bodyArray[26].Length <= 1 &&
                                         (char.ToUpper(bodyArray[26][0]) == 'A' || char.ToUpper(bodyArray[26][0]) == 'C' || char.ToUpper(bodyArray[26][0]) == 'I'))
                                     {
                                         record.customerType = bodyArray[26];
@@ -308,7 +343,8 @@ namespace AerLingus.Controllers
                                         record.customerType = null;
                                     }
 
-                                    if (bodyArray[27] != string.Empty)
+                                    if (bodyArray[27] != string.Empty && 
+                                        bodyArray[27].Length <= 100)
                                     {
                                         record.promotionCode = bodyArray[27];
                                     }
@@ -317,7 +353,8 @@ namespace AerLingus.Controllers
                                         record.promotionCode = null;
                                     }
 
-                                    if (bodyArray[28] != string.Empty)
+                                    if (bodyArray[28] != string.Empty &&
+                                        bodyArray[28].Length <= 3)
                                     {
                                         record.ticketCurrency = bodyArray[28];
                                     }
@@ -326,7 +363,8 @@ namespace AerLingus.Controllers
                                         record.ticketCurrency = null;
                                     }
 
-                                    if (bodyArray[29] != string.Empty)
+                                    if (bodyArray[29] != string.Empty &&
+                                        bodyArray[29].Length <= 3)
                                     {
                                         record.targetCurrency = bodyArray[29];
                                     }
@@ -335,7 +373,8 @@ namespace AerLingus.Controllers
                                         record.targetCurrency = null;
                                     }
 
-                                    if (bodyArray[30] != string.Empty)
+                                    if (bodyArray[30] != string.Empty &&
+                                        bodyArray[30].Length <= 10)
                                     {
                                         record.exchangeRate = Convert.ToSingle(bodyArray[30]);
                                     }
@@ -344,7 +383,8 @@ namespace AerLingus.Controllers
                                         record.exchangeRate = null;
                                     }
 
-                                    if (bodyArray[31] != string.Empty)
+                                    if (bodyArray[31] != string.Empty &&
+                                        bodyArray[31].Length <= 10)
                                     {
                                         record.fareBasis = bodyArray[31];
                                     }
@@ -373,5 +413,11 @@ namespace AerLingus.Controllers
                 return Content("Something went wrong." + ex.Message);
             }
         }
+
+        public ActionResult FlightRecordForm()
+        {
+            return View();
+        }
+
     }
 }
