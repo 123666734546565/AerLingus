@@ -14,7 +14,7 @@ namespace AerLingus.Models
     
     public partial class FR_Batch_Files
     {
-        public int File_ID { get; set; }
+     
         public string Content { get; set; }
         public string Header { get; set; }
         public string Footer { get; set; }
