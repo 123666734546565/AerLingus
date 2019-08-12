@@ -29,7 +29,7 @@ namespace AerLingus.Controllers
             if (file == null)
                 return Content("No file selected.");
 
-            if (file.ContentLength == 0)
+            else if (file.ContentLength == 0)
                 return Content("File is empty.");
 
             string failedToAddRecords = string.Empty;
@@ -79,11 +79,9 @@ namespace AerLingus.Controllers
                                 {
                                     bodyArray = tempRecord.Split('|');
 
-                                    if (bodyArray[1] != string.Empty && 
-                                        bodyArray[1].Length <= 16)
+                                    if (String.IsNullOrEmpty(bodyArray[1]) != true && bodyArray[1].Length <= 16)
                                     {
                                         record.identifierNo = bodyArray[1];
-
                                         addedAtLeastOneRecord = true;
                                     }
                                     else
@@ -91,11 +89,9 @@ namespace AerLingus.Controllers
                                         record.identifierNo = null;              
                                     }
 
-                                    if (bodyArray[2] != string.Empty && 
-                                        bodyArray[2].Length <= 2)
+                                    if (String.IsNullOrEmpty(bodyArray[2]) != true && bodyArray[2].Length <= 2)
                                     {
                                         record.transactionType = bodyArray[2];
-
                                         addedAtLeastOneRecord = true;
                                     }
                                     else
@@ -562,7 +558,7 @@ namespace AerLingus.Controllers
 
                         return Content("Success");
                     }
-                    else return Content("No record has been added because either the selected file has no footer or number of footer records is incorrect.");
+                    else return Content("No record has been added because either the selected file has no footer or number of footer records is incorrect."+ recordsAdded+" - "+numberOfFooterRecords);
                 }
                 else return Content("Error: File has no header or it is not prefixed with H.");
             }
