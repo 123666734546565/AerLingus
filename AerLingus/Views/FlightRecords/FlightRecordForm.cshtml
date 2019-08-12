@@ -1,4 +1,5 @@
 ﻿@model AerLingus.Models.Flight_Records
+@using System.Web.Hosting;
 @{
     ViewBag.Title = "FlightRecordForm";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -64,25 +65,14 @@
 
     });
 
-    List<SelectListItem> listItems4 = new List<SelectListItem>();
-    listItems4.Add(new SelectListItem
-    {
-        Text = "EUR",
-        Value = "EUR"
-    });
-    listItems4.Add(new SelectListItem
-    {
-        Text = "GBP",
-        Value = "GBP",
+    StreamReader sr = new StreamReader(HostingEnvironment.ApplicationPhysicalPath + "/Content/currencies.txt");
 
-    });
-    listItems4.Add(new SelectListItem
+    List<string> listItems4 = new List<string>();
+
+    while(!sr.EndOfStream )
     {
-        Text = "USD",
-        Value = "USD",
-
-    });
-
+        listItems4.Add(sr.ReadLine());
+    }
 
 }
 
@@ -201,12 +191,12 @@
     </div>
     <div class="form-group">
         @Html.LabelFor(fr => fr.ticketCurrency)
-        @Html.DropDownListFor(fr => fr.ticketCurrency, listItems4, new { @class = "form-control" })
+        @Html.DropDownListFor(fr => fr.ticketCurrency, new SelectList(listItems4), new { @class = "form-control" })
     </div>
 
     <div class="form-group">
         @Html.LabelFor(fr => fr.targetCurrency)
-        @Html.DropDownListFor(fr => fr.targetCurrency, listItems4, new { @class = "form-control" })
+        @Html.DropDownListFor(fr => fr.targetCurrency, new SelectList ( listItems4 ), new { @class = "form-control" })
     </div>
     <div class="form-group">
         @Html.LabelFor(fr => fr.exchangeRate)
@@ -214,7 +204,7 @@
     </div>
     <div class="form-group">
         @Html.LabelFor(fr => fr.fareBasis)
-        @Html.DropDownListFor(fr => fr.fareBasis, listItems4, new { @class = "form-control" })
+        @Html.DropDownListFor(fr => fr.fareBasis, new SelectList(listItems4), new { @class = "form-control" })
     </div>
 
     <button type="submit" class="btn btn-success">Save</button>
