@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="AerLingusDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="AerLingusDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <!--Errors Found During Generation:
 warning 6002: The table/view 'AerLingus_database.dbo.Flight_Records' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Flight_Records">
@@ -57,10 +57,11 @@ warning 6002: The table/view 'AerLingus_database.dbo.Flight_Records' does not ha
         </EntityType>
         <EntityType Name="FR_Batch_Files">
           <Key>
-            <PropertyRef Name="File ID" />
+            <PropertyRef Name="Header" />
           </Key>
-          <Property Name="File ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Header" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="Content" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Footer" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityContainer Name="AerLingusDatabaseModelStoreContainer">
           <EntitySet Name="FR_Batch_Files" EntityType="Self.FR_Batch_Files" Schema="dbo" store:Type="Tables" />
@@ -100,17 +101,19 @@ warning 6002: The table/view 'AerLingus_database.dbo.Flight_Records' does not ha
     FROM [dbo].[Flight_Records] AS [Flight_Records]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="AerLingusDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="FR_Batch_Files">
           <Key>
             <PropertyRef Name="File_ID" />
+            <PropertyRef Name="Header" />
           </Key>
           <Property Name="File_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Header" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Footer" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Flight_Records">
           <Key>
@@ -173,7 +176,8 @@ warning 6002: The table/view 'AerLingus_database.dbo.Flight_Records' does not ha
           <EntitySetMapping Name="FR_Batch_Files">
             <EntityTypeMapping TypeName="AerLingusDatabaseModel.FR_Batch_Files">
               <MappingFragment StoreEntitySet="FR_Batch_Files">
-                <ScalarProperty Name="File_ID" ColumnName="File ID" />
+                <ScalarProperty Name="Footer" ColumnName="Footer" />
+                <ScalarProperty Name="Header" ColumnName="Header" />
                 <ScalarProperty Name="Content" ColumnName="Content" />
               </MappingFragment>
             </EntityTypeMapping>
