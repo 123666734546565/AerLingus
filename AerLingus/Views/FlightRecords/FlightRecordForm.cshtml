@@ -4,17 +4,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<head>
-    <script type="text/javascript" src="/scripts/jquery.min.js"></script>
-    <script type="text/javascript" src="/scripts/moment.min.js"></script>
-    <script type="text/javascript" src="/scripts/bootstrap.min.js"></script>
-    <script type="text/javascript" src="/scripts/bootstrap-datetimepicker.*js"></script>
-
-    <script type="text/javascript" src="/scripts/bootstrap-datetimepicker.*js"></script>
-    <link rel="stylesheet/less" type="text/css" href="~/Content/bootstrap-datetimepicker-build.less" />
-
-</head>
-
 <h2>Add new flight record</h2>
 
 @{
@@ -32,24 +21,24 @@
     });
 
     List<SelectListItem> listItems2 = new List<SelectListItem>();
-    listItems2.Add(new SelectListItem
+    listItems.Add(new SelectListItem
     {
         Text = "F",
         Value = "F"
     });
-    listItems2.Add(new SelectListItem
+    listItems.Add(new SelectListItem
     {
         Text = "J",
         Value = "J",
 
     });
-    listItems2.Add(new SelectListItem
+    listItems.Add(new SelectListItem
     {
         Text = "W",
         Value = "W",
 
     });
-    listItems2.Add(new SelectListItem
+    listItems.Add(new SelectListItem
     {
         Text = "Y",
         Value = "Y",
@@ -57,18 +46,18 @@
     });
 
     List<SelectListItem> listItems3 = new List<SelectListItem>();
-    listItems3.Add(new SelectListItem
+    listItems.Add(new SelectListItem
     {
         Text = "A",
         Value = "A"
     });
-    listItems3.Add(new SelectListItem
+    listItems.Add(new SelectListItem
     {
         Text = "C",
         Value = "C",
 
     });
-    listItems3.Add(new SelectListItem
+    listItems.Add(new SelectListItem
     {
         Text = "I",
         Value = "I",
@@ -76,18 +65,18 @@
     });
 
     List<SelectListItem> listItems4 = new List<SelectListItem>();
-    listItems4.Add(new SelectListItem
+    listItems.Add(new SelectListItem
     {
         Text = "EUR",
         Value = "EUR"
     });
-    listItems4.Add(new SelectListItem
+    listItems.Add(new SelectListItem
     {
         Text = "GBP",
         Value = "GBP",
 
     });
-    listItems4.Add(new SelectListItem
+    listItems.Add(new SelectListItem
     {
         Text = "USD",
         Value = "USD",
@@ -131,10 +120,8 @@
     //potreban datetimepicker!!!
     <div class="form-group">
         @Html.LabelFor(fr => fr.bookingDate)
-        @Html.EditorFor(fr => fr.bookingDate, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.EditorFor(fr => fr.bookingDate, new { htmlAttributes = new { @class = "datepicker form-control" } })
     </div>
-
-
     //dodat datepicker
     <div class="form-group">
         @Html.LabelFor(fr => fr.departureDate)
@@ -229,7 +216,7 @@
         @Html.LabelFor(fr => fr.fareBasis)
         @Html.DropDownListFor(fr => fr.fareBasis, listItems4, new { @class = "form-control" })
     </div>
-
+   
 }
 
 <link href="~/Content/jquery-ui.min.css" rel="stylesheet" />
@@ -237,39 +224,22 @@
 
 
 @section scripts {
-    @*<script src="~/Scripts/jquery-ui.min.js"></script>
-        <script>
-            $(function () {
-                $(".datepicker").datepicker({
-                    dateFormat: "dd/mm/yy",
-                    changeMonth: true,
-                    changeYear: true,
-                    yearRange: "-10:+10",
-                    showOn: "both",
-                    buttonText: "<i class='fa fa-calendar' style='font - size:74x'></i>"
-
-                })
-            })
-        </script>*@
-    <script type="text/javascript">
+    <script src="~/Scripts/jquery-ui.min.js"></script>
+    <script>
         $(function () {
-            $('#bookingDate').datetimepicker({
-                format: 'L',
-                showClose: true,
-                showClear: true,
-                toolbarPlacement: 'top'
-            });
-            $('#bookingDate').datetimepicker({
-                format: 'LT',
-                showClose: true,
-                showClear: true,
-                toolbarPlacement: 'top',
-                stepping: 15
-            });
-        });
-}
+            $(".datepicker").datepicker({
+                dateFormat: "dd/mm/yy",
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "-10:+10",
+                showOn: "both",
+                buttonText: "<i class='fa fa-calendar' style='font - size:74x'></i>"
+
+            })
+        })
     </script>
 }
+
 
 
 
