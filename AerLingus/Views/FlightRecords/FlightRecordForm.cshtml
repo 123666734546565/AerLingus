@@ -69,7 +69,7 @@
 
     List<string> listItems4 = new List<string>();
 
-    while(!sr.EndOfStream )
+    while (!sr.EndOfStream)
     {
         listItems4.Add(sr.ReadLine());
     }
@@ -115,7 +115,7 @@
     //dodat datepicker
     <div class="form-group">
         @Html.LabelFor(fr => fr.departureDate)
-        @Html.EditorFor(fr => fr.departureDate, new { htmlAttributes = new { @class = "datepicker form-control" } })
+        @Html.EditorFor(fr => fr.departureDate, new { htmlAttributes = new { @class = "datepicker1 form-control" } })
     </div>
     <div class="form-group">
         @Html.LabelFor(fr => fr.origin)
@@ -196,7 +196,7 @@
 
     <div class="form-group">
         @Html.LabelFor(fr => fr.targetCurrency)
-        @Html.DropDownListFor(fr => fr.targetCurrency, new SelectList ( listItems4 ), new { @class = "form-control" })
+        @Html.DropDownListFor(fr => fr.targetCurrency, new SelectList(listItems4), new { @class = "form-control" })
     </div>
     <div class="form-group">
         @Html.LabelFor(fr => fr.exchangeRate)
@@ -220,6 +220,19 @@
     <script>
         $(function () {
             $(".datepicker").datepicker({
+                dateFormat: "dd/mm/yy",
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "-10:+10",
+                showOn: "both",
+                buttonText: "<i class='fa fa-calendar' style='font - size:74x'></i>"
+
+            })
+        })
+    </script>
+    <script>
+        $(function () {
+            $(".datepicker1").datepicker({
                 dateFormat: "dd/mm/yy",
                 changeMonth: true,
                 changeYear: true,
