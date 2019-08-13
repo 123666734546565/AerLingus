@@ -15,7 +15,7 @@ namespace AerLingus.Models
     
     public partial class Flight_Records
     {
-        [MinLength(0 , ErrorMessage = "Min lenght is 16 characters!")]
+        [MinLength(0 , ErrorMessage = "Min lenght is 0 characters!")]
         [MaxLength(16, ErrorMessage = "Max lenght is 16 characters!")]
         public string identifierNo { get; set; }
 

@@ -7,74 +7,6 @@
 
 <h2>Add new flight record</h2>
 
-@{
-    List<SelectListItem> listItems = new List<SelectListItem>();
-    listItems.Add(new SelectListItem
-    {
-        Text = "AI",
-        Value = "AI"
-    });
-    listItems.Add(new SelectListItem
-    {
-        Text = "AB",
-        Value = "AB",
-
-    });
-
-    List<SelectListItem> listItems2 = new List<SelectListItem>();
-    listItems2.Add(new SelectListItem
-    {
-        Text = "F",
-        Value = "F"
-    });
-    listItems2.Add(new SelectListItem
-    {
-        Text = "J",
-        Value = "J",
-
-    });
-    listItems2.Add(new SelectListItem
-    {
-        Text = "W",
-        Value = "W",
-
-    });
-    listItems2.Add(new SelectListItem
-    {
-        Text = "Y",
-        Value = "Y",
-
-    });
-
-    List<SelectListItem> listItems3 = new List<SelectListItem>();
-    listItems3.Add(new SelectListItem
-    {
-        Text = "A",
-        Value = "A"
-    });
-    listItems3.Add(new SelectListItem
-    {
-        Text = "C",
-        Value = "C",
-
-    });
-    listItems3.Add(new SelectListItem
-    {
-        Text = "I",
-        Value = "I",
-
-    });
-
-    StreamReader sr = new StreamReader(HostingEnvironment.ApplicationPhysicalPath + "/Content/currencies.txt");
-
-    List<string> listItems4 = new List<string>();
-
-    while (!sr.EndOfStream)
-    {
-        listItems4.Add(sr.ReadLine());
-    }
-
-}
 
 @using (Html.BeginForm("FlightRecordForm", "FlightRecords"))
 {
@@ -86,7 +18,7 @@
 
 <div class="form-group">
     @Html.LabelFor(fr => fr.transactionType)
-    @Html.DropDownListFor(fr => fr.transactionType, listItems, new { @class = "form-control" })
+    @Html.DropDownListFor(fr => fr.transactionType, new SelectList( ViewBag ["list1"], "Text", "Value"), new { @class = "form-control" })
     @Html.ValidationMessageFor(fr => fr.transactionType, "", new { @class = "text-danger" })
 </div>
 <div class="form-group">
@@ -143,7 +75,7 @@
 </div>
 <div class="form-group">
     @Html.LabelFor(fr => fr.cabinClass)
-    @Html.DropDownListFor(fr => fr.cabinClass, listItems2, new { @class = "form-control" })
+    @Html.DropDownListFor(fr => fr.cabinClass, new SelectList(ViewBag["list2"], "Text", "Value"), new { @class = "form-control" })
     @Html.ValidationMessageFor(fr => fr.cabinClass, "", new { @class = "text-danger" })
 </div>
 <div class="form-group">
@@ -208,7 +140,7 @@
 </div>
 <div class="form-group">
     @Html.LabelFor(fr => fr.customerType)
-    @Html.DropDownListFor(fr => fr.customerType, listItems3, new { @class = "form-control" })
+    @Html.DropDownListFor(fr => fr.customerType, new SelectList(ViewBag["list3"], "Text", "Value"), new { @class = "form-control" })
     @Html.ValidationMessageFor(fr => fr.customerType, "", new { @class = "text-danger" })
 </div>
 <div class="form-group">
@@ -218,14 +150,14 @@
 </div>
 <div class="form-group">
     @Html.LabelFor(fr => fr.ticketCurrency)
-    @Html.DropDownListFor(fr => fr.ticketCurrency, new SelectList(listItems4), new { @class = "form-control" })
+    @Html.DropDownListFor(fr => fr.ticketCurrency, new SelectList(ViewBag["list4"], "Text", "Value"), new { @class = "form-control" })
     @Html.ValidationMessageFor(fr => fr.ticketCurrency , "", new { @class = "text-danger" })
 
 </div>
 
 <div class="form-group">
     @Html.LabelFor(fr => fr.targetCurrency)
-    @Html.DropDownListFor(fr => fr.targetCurrency, new SelectList(listItems4), new { @class = "form-control" })
+    @Html.DropDownListFor(fr => fr.targetCurrency, new SelectList(ViewBag["list4"], "Text", "Value"), new { @class = "form-control" })
     @Html.ValidationMessageFor(fr => fr.targetCurrency, "", new { @class = "text-danger" })
 </div>
 <div class="form-group">
@@ -235,7 +167,7 @@
 </div>
 <div class="form-group">
     @Html.LabelFor(fr => fr.fareBasis)
-    @Html.DropDownListFor(fr => fr.fareBasis, new SelectList(listItems4), new { @class = "form-control" })
+    @Html.DropDownListFor(fr => fr.fareBasis, new SelectList(ViewBag["list4"], "Text", "Value"), new { @class = "form-control" })
     @Html.ValidationMessageFor(fr => fr.fareBasis, "", new { @class = "text-danger" })
 </div>
 
