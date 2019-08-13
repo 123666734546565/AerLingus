@@ -36,8 +36,7 @@ namespace AerLingus.Controllers
         // POST: api/FlightRecordsAPI/AddFlightRecord
         public HttpResponseMessage AddFlightRecord([FromBody] Flight_Records sfr)
         {
-            if (ModelState.IsValid)
-            {
+            
                 entities.Flight_Records.Add(new Flight_Records()
                 {
                     identifierNo = sfr.identifierNo,
@@ -75,7 +74,7 @@ namespace AerLingus.Controllers
                 entities.SaveChanges();
                
 
-            }
+            
             return Request.CreateResponse(HttpStatusCode.OK);
 
         }

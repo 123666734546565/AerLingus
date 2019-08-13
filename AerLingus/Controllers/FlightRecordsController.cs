@@ -103,11 +103,11 @@ namespace AerLingus.Controllers
             }
 
 
-            ViewBag["list1"] = listItems;
+            ViewBag.list1 = listItems;
 
-            ViewBag["list2"] = listItems2;
-            ViewBag["list3"] = listItems3;
-            ViewBag["list4"] = listItems4;
+            ViewBag.list2 = listItems2;
+            ViewBag.list3 = listItems3;
+            ViewBag.list4 = listItems4;
 
 
 
