@@ -15,58 +15,58 @@ namespace AerLingus.Models
     
     public partial class Flight_Records
     {
-        [MinLength(0)]
-        [MaxLength(16)]
+        [MinLength(0 , ErrorMessage = "Min lenght is 16 characters!")]
+        [MaxLength(16, ErrorMessage = "Max lenght is 16 characters!")]
         public string identifierNo { get; set; }
 
-        [Required]
-        [MinLength(1)]
-        [MaxLength(2)]
+        [Required(ErrorMessage = "Field is required!")]
+        [MinLength(1, ErrorMessage = "Min lenght is 1 characters!")]
+        [MaxLength(2, ErrorMessage = "Max lenght is 2 characters!")]
         public string transactionType { get; set; }
 
         [MinLength(0)]
-        [MaxLength(30)]
+        [MaxLength(30, ErrorMessage = "Max lenght is 30 characters!")]
         public string otherFFPNo { get; set; }
 
         [MinLength(0)]
-        [MaxLength(30)]
+        [MaxLength(30, ErrorMessage = "Max lenght is 30 characters!")]
         public string otherFFPScheme { get; set; }
 
-        [Required]
-        [MinLength(1)]
-        [MaxLength(30)]
+        [Required(ErrorMessage = "Field is required!")]
+        [MinLength(1, ErrorMessage = "Min lenght is 1 characters!")]
+        [MaxLength(30, ErrorMessage = "Max lenght is 30 characters!")]
         public string firstName { get; set; }
 
-        [Required]
-        [MinLength(1)]
-        [MaxLength(30)]
+        [Required(ErrorMessage = "Field is required!")]
+        [MinLength(1, ErrorMessage = "Min lenght is 1 characters!")]
+        [MaxLength(30, ErrorMessage = "Max lenght is 30 characters!")]
         public string lastName { get; set; }
 
         [MinLength(0)]
-        [MaxLength(100)]
+        [MaxLength(100, ErrorMessage = "Max lenght is 30 characters!")]
         public string partnerTransactionNo { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Field is required!")]
         [DataType(DataType.DateTime)]
         [Display(Name = "Booking Date") ,DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yy H:mm:ss tt}")]
         public DateTime bookingDate { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Field is required!")]
         [DataType(DataType.Date)]
         [Display(Name = "Departure Date"), DisplayFormat(ApplyFormatInEditMode = true)]
         public System.DateTime departureDate { get; set; }
 
-        [Required]
-        [MinLength(1)]
-        [MaxLength(3)]
+        [Required(ErrorMessage = "Field is required!")]
+        [MinLength(3, ErrorMessage = "Min lenght is 3 characters!")]
+        [MaxLength(3, ErrorMessage = "Max lenght is 3 characters!")]
         public string origin { get; set; }
 
-        [Required]
-        [MinLength(1)]
-        [MaxLength(3)]
+        [Required(ErrorMessage = "Field is required!")]
+        [MinLength(3, ErrorMessage = "Min lenght is 3 characters!")]
+        [MaxLength(3, ErrorMessage = "Max lenght is 3 characters!")]
         public string destination { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Field is required!")]
         [MinLength(1)]
         [MaxLength(2)]
         public string bookingClass { get; set; }
@@ -75,22 +75,22 @@ namespace AerLingus.Models
         [MaxLength(1)]
         public string cabinClass { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Field is required!")]
         [MinLength(1)]
         [MaxLength(4)]
         public string marketingFlightNo { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Field is required!")]
         [MinLength(1)]
         [MaxLength(2)]
         public string marketingAirline { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Field is required!")]
         [MinLength(1)]
         [MaxLength(4)]
         public string operatingFlightNo { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Field is required!")]
         [MinLength(1)]
         [MaxLength(2)]
         public string operatingAirline { get; set; }
@@ -107,7 +107,7 @@ namespace AerLingus.Models
         [MaxLength(2)]
         public string couponNo { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Field is required!")]
         [MinLength(1)]
         [MaxLength(6)]
         public string pnrNo { get; set; }
