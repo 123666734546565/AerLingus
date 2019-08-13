@@ -46,7 +46,7 @@ namespace AerLingus.Models
         [MaxLength(100, ErrorMessage = "Max lenght is 30 characters!")]
         public string partnerTransactionNo { get; set; }
 
-        [Required(ErrorMessage = "Field is required!")]
+       // [Required(ErrorMessage = "Field is required!")]
         [DataType(DataType.DateTime)]
         [Display(Name = "Booking Date") ,DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yy H:mm:ss tt}")]
         public DateTime bookingDate { get; set; }
