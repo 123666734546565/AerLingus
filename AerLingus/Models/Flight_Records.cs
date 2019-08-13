@@ -47,11 +47,13 @@ namespace AerLingus.Models
         public string partnerTransactionNo { get; set; }
 
         [Required]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.DateTime)]
+        [Display(Name = "Booking Date") ,DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yy H:mm:ss tt}")]
         public DateTime bookingDate { get; set; }
 
         [Required]
+        [DataType(DataType.Date)]
+        [Display(Name = "Departure Date"), DisplayFormat(ApplyFormatInEditMode = true)]
         public System.DateTime departureDate { get; set; }
 
         [Required]
