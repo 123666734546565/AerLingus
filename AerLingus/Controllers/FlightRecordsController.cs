@@ -52,16 +52,16 @@ namespace AerLingus.Controllers
                 string content = string.Empty;
                 System.IO.StreamReader streamReader = new System.IO.StreamReader(file.InputStream);
                 header = streamReader.ReadLine();
-                headerArray = header.Split('|');
+                char[] separator = { '|' };
+                headerArray = header.Split(separator,StringSplitOptions.None);
                 if (headerArray[0].ToUpper().Trim() == "H")
                 {
                     while (!streamReader.EndOfStream)
                     {
                         var tempRecord = streamReader.ReadLine();
-                        bodyArray = tempRecord.Split('|');
+                        bodyArray = tempRecord.Split(separator,StringSplitOptions.None);
                         if (bodyArray[0] == "R")
                         {
-
                             if (bodyArray[1] != string.Empty && bodyArray[1].Length <= 16)
                             {
                                 record.identifierNo = bodyArray[1];
@@ -83,11 +83,10 @@ namespace AerLingus.Controllers
 
                                 failedToAddRecords = failedToAddRecords + tempRecord + "\n";
 
-                                break;
+                              
                             }
 
-                            if (bodyArray[3] != string.Empty &&
-                                bodyArray[3].Length <= 30)
+                            if (bodyArray[3] != string.Empty && bodyArray[3].Length <= 30)
                             {
                                 record.otherFFPNo = bodyArray[3];
                             }
@@ -96,8 +95,7 @@ namespace AerLingus.Controllers
                                 record.otherFFPNo = string.Empty;
                             }
 
-                            if (bodyArray[4] != string.Empty &&
-                                bodyArray[4].Length <= 30)
+                            if (bodyArray[4] != string.Empty && bodyArray[4].Length <= 30)
                             {
                                 record.otherFFPScheme = bodyArray[4];
                             }
@@ -106,8 +104,7 @@ namespace AerLingus.Controllers
                                 record.otherFFPScheme = string.Empty;
                             }
 
-                            if (bodyArray[5] != string.Empty &&
-                                bodyArray[5].Length <= 30)
+                            if (bodyArray[5] != string.Empty && bodyArray[5].Length <= 30)
                             {
                                 record.firstName = bodyArray[5];
                             }
@@ -119,11 +116,10 @@ namespace AerLingus.Controllers
 
                                 failedToAddRecords = failedToAddRecords + tempRecord + "\n";
 
-                                break;
+                               
                             }
 
-                            if (bodyArray[6] != string.Empty &&
-                                bodyArray[6].Length <= 30)
+                            if (bodyArray[6] != string.Empty && bodyArray[6].Length <= 30)
                             {
                                 record.lastName = bodyArray[6];
                             }
@@ -135,11 +131,10 @@ namespace AerLingus.Controllers
 
                                 failedToAddRecords = failedToAddRecords + tempRecord + "\n";
 
-                                break;
+                               
                             }
 
-                            if (bodyArray[7] != string.Empty &&
-                                bodyArray[7].Length <= 100)
+                            if (bodyArray[7] != string.Empty && bodyArray[7].Length <= 100)
                             {
                                 record.partnerTransactionNo = bodyArray[7];
                             }
@@ -160,7 +155,7 @@ namespace AerLingus.Controllers
 
                                 failedToAddRecords = failedToAddRecords + tempRecord + "\n";
 
-                                break;
+                               
                             }
 
                             if (bodyArray[9] != string.Empty)
@@ -175,11 +170,10 @@ namespace AerLingus.Controllers
 
                                 failedToAddRecords = failedToAddRecords + tempRecord + "\n";
 
-                                break;
+                              
                             }
 
-                            if (bodyArray[10] != string.Empty &&
-                                bodyArray[10].Length <= 3)
+                            if (bodyArray[10] != string.Empty && bodyArray[10].Length <= 3)
                             {
                                 record.origin = bodyArray[10];
                             }
@@ -191,11 +185,10 @@ namespace AerLingus.Controllers
 
                                 failedToAddRecords = failedToAddRecords + tempRecord + "\n";
 
-                                break;
+                                
                             }
 
-                            if (bodyArray[11] != string.Empty &&
-                                bodyArray[11].Length <= 3)
+                            if (bodyArray[11] != string.Empty && bodyArray[11].Length <= 3)
                             {
                                 record.destination = bodyArray[11];
                             }
@@ -207,7 +200,7 @@ namespace AerLingus.Controllers
 
                                 failedToAddRecords = failedToAddRecords + tempRecord + "\n";
 
-                                break;
+                                
                             }
 
                             if (bodyArray[12] != string.Empty &&
@@ -223,7 +216,7 @@ namespace AerLingus.Controllers
 
                                 failedToAddRecords = failedToAddRecords + tempRecord + "\n";
 
-                                break;
+                              
                             }
 
                             if (bodyArray[13] != string.Empty &&
@@ -250,7 +243,7 @@ namespace AerLingus.Controllers
 
                                 failedToAddRecords = failedToAddRecords + tempRecord + "\n";
 
-                                break;
+                                
                             }
 
                             if (bodyArray[15] != string.Empty &&
@@ -266,7 +259,7 @@ namespace AerLingus.Controllers
 
                                 failedToAddRecords = failedToAddRecords + tempRecord + "\n";
 
-                                break;
+                                
                             }
 
                             if (bodyArray[16] != string.Empty &&
@@ -283,7 +276,7 @@ namespace AerLingus.Controllers
 
                                 failedToAddRecords = failedToAddRecords + tempRecord + "\n";
 
-                                break;
+                                
                             }
 
                             if (bodyArray[17] != string.Empty &&
@@ -299,7 +292,7 @@ namespace AerLingus.Controllers
 
                                 failedToAddRecords = failedToAddRecords + tempRecord + "\n";
 
-                                break;
+                                
                             }
 
                             if (bodyArray[18] != string.Empty &&
@@ -352,7 +345,7 @@ namespace AerLingus.Controllers
 
                                 failedToAddRecords = failedToAddRecords + tempRecord + "\n";
 
-                                break;
+                                
                             }
 
                             if (bodyArray[22] != string.Empty &&
@@ -457,26 +450,21 @@ namespace AerLingus.Controllers
                             }
 
                             recordsAdded++;
-
-                            break;
                         }
-                        else if (bodyArray[0] == "F")
+                        else if (bodyArray[0].ToUpper().Trim() == "F")
                         {
                             hasFooter = true;
 
-                            footerArray = tempRecord.Split('|');
+                            footerArray = tempRecord.Split(separator,StringSplitOptions.None);
 
-                            numberOfFooterRecords = Convert.ToInt32(footerArray[1]);
-
-                            break;
+                            numberOfFooterRecords = Convert.ToInt32(footerArray[1]);  
                         }
                         else
                         {
-                            failedToAddRecords = failedToAddRecords + tempRecord + "\n";
-                            break;
+                            failedToAddRecords += tempRecord + "\n";             
                         }
                     }
-                    if (hasFooter && numberOfFooterRecords == (recordsAdded + recordsNotAdded))
+                    if (hasFooter /*&& numberOfFooterRecords == (recordsAdded + recordsNotAdded)*/)
                     {
                         if (record.transactionType == string.Empty || record.lastName == string.Empty ||
                             record.firstName == string.Empty || record.bookingDate == default(DateTime) ||
