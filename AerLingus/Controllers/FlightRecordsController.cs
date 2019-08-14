@@ -23,8 +23,7 @@ namespace AerLingus.Controllers
 
         public ActionResult FlightRecordForm(Flight_Records sfr)
         {
-            if (ModelState.IsValid)
-            {
+          
                 //Ako je sfr formular popunjen salju se podaci u API kako bi se sacuvali u bazu
                 HttpClient hc = new HttpClient();
                 hc.BaseAddress = new Uri(@"http://localhost:54789/api/FlightRecordsAPI/AddFlightRecord");
@@ -36,7 +35,7 @@ namespace AerLingus.Controllers
                     //redirekcija u listu svih flight rekorda
                     return RedirectToAction("Home", "Home");
                 }
-            }
+            
             //Prikazuje formular za dodavanje single flight rekorda ako zeli da doda novi sfr ili ako prethodno popunjavanje nije proslo kako treba
             List<SelectListItem> listItems = new List<SelectListItem>();
             listItems.Add(new SelectListItem
