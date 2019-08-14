@@ -24,7 +24,7 @@ namespace AerLingus.Models
 
         [DisplayName("Transaction type")]
         [Required(ErrorMessage = "Field is required!")]
-        [MinLength(1, ErrorMessage = "Min lenght is 1 characters!")]
+        [MinLength(1, ErrorMessage = "Min lenght is 1 character!")]
         [MaxLength(2, ErrorMessage = "Max lenght is 2 characters!")]
         public string transactionType { get; set; }
 
@@ -40,13 +40,13 @@ namespace AerLingus.Models
 
         [DisplayName("First name")]
         [Required(ErrorMessage = "Field is required!")]
-        [MinLength(1, ErrorMessage = "Min lenght is 1 characters!")]
+        [MinLength(1, ErrorMessage = "Min lenght is 1 character!")]
         [MaxLength(30, ErrorMessage = "Max lenght is 30 characters!")]
         public string firstName { get; set; }
 
         [DisplayName("Last name")]
         [Required(ErrorMessage = "Field is required!")]
-        [MinLength(1, ErrorMessage = "Min lenght is 1 characters!")]
+        [MinLength(1, ErrorMessage = "Min lenght is 1 character!")]
         [MaxLength(30, ErrorMessage = "Max lenght is 30 characters!")]
         public string lastName { get; set; }
 
@@ -81,36 +81,36 @@ namespace AerLingus.Models
 
         [DisplayName("Booking class")]
         [Required(ErrorMessage = "Field is required!")]
-        [MinLength(1, ErrorMessage = "Min lenght is 1 characters!")]
+        [MinLength(1, ErrorMessage = "Min lenght is 1 character!")]
         [MaxLength(2, ErrorMessage = "Max lenght is 2 characters!")]
         public string bookingClass { get; set; }
 
         [DisplayName("Cabin class")]
         [MinLength(0)]
-        [MaxLength(1, ErrorMessage = "Max lenght is 1 characters!")]
+        [MaxLength(1, ErrorMessage = "Max lenght is 1 character!")]
         public string cabinClass { get; set; }
 
         [DisplayName("Marketing flight number")]
         [Required(ErrorMessage = "Field is required!")]
-        [MinLength(1, ErrorMessage = "Min lenght is 1 characters!")]
+        [MinLength(1, ErrorMessage = "Min lenght is 1 character!")]
         [MaxLength(4, ErrorMessage = "Max lenght is 4 characters!")]
         public string marketingFlightNo { get; set; }
 
         [DisplayName("Marketing airline")]
         [Required(ErrorMessage = "Field is required!")]
-        [MinLength(1, ErrorMessage = "Min lenght is 1 characters!")]
+        [MinLength(1, ErrorMessage = "Min lenght is 1 character!")]
         [MaxLength(2, ErrorMessage = "Max lenght is 2 characters!")]
         public string marketingAirline { get; set; }
 
         [DisplayName("Operating flight number")]
         [Required(ErrorMessage = "Field is required!")]
-        [MinLength(1, ErrorMessage = "Min lenght is 1 characters!")]
+        [MinLength(1, ErrorMessage = "Min lenght is 1 character!")]
         [MaxLength(4, ErrorMessage = "Max lenght is 4 characters!")]
         public string operatingFlightNo { get; set; }
 
         [DisplayName("Operating airline")]
         [Required(ErrorMessage = "Field is required!")]
-        [MinLength(1, ErrorMessage = "Min lenght is 1 characters!")]
+        [MinLength(1, ErrorMessage = "Min lenght is 1 character!")]
         [MaxLength(2, ErrorMessage = "Min lenght is 2 characters!")]
         public string operatingAirline { get; set; }
 
@@ -131,7 +131,7 @@ namespace AerLingus.Models
 
         [DisplayName("pnrNo number")]
         [Required(ErrorMessage = "Field is required!")]
-        [MinLength(1, ErrorMessage = "Min lenght is 1 characters!")]
+        [MinLength(1, ErrorMessage = "Min lenght is 1 character!")]
         [MaxLength(6, ErrorMessage = "Max lenght is 6 characters!")]
         public string pnrNo { get; set; }
 
@@ -153,12 +153,12 @@ namespace AerLingus.Models
 
         [DisplayName("Customer type")]
         [MinLength(0)]
-        [MaxLength(1, ErrorMessage = "Max lenght is 1 characters!")]
+        [MaxLength(1, ErrorMessage = "Max lenght is 1 character!")]
         public string customerType { get; set; }
 
         [DisplayName("Promotion code")]
         [MinLength(0)]
-        [MaxLength(1, ErrorMessage = "Max lenght is 1 characters!")]
+        [MaxLength(1, ErrorMessage = "Max lenght is 1 character!")]
         public string promotionCode { get; set; }
 
         [DisplayName("Ticket currency")]
