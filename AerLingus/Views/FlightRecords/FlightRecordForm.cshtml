@@ -55,7 +55,7 @@
     //dodat datepicker
 <div class="form-group">
     @Html.LabelFor(fr => fr.departureDate)
-    @Html.EditorFor(fr => fr.departureDate, new { htmlAttributes = new { @class = "datepicker1 form-control" } })
+    @Html.EditorFor(fr => fr.departureDate, new { htmlAttributes = new { @class = "datepicker1 form-control", type="text" } })
     @Html.ValidationMessageFor(fr => fr.departureDate, "", new { @class = "text-danger" })
 </div>
 <div class="form-group">
