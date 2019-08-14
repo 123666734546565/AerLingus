@@ -11,6 +11,7 @@ namespace AerLingus.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations.Schema;
     
     public partial class Flight_Records
     {
@@ -21,7 +22,7 @@ namespace AerLingus.Models
         public string firstName { get; set; }
         public string lastName { get; set; }
         public string partnerTransactionNo { get; set; }
-        public System.DateTime bookingDate { get; set; }
+        public Nullable<System.DateTime> bookingDate { get; set; }
         public System.DateTime departureDate { get; set; }
         public string origin { get; set; }
         public string destination { get; set; }
@@ -36,14 +37,17 @@ namespace AerLingus.Models
         public string couponNo { get; set; }
         public string pnrNo { get; set; }
         public Nullable<long> distance { get; set; }
-        public Nullable<float> baseFare { get; set; }
-        public Nullable<float> discountBase { get; set; }
-        public Nullable<float> exciseTax { get; set; }
+        public Nullable<double> baseFare { get; set; }
+        public Nullable<double> discountBase { get; set; }
+        public Nullable<double> exciseTax { get; set; }
         public string customerType { get; set; }
         public string promotionCode { get; set; }
         public string ticketCurrency { get; set; }
         public string targetCurrency { get; set; }
-        public Nullable<float> exchangeRate { get; set; }
+        public Nullable<double> exchangeRate { get; set; }
         public string fareBasis { get; set; }
+
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int ID { get; set; }
     }
 }
