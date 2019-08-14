@@ -1,0 +1,129 @@
+[MinLength(0)]
+        [MaxLength(16)]       
+        public string IdentifierNo { get; set; }
+
+        [Required]
+        [MinLength(1)]
+        [MaxLength(2)]
+        public string TransactionType { get; set; }
+
+        [MinLength(0)]
+        [MaxLength(30)]
+        public string OtherFFPNo { get; set; }
+
+        [MinLength(0)]
+        [MaxLength(30)]
+        public string OtherFFPScheme { get; set; }
+
+        [Required]
+        [MinLength(1)]
+        [MaxLength(30)]
+        public string FirstName { get; set; }
+
+        [Required]
+        [MinLength(1)]
+        [MaxLength(30)]
+        public string LastName { get; set; }
+
+        [MinLength(0)]
+        [MaxLength(100)]
+        public string PartnerTransactionNo { get; set; }
+
+        [Required]
+        //[DataType(DataType.Date)]
+        //[DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime BookingDate { get; set; }
+
+        [Required]
+        public string DepartureDate { get; set; }
+
+        [Required]
+        [MinLength(1)]
+        [MaxLength(3)]
+        public string Origin { get; set; }
+
+        [Required]
+        [MinLength(1)]
+        [MaxLength(3)]
+        public string Destination { get; set; }
+
+        [Required]
+        [MinLength(1)]
+        [MaxLength(2)]
+        public string BookingClass { get; set; }
+
+        [MinLength(0)]
+        [MaxLength(1)]
+        public string CabinClass { get; set; }
+
+        [Required]
+        [MinLength(1)]
+        [MaxLength(4)]
+        public string MarketingFlightNo { get; set; }
+
+        [Required]
+        [MinLength(1)]
+        [MaxLength(2)]
+        public string MarketingAirline { get; set; }
+
+        [Required]
+        [MinLength(1)]
+        [MaxLength(4)]
+        public string OperatingFlightNo { get; set; }
+
+        [Required]
+        [MinLength(1)]
+        [MaxLength(2)]
+        public string OperatingAirline { get; set; }
+
+        [MinLength(13)]
+        [MaxLength(14)]
+        public string TicketNo { get; set; }
+
+        [MinLength(0)]
+        [MaxLength(25)]
+        public string ExternalPaxID { get; set; }
+
+        [MinLength(0)]
+        [MaxLength(2)]
+        public string CouponNo { get; set; }
+
+        [Required]
+        [MinLength(1)]
+        [MaxLength(6)]
+        public string PnrNo { get; set; }
+
+        [Range(minimum: 0, maximum: 99999)]
+        public long Distance { get; set; }
+
+        [Range(minimum: 0, maximum: 999999999)]
+        public double BaseFare { get; set; }
+
+        [Range(minimum: 0, maximum: 999999999)]
+        public double DiscountBase { get; set; }
+
+        [Range(minimum: 0, maximum: 999999999)]
+        public double ExciseTax { get; set; }
+
+        [MinLength(0)]
+        [MaxLength(1)]
+        public string CustomerType { get; set; }
+
+        [MinLength(0)]
+        [MaxLength(100)]
+        public string PromotionCode { get; set; }
+
+        [MinLength(0)]
+        [MaxLength(3)]
+        public string TicketCurrency { get; set; }
+
+        [MinLength(0)]
+        [MaxLength(3)]
+        public string TargetCurrency { get; set; }
+
+        [Range(minimum: 0, maximum: 9999999999)]
+        public double ExchangeRate { get; set; }
+
+        [MinLength(0)]
+        [MaxLength(10)]
+        public string FareBasis { get; set; }
