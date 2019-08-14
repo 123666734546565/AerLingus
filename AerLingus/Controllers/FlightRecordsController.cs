@@ -29,6 +29,8 @@ namespace AerLingus.Controllers
         {
             Stream stream = file.InputStream;
 
+            List<Flight_Records> list = new List<Flight_Records>();
+
             if (file == null)
                 return Content("No file selected.");
 
@@ -512,10 +514,10 @@ namespace AerLingus.Controllers
                                 //{
                                 recordsAdded++;
 
-                                entities.Flight_Records.Add(record);
-                                entities.SaveChanges();
-                                //entities.SaveChanges();
-                                //}                                
+                                //entities.Flight_Records.Add(record);
+                                //entities.SaveChanges();                              
+
+                                list.Add(record);
 
                                 continue;
                             }
@@ -531,19 +533,19 @@ namespace AerLingus.Controllers
 
                                 continue;
                             }
-                    }
-
-
-
-                    
-
+                    }                  
                 }
-                //if (numberOfFooterRecords == (recordsAdded + recordsNotAdded))
-                //{
-                //    entities.SaveChanges();
-                //}
 
-                //else return Content("Number of footer records do not match");
+                if (numberOfFooterRecords == (recordsAdded + recordsNotAdded))
+                {
+                    foreach(Flight_Records fr in list)
+                    {
+                        entities.Flight_Records.Add(fr);
+                        entities.SaveChanges();
+                    }
+                }
+                else return Content("Number of footer records do not match");
+
                 //return Content("Number of footer records: " + numberOfFooterRecords + "\nRecords added: " + recordsAdded + "\nrecords noot added: " + recordsNotAdded);
                 //return RedirectToAction("Index", "Home");
                 return Content(failedToAddRecords);
