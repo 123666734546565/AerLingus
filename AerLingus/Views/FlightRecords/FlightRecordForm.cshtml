@@ -18,7 +18,7 @@
 
 <div class="form-group">
     @Html.LabelFor(fr => fr.transactionType)
-    @Html.DropDownListFor(fr => fr.transactionType, new SelectList( ViewBag.list1, "Text", "Value"), new { @class = "form-control" })
+    @Html.DropDownListFor(fr => fr.transactionType, new SelectList( ViewBag.list1, "Text", "Value"),"Select Transaction type", new { @class = "form-control" })
     @Html.ValidationMessageFor(fr => fr.transactionType, "", new { @class = "text-danger" })
 </div>
 <div class="form-group">
@@ -150,7 +150,7 @@
 </div>
 <div class="form-group">
     @Html.LabelFor(fr => fr.ticketCurrency)
-    @Html.DropDownListFor(fr => fr.ticketCurrency, new SelectList(ViewBag.list4, "Text", "Value"), new { @class = "form-control" })
+    @Html.DropDownListFor(fr => fr.ticketCurrency, new SelectList(ViewBag.list4), new { @class = "form-control" })
     @Html.ValidationMessageFor(fr => fr.ticketCurrency, "", new { @class = "text-danger" })
 
 
@@ -158,7 +158,7 @@
 
 <div class="form-group">
     @Html.LabelFor(fr => fr.targetCurrency)
-    @Html.DropDownListFor(fr => fr.targetCurrency, new SelectList(ViewBag.list4, "Text", "Value"), new { @class = "form-control" })
+    @Html.DropDownListFor(fr => fr.targetCurrency, new SelectList(ViewBag.list4), new { @class = "form-control" })
     @Html.ValidationMessageFor(fr => fr.targetCurrency, "", new { @class = "text-danger" })
 </div>
 <div class="form-group">
@@ -168,7 +168,7 @@
 </div>
 <div class="form-group">
     @Html.LabelFor(fr => fr.fareBasis)
-    @Html.DropDownListFor(fr => fr.fareBasis, new SelectList(ViewBag.list4, "Text", "Value"), new { @class = "form-control" })
+    @Html.DropDownListFor(fr => fr.fareBasis, new SelectList(ViewBag.list4), new { @class = "form-control" })
     @Html.ValidationMessageFor(fr => fr.fareBasis, "", new { @class = "text-danger" })
 </div>
 

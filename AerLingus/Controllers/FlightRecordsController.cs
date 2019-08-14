@@ -23,19 +23,21 @@ namespace AerLingus.Controllers
 
         public ActionResult FlightRecordForm(Flight_Records sfr)
         {
-            //Ako je sfr formular popunjen salju se podaci u API kako bi se sacuvali u bazu
-            HttpClient hc = new HttpClient();
-            hc.BaseAddress = new Uri(@"http://localhost:54789/api/FlightRecordsAPI/AddFlightRecord");
-            var insertRecord = hc.PostAsJsonAsync<Flight_Records>("", sfr);
-            insertRecord.Wait();
-            var recorddisplay = insertRecord.Result;
-            if (recorddisplay.IsSuccessStatusCode)
+            if (ModelState.IsValid)
             {
-                //redirekcija u listu svih flight rekorda
-                return RedirectToAction("Home", "Home");
+                //Ako je sfr formular popunjen salju se podaci u API kako bi se sacuvali u bazu
+                HttpClient hc = new HttpClient();
+                hc.BaseAddress = new Uri(@"http://localhost:54789/api/FlightRecordsAPI/AddFlightRecord");
+                var insertRecord = hc.PostAsJsonAsync<Flight_Records>("", sfr);
+                insertRecord.Wait();
+                var recorddisplay = insertRecord.Result;
+                if (recorddisplay.IsSuccessStatusCode)
+                {
+                    //redirekcija u listu svih flight rekorda
+                    return RedirectToAction("Home", "Home");
+                }
             }
             //Prikazuje formular za dodavanje single flight rekorda ako zeli da doda novi sfr ili ako prethodno popunjavanje nije proslo kako treba
-
             List<SelectListItem> listItems = new List<SelectListItem>();
             listItems.Add(new SelectListItem
             {
@@ -46,7 +48,6 @@ namespace AerLingus.Controllers
             {
                 Text = "AB",
                 Value = "AB",
-
             });
 
             List<SelectListItem> listItems2 = new List<SelectListItem>();
@@ -59,19 +60,16 @@ namespace AerLingus.Controllers
             {
                 Text = "J",
                 Value = "J",
-
             });
             listItems2.Add(new SelectListItem
             {
                 Text = "W",
                 Value = "W",
-
             });
             listItems2.Add(new SelectListItem
             {
                 Text = "Y",
                 Value = "Y",
-
             });
 
             List<SelectListItem> listItems3 = new List<SelectListItem>();
@@ -90,7 +88,6 @@ namespace AerLingus.Controllers
             {
                 Text = "I",
                 Value = "I",
-
             });
 
             StreamReader sr = new StreamReader(HostingEnvironment.ApplicationPhysicalPath + "/Content/currencies.txt");
@@ -102,14 +99,10 @@ namespace AerLingus.Controllers
                 listItems4.Add(sr.ReadLine());
             }
 
-
             ViewBag.list1 = listItems;
-
             ViewBag.list2 = listItems2;
             ViewBag.list3 = listItems3;
             ViewBag.list4 = listItems4;
-
-
 
             return View();
         }
