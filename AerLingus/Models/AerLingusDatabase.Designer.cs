@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\Tim 3\Desktop\Projekat\AerLingus\AerLingus\Models\AerLingusDatabase.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\Milos\source\repos\123666734546565\AerLingus\AerLingus\Models\AerLingusDatabase.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.
