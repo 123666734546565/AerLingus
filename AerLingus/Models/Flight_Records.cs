@@ -58,7 +58,7 @@ namespace AerLingus.Models
         [DisplayName("Booking date")]
        // [Required(ErrorMessage = "Field is required!")]
         [DataType(DataType.DateTime)]
-        [Display(Name = "Booking Date") ,DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yy H:mm:ss tt}")]
+        [Display(Name = "Booking Date") ,DisplayFormat(ApplyFormatInEditMode = true)]
         public DateTime bookingDate { get; set; }
 
         [DisplayName("Departure date")]

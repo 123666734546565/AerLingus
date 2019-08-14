@@ -7,7 +7,6 @@
 
 <h2>Add new flight record</h2>
 
-
 @using (Html.BeginForm("FlightRecordForm", "FlightRecords"))
 {
     
@@ -203,7 +202,7 @@
     <script>
         $(function () {
             $(".datepicker1").datepicker({
-                dateFormat: "dd-mm-yy",
+                dateFormat: "yy-MM-dd",
                 changeMonth: true,
                 changeYear: true,
                 yearRange: "-10:+10",
@@ -223,7 +222,7 @@
                     changeMonth: true,
                     changeYear: true,
                     yearRange: "-10:+10",
-                    dateFormat: 'dd-mm-yy',
+                    dateFormat: 'yy-MM-dd',
                     controlType: 'select',
                     timeFormat: 'HH:mm:ss',
                     buttonText: "<i class='fa fa-calendar' style='font - size:74x'></i>"
