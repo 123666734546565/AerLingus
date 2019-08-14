@@ -82,7 +82,7 @@ namespace AerLingus.Models
 
         [Required(ErrorMessage = "Field is required!")]
         [MinLength(1, ErrorMessage = "Min lenght is 1 characters!")]
-        [MaxLength(2, ErrorMessage = "Max lenght is 4 characters!")]
+        [MaxLength(2, ErrorMessage = "Max lenght is 2 characters!")]
         public string marketingAirline { get; set; }
 
         [Required(ErrorMessage = "Field is required!")]
