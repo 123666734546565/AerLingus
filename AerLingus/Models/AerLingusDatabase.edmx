@@ -5,23 +5,9 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="AerLingusDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'AerLingus_database.dbo.Flight_Records' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Flight_Records">
           <Key>
-            <PropertyRef Name="transactionType" />
-            <PropertyRef Name="firstName" />
-            <PropertyRef Name="lastName" />
-            <PropertyRef Name="bookingDate" />
-            <PropertyRef Name="departureDate" />
-            <PropertyRef Name="origin" />
-            <PropertyRef Name="destination" />
-            <PropertyRef Name="bookingClass" />
-            <PropertyRef Name="marketingFlightNo" />
-            <PropertyRef Name="marketingAirline" />
-            <PropertyRef Name="operatingFlightNo" />
-            <PropertyRef Name="operatingAirline" />
-            <PropertyRef Name="pnrNo" />
+            <PropertyRef Name="ID" />
           </Key>
           <Property Name="identifierNo" Type="nvarchar" MaxLength="16" />
           <Property Name="transactionType" Type="nvarchar" MaxLength="2" Nullable="false" />
@@ -54,6 +40,7 @@ warning 6002: The table/view 'AerLingus_database.dbo.Flight_Records' does not ha
           <Property Name="targetCurrency" Type="nvarchar" MaxLength="3" />
           <Property Name="exchangeRate" Type="real" />
           <Property Name="fareBasis" Type="nvarchar" MaxLength="10" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="FR_Batch_Files">
           <Key>
@@ -64,42 +51,8 @@ warning 6002: The table/view 'AerLingus_database.dbo.Flight_Records' does not ha
           <Property Name="Footer" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityContainer Name="AerLingusDatabaseModelStoreContainer">
+          <EntitySet Name="Flight_Records" EntityType="Self.Flight_Records" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FR_Batch_Files" EntityType="Self.FR_Batch_Files" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Flight_Records" EntityType="Self.Flight_Records" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [Flight_Records].[identifierNo] AS [identifierNo], 
-    [Flight_Records].[transactionType] AS [transactionType], 
-    [Flight_Records].[otherFFPNo] AS [otherFFPNo], 
-    [Flight_Records].[otherFFPScheme] AS [otherFFPScheme], 
-    [Flight_Records].[firstName] AS [firstName], 
-    [Flight_Records].[lastName] AS [lastName], 
-    [Flight_Records].[partnerTransactionNo] AS [partnerTransactionNo], 
-    [Flight_Records].[bookingDate] AS [bookingDate], 
-    [Flight_Records].[departureDate] AS [departureDate], 
-    [Flight_Records].[origin] AS [origin], 
-    [Flight_Records].[destination] AS [destination], 
-    [Flight_Records].[bookingClass] AS [bookingClass], 
-    [Flight_Records].[cabinClass] AS [cabinClass], 
-    [Flight_Records].[marketingFlightNo] AS [marketingFlightNo], 
-    [Flight_Records].[marketingAirline] AS [marketingAirline], 
-    [Flight_Records].[operatingFlightNo] AS [operatingFlightNo], 
-    [Flight_Records].[operatingAirline] AS [operatingAirline], 
-    [Flight_Records].[ticketNo] AS [ticketNo], 
-    [Flight_Records].[externalPaxID] AS [externalPaxID], 
-    [Flight_Records].[couponNo] AS [couponNo], 
-    [Flight_Records].[pnrNo] AS [pnrNo], 
-    [Flight_Records].[distance] AS [distance], 
-    [Flight_Records].[baseFare] AS [baseFare], 
-    [Flight_Records].[discountBase] AS [discountBase], 
-    [Flight_Records].[exciseTax] AS [exciseTax], 
-    [Flight_Records].[customerType] AS [customerType], 
-    [Flight_Records].[promotionCode] AS [promotionCode], 
-    [Flight_Records].[ticketCurrency] AS [ticketCurrency], 
-    [Flight_Records].[targetCurrency] AS [targetCurrency], 
-    [Flight_Records].[exchangeRate] AS [exchangeRate], 
-    [Flight_Records].[fareBasis] AS [fareBasis]
-    FROM [dbo].[Flight_Records] AS [Flight_Records]</DefiningQuery>
-          </EntitySet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -128,6 +81,7 @@ warning 6002: The table/view 'AerLingus_database.dbo.Flight_Records' does not ha
             <PropertyRef Name="operatingFlightNo" />
             <PropertyRef Name="operatingAirline" />
             <PropertyRef Name="pnrNo" />
+            <PropertyRef Name="ID" />
           </Key>
           <Property Name="identifierNo" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
           <Property Name="transactionType" Type="String" MaxLength="2" FixedLength="false" Unicode="true" Nullable="false" />
@@ -160,6 +114,7 @@ warning 6002: The table/view 'AerLingus_database.dbo.Flight_Records' does not ha
           <Property Name="targetCurrency" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
           <Property Name="exchangeRate" Type="Single" />
           <Property Name="fareBasis" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
         <EntityContainer Name="AerLingusDatabaseEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="FR_Batch_Files" EntityType="Self.FR_Batch_Files" />
@@ -183,6 +138,7 @@ warning 6002: The table/view 'AerLingus_database.dbo.Flight_Records' does not ha
           <EntitySetMapping Name="Flight_Records">
             <EntityTypeMapping TypeName="AerLingusDatabaseModel.Flight_Records">
               <MappingFragment StoreEntitySet="Flight_Records">
+                <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="identifierNo" ColumnName="identifierNo" />
                 <ScalarProperty Name="transactionType" ColumnName="transactionType" />
                 <ScalarProperty Name="otherFFPNo" ColumnName="otherFFPNo" />
