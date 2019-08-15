@@ -7,12 +7,16 @@ using Microsoft.VisualBasic;
 using AerLingus.Models;
 using System.Data.Entity;
 using System.IO;
+using System.Data.SqlClient;
+using System.Threading.Tasks;
 
 namespace AerLingus.Controllers
 {
     public class FlightRecordsController : Controller
     {
+       
         private AerLingus_databaseEntities entities;
+
 
         public FlightRecordsController()
         {
@@ -25,11 +29,11 @@ namespace AerLingus.Controllers
             return View();
         }
 
-        public ActionResult Upload(HttpPostedFileBase file)
+        public async Task<ActionResult> Upload(HttpPostedFileBase file)
         {
             Stream stream = file.InputStream;
 
-            List<Flight_Records> list = new List<Flight_Records>();
+           
 
             if (file == null)
                 return Content("No file selected.");
@@ -73,7 +77,7 @@ namespace AerLingus.Controllers
 
                 headerArray = header.Split(separator, StringSplitOptions.None);
 
-                if(headerArray[0].ToUpper() != "H")
+                if (headerArray[0].ToUpper() != "H")
                     return Content("Error: File has no header or it is not prefixed with H."); ;
 
                 while (!streamReader1.EndOfStream)
@@ -82,6 +86,7 @@ namespace AerLingus.Controllers
 
                     numberOfRecords++;
                 }
+                numberOfRecords--;
 
                 if (footerArray[0] != "F")
                     return Content("Error: File has no footer or it is not prefixed with F.");
@@ -96,7 +101,7 @@ namespace AerLingus.Controllers
 
                 System.IO.StreamReader streamReader = new System.IO.StreamReader(stream);
 
-                streamReader.ReadLine(); //H
+                streamReader.ReadLine(); //H                
 
                 while (!streamReader.EndOfStream)
                 {
@@ -104,6 +109,7 @@ namespace AerLingus.Controllers
 
                     switch (tempRecord[0])
                     {
+
                         case 'R':
                             {
                                 bodyArray = tempRecord.Split(separator, StringSplitOptions.None);
@@ -504,6 +510,7 @@ namespace AerLingus.Controllers
                                     record.fareBasis = string.Empty;
                                 }
 
+
                                 //if (record.transactionType != string.Empty && record.lastName != string.Empty &&
                                 //        record.firstName != string.Empty && record.bookingDate != default(DateTime) &&
                                 //        record.departureDate != default(DateTime) && record.origin != string.Empty &&
@@ -514,13 +521,21 @@ namespace AerLingus.Controllers
                                 //{
                                 recordsAdded++;
 
-                                //entities.Flight_Records.Add(record);
-                                //entities.SaveChanges();                              
+                               
+                                if (numberOfRecords == numberOfFooterRecords)
+                                {
+                                    entities.Flight_Records.Add(record);
+                                    entities.SaveChanges();
+                                }
+                                else return Content("Number of footer records do not match");
 
-                                list.Add(record);
+                                                         
 
                                 continue;
+
+                               
                             }
+
                         case 'F':
                             {
                                 break;
@@ -533,22 +548,14 @@ namespace AerLingus.Controllers
 
                                 continue;
                             }
-                    }                  
-                }
 
-                if (numberOfFooterRecords == (recordsAdded + recordsNotAdded))
-                {
-                    foreach(Flight_Records fr in list)
-                    {
-                        entities.Flight_Records.Add(fr);
-                        entities.SaveChanges();
-                    }
-                }
-                else return Content("Number of footer records do not match");
+                    } 
 
-                //return Content("Number of footer records: " + numberOfFooterRecords + "\nRecords added: " + recordsAdded + "\nrecords noot added: " + recordsNotAdded);
-                //return RedirectToAction("Index", "Home");
-                return Content(failedToAddRecords);
+
+                }
+ 
+                return RedirectToAction("Index", "Home");
+              
                 
             } 
             catch (Exception ex)
