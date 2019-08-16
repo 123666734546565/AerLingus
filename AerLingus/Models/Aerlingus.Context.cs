@@ -13,10 +13,10 @@ namespace AerLingus.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class AerLingusDatabaseEntities : DbContext
+    public partial class AerLingus_databaseEntities1 : DbContext
     {
-        public AerLingusDatabaseEntities()
-            : base("name=AerLingusDatabaseEntities")
+        public AerLingus_databaseEntities1()
+            : base("name=AerLingus_databaseEntities1")
         {
         }
     
@@ -25,7 +25,7 @@ namespace AerLingus.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<FR_Batch_Files> FR_Batch_Files { get; set; }
         public virtual DbSet<Flight_Records> Flight_Records { get; set; }
+        public virtual DbSet<FR_Batch_Files> FR_Batch_Files { get; set; }
     }
 }
