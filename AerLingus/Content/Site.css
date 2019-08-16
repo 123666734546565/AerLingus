@@ -26,11 +26,11 @@ textarea {
 .field-validation-error{
 
     color:red;
-    display:inline-block;
+    
 }
 .input-validation-error {
-    display:inline-block;
-    border: 1.25px solid red;
+    
+    border: 1.25px solid red ;
 }
 
 #identifierNo{
@@ -137,13 +137,15 @@ textarea {
 }
 
 .btn {
-   background-color: #26aabd;
+    background-color: #26aabd;
+   
 }
 
 .btn:hover {
     background-color: #1f8d9d;
 }
 
-#dugmedatum{
-    display:inline-block;
+.btn:active {
+    background: #26aabd !important;
 }
+

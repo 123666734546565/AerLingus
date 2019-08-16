@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AerLingus.Models
+namespace AerLingus.Helpers.Models
 {
     using System;
     using System.Collections.Generic;
