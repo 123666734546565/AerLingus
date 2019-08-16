@@ -197,6 +197,12 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\FlashMessage.cs" />
+    <Compile Include="Helpers\Razor\HtmlClasses.cs" />
+    <Compile Include="Helpers\Razor\HtmlExtensions\Nl2brExtension.cs" />
+    <Compile Include="Helpers\Razor\HtmlExtensions\ReadOnlyForExtension.cs" />
+    <Compile Include="Helpers\Razor\HtmlHelpers.cs" />
+    <Compile Include="Helpers\Razor\TemplatesConsts.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AerLingusDatabase.Context.cs">
       <AutoGen>True</AutoGen>
@@ -283,6 +289,36 @@
     <Content Include="Models\AerLingusDatabase.edmx.diagram">
       <DependentUpon>AerLingusDatabase.edmx</DependentUpon>
     </Content>
+    <Content Include="Areas\Shared\Views\Partial\_FlashMessages.cshtml" />
+    <Content Include="Areas\Shared\Views\Partial\EditorTemplates\_Label.cshtml" />
+    <Content Include="Areas\Shared\Views\Partial\EditorTemplates\TimeSpan.cshtml" />
+    <Content Include="Areas\Shared\Views\Partial\EditorTemplates\TextBoxBase.cshtml" />
+    <Content Include="Areas\Shared\Views\Partial\EditorTemplates\Text.cshtml" />
+    <Content Include="Areas\Shared\Views\Partial\EditorTemplates\String.cshtml" />
+    <Content Include="Areas\Shared\Views\Partial\EditorTemplates\Single.cshtml" />
+    <Content Include="Areas\Shared\Views\Partial\EditorTemplates\Password.cshtml" />
+    <Content Include="Areas\Shared\Views\Partial\EditorTemplates\MultilineText.cshtml" />
+    <Content Include="Areas\Shared\Views\Partial\EditorTemplates\Int32.cshtml" />
+    <Content Include="Areas\Shared\Views\Partial\EditorTemplates\HttpPostedFileBase.cshtml" />
+    <Content Include="Areas\Shared\Views\Partial\EditorTemplates\Enum.cshtml" />
+    <Content Include="Areas\Shared\Views\Partial\EditorTemplates\EmailAddress.cshtml" />
+    <Content Include="Areas\Shared\Views\Partial\EditorTemplates\DropDown.cshtml" />
+    <Content Include="Areas\Shared\Views\Partial\EditorTemplates\Decimal.cshtml" />
+    <Content Include="Areas\Shared\Views\Partial\EditorTemplates\DateTime.cshtml" />
+    <Content Include="Areas\Shared\Views\Partial\EditorTemplates\Date.cshtml" />
+    <Content Include="Areas\Shared\Views\Partial\EditorTemplates\Currency.cshtml" />
+    <Content Include="Areas\Shared\Views\Partial\EditorTemplates\Boolean.cshtml" />
+    <Content Include="Areas\Shared\Views\Partial\DisplayTemplates\String.cshtml" />
+    <Content Include="Areas\Shared\Views\Partial\DisplayTemplates\Number.cshtml" />
+    <Content Include="Areas\Shared\Views\Partial\DisplayTemplates\MultilineText.cshtml" />
+    <Content Include="Areas\Shared\Views\Partial\DisplayTemplates\Int32.cshtml" />
+    <Content Include="Areas\Shared\Views\Partial\DisplayTemplates\EmailAddress.cshtml" />
+    <Content Include="Areas\Shared\Views\Partial\DisplayTemplates\DisplayBase.cshtml" />
+    <Content Include="Areas\Shared\Views\Partial\DisplayTemplates\Decimal.cshtml" />
+    <Content Include="Areas\Shared\Views\Partial\DisplayTemplates\DateTime.cshtml" />
+    <Content Include="Areas\Shared\Views\Partial\DisplayTemplates\Date.cshtml" />
+    <Content Include="Areas\Shared\Views\Partial\DisplayTemplates\Currency.cshtml" />
+    <Content Include="Areas\Shared\Views\Partial\DisplayTemplates\Boolean.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\i18n\jquery-ui-timepicker-addon-i18n.js" />
     <Content Include="Scripts\i18n\jquery-ui-timepicker-addon-i18n.min.js" />
