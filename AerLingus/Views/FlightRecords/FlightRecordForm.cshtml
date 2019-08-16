@@ -75,7 +75,8 @@
     </div>
     <div class="form-group">
         @Html.LabelFor(fr => fr.cabinClass)
-        @Html.DropDownListFor(fr => fr.cabinClass, new SelectList(ViewBag.list2, "Text", "Value"), new { @class = "form-control"})
+        @Html.TextBoxFor(fr => fr.cabinClass, new { @class = "form-control" })
+        @*@Html.DropDownListFor(fr => fr.cabinClass, new SelectList(ViewBag.list2, "Text", "Value"), new { @class = "form-control"})*@
         @Html.ValidationMessageFor(fr => fr.cabinClass, "", new { @class = "text-danger" })
     </div>
     <div class="form-group">
