@@ -2,30 +2,197 @@
     ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+<link rel="stylesheet" href="~/Content/WelcomeAnimation.css" />
+
+<link rel="stylesheet" href="~/Content/style.css" />
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" />
+<link rel="stylesheet" href="~/Content/HomePageScreen.css" />
+
+<script src="~/Scripts/WelcomeAnimationGoogleApi.js"></script>
+<script src="~/Scripts/WelcomeAnimation.js"></script>
+
+<div class="welcome-section content-hidden">
+    <div class="content-wrap">
+        <ul class="fly-in-text">
+            <li>W</li>
+            <li>E</li>
+            <li>L</li>
+            <li>C</li>
+            <li>O</li>
+            <li>M</li>
+            <li>E</li>
+        </ul>
+        @*<a href="#" class="enter-button">Aer Lingus</a>*@
+        <h1 class="enter-button"><img src="~/Content/Images/AerLingusLogo.png" style="width:500px;height:100px;" /></h1>
+    </div>
 </div>
 
 <div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+    <div class="col-md-2">
+        <h3>Contributors</h3>
+        <hr />
+        <ul style="list-style:none">
+            <li>Aleksa Shahgoli</li>
+            <li>Milos Spasojevic</li>
+            <li>Nadica Zarkic</li>
+            <li>Marko Filimonovic</li>
+            <li>Stefan Filipovic</li>
+        </ul>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+    <div class="col-md-2">
+        @*<br />*@
+        <h3>Facebook</h3>
+        <hr />
+        <ul style="list-style:none">
+            <li>
+                <a href="https://www.facebook.com/profile.php?id=100013148644347">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+            </li>
+        </ul>
     </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+    <div class="col-md-2">
+        <h3>Instagram</h3>
+        <hr />
+        <ul style="list-style:none">
+            <li>
+                <a href="#">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-2">
+        <h3>Gmail</h3>
+        <hr />
+        <ul style="list-style:none">
+            <li>
+                <a href="#">
+                    <i class="fab fa-google"></i>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fab fa-google"></i>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fab fa-google"></i>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fab fa-google"></i>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fab fa-google"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-2">
+        <h3>GitHub</h3>
+        <hr />
+        <ul style="list-style:none">
+            <li>
+                <a href="#">
+                    <i class="fab fa-github"></i>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fab fa-github"></i>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fab fa-github"></i>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fab fa-github"></i>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fab fa-github"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-2">
+        <h3>LinkedIn</h3>
+        <hr />
+        <ul style="list-style:none">
+            <li>
+                <a href="#">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+            </li>
+        </ul>
     </div>
 </div>
