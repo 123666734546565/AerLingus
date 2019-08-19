@@ -147,3 +147,13 @@ textarea {
 #dugmedatum{
     display:inline-block;
 }
+
+.datapicker {
+    display: inline-block;
+    margin-right: 5px;
+    width: -webkit-calc(100% - 21px);
+    width: -moz-calc(100% - 21px);
+    width: -o-calc(100% - 21px);
+    width: -ms-calc(100% - 21px);
+    width: calc(100% - 21px);
+}

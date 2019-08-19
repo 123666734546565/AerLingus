@@ -10,13 +10,13 @@
 @using (Html.BeginForm("FlightRecordForm", "FlightRecords"))
 {
 
-<div class="form-group">
-    @Html.LabelFor(fr => fr.identifierNo)
-    @Html.ValidationMessageFor(fr => fr.identifierNo, "", new { @class = "text-danger" })
-</div>
+    <div class="form-group">
+        @Html.LabelFor(fr => fr.identifierNo)
+        @Html.ValidationMessageFor(fr => fr.identifierNo, "", new { @class = "text-danger" })
+    </div>
     <div class="form-group">
         @Html.TextBoxFor(fr => fr.identifierNo, new { @class = "form-control" })
-      
+
     </div>
     <div class="form-group">
         @Html.LabelFor(fr => fr.transactionType)
@@ -24,7 +24,7 @@
     </div>
     <div class="form-group">
         @Html.DropDownListFor(fr => fr.transactionType, new SelectList(ViewBag.list1, "Text", "Value"), "Select Transaction type", new { @class = "form-control" })
-      
+
     </div>
     <div class="form-group">
         @Html.LabelFor(fr => fr.otherFFPNo)
@@ -32,7 +32,7 @@
     </div>
     <div class="form-group">
         @Html.TextBoxFor(fr => fr.otherFFPNo, new { @class = "form-control" })
-      
+
     </div>
     <div class="form-group">
         @Html.LabelFor(fr => fr.otherFFPScheme)
@@ -40,7 +40,7 @@
     </div>
     <div class="form-group">
         @Html.TextBoxFor(fr => fr.otherFFPScheme, new { @class = "form-control" })
-       
+
     </div>
     <div class="form-group">
         @Html.LabelFor(fr => fr.firstName)
@@ -49,7 +49,7 @@
     <div class="form-group">
 
         @Html.TextBoxFor(fr => fr.firstName, new { @class = "form-control" })
-       
+
     </div>
     <div class="form-group">
         @Html.LabelFor(fr => fr.lastName)
@@ -58,7 +58,7 @@
     <div class="form-group">
 
         @Html.TextBoxFor(fr => fr.lastName, new { @class = "form-control" })
-       
+
     </div>
     <div class="form-group">
         @Html.LabelFor(fr => fr.partnerTransactionNo)
@@ -66,7 +66,7 @@
     </div>
     <div class="form-group">
         @Html.TextBoxFor(fr => fr.partnerTransactionNo, new { @class = "form-control" })
-       
+
     </div>
     //potreban datetimepicker!!!
     <div class="form-group">
@@ -76,7 +76,7 @@
     <div class="form-group">
 
         @Html.EditorFor(fr => fr.bookingDate, new { htmlAttributes = new { @class = "datepicker form-control", autocomplete = "off" } })
-       
+
     </div>
     //dodat datepicker
     <div class="form-group">
@@ -86,7 +86,7 @@
     <div class="form-group">
 
         @Html.EditorFor(fr => fr.departureDate, new { htmlAttributes = new { @class = "datepicker1 form-control", type = "text", autocomplete = "off" } })
-        
+
     </div>
     <div class="form-group">
         @Html.LabelFor(fr => fr.origin)
@@ -95,7 +95,7 @@
     <div class="form-group">
 
         @Html.TextBoxFor(fr => fr.origin, new { @class = "form-control" })
-       
+
     </div>
     <div class="form-group">
         @Html.LabelFor(fr => fr.destination)
@@ -104,7 +104,7 @@
     <div class="form-group">
 
         @Html.TextBoxFor(fr => fr.destination, new { @class = "form-control" })
-       
+
     </div>
     <div class="form-group">
         @Html.LabelFor(fr => fr.bookingClass)
@@ -113,7 +113,7 @@
     <div class="form-group">
 
         @Html.TextBoxFor(fr => fr.bookingClass, new { @class = "form-control" })
-       
+
     </div>
     <div class="form-group">
         @Html.LabelFor(fr => fr.cabinClass)
@@ -123,7 +123,7 @@
 
         @Html.TextBoxFor(fr => fr.cabinClass, new { @class = "form-control" })
         @*@Html.DropDownListFor(fr => fr.cabinClass, new SelectList(ViewBag.list2, "Text", "Value"), new { @class = "form-control"})*@
-        
+
     </div>
     <div class="form-group">
         @Html.LabelFor(fr => fr.marketingFlightNo)
@@ -141,7 +141,7 @@
     <div class="form-group">
 
         @Html.TextBoxFor(fr => fr.marketingAirline, new { @class = "form-control" })
-       
+
     </div>
     <div class="form-group">
         @Html.LabelFor(fr => fr.operatingFlightNo)
@@ -150,7 +150,7 @@
     <div class="form-group">
 
         @Html.TextBoxFor(fr => fr.operatingFlightNo, new { @class = "form-control" })
-        
+
     </div>
     <div class="form-group">
         @Html.LabelFor(fr => fr.operatingAirline)
@@ -158,7 +158,7 @@
     </div>
     <div class="form-group">
         @Html.TextBoxFor(fr => fr.operatingAirline, new { @class = "form-control" })
-      
+
     </div>
     <div class="form-group">
         @Html.LabelFor(fr => fr.ticketNo)
@@ -167,7 +167,7 @@
     <div class="form-group">
 
         @Html.TextBoxFor(fr => fr.ticketNo, new { @class = "form-control" })
-        
+
     </div>
     <div class="form-group">
         @Html.LabelFor(fr => fr.externalPaxID)
@@ -176,7 +176,7 @@
     <div class="form-group">
 
         @Html.TextBoxFor(fr => fr.externalPaxID, new { @class = "form-control" })
-        
+
     </div>
     <div class="form-group">
         @Html.LabelFor(fr => fr.couponNo)
@@ -185,7 +185,7 @@
     <div class="form-group">
 
         @Html.TextBoxFor(fr => fr.couponNo, new { @class = "form-control" })
-        
+
     </div>
     <div class="form-group">
         @Html.LabelFor(fr => fr.pnrNo)
@@ -194,7 +194,7 @@
     <div class="form-group">
 
         @Html.TextBoxFor(fr => fr.pnrNo, new { @class = "form-control" })
-      
+
     </div>
     <div class="form-group">
         @Html.LabelFor(fr => fr.distance)
@@ -203,7 +203,7 @@
     <div class="form-group">
 
         @Html.TextBoxFor(fr => fr.distance, new { @class = "form-control" })
-        
+
     </div>
     <div class="form-group">
         @Html.LabelFor(fr => fr.baseFare)
@@ -211,7 +211,7 @@
     </div>
     <div class="form-group">
         @Html.TextBoxFor(fr => fr.baseFare, new { @class = "form-control" })
-       
+
     </div>
     <div class="form-group">
         @Html.LabelFor(fr => fr.discountBase)
@@ -219,7 +219,7 @@
     </div>
     <div class="form-group">
         @Html.TextBoxFor(fr => fr.discountBase, new { @class = "form-control" })
-       
+
     </div>
     <div class="form-group">
         @Html.LabelFor(fr => fr.exciseTax)
@@ -228,7 +228,7 @@
     <div class="form-group">
 
         @Html.TextBoxFor(fr => fr.exciseTax, new { @class = "form-control" })
-       
+
     </div>
     <div class="form-group">
         @Html.LabelFor(fr => fr.customerType)
@@ -236,7 +236,7 @@
     </div>
     <div class="form-group">
         @Html.DropDownListFor(fr => fr.customerType, new SelectList(ViewBag.list3, "Text", "Value"), new { @class = "form-control" })
-        
+
     </div>
     <div class="form-group">
         @Html.LabelFor(fr => fr.promotionCode)
@@ -244,7 +244,7 @@
     </div>
     <div class="form-group">
         @Html.TextBoxFor(fr => fr.promotionCode, new { @class = "form-control" })
-       
+
     </div>
     <div class="form-group">
         @Html.LabelFor(fr => fr.ticketCurrency)
@@ -252,7 +252,7 @@
     </div>
     <div class="form-group">
         @Html.DropDownListFor(fr => fr.ticketCurrency, new SelectList(ViewBag.list4), new { @class = "form-control" })
-       
+
     </div>
     <div class="form-group">
         @Html.LabelFor(fr => fr.targetCurrency)
@@ -261,7 +261,7 @@
     </div>
     <div class="form-group">
         @Html.DropDownListFor(fr => fr.targetCurrency, new SelectList(ViewBag.list4), new { @class = "form-control" })
-       
+
     </div>
     <div class="form-group">
         @Html.LabelFor(fr => fr.exchangeRate)
@@ -269,16 +269,16 @@
     </div>
     <div class="form-group">
         @Html.TextBoxFor(fr => fr.exchangeRate, new { @class = "form-control" })
-       
+
     </div>
     <div class="form-group">
         @Html.LabelFor(fr => fr.fareBasis)
         @Html.ValidationMessageFor(fr => fr.fareBasis, "", new { @class = "text-danger" })
     </div>
     <div class="form-group">
-       
+
         @Html.DropDownListFor(fr => fr.fareBasis, new SelectList(ViewBag.list4), new { @class = "form-control" })
-       
+
     </div>
     <button type="submit" class="btn btn-success">Save</button>
 
@@ -294,19 +294,20 @@
 
 @section scripts {
     <script src="~/Scripts/jquery-ui.min.js"></script>
-    @*<script>
-            $(function () {
-                $(".datepicker").datepicker({
-                    dateFormat: "dd-mm-yy HH:mm:ss",
-                    changeMonth: true,
-                    changeYear: true,
-                    yearRange: "-10:+10",
-                    showOn: "both",
-                    buttonText: "<i class='fa fa-calendar' style='font - size:74x'></i>"
+    <script>
+        $(function () {
+            $(".datepicker").datepicker({
+                dateFormat: "dd-mm-yy HH:mm:ss",
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "-10:+10",
+                showOn: "both",
+                buttonText: "<i class='fa fa-calendar' style='font - size:74x'></i>"
 
-                })
             })
-        </script>*@
+        })
+    </script>
+
     <script>
         $(function () {
             $(".datepicker1").datepicker({
@@ -333,7 +334,7 @@
                     dateFormat: 'yy-MM-dd',
                     controlType: 'select',
                     timeFormat: 'HH:mm:ss',
-                    buttonText: "<i class='fa fa-calendar' style='font - size:74x'></i>"
+                    buttonText: "<i class='fa fa-calendar' style='font - size:74x'></i>",
                 });
 
             });
@@ -351,6 +352,33 @@
         });
 
     </script>
+
+    <div class="container">
+        <div class="row">
+            <div class='col-sm-6'>
+                <div class="form-group">
+                    <div class='input-group date' id='datetimepicker5'>
+                        <input type='text' class="form-control" />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <script type="text/javascript">
+                $(function () {
+                    $('#datetimepicker5').datetimepicker({
+                        defaultDate: "11/1/2013",
+                        disabledDates: [
+                            moment("12/25/2013"),
+                            new Date(2013, 11 - 1, 21),
+                            "11/22/2013 00:53"
+                        ]
+                    });
+                });
+            </script>
+        </div>
+    </div>
 }
 
 
