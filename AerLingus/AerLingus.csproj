@@ -203,30 +203,30 @@
     <Compile Include="Helpers\Razor\HtmlExtensions\ReadOnlyForExtension.cs" />
     <Compile Include="Helpers\Razor\HtmlHelpers.cs" />
     <Compile Include="Helpers\Razor\TemplatesConsts.cs" />
-    <Compile Include="Helpers\Models\AccountViewModels.cs" />
-    <Compile Include="Helpers\Models\Aerlingus.Context.cs">
+    <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Aerlingus.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Aerlingus.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\Models\Aerlingus.cs">
+    <Compile Include="Models\Aerlingus.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Aerlingus.tt</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\Models\Aerlingus.Designer.cs">
+    <Compile Include="Models\Aerlingus.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Aerlingus.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\Models\Flight_Records.cs">
+    <Compile Include="Models\Flight_Records.cs">
       <DependentUpon>Aerlingus.tt</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\Models\FR_Batch_Files.cs">
+    <Compile Include="Models\FR_Batch_Files.cs">
       <DependentUpon>Aerlingus.tt</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\Models\IdentityModels.cs" />
-    <Compile Include="Helpers\Models\ManageViewModels.cs" />
+    <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -270,12 +270,12 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Helpers\Models\Aerlingus.Context.tt">
+    <Content Include="Models\Aerlingus.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Aerlingus.edmx</DependentUpon>
       <LastGenOutput>Aerlingus.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Helpers\Models\Aerlingus.tt">
+    <Content Include="Models\Aerlingus.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Aerlingus.edmx</DependentUpon>
       <LastGenOutput>Aerlingus.cs</LastGenOutput>
@@ -312,11 +312,11 @@
     <Content Include="Areas\Shared\Views\Partial\DisplayTemplates\Date.cshtml" />
     <Content Include="Areas\Shared\Views\Partial\DisplayTemplates\Currency.cshtml" />
     <Content Include="Areas\Shared\Views\Partial\DisplayTemplates\Boolean.cshtml" />
-    <EntityDeploy Include="Helpers\Models\Aerlingus.edmx">
+    <EntityDeploy Include="Models\Aerlingus.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Aerlingus.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Helpers\Models\Aerlingus.edmx.diagram">
+    <Content Include="Models\Aerlingus.edmx.diagram">
       <DependentUpon>Aerlingus.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
