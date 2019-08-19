@@ -8,6 +8,7 @@ using AerLingus.Models;
 using System.Net.Http;
 using System.IO;
 using System.Web.Hosting;
+using AerLingus.Helpers.Models;
 
 namespace AerLingus.Controllers
 {
