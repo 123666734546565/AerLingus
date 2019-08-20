@@ -8,13 +8,13 @@ using AerLingus.Models;
 using System.IO;
 using System.Web;
 using Microsoft.VisualBasic;
+using System.Text;
 
 namespace AerLingus.Controllers.Api
 {
     public class FlightRecordsApiController : ApiController
     {
         private AerLingus_databaseEntities entities;
-        public string poruka;
 
         public FlightRecordsApiController()
         {
@@ -71,6 +71,8 @@ namespace AerLingus.Controllers.Api
                 string footer = string.Empty;
                 string[] footerArray = null;
 
+                StringBuilder builder = new StringBuilder();
+
                 char[] separator = new char[] { '|' };
 
                 Flight_Records record = new Flight_Records();
@@ -91,6 +93,8 @@ namespace AerLingus.Controllers.Api
                 while (!streamReader1.EndOfStream)
                 {
                     footer = streamReader1.ReadLine();
+
+                    builder.AppendLine(footer);
 
                     footerArray = footer.Split(separator, StringSplitOptions.None);
 
@@ -579,6 +583,9 @@ namespace AerLingus.Controllers.Api
 
                 FR_Batch_Files batch = new FR_Batch_Files();
 
+                if (entities.FR_Batch_Files.Any(b => b.Header == batch.Header))
+                    return Request.CreateResponse(HttpStatusCode.Conflict);
+
                 batch.Header = header;
                 batch.Footer = footer;
                 batch.Content = streamReader2.ReadToEnd();
@@ -588,10 +595,8 @@ namespace AerLingus.Controllers.Api
 
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                poruka = ex.Message;
-
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
         }
