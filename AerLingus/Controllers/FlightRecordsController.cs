@@ -68,7 +68,9 @@ namespace AerLingus.Controllers
                     return Content("406: File is missing header or footer or they are not prefixed with H or F");
                 else if (returnedStatusCode == System.Net.HttpStatusCode.PreconditionFailed)
                     return Content("412: No record added to database because number of footer records do not match");
-                else return Content("500: Internl Server Error");
+                if (returnedStatusCode == System.Net.HttpStatusCode.Conflict)
+                    return Content("409: File with that header already exists in database");
+                else return Content("500: Internal Server Error");
             }
         }
 
@@ -76,27 +78,6 @@ namespace AerLingus.Controllers
         {
             return View();
         }
-
-        //[HttpPost]
-        //public ActionResult Upload(HttpPostedFileBase file)
-        //{
-        //    if (file == null)
-        //        return Content("No file selected.");
-
-            //if (file.ContentLength > 0)
-            //{
-            //    var fileName = Path.GetFileName(file.FileName);
-            //    var path = Path.Combine(Server.MapPath("~/App_Data/uploads"), fileName);
-            //    file.SaveAs(path);
-            //}
-            //file.InputStream.
-            //var contents = new StreamReader(file.InputStream).ReadLine();
-
-            //if (contents == null)
-            //    return Content("JESTE NULL");
-            //else return Content("NIJE NULL  " + contents + "--" + file.ContentLength);
-
-            //return RedirectToAction("Index", "Home");
-        }
     }
+}
         

@@ -15,7 +15,6 @@ namespace AerLingus.Controllers.Api
     public class FlightRecordsApiController : ApiController
     {
         private AerLingus_databaseEntities entities;
-
         public FlightRecordsApiController()
         {
             entities = new AerLingus_databaseEntities();
@@ -583,17 +582,22 @@ namespace AerLingus.Controllers.Api
 
                 FR_Batch_Files batch = new FR_Batch_Files();
 
-                if (entities.FR_Batch_Files.Any(b => b.Header == batch.Header))
-                    return Request.CreateResponse(HttpStatusCode.Conflict);
-
                 batch.Header = header;
-                batch.Footer = footer;
-                batch.Content = streamReader2.ReadToEnd();
 
-                entities.FR_Batch_Files.Add(batch);
-                entities.SaveChanges();
+                if (entities.FR_Batch_Files.Any(b => b.Header == batch.Header))
+                {
+                    return Request.CreateResponse(HttpStatusCode.Conflict);
+                }
+                else
+                {                    
+                    batch.Footer = footer;
+                    batch.Content = streamReader2.ReadToEnd();
 
-                return Request.CreateResponse(HttpStatusCode.OK);
+                    entities.FR_Batch_Files.Add(batch);
+                    entities.SaveChanges();
+
+                    return Request.CreateResponse(HttpStatusCode.OK);
+                }
             }
             catch (Exception)
             {
