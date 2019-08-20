@@ -150,9 +150,9 @@ textarea {
 }
 
 .datepicker1 {
-    display:inline-block;
+    display:inline-flex;
 }
 
 .datepicker{
-    display:inline-block;
+    display:inline-flex;
 }

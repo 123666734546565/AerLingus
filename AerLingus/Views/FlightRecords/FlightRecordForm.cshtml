@@ -55,18 +55,21 @@
     //potreban datetimepicker!!!
 <div class="form-group">
     @Html.LabelFor(fr => fr.bookingDate)
-    @Html.EditorFor(fr => fr.bookingDate, new { htmlAttributes = new { @class = "datepicker form-control", autocomplete = "off" } })
-    @Html.ValidationMessageFor(fr => fr.bookingDate, "", new { @class = "text-danger" })
-</div>
-    
+    <div class"form-group>
+        @Html.EditorFor(fr => fr.bookingDate, new { htmlAttributes = new { @class = "datepicker form-control", autocomplete = "off" } })
+    </div>
+    @Html.ValidationMessageFor(fr => fr.bookingDate, "", new { id = "idValidacija" })
+ </div>
+
     //dodat datepicker
 <div class="form-group">
     @Html.LabelFor(fr => fr.departureDate)
-    @Html.EditorFor(fr => fr.departureDate, new { htmlAttributes = new { @class = "datepicker1 form-control", type = "text", autocomplete = "off" } })
-    @Html.ValidationMessageFor(fr => fr.departureDate, "", new { @class = "text-danger" })
+    <div class"form-group>
+         @Html.EditorFor(fr => fr.departureDate, new { htmlAttributes = new { @class = "datepicker1 form-control", type = "text", autocomplete = "off" } })
+    </div>
+    @Html.ValidationMessageFor(fr => fr.departureDate, "", new { id = "idValidacija" })
 </div>
-    
-<div class="form-group">
+ <div class="form-group">
     @Html.LabelFor(fr => fr.origin)
     @Html.TextBoxFor(fr => fr.origin, new { @class = "form-control" })
     @Html.ValidationMessageFor(fr => fr.origin, "", new { @class = "text-danger" })
