@@ -14,20 +14,20 @@ namespace AerLingus.Controllers.Api
     public class FlightRecordsApiController : ApiController
     {
         private AerLingus_databaseEntities entities;
-
+        public string poruka;
 
         public FlightRecordsApiController()
         {
             entities = new AerLingus_databaseEntities();
         }
 
-        [HttpGet]
+        [System.Web.Http.HttpGet]
         public IEnumerable<Flight_Records> GetFlightRecords()
         {
-            return entities.Flight_Records;
+            return entities.Flight_Records.ToList();
         }
 
-        [HttpGet]
+        [System.Web.Http.HttpGet]
         public IHttpActionResult GetFlightRecord(int id)
         {
             var flightRecord = entities.Flight_Records.SingleOrDefault(fr => fr.ID == id);
@@ -38,21 +38,21 @@ namespace AerLingus.Controllers.Api
             return Ok(flightRecord);
         }
 
-        [HttpPost]
-        public IHttpActionResult Upload(HttpPostedFileBase file)
+        [System.Web.Http.HttpPost]
+        public HttpResponseMessage Upload(HttpPostedFileBase file)
         {
             Stream stream = file.InputStream;
 
             if (file == null)
-                return NotFound();
+                return Request.CreateResponse(HttpStatusCode.NotFound);
 
             if (file.ContentLength == 0)
-                return StatusCode(HttpStatusCode.NoContent);
+                return Request.CreateResponse(HttpStatusCode.NoContent);
 
             string failedToAddRecords = string.Empty;
 
             bool hasFooter = false;
-            
+
             int recordsAdded = 0;
             int recordsNotAdded = 0;
             int numberOfFooterRecords = 0;
@@ -79,14 +79,14 @@ namespace AerLingus.Controllers.Api
 
                 stream.Position = 0;
 
-                System.IO.StreamReader streamReader1 = new System.IO.StreamReader(stream);
+                StreamReader streamReader1 = new StreamReader(stream);
 
                 header = streamReader1.ReadLine();
 
                 headerArray = header.Split(separator, StringSplitOptions.None);
 
                 if (headerArray[0].ToUpper() != "H")
-                    return StatusCode(HttpStatusCode.NotAcceptable);
+                    return Request.CreateResponse(HttpStatusCode.NotAcceptable);
 
                 while (!streamReader1.EndOfStream)
                 {
@@ -99,7 +99,7 @@ namespace AerLingus.Controllers.Api
                 numberOfRecords--;
 
                 if (footerArray[0] != "F")
-                    return StatusCode(HttpStatusCode.NotAcceptable);
+                    return Request.CreateResponse(HttpStatusCode.NotAcceptable);
 
                 hasFooter = true;
 
@@ -534,7 +534,7 @@ namespace AerLingus.Controllers.Api
                                             entities.Flight_Records.Add(record);
                                             entities.SaveChanges();
                                         }
-                                        else return StatusCode(HttpStatusCode.PreconditionFailed);
+                                        else return Request.CreateResponse(HttpStatusCode.PreconditionFailed);
                                     }
                                     else
                                     {
@@ -550,7 +550,7 @@ namespace AerLingus.Controllers.Api
                                         entities.Flight_Records.Add(record);
                                         entities.SaveChanges();
                                     }
-                                    else return StatusCode(HttpStatusCode.PreconditionFailed);
+                                    else return Request.CreateResponse(HttpStatusCode.PreconditionFailed);
                                 }
 
                                 continue;
@@ -586,11 +586,13 @@ namespace AerLingus.Controllers.Api
                 entities.FR_Batch_Files.Add(batch);
                 entities.SaveChanges();
 
-                return Ok();
+                return Request.CreateResponse(HttpStatusCode.OK);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return InternalServerError();
+                poruka = ex.Message;
+
+                return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
         }
     }
