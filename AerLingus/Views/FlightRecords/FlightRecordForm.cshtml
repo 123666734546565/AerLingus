@@ -52,7 +52,7 @@
     @Html.ValidationMessageFor(fr => fr.partnerTransactionNo, "", new { @class = "text-danger" })
 </div>
     
-    //potreban datetimepicker!!!
+   
 <div class="form-group">
     @Html.LabelFor(fr => fr.bookingDate)
     <div class"form-group>
@@ -221,23 +221,24 @@
 
     @Scripts.Render("~/bundles/jqueryval")
     <script src="~/Scripts/jquery-ui.min.js"></script>
-    <script>
+    @*<script>
             $(function () {
                 $(".datepicker").datepicker({
-                    dateFormat: "dd-mm-yy",
+                    dateFormat: "yy-mm-dd",
                     changeMonth: true,
                     changeYear: true,
                     yearRange: "-10:+10",
                     showOn: "both",
+                    timeFormat:"HH:mm:ss",
                     buttonText: "<i class='fa fa-calendar' style='font - size:74x'></i>"
 
                 })
             })
-        </script>
+        </script>*@
     <script>
         $(function () {
             $(".datepicker1").datepicker({
-                dateFormat: "yy-MM-dd",
+                dateFormat: "yy-mm-dd",
                 changeMonth: true,
                 changeYear: true,
                 yearRange: "-10:+10",
@@ -251,19 +252,19 @@
     <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
     <script src="~/Scripts/jquery-ui-timepicker-addon.min.js"></script>
     <script type="text/javascript">
-        //$(document).ready(function () {
-        //    $(function () {
-        //        $(".datepicker").datetimepicker({
-        //            changeMonth: true,
-        //            changeYear: true,
-        //            yearRange: "-10:+10",
-        //            dateFormat: 'yy-MM-dd',
-        //            controlType: 'select',
-        //            timeFormat: 'HH:mm:ss',
-        //            buttonText: "<i class='fa fa-calendar' style='font - size:74x'></i>"
-        //        });
+        $(document).ready(function () {
+            $(function () {
+                $(".datepicker").datetimepicker({
+                    changeMonth: true,
+                    changeYear: true,
+                    yearRange: "-10:+10",
+                    dateFormat: 'yy-mm-dd',
+                    controlType: 'select',
+                    timeFormat: 'HH:mm:ss',
+                    buttonText: "<i class='fa fa-calendar' style='font - size:74x'></i>"
+                });
 
-        //    });
+            });
 
             jQuery.validator.methods.date = function (value, element) {
                 var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);

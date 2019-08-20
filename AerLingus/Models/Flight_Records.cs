@@ -164,15 +164,18 @@ namespace AerLingus.Models
         [DisplayName("Ticket currency")]
         [MinLength(0)]
         [MaxLength(3, ErrorMessage = "Min lenght is 3 characters!")]
+        [EIValidation]
         public string ticketCurrency { get; set; }
 
         [DisplayName("Target currency")]
         [MinLength(0)]
         [MaxLength(3, ErrorMessage = "Min lenght is 3 characters!")]
+        [EIValidation]
         public string targetCurrency { get; set; }
 
         [DisplayName("Exchange rate")]
         [Range(minimum: 0, maximum: 9999999999, ErrorMessage = "Insert number in range from 0 to 999999999!")]
+        [EIValidation]
         public Nullable<float> exchangeRate { get; set; }
 
         [DisplayName("Fare basis")]

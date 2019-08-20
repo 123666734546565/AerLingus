@@ -219,6 +219,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Aerlingus.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\EIValidation.cs" />
     <Compile Include="Models\Flight_Records.cs">
       <DependentUpon>Aerlingus.tt</DependentUpon>
     </Compile>
