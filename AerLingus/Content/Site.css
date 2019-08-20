@@ -149,3 +149,10 @@ textarea {
     background: #26aabd !important;
 }
 
+.datepicker1 {
+    display:inline-block;
+}
+
+.datepicker{
+    display:inline-block;
+}
