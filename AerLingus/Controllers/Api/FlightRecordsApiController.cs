@@ -14,9 +14,42 @@ namespace AerLingus.Controllers.Api
 {
     public class FlightRecordsApiController : ApiController
     {
+        //private List<Flight_Records> list;
         private AerLingus_databaseEntities entities;
+
+        //public Predicate<T> Or<T>(params Predicate<T>[] predicates)
+        //{
+        //    return delegate (T item)
+        //    {
+        //        foreach (Predicate<T> predicate in predicates)
+        //        {
+        //            if (predicate(item))
+        //            {
+        //                return true;
+        //            }
+        //        }
+        //        return false;
+        //    };
+        //}
+
+        //public Predicate<T> And<T>(params Predicate<T>[] predicates)
+        //{
+        //    return delegate (T item)
+        //    {
+        //        foreach (Predicate<T> predicate in predicates)
+        //        {
+        //            if (!predicate(item))
+        //            {
+        //                return false;
+        //            }
+        //        }
+        //        return true;
+        //    };
+        //}
+
         public FlightRecordsApiController()
         {
+            //list = entities.Flight_Records.ToList();
             entities = new AerLingus_databaseEntities();
         }
 
@@ -50,8 +83,6 @@ namespace AerLingus.Controllers.Api
 
             string failedToAddRecords = string.Empty;
 
-            bool hasFooter = false;
-
             int recordsAdded = 0;
             int recordsNotAdded = 0;
             int numberOfFooterRecords = 0;
@@ -69,8 +100,6 @@ namespace AerLingus.Controllers.Api
 
                 string footer = string.Empty;
                 string[] footerArray = null;
-
-                StringBuilder builder = new StringBuilder();
 
                 char[] separator = new char[] { '|' };
 
@@ -93,18 +122,15 @@ namespace AerLingus.Controllers.Api
                 {
                     footer = streamReader1.ReadLine();
 
-                    builder.AppendLine(footer);
-
                     footerArray = footer.Split(separator, StringSplitOptions.None);
 
                     numberOfRecords++;
                 }
+
                 numberOfRecords--;
 
                 if (footerArray[0] != "F")
                     return Request.CreateResponse(HttpStatusCode.NotAcceptable);
-
-                hasFooter = true;
 
                 numberOfFooterRecords = Convert.ToInt32(footerArray[1]);
 
@@ -124,7 +150,6 @@ namespace AerLingus.Controllers.Api
 
                     switch (tempRecord[0])
                     {
-
                         case 'R':
                             {
                                 bodyArray = tempRecord.Split(separator, StringSplitOptions.None);
@@ -150,7 +175,7 @@ namespace AerLingus.Controllers.Api
 
                                     recordsNotAdded++;
 
-                                    failedToAddRecords = failedToAddRecords + tempRecord + "[Transaction Type]" + "\n";
+                                    failedToAddRecords = failedToAddRecords + tempRecord + "\n";
 
                                     continue;
                                 }
@@ -186,7 +211,7 @@ namespace AerLingus.Controllers.Api
 
                                     recordsNotAdded++;
 
-                                    failedToAddRecords = failedToAddRecords + tempRecord + "[First Name]" + "\n";
+                                    failedToAddRecords = failedToAddRecords + tempRecord + "\n";
 
                                     continue;
                                 }
@@ -202,7 +227,7 @@ namespace AerLingus.Controllers.Api
 
                                     recordsNotAdded++;
 
-                                    failedToAddRecords = failedToAddRecords + tempRecord + "[Last Name]" + "\n";
+                                    failedToAddRecords = failedToAddRecords + tempRecord + "\n";
 
                                     continue;
                                 }
@@ -227,7 +252,7 @@ namespace AerLingus.Controllers.Api
 
                                     recordsNotAdded++;
 
-                                    failedToAddRecords = failedToAddRecords + tempRecord + "[Booking Date]" + "\n";
+                                    failedToAddRecords = failedToAddRecords + tempRecord + "\n";
 
                                     continue;
                                 }
@@ -242,7 +267,7 @@ namespace AerLingus.Controllers.Api
 
                                     recordsNotAdded++;
 
-                                    failedToAddRecords = failedToAddRecords + tempRecord + "[Departure Date]" + "\n";
+                                    failedToAddRecords = failedToAddRecords + tempRecord + "\n";
 
                                     continue;
                                 }
@@ -258,7 +283,7 @@ namespace AerLingus.Controllers.Api
 
                                     recordsNotAdded++;
 
-                                    failedToAddRecords = failedToAddRecords + tempRecord + "[Origin]" + "\n";
+                                    failedToAddRecords = failedToAddRecords + tempRecord + "\n";
 
                                     continue;
                                 }
@@ -274,7 +299,7 @@ namespace AerLingus.Controllers.Api
 
                                     recordsNotAdded++;
 
-                                    failedToAddRecords = failedToAddRecords + tempRecord + "[Destination]" + "\n";
+                                    failedToAddRecords = failedToAddRecords + tempRecord + "\n";
 
                                     continue;
                                 }
@@ -290,7 +315,7 @@ namespace AerLingus.Controllers.Api
 
                                     recordsNotAdded++;
 
-                                    failedToAddRecords = failedToAddRecords + tempRecord + "[Booking Class]" + "\n";
+                                    failedToAddRecords = failedToAddRecords + tempRecord + "\n";
 
                                     continue;
                                 }
@@ -317,7 +342,7 @@ namespace AerLingus.Controllers.Api
 
                                     recordsNotAdded++;
 
-                                    failedToAddRecords = failedToAddRecords + tempRecord + "[Marketing Flight No]" + "\n";
+                                    failedToAddRecords = failedToAddRecords + tempRecord + "\n";
 
                                     continue;
                                 }
@@ -333,7 +358,7 @@ namespace AerLingus.Controllers.Api
 
                                     recordsNotAdded++;
 
-                                    failedToAddRecords = failedToAddRecords + tempRecord + "[Marketing Airline]" + "\n";
+                                    failedToAddRecords = failedToAddRecords + tempRecord + "\n";
 
                                     continue;
                                 }
@@ -350,7 +375,7 @@ namespace AerLingus.Controllers.Api
 
                                     recordsNotAdded++;
 
-                                    failedToAddRecords = failedToAddRecords + tempRecord + "[Operating Flight No]" + "\n";
+                                    failedToAddRecords = failedToAddRecords + tempRecord + "\n";
 
                                     continue;
                                 }
@@ -366,7 +391,7 @@ namespace AerLingus.Controllers.Api
 
                                     recordsNotAdded++;
 
-                                    failedToAddRecords = failedToAddRecords + tempRecord + "[Operating Airline]" + "\n";
+                                    failedToAddRecords = failedToAddRecords + tempRecord + "\n";
 
                                     continue;
                                 }
@@ -419,7 +444,7 @@ namespace AerLingus.Controllers.Api
 
                                     recordsNotAdded++;
 
-                                    failedToAddRecords = failedToAddRecords + tempRecord + "[Pnr No]" + "\n";
+                                    failedToAddRecords = failedToAddRecords + tempRecord + "\n";
 
                                     continue;
                                 }
@@ -555,7 +580,6 @@ namespace AerLingus.Controllers.Api
                                     }
                                     else return Request.CreateResponse(HttpStatusCode.PreconditionFailed);
                                 }
-
                                 continue;
                             }
 
@@ -589,7 +613,7 @@ namespace AerLingus.Controllers.Api
                     return Request.CreateResponse(HttpStatusCode.Conflict);
                 }
                 else
-                {                    
+                {          
                     batch.Footer = footer;
                     batch.Content = streamReader2.ReadToEnd();
 

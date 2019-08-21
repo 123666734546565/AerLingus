@@ -28,20 +28,8 @@ namespace AerLingus.Controllers
             entities = new AerLingus_databaseEntities();
         }
 
-        // GET: FlightRecords
-        public ActionResult Index()
-        {
-            return View();
-        }
-
         public ActionResult Upload(HttpPostedFileBase file)
         {
-            if (file == null)
-                return Content("No file selected.");
-
-            if (file.ContentLength == 0)
-                return Content("File is empty.");
-
             var fileName = Path.GetFileName(file.FileName);
 
             var path = Path.Combine(Server.MapPath("~/UploadedFiles"), fileName);
@@ -60,17 +48,21 @@ namespace AerLingus.Controllers
                 return RedirectToAction("Index", "Home");
             else
             {
+                object errorMessage = null; ;
+
                 if (returnedStatusCode == System.Net.HttpStatusCode.NotFound)
-                    return Content("404: No file selected");
+                    errorMessage = "ERROR 404: No file selected.";
                 else if (returnedStatusCode == System.Net.HttpStatusCode.NoContent)
-                    return Content("204: File is empty");
+                    errorMessage = "ERROR 204: File is empty.";
                 else if (returnedStatusCode == System.Net.HttpStatusCode.NotAcceptable)
-                    return Content("406: File is missing header or footer or they are not prefixed with H or F");
+                    errorMessage = "ERROR 406: File is missing header or footer or they are not prefixed with H or F.";
                 else if (returnedStatusCode == System.Net.HttpStatusCode.PreconditionFailed)
-                    return Content("412: No record added to database because number of footer records do not match");
-                if (returnedStatusCode == System.Net.HttpStatusCode.Conflict)
-                    return Content("409: File with that header already exists in database");
-                else return Content("500: Internal Server Error");
+                    errorMessage = "ERROR 412: No record added to database because number of footer records do not match with the number of actual records in the file.";
+                else if (returnedStatusCode == System.Net.HttpStatusCode.Conflict)
+                    errorMessage = "ERROR 409: File with requested header already exists in database.";
+                else errorMessage = "ERROR 500: Internal Server Error";
+
+                return View("Error", errorMessage);
             }
         }
 
