@@ -7,12 +7,14 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
+
 namespace AerLingus.Models
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel;
 
     public partial class Flight_Records
     {
@@ -111,7 +113,7 @@ namespace AerLingus.Models
         [DisplayName("Operating airline")]
         [Required(ErrorMessage = "Field is required!")]
         [MinLength(1, ErrorMessage = "Min lenght is 1 character!")]
-        [MaxLength(2, ErrorMessage = "Min lenght is 2 characters!")]
+        [MaxLength(2, ErrorMessage = "Max lenght is 2 characters!")]
         public string operatingAirline { get; set; }
 
         [DisplayName("Ticket number")]
@@ -163,13 +165,13 @@ namespace AerLingus.Models
 
         [DisplayName("Ticket currency")]
         [MinLength(0)]
-        [MaxLength(3, ErrorMessage = "Min lenght is 3 characters!")]
+        [MaxLength(3, ErrorMessage = "Max lenght is 3 characters!")]
         [EIValidation]
         public string ticketCurrency { get; set; }
 
         [DisplayName("Target currency")]
         [MinLength(0)]
-        [MaxLength(3, ErrorMessage = "Min lenght is 3 characters!")]
+        [MaxLength(3, ErrorMessage = "Max lenght is 3 characters!")]
         [EIValidation]
         public string targetCurrency { get; set; }
 
@@ -180,7 +182,7 @@ namespace AerLingus.Models
 
         [DisplayName("Fare basis")]
         [MinLength(0)]
-        [MaxLength(10, ErrorMessage = "Min lenght is 3 characters!")]
+        [MaxLength(10, ErrorMessage = "Max lenght is 3 characters!")]
         public string fareBasis { get; set; }
     }
 }
