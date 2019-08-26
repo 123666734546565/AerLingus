@@ -9,54 +9,23 @@ using System.IO;
 using System.Web;
 using Microsoft.VisualBasic;
 using System.Text;
+using AerLingus.Validations;
 
 namespace AerLingus.Controllers.Api
 {
     public class FlightRecordsApiController : ApiController
     {
-        //private List<Flight_Records> list;
         private AerLingus_databaseEntities entities;
-
-        //public Predicate<T> Or<T>(params Predicate<T>[] predicates)
-        //{
-        //    return delegate (T item)
-        //    {
-        //        foreach (Predicate<T> predicate in predicates)
-        //        {
-        //            if (predicate(item))
-        //            {
-        //                return true;
-        //            }
-        //        }
-        //        return false;
-        //    };
-        //}
-
-        //public Predicate<T> And<T>(params Predicate<T>[] predicates)
-        //{
-        //    return delegate (T item)
-        //    {
-        //        foreach (Predicate<T> predicate in predicates)
-        //        {
-        //            if (!predicate(item))
-        //            {
-        //                return false;
-        //            }
-        //        }
-        //        return true;
-        //    };
-        //}
 
         public FlightRecordsApiController()
         {
-            //list = entities.Flight_Records.ToList();
             entities = new AerLingus_databaseEntities();
         }
 
         [System.Web.Http.HttpGet]
         public IEnumerable<Flight_Records> GetFlightRecords()
         {
-            return entities.Flight_Records.ToList();
+            return entities.Flight_Records;
         }
 
         [System.Web.Http.HttpGet]
@@ -92,6 +61,8 @@ namespace AerLingus.Controllers.Api
             {
                 string tempRecord = string.Empty;
 
+                bool convertedFooterRecordsSuccessfully = false;
+
                 string header = string.Empty;
                 string[] headerArray = null;
 
@@ -113,6 +84,11 @@ namespace AerLingus.Controllers.Api
 
                 header = streamReader1.ReadLine();
 
+                if (entities.FR_Batch_Files.Any(b => b.Header == header))
+                    return Request.CreateResponse(HttpStatusCode.Conflict);
+
+                FR_Batch_Files batch = new FR_Batch_Files();
+
                 headerArray = header.Split(separator, StringSplitOptions.None);
 
                 if (headerArray[0].ToUpper() != "H")
@@ -126,13 +102,15 @@ namespace AerLingus.Controllers.Api
 
                     numberOfRecords++;
                 }
-
                 numberOfRecords--;
 
                 if (footerArray[0] != "F")
                     return Request.CreateResponse(HttpStatusCode.NotAcceptable);
 
-                numberOfFooterRecords = Convert.ToInt32(footerArray[1]);
+                convertedFooterRecordsSuccessfully = int.TryParse(footerArray[1], out numberOfFooterRecords);
+
+                if (!convertedFooterRecordsSuccessfully)
+                    return Request.CreateResponse(HttpStatusCode.BadRequest);
 
                 streamReader1.DiscardBufferedData();
 
@@ -150,6 +128,7 @@ namespace AerLingus.Controllers.Api
 
                     switch (tempRecord[0])
                     {
+
                         case 'R':
                             {
                                 bodyArray = tempRecord.Split(separator, StringSplitOptions.None);
@@ -249,12 +228,6 @@ namespace AerLingus.Controllers.Api
                                 else
                                 {
                                     record.bookingDate = default(DateTime);
-
-                                    recordsNotAdded++;
-
-                                    failedToAddRecords = failedToAddRecords + tempRecord + "\n";
-
-                                    continue;
                                 }
 
                                 if (bodyArray[9] != string.Empty)
@@ -466,7 +439,7 @@ namespace AerLingus.Controllers.Api
                                 }
                                 else
                                 {
-                                    record.baseFare = default(float);
+                                    record.baseFare = default(double);
                                 }
 
                                 if (bodyArray[24] != string.Empty &&
@@ -476,7 +449,7 @@ namespace AerLingus.Controllers.Api
                                 }
                                 else
                                 {
-                                    record.discountBase = default(float);
+                                    record.discountBase = default(double);
                                 }
 
                                 if (bodyArray[25] != string.Empty &&
@@ -486,7 +459,7 @@ namespace AerLingus.Controllers.Api
                                 }
                                 else
                                 {
-                                    record.exciseTax = default(float);
+                                    record.exciseTax = default(double);
                                 }
 
                                 if (bodyArray[26] != string.Empty &&
@@ -537,7 +510,7 @@ namespace AerLingus.Controllers.Api
                                 }
                                 else
                                 {
-                                    record.exchangeRate = default(float);
+                                    record.exchangeRate = default(double);
                                 }
 
                                 if (bodyArray[31] != string.Empty &&
@@ -558,9 +531,49 @@ namespace AerLingus.Controllers.Api
                                     {
                                         if (numberOfRecords == numberOfFooterRecords)
                                         {
-                                            recordsAdded++;
-                                            entities.Flight_Records.Add(record);
-                                            entities.SaveChanges();
+                                            if (record.ticketNo != string.Empty || record.externalPaxID != string.Empty)
+                                            {
+                                                if (record.ticketNo != string.Empty)
+                                                {
+                                                    if (Validation.TickerNoValidation(record) != null)
+                                                    {
+                                                        failedToAddRecords = failedToAddRecords + tempRecord + "\n";
+                                                        recordsNotAdded++;
+                                                        continue;
+                                                    }
+
+                                                    Validation.SetEmptyPropertiesToNull(record);
+                                                    recordsAdded++;
+                                                    entities.Flight_Records.Add(record);
+                                                    entities.SaveChanges();
+                                                }
+                                                else if (record.externalPaxID != string.Empty)
+                                                {
+                                                    if (Validation.ExternalPaxIDValidation(record) != null)
+                                                    {
+                                                        failedToAddRecords = failedToAddRecords + tempRecord + "\n";
+                                                        recordsNotAdded++;
+                                                        continue;
+                                                    }
+
+                                                    Validation.SetEmptyPropertiesToNull(record);
+                                                    recordsAdded++;
+                                                    entities.Flight_Records.Add(record);
+                                                    entities.SaveChanges();
+                                                }
+                                                else
+                                                {
+                                                    failedToAddRecords = failedToAddRecords + tempRecord + "\n";
+                                                    recordsNotAdded++;
+                                                    continue;
+                                                }
+                                            }
+                                            else
+                                            {
+                                                failedToAddRecords = failedToAddRecords + tempRecord + "\n";
+                                                recordsNotAdded++;
+                                                continue;
+                                            }
                                         }
                                         else return Request.CreateResponse(HttpStatusCode.PreconditionFailed);
                                     }
@@ -574,9 +587,49 @@ namespace AerLingus.Controllers.Api
                                 {
                                     if (numberOfRecords == numberOfFooterRecords)
                                     {
-                                        recordsAdded++;
-                                        entities.Flight_Records.Add(record);
-                                        entities.SaveChanges();
+                                        if (record.ticketNo != string.Empty || record.externalPaxID != string.Empty)
+                                        {
+                                            if (record.ticketNo != string.Empty)
+                                            {
+                                                if (Validation.TickerNoValidation(record) != null)
+                                                {
+                                                    failedToAddRecords = failedToAddRecords + tempRecord + "\n";
+                                                    recordsNotAdded++;
+                                                    continue;
+                                                }
+
+                                                Validation.SetEmptyPropertiesToNull(record);
+                                                recordsAdded++;
+                                                entities.Flight_Records.Add(record);
+                                                entities.SaveChanges();
+                                            }
+                                            else if (record.externalPaxID != string.Empty)
+                                            {
+                                                if (Validation.ExternalPaxIDValidation(record) != null)
+                                                {
+                                                    failedToAddRecords = failedToAddRecords + tempRecord + "\n";
+                                                    recordsNotAdded++;
+                                                    continue;
+                                                }
+
+                                                Validation.SetEmptyPropertiesToNull(record);
+                                                recordsAdded++;
+                                                entities.Flight_Records.Add(record);
+                                                entities.SaveChanges();
+                                            }
+                                            else
+                                            {
+                                                recordsNotAdded++;
+                                                failedToAddRecords = failedToAddRecords + tempRecord + "\n";
+                                                continue;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            failedToAddRecords = failedToAddRecords + tempRecord + "\n";
+                                            recordsNotAdded++;
+                                            continue;
+                                        }
                                     }
                                     else return Request.CreateResponse(HttpStatusCode.PreconditionFailed);
                                 }
@@ -589,7 +642,7 @@ namespace AerLingus.Controllers.Api
                             }
                         default:
                             {
-                                failedToAddRecords = failedToAddRecords + tempRecord + "[Default]" + "\n";
+                                failedToAddRecords = failedToAddRecords + tempRecord + "\n";
 
                                 recordsNotAdded++;
 
@@ -604,26 +657,16 @@ namespace AerLingus.Controllers.Api
 
                 StreamReader streamReader2 = new StreamReader(stream);
 
-                FR_Batch_Files batch = new FR_Batch_Files();
-
                 batch.Header = header;
+                batch.Footer = footer;
+                batch.Content = streamReader2.ReadToEnd();
 
-                if (entities.FR_Batch_Files.Any(b => b.Header == batch.Header))
-                {
-                    return Request.CreateResponse(HttpStatusCode.Conflict);
-                }
-                else
-                {          
-                    batch.Footer = footer;
-                    batch.Content = streamReader2.ReadToEnd();
+                entities.FR_Batch_Files.Add(batch);
+                entities.SaveChanges();
 
-                    entities.FR_Batch_Files.Add(batch);
-                    entities.SaveChanges();
-
-                    return Request.CreateResponse(HttpStatusCode.OK);
-                }
+                return Request.CreateResponse(HttpStatusCode.OK);
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }

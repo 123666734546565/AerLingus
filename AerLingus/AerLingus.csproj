@@ -226,16 +226,19 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Validations\Validation.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\CenterErrorButton.css" />
     <Content Include="Content\HomePageScreen.css" />
     <Content Include="Content\Images\AerLingusLogo.png" />
     <Content Include="Content\Images\Background1980x1080.png" />
     <Content Include="Content\SocialMediaIcons.css" />
+    <Content Include="Content\style.css" />
     <Content Include="Content\WelcomeAnimation.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -309,6 +312,7 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\FlightRecords\FlightRecordForm.cshtml" />
+    <Content Include="Views\FlightRecords\UploadSuccessful.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
