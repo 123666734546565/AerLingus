@@ -9,178 +9,155 @@
 
 namespace AerLingus.Models
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel;
+	using System;
+	using System.Collections.Generic;
+	using System.ComponentModel.DataAnnotations;
+	using System.ComponentModel.DataAnnotations.Schema;
+	using System.ComponentModel;
 
-    public partial class Flight_Records
-    {
+	public partial class Flight_Records
+	{
+		[DisplayName("Identifier number")]
+		[MaxLength(16)]
+		public string identifierNo { get; set; }
 
-        [DisplayName("Identifier number")]
-        [MinLength(0 , ErrorMessage = "Min lenght is 0 characters!")]
-        [MaxLength(16, ErrorMessage = "Max lenght is 16 characters!")]
-        public string identifierNo { get; set; }
+		[DisplayName("Transaction type")]
+		[Required]
+		[MaxLength(2)]
+		public string transactionType { get; set; }
 
-        [DisplayName("Transaction type")]
-        [Required(ErrorMessage = "Field is required!")]
-        [MinLength(1, ErrorMessage = "Min lenght is 1 character!")]
-        [MaxLength(2, ErrorMessage = "Max lenght is 2 characters!")]
-        public string transactionType { get; set; }
+		[DisplayName("Other FFP number")]
+		[MaxLength(30)]
+		public string otherFFPNo { get; set; }
 
-        [DisplayName("Other FFP number")]
-        [MinLength(0)]
-        [MaxLength(30, ErrorMessage = "Max lenght is 30 characters!")]
-        public string otherFFPNo { get; set; }
+		[MaxLength(30)]
+		[DisplayName("Other FFP scheme")]
+		public string otherFFPScheme { get; set; }
 
-        [DisplayName("Other FFP scheme")]
-        [MinLength(0)]
-        [MaxLength(30, ErrorMessage = "Max lenght is 30 characters!")]
-        public string otherFFPScheme { get; set; }
+		[MinLength(2)]
+		[MaxLength(30)]
+		[DisplayName("First name")]
+		[Required]
+		public string firstName { get; set; }
 
-        [DisplayName("First name")]
-        [Required(ErrorMessage = "Field is required!")]
-        [MinLength(1, ErrorMessage = "Min lenght is 1 character!")]
-        [MaxLength(30, ErrorMessage = "Max lenght is 30 characters!")]
-        public string firstName { get; set; }
+		[MinLength(2)]
+		[MaxLength(30)]
+		[DisplayName("Last name")]
+		[Required]
+		public string lastName { get; set; }
 
-        [DisplayName("Last name")]
-        [Required(ErrorMessage = "Field is required!")]
-        [MinLength(1, ErrorMessage = "Min lenght is 1 character!")]
-        [MaxLength(30, ErrorMessage = "Max lenght is 30 characters!")]
-        public string lastName { get; set; }
+		[MaxLength(100)]
+		[DisplayName("Partner transaction number")]
+		public string partnerTransactionNo { get; set; }
 
-        [DisplayName("Partner transaction number")]
-        [MinLength(0)]
-        [MaxLength(100, ErrorMessage = "Max lenght is 30 characters!")]
-        public string partnerTransactionNo { get; set; }
+		[DisplayName("Booking date")]
+		public Nullable<System.DateTime> bookingDate { get; set; }
 
-        [DisplayName("Booking date")]
-       // [Required(ErrorMessage = "Field is required!")]
-        [DataType(DataType.DateTime)]
-        [Display(Name = "Booking Date") ,DisplayFormat(ApplyFormatInEditMode = true)]
-        public DateTime bookingDate { get; set; }
+		[DisplayName("Departure date")]
+		[Required]
+		public System.DateTime departureDate { get; set; }
 
-        [DisplayName("Departure date")]
-        [Required(ErrorMessage = "Field is required!")]
-        [DataType(DataType.Date)]
-        [Display(Name = "Departure Date"), DisplayFormat(ApplyFormatInEditMode = true)]
-        public System.DateTime departureDate { get; set; }
+		[DisplayName("Origin")]
+		[Required]
+		[StringLength(maximumLength: 3, MinimumLength = 3)]
+		public string origin { get; set; }
 
-        [DisplayName("Origin")]
-        [Required(ErrorMessage = "Field is required!")]
-        [MinLength(3, ErrorMessage = "Min lenght is 3 characters!")]
-        [MaxLength(3, ErrorMessage = "Max lenght is 3 characters!")]
-        public string origin { get; set; }
+		[DisplayName("Destination")]
+		[Required]
+		[StringLength(maximumLength: 3, MinimumLength =3)]
+		public string destination { get; set; }
 
-        [DisplayName("Destination")]
-        [Required(ErrorMessage = "Field is required!")]
-        [MinLength(3, ErrorMessage = "Min lenght is 3 characters!")]
-        [MaxLength(3, ErrorMessage = "Max lenght is 3 characters!")]
-        public string destination { get; set; }
+		[DisplayName("Booking class")]
+		[Required]
+		[MaxLength(2)]
+		public string bookingClass { get; set; }
 
-        [DisplayName("Booking class")]
-        [Required(ErrorMessage = "Field is required!")]
-        [MinLength(1, ErrorMessage = "Min lenght is 1 character!")]
-        [MaxLength(2, ErrorMessage = "Max lenght is 2 characters!")]
-        public string bookingClass { get; set; }
+		[DisplayName("Cabin class")]
+		[MaxLength(1)]
+		public string cabinClass { get; set; }
 
-        [DisplayName("Cabin class")]
-        [MinLength(0)]
-        [MaxLength(1, ErrorMessage = "Max lenght is 1 character!")]
-        public string cabinClass { get; set; }
+		[DisplayName("Marketing flight number")]
+		[Required]
+		[MaxLength(4)]
+		public string marketingFlightNo { get; set; }
 
-        [DisplayName("Marketing flight number")]
-        [Required(ErrorMessage = "Field is required!")]
-        [MinLength(1, ErrorMessage = "Min lenght is 1 character!")]
-        [MaxLength(4, ErrorMessage = "Max lenght is 4 characters!")]
-        public string marketingFlightNo { get; set; }
+		[MaxLength(2)]
+		[DisplayName("Marketing airline")]
+		[Required]
+		public string marketingAirline { get; set; }
 
-        [DisplayName("Marketing airline")]
-        [Required(ErrorMessage = "Field is required!")]
-        [MinLength(1, ErrorMessage = "Min lenght is 1 character!")]
-        [MaxLength(2, ErrorMessage = "Max lenght is 2 characters!")]
-        public string marketingAirline { get; set; }
+		[MaxLength(4)]
+		[DisplayName("Operating flight number")]
+		[Required]
+		public string operatingFlightNo { get; set; }
 
-        [DisplayName("Operating flight number")]
-        [Required(ErrorMessage = "Field is required!")]
-        [MinLength(1, ErrorMessage = "Min lenght is 1 character!")]
-        [MaxLength(4, ErrorMessage = "Max lenght is 4 characters!")]
-        public string operatingFlightNo { get; set; }
+		[MaxLength(2)]
+		[DisplayName("Operating airline")]
+		[Required]
+		public string operatingAirline { get; set; }
 
-        [DisplayName("Operating airline")]
-        [Required(ErrorMessage = "Field is required!")]
-        [MinLength(1, ErrorMessage = "Min lenght is 1 character!")]
-        [MaxLength(2, ErrorMessage = "Min lenght is 2 characters!")]
-        public string operatingAirline { get; set; }
+		[MinLength(13)]
+		[MaxLength(14)]
+		[DisplayName("Ticket number")]
+		public string ticketNo { get; set; }
 
-        [DisplayName("Ticket number")]
-        [MinLength(13, ErrorMessage = "Min lenght is 13 characters!")]
-        [MaxLength(14, ErrorMessage = "Max lenght is 14 characters!")]
-        public string ticketNo { get; set; }
+		[DisplayName("External PaxID")]
+		[MaxLength(25)]
+		public string externalPaxID { get; set; }
 
-        [DisplayName("External PaxID")]
-        [MinLength(0)]
-        [MaxLength(25, ErrorMessage = "Max lenght is 25 characters!")]
-        public string externalPaxID { get; set; }
+		[MaxLength(2)]
+		[DisplayName("Coupon number")]
+		public string couponNo { get; set; }
 
-        [DisplayName("Coupon number")]
-        [MinLength(0)]
-        [MaxLength(2, ErrorMessage = "Max lenght is 2 characters!")]
-        public string couponNo { get; set; }
+		[MaxLength(6)]
+		[DisplayName("pnrNo number")]
+		[Required]
+		public string pnrNo { get; set; }
 
-        [DisplayName("pnrNo number")]
-        [Required(ErrorMessage = "Field is required!")]
-        [MinLength(1, ErrorMessage = "Min lenght is 1 character!")]
-        [MaxLength(6, ErrorMessage = "Max lenght is 6 characters!")]
-        public string pnrNo { get; set; }
+		[DisplayName("Distance")]
+		[Range(0, 99999)]
+		public Nullable<long> distance { get; set; }
 
-        [DisplayName("Distance")]
-        [Range(minimum: 0, maximum: 99999,  ErrorMessage = "Insert number in range from 0 to 99999!")]
-        public Nullable<long> distance { get; set; }
+		[Range(0, 999999999)]
+		[DisplayName("Base fare")]
+		public Nullable<double> baseFare { get; set; }
 
-        [DisplayName("Base fare")]
-        [Range(minimum: 0, maximum: 999999999, ErrorMessage = "Insert number in range from 0 to 999999999!")]
-        public Nullable<float> baseFare { get; set; }
+		[Range(0, 999999999)]
+		[DisplayName("Discount base")]
+		public Nullable<double> discountBase { get; set; }
 
-        [DisplayName("Discount base")]
-        [Range(minimum: 0, maximum: 999999999, ErrorMessage = "Insert number in range from 0 to 999999999!")]
-        public Nullable<float> discountBase { get; set; }
+		[Range(0, 999999999)]
+		[DisplayName("Excise tax")]
+		public Nullable<double> exciseTax { get; set; }
 
-        [DisplayName("Excise tax")]
-        [Range(minimum: 0, maximum: 999999999, ErrorMessage = "Insert number in range from 0 to 999999999!")]
-        public Nullable<float> exciseTax { get; set; }
+		[MaxLength(1)]
+		[DisplayName("Customer type")]
+		public string customerType { get; set; }
 
-        [DisplayName("Customer type")]
-        [MinLength(0)]
-        [MaxLength(1, ErrorMessage = "Max lenght is 1 character!")]
-        public string customerType { get; set; }
+		[MaxLength(1)]
+		[DisplayName("Promotion code")]
+		public string promotionCode { get; set; }
 
-        [DisplayName("Promotion code")]
-        [MinLength(0)]
-        [MaxLength(1, ErrorMessage = "Max lenght is 1 character!")]
-        public string promotionCode { get; set; }
+		[MaxLength(3)]
+		[DisplayName("Ticket currency")]
+		[EIValidation]
+		public string ticketCurrency { get; set; }
 
-        [DisplayName("Ticket currency")]
-        [MinLength(0)]
-        [MaxLength(3, ErrorMessage = "Min lenght is 3 characters!")]
-        [EIValidation]
-        public string ticketCurrency { get; set; }
+		[MaxLength(3)]
+		[DisplayName("Target currency")]
+		[EIValidation]
+		public string targetCurrency { get; set; }
 
-        [DisplayName("Target currency")]
-        [MinLength(0)]
-        [MaxLength(3, ErrorMessage = "Min lenght is 3 characters!")]
-        [EIValidation]
-        public string targetCurrency { get; set; }
+		[Range(0, 9999999999)]
+		[DisplayName("Exchange rate")]
+		[EIValidation]
+		public Nullable<double> exchangeRate { get; set; }
 
-        [DisplayName("Exchange rate")]
-        [Range(minimum: 0, maximum: 9999999999, ErrorMessage = "Insert number in range from 0 to 999999999!")]
-        [EIValidation]
-        public Nullable<float> exchangeRate { get; set; }
+		[MaxLength(10)]
+		[DisplayName("Fare basis")]
+		public string fareBasis { get; set; }
 
-        [DisplayName("Fare basis")]
-        [MinLength(0)]
-        [MaxLength(10, ErrorMessage = "Min lenght is 3 characters!")]
-        public string fareBasis { get; set; }
-    }
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		public int ID { get; set; }
+	}
 }

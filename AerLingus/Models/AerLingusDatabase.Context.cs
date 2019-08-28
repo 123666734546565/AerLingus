@@ -13,10 +13,10 @@ namespace AerLingus.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class AerLingus_databaseEntities1 : DbContext
+    public partial class AerLingus_databaseEntities : DbContext
     {
-        public AerLingus_databaseEntities1()
-            : base("name=AerLingus_databaseEntities1")
+        public AerLingus_databaseEntities()
+            : base("name=AerLingus_databaseEntities")
         {
         }
     

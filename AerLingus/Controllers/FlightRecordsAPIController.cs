@@ -11,7 +11,7 @@ namespace AerLingus.Controllers
 {
     public class FlightRecordsAPIController : ApiController
     {
-        AerLingus_databaseEntities1 entities = new AerLingus_databaseEntities1();
+        AerLingus_databaseEntities entities = new AerLingus_databaseEntities();
 
         // GET: api/FlightRecordsAPI
         public HttpResponseMessage Get()

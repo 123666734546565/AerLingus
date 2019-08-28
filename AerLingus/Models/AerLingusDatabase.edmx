@@ -104,7 +104,7 @@
           <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Footer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
-        <EntityContainer Name="AerLingus_databaseEntities1" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="AerLingus_databaseEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Flight_Records" EntityType="Self.Flight_Records" />
           <EntitySet Name="FR_Batch_Files" EntityType="Self.FR_Batch_Files" />
         </EntityContainer>
@@ -113,7 +113,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="AerLingus_databaseModelStoreContainer" CdmEntityContainer="AerLingus_databaseEntities1">
+        <EntityContainerMapping StorageEntityContainer="AerLingus_databaseModelStoreContainer" CdmEntityContainer="AerLingus_databaseEntities">
           <EntitySetMapping Name="Flight_Records">
             <EntityTypeMapping TypeName="AerLingus_databaseModel.Flight_Records">
               <MappingFragment StoreEntitySet="Flight_Records">
