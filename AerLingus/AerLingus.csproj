@@ -216,6 +216,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AerLingusDatabase.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\EIValidation.cs" />
     <Compile Include="Models\Flight_Records.cs">
       <DependentUpon>AerLingusDatabase.tt</DependentUpon>
     </Compile>
@@ -234,10 +235,14 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\CenterErrorButton.css" />
+    <Content Include="Content\currencies.txt" />
     <Content Include="Content\dropzone.min.css" />
     <Content Include="Content\HomePageScreen.css" />
     <Content Include="Content\Images\AerLingusLogo.png" />
     <Content Include="Content\Images\Background1980x1080.png" />
+    <Content Include="Content\jquery-ui-timepicker-addon.css" />
+    <Content Include="Content\jquery-ui-timepicker-addon.min.css" />
+    <Content Include="Content\jquery-ui.min.css" />
     <Content Include="Content\SocialMediaIcons.css" />
     <Content Include="Content\style.css" />
     <Content Include="Content\WelcomeAnimation.css" />
@@ -271,6 +276,12 @@
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-ui-1.8.11.js" />
+    <Content Include="Scripts\jquery-ui-1.8.11.min.js" />
+    <Content Include="Scripts\jquery-ui-sliderAccess.js" />
+    <Content Include="Scripts\jquery-ui-timepicker-addon.js" />
+    <Content Include="Scripts\jquery-ui-timepicker-addon.min.js" />
+    <Content Include="Scripts\jquery-ui.min.js" />
     <Content Include="Scripts\jquery.filedrop.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />

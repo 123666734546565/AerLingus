@@ -2631,12 +2631,15 @@ input[type="search"] {
 .form-group {
   margin-bottom: 15px;
 }
+.datepicker form-control{
+    display: inline;
+}
 .radio,
 .checkbox {
-  position: relative;
-  display: block;
-  margin-top: 10px;
-  margin-bottom: 10px;
+    position: relative;
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 .radio label,
 .checkbox label {

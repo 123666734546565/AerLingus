@@ -10,6 +10,7 @@ using System.Web;
 using Microsoft.VisualBasic;
 using System.Text;
 using AerLingus.Validations;
+using System.Threading.Tasks;
 
 namespace AerLingus.Controllers.Api
 {
@@ -671,5 +672,19 @@ namespace AerLingus.Controllers.Api
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
         }
+        //FORMULAR 
+
+        [System.Web.Http.HttpPost]
+        [Route("api/FlightRecordsAPI/AddFlightRecord")]
+        // POST: api/FlightRecordsAPI/AddFlightRecord
+        public async Task<HttpResponseMessage> AddFlightRecord([FromBody] Flight_Records sfr)
+        {
+            entities.Flight_Records.Add(sfr);
+            await entities.SaveChangesAsync();
+            return Request.CreateResponse(HttpStatusCode.OK);
+
+        }
     }
+
+
 }
