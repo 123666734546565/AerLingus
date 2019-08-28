@@ -234,6 +234,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\CenterErrorButton.css" />
+    <Content Include="Content\dropzone.min.css" />
     <Content Include="Content\HomePageScreen.css" />
     <Content Include="Content\Images\AerLingusLogo.png" />
     <Content Include="Content\Images\Background1980x1080.png" />
@@ -264,6 +265,7 @@
       <DependentUpon>AerLingusDatabase.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\dropzone.min.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
@@ -313,6 +315,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\FlightRecords\FlightRecordForm.cshtml" />
     <Content Include="Views\FlightRecords\UploadSuccessful.cshtml" />
+    <Content Include="Views\FlightRecords\DragAndDropStatusMessages.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -76,67 +76,83 @@ namespace AerLingus.Controllers
         }
 
         [System.Web.Http.HttpPost]
-        public ActionResult UploadFiles()
+        public ActionResult DragAndDrop()
         {
-            string poruka = string.Empty;
-            if (Request.Files?.Count <= 0)
-                return Content("There is no file selected");
+            int counter = 1;
+            string fname = string.Empty;
 
-            else
-            {
-                var filesCount = Request.Files.Count;
-                for (int i = 0; i < filesCount; i++)
+        
+
+            try
+            { 
+                foreach (string fileName in Request.Files)
                 {
-                    var file = Request.Files[i];
 
-
-                    if (file == null)
-                        poruka = poruka + "No file selected.\n";
-
-                    if (file.ContentLength == 0)
-                        poruka = poruka + ("File is empty.\n");
-
-
-                    var fileName = Path.GetFileName(file.FileName);
-                    var path = Path.Combine(Server.MapPath("~/UploadedFiles"), fileName);
-                    if (fileName != string.Empty)
-                        return Content(fileName);
-                    else
-                        return Content("PRAZNO");
-                    file.SaveAs(path);
-
-
-                    FlightRecordsApiController flight = new FlightRecordsApiController()
+                    string errorMessage = "";
+                    HttpPostedFileBase file = Request.Files[fileName];
+                    fname = file.FileName;
+                    if (file != null && file.ContentLength > 0)
                     {
-                        Request = new HttpRequestMessage(),
-                        Configuration = new HttpConfiguration()
-                    };
+                        var path = Path.Combine(Server.MapPath("~/UploadedFiles"));
+                        string pathString = Path.Combine(path.ToString());
 
-                    var returnedStatusCode = flight.Upload(file).StatusCode;
+                        if(Path.GetExtension(file.FileName) != ".csv")
+                        {
+                            errorMessage += errorMessage + "File[" + counter + "] - ERROR 421: File must have .csv extension" + "\n";
+                            counter++;
+                            continue;
+                        }
+                       
 
-                    if (returnedStatusCode == System.Net.HttpStatusCode.OK)
-                        return RedirectToAction("Index", "Home");
-                    else
-                    {
-                        if (returnedStatusCode == System.Net.HttpStatusCode.NotFound)
-                            poruka = poruka + "404: No file selected\n";
-                        else if (returnedStatusCode == System.Net.HttpStatusCode.NoContent)
-                            poruka = poruka + "204: File is empty\n";
-                        else if (returnedStatusCode == System.Net.HttpStatusCode.NotAcceptable)
-                            poruka = poruka + "406: File is missing header or footer or they are not prefixed with H or F\n";
-                        else if (returnedStatusCode == System.Net.HttpStatusCode.PreconditionFailed)
-                            poruka = poruka + "412: No record added to database because number of footer records do not match\n";
-                        else if (returnedStatusCode == System.Net.HttpStatusCode.Conflict)
-                            poruka = poruka + "409: File with that header already exists in database\n";
-                        poruka = poruka + "500: Internal Server Error\n";
+                        string fileName1 = fname + Path.GetExtension(file.FileName);
+                        string uploadPath = string.Format("{0}\\{1}", pathString, fileName1);
+                        file.SaveAs(uploadPath);
+
+                        FlightRecordsApiController api = new FlightRecordsApiController()
+                        {
+                            Request = new HttpRequestMessage(),
+                            Configuration = new HttpConfiguration()
+                        };
+
+                        var returnedStatusCode = api.Upload(file).StatusCode;
+
+                        if (returnedStatusCode == System.Net.HttpStatusCode.OK)
+                           // ViewBag.ErrorMessages = ViewBag.ErrorMessages + "File[" + counter + "] - STATUS 201: Successful" + "\n";
+                        errorMessage += errorMessage + "File[" + counter + "] - STATUS 201: Successfull" + "\n";
+                        else
+                        {
+                            if (returnedStatusCode == System.Net.HttpStatusCode.NotFound)
+                                //ViewBag.ErrorMessages = ViewBag.ErrorMessages + "File[" + counter + "] - ERROR 404: No file selected" + "\n";
+                                errorMessage += errorMessage + "File[" + counter + "] - ERROR 404: No file selected" + "\n";
+                            else if (returnedStatusCode == System.Net.HttpStatusCode.NoContent)
+                                //ViewBag.ErrorMessages = ViewBag.ErrorMessages + "File[" + counter + "] - ERROR 204: File is empty" + "\n";
+                            errorMessage += errorMessage + "File[" + counter + "] - ERROR 204: File is empty" + "\n";
+                            else if (returnedStatusCode == System.Net.HttpStatusCode.NotAcceptable)
+                                //ViewBag.ErrorMessages = ViewBag.ErrorMessages + "File[" + counter + "] - ERROR 406: File is missing header or footer or they are not prefixed with H or F" + "\n";
+                            errorMessage += errorMessage + "File[" + counter + "] - ERROR 406: File is missing header or footer or they are not prefixed with H or F" + "\n";
+                            else if (returnedStatusCode == System.Net.HttpStatusCode.BadRequest)
+                                //ViewBag.ErrorMessages = ViewBag.ErrorMessages + "File[" + counter + "] - ERROR 400: Footer does not have the number of potential records" + "\n";
+                            errorMessage += errorMessage + "File[" + counter + "] - ERROR 400: Footer does not have the number of potential records" + "\n";
+                            else if (returnedStatusCode == System.Net.HttpStatusCode.PreconditionFailed)
+                                //ViewBag.ErrorMessages = ViewBag.ErrorMessages + "File[" + counter + "] - ERROR 412: No record added to database because the number of footer records does not match with the number of existing records in the file" + "\n";
+                            errorMessage += errorMessage + "File[" + counter + "] - ERROR 412: No record added to database because the number of footer records does not match with the number of existing records in the file" + "\n";
+                            else if (returnedStatusCode == System.Net.HttpStatusCode.Conflict)
+                                //ViewBag.ErrorMessages = ViewBag.ErrorMessages + "File[" + counter + "] - ERROR 409: File with that header already exists in database" + "\n";
+                            errorMessage += errorMessage + "File[" + counter + "] - ERROR 409: File with that header already exists in database" + "\n";
+                            //else ViewBag.ErrorMessages = ViewBag.ErrorMessages + "File[" + counter + "] - ERROR 500: Internal Server Error" + "\n";
+                            else errorMessage += errorMessage + "File[" + counter + "] - ERROR 500: Internal Server Error" + "\n";
+                            counter++;
+
+                            return Content(errorMessage);
+                        }
                     }
+                  
                 }
-                if (poruka != string.Empty)
-                {
-                    return Content(poruka);
-                }
-                else
-                    return RedirectToAction("Index", "Home");
+                return Content("valjda");
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.Message);
             }
         }
 
