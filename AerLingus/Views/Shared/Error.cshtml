@@ -1,9 +1,14 @@
-﻿@model System.Web.Mvc.HandleErrorInfo
+﻿@model Object
 
 @{
     ViewBag.Title = "Error";
 }
 
-<h1 class="text-danger">Error.</h1>
-<h2 class="text-danger">An error occurred while processing your request.</h2>
+<link rel="stylesheet" href="~/Content/CenterErrorButton.css" />
 
+@*<h1 class="text-danger">Error.</h1>*@
+<h2 class="text-danger" style="text-align:center"><b>@Model</b></h2>
+
+<div class="wrapper">
+    @Html.ActionLink("Back", "FlightRecordForm", "FlightRecords", new { @class = "btn btn-danger", @style = "width:70px;" })
+</div>

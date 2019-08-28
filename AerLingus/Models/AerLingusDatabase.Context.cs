@@ -12,7 +12,8 @@ namespace AerLingus.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-    
+    using System.Data.Entity.ModelConfiguration.Conventions;
+
     public partial class AerLingus_databaseEntities : DbContext
     {
         public AerLingus_databaseEntities()
@@ -22,6 +23,7 @@ namespace AerLingus.Models
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            //modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
             throw new UnintentionalCodeFirstException();
         }
     
