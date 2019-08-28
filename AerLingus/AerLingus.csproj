@@ -193,6 +193,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\FlightRecordsAPIController.cs" />
     <Compile Include="Controllers\Api\FlightRecordsApiController.cs" />
     <Compile Include="Controllers\FlightRecordsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -200,6 +201,12 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\FlashMessage.cs" />
+    <Compile Include="Helpers\Razor\HtmlClasses.cs" />
+    <Compile Include="Helpers\Razor\HtmlExtensions\Nl2brExtension.cs" />
+    <Compile Include="Helpers\Razor\HtmlExtensions\ReadOnlyForExtension.cs" />
+    <Compile Include="Helpers\Razor\HtmlHelpers.cs" />
+    <Compile Include="Helpers\Razor\TemplatesConsts.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AerLingusDatabase.Context.cs">
       <AutoGen>True</AutoGen>
@@ -216,6 +223,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AerLingusDatabase.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\EIValidation.cs" />
     <Compile Include="Models\Flight_Records.cs">
       <DependentUpon>AerLingusDatabase.tt</DependentUpon>
     </Compile>
@@ -233,6 +241,37 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\currencies.txt" />
+    <Content Include="Content\jquery-ui-timepicker-addon.css" />
+    <Content Include="Content\jquery-ui-timepicker-addon.min.css" />
+    <Content Include="Content\jquery-ui.min.css" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\jquery.ui.accordion.css" />
+    <Content Include="Content\themes\base\jquery.ui.all.css" />
+    <Content Include="Content\themes\base\jquery.ui.autocomplete.css" />
+    <Content Include="Content\themes\base\jquery.ui.base.css" />
+    <Content Include="Content\themes\base\jquery.ui.button.css" />
+    <Content Include="Content\themes\base\jquery.ui.core.css" />
+    <Content Include="Content\themes\base\jquery.ui.datepicker.css" />
+    <Content Include="Content\themes\base\jquery.ui.dialog.css" />
+    <Content Include="Content\themes\base\jquery.ui.progressbar.css" />
+    <Content Include="Content\themes\base\jquery.ui.resizable.css" />
+    <Content Include="Content\themes\base\jquery.ui.selectable.css" />
+    <Content Include="Content\themes\base\jquery.ui.slider.css" />
+    <Content Include="Content\themes\base\jquery.ui.tabs.css" />
+    <Content Include="Content\themes\base\jquery.ui.theme.css" />
     <Content Include="Content\CenterErrorButton.css" />
     <Content Include="Content\dropzone.min.css" />
     <Content Include="Content\HomePageScreen.css" />
@@ -257,6 +296,36 @@
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Areas\Shared\Views\Partial\_FlashMessages.cshtml" />
+    <Content Include="Areas\Shared\Views\Partial\EditorTemplates\_Label.cshtml" />
+    <Content Include="Areas\Shared\Views\Partial\EditorTemplates\TimeSpan.cshtml" />
+    <Content Include="Areas\Shared\Views\Partial\EditorTemplates\TextBoxBase.cshtml" />
+    <Content Include="Areas\Shared\Views\Partial\EditorTemplates\Text.cshtml" />
+    <Content Include="Areas\Shared\Views\Partial\EditorTemplates\String.cshtml" />
+    <Content Include="Areas\Shared\Views\Partial\EditorTemplates\Single.cshtml" />
+    <Content Include="Areas\Shared\Views\Partial\EditorTemplates\Password.cshtml" />
+    <Content Include="Areas\Shared\Views\Partial\EditorTemplates\MultilineText.cshtml" />
+    <Content Include="Areas\Shared\Views\Partial\EditorTemplates\Int32.cshtml" />
+    <Content Include="Areas\Shared\Views\Partial\EditorTemplates\HttpPostedFileBase.cshtml" />
+    <Content Include="Areas\Shared\Views\Partial\EditorTemplates\Enum.cshtml" />
+    <Content Include="Areas\Shared\Views\Partial\EditorTemplates\EmailAddress.cshtml" />
+    <Content Include="Areas\Shared\Views\Partial\EditorTemplates\DropDown.cshtml" />
+    <Content Include="Areas\Shared\Views\Partial\EditorTemplates\Decimal.cshtml" />
+    <Content Include="Areas\Shared\Views\Partial\EditorTemplates\DateTime.cshtml" />
+    <Content Include="Areas\Shared\Views\Partial\EditorTemplates\Date.cshtml" />
+    <Content Include="Areas\Shared\Views\Partial\EditorTemplates\Currency.cshtml" />
+    <Content Include="Areas\Shared\Views\Partial\EditorTemplates\Boolean.cshtml" />
+    <Content Include="Areas\Shared\Views\Partial\DisplayTemplates\String.cshtml" />
+    <Content Include="Areas\Shared\Views\Partial\DisplayTemplates\Number.cshtml" />
+    <Content Include="Areas\Shared\Views\Partial\DisplayTemplates\MultilineText.cshtml" />
+    <Content Include="Areas\Shared\Views\Partial\DisplayTemplates\Int32.cshtml" />
+    <Content Include="Areas\Shared\Views\Partial\DisplayTemplates\EmailAddress.cshtml" />
+    <Content Include="Areas\Shared\Views\Partial\DisplayTemplates\DisplayBase.cshtml" />
+    <Content Include="Areas\Shared\Views\Partial\DisplayTemplates\Decimal.cshtml" />
+    <Content Include="Areas\Shared\Views\Partial\DisplayTemplates\DateTime.cshtml" />
+    <Content Include="Areas\Shared\Views\Partial\DisplayTemplates\Date.cshtml" />
+    <Content Include="Areas\Shared\Views\Partial\DisplayTemplates\Currency.cshtml" />
+    <Content Include="Areas\Shared\Views\Partial\DisplayTemplates\Boolean.cshtml" />
     <EntityDeploy Include="Models\AerLingusDatabase.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>AerLingusDatabase.Designer.cs</LastGenOutput>
@@ -265,12 +334,64 @@
       <DependentUpon>AerLingusDatabase.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\i18n\jquery-ui-timepicker-addon-i18n.js" />
+    <Content Include="Scripts\i18n\jquery-ui-timepicker-addon-i18n.min.js" />
+    <Content Include="Scripts\i18n\jquery-ui-timepicker-af.js" />
+    <Content Include="Scripts\i18n\jquery-ui-timepicker-am.js" />
+    <Content Include="Scripts\i18n\jquery-ui-timepicker-bg.js" />
+    <Content Include="Scripts\i18n\jquery-ui-timepicker-ca.js" />
+    <Content Include="Scripts\i18n\jquery-ui-timepicker-cs.js" />
+    <Content Include="Scripts\i18n\jquery-ui-timepicker-da.js" />
+    <Content Include="Scripts\i18n\jquery-ui-timepicker-de.js" />
+    <Content Include="Scripts\i18n\jquery-ui-timepicker-el.js" />
+    <Content Include="Scripts\i18n\jquery-ui-timepicker-es.js" />
+    <Content Include="Scripts\i18n\jquery-ui-timepicker-et.js" />
+    <Content Include="Scripts\i18n\jquery-ui-timepicker-eu.js" />
+    <Content Include="Scripts\i18n\jquery-ui-timepicker-fa.js" />
+    <Content Include="Scripts\i18n\jquery-ui-timepicker-fi.js" />
+    <Content Include="Scripts\i18n\jquery-ui-timepicker-fr.js" />
+    <Content Include="Scripts\i18n\jquery-ui-timepicker-gl.js" />
+    <Content Include="Scripts\i18n\jquery-ui-timepicker-he.js" />
+    <Content Include="Scripts\i18n\jquery-ui-timepicker-hr.js" />
+    <Content Include="Scripts\i18n\jquery-ui-timepicker-hu.js" />
+    <Content Include="Scripts\i18n\jquery-ui-timepicker-id.js" />
+    <Content Include="Scripts\i18n\jquery-ui-timepicker-it.js" />
+    <Content Include="Scripts\i18n\jquery-ui-timepicker-ja.js" />
+    <Content Include="Scripts\i18n\jquery-ui-timepicker-ko.js" />
+    <Content Include="Scripts\i18n\jquery-ui-timepicker-lt.js" />
+    <Content Include="Scripts\i18n\jquery-ui-timepicker-lv.js" />
+    <Content Include="Scripts\i18n\jquery-ui-timepicker-mk.js" />
+    <Content Include="Scripts\i18n\jquery-ui-timepicker-nl.js" />
+    <Content Include="Scripts\i18n\jquery-ui-timepicker-no.js" />
+    <Content Include="Scripts\i18n\jquery-ui-timepicker-pl.js" />
+    <Content Include="Scripts\i18n\jquery-ui-timepicker-pt-BR.js" />
+    <Content Include="Scripts\i18n\jquery-ui-timepicker-pt.js" />
+    <Content Include="Scripts\i18n\jquery-ui-timepicker-ro.js" />
+    <Content Include="Scripts\i18n\jquery-ui-timepicker-ru.js" />
+    <Content Include="Scripts\i18n\jquery-ui-timepicker-sk.js" />
+    <Content Include="Scripts\i18n\jquery-ui-timepicker-sl.js" />
+    <Content Include="Scripts\i18n\jquery-ui-timepicker-sq.js" />
+    <Content Include="Scripts\i18n\jquery-ui-timepicker-sr-RS.js" />
+    <Content Include="Scripts\i18n\jquery-ui-timepicker-sr-YU.js" />
+    <Content Include="Scripts\i18n\jquery-ui-timepicker-sv.js" />
+    <Content Include="Scripts\i18n\jquery-ui-timepicker-th.js" />
+    <Content Include="Scripts\i18n\jquery-ui-timepicker-tr.js" />
+    <Content Include="Scripts\i18n\jquery-ui-timepicker-uk.js" />
+    <Content Include="Scripts\i18n\jquery-ui-timepicker-vi.js" />
+    <Content Include="Scripts\i18n\jquery-ui-timepicker-zh-CN.js" />
+    <Content Include="Scripts\i18n\jquery-ui-timepicker-zh-TW.js" />
     <Content Include="Scripts\dropzone.min.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-ui-1.8.11.js" />
+    <Content Include="Scripts\jquery-ui-1.8.11.min.js" />
+    <Content Include="Scripts\jquery-ui-sliderAccess.js" />
+    <Content Include="Scripts\jquery-ui-timepicker-addon.js" />
+    <Content Include="Scripts\jquery-ui-timepicker-addon.min.js" />
+    <Content Include="Scripts\jquery-ui.min.js" />
     <Content Include="Scripts\jquery.filedrop.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
@@ -314,12 +435,12 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\FlightRecords\FlightRecordForm.cshtml" />
+    <Content Include="Views\FlightRecords\FlightRecordForm.cshtml" />
     <Content Include="Views\FlightRecords\UploadSuccessful.cshtml" />
     <Content Include="Views\FlightRecords\DragAndDropStatusMessages.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="UploadedFiles\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

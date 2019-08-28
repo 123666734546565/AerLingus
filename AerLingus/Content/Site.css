@@ -1,6 +1,7 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    background-color: #f3f0ee;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -21,6 +22,139 @@ input,
 select,
 textarea {
     max-width: 280px;
+}
+.field-validation-error{
+
+    color:red;
+    
+}
+.input-validation-error {
+    
+    border: 1.25px solid red ;
+}
+
+#identifierNo{
+    border: 1.25px solid #26aabd; 
+}
+#transactionType {
+    border: 1.25px solid #26aabd;
+}
+#otherFFPNo {
+    border: 1.25px solid #26aabd;
+}
+#otherFFPScheme {
+    border: 1.25px solid #26aabd;
+}
+
+#firstName {
+    border: 1.25px solid #26aabd;
+}
+
+#lastName {
+    border: 1.25px solid #26aabd;
+}
+#partnerTransactionNo {
+    border: 1.25px solid #26aabd;
+}
+#bookingDate {
+    border: 1.25px solid #26aabd;
+}
+#departureDate {
+    border: 1.25px solid #26aabd;
+}
+#origin {
+    border: 1.25px solid #26aabd;
+}
+#externalPaxID {
+    border: 1.25px solid #26aabd;
+}
+#cabinClass {
+    border: 1.25px solid #26aabd;
+}
+#destination {
+    border: 1.25px solid #26aabd;
+}
+#bookingClass {
+    border: 1.25px solid #26aabd;
+}
+#marketingFlightNo {
+    border: 1.25px solid #26aabd;
+}
+#marketingAirline {
+    border: 1.25px solid #26aabd;
+}
+#operatingFlightNo {
+    border: 1.25px solid #26aabd;
+}
+#operatingAirline {
+    border: 1.25px solid #26aabd;
+}
+#ticketNo {
+    border: 1.25px solid #26aabd;
+}
+#externalPaxId {
+    border: 1.25px solid #26aabd;
+}
+#couponNo {
+    border: 1.25px solid #26aabd;
+}
+#pnrNo {
+    border: 1.25px solid #26aabd;
+}
+#distance {
+    border: 1.25px solid #26aabd;
+}
+#fareBasis {
+    border: 1.25px solid #26aabd;
+}
+#discountBase {
+    border: 1.25px solid #26aabd;
+}
+#exciseTax {
+    border: 1.25px solid #26aabd;
+}
+#customerType {
+    border: 1.25px solid #26aabd;
+}
+#promotionCode {
+    border: 1.25px solid #26aabd;
+}
+#ticketCurrency {
+    border: 1.25px solid #26aabd;
+}
+#baseFare {
+    border: 1.25px solid #26aabd;
+}
+
+#targetCurrency {
+    border: 1.25px solid #26aabd;
+}
+#exchangeRate {
+    border: 1.25px solid #26aabd;
+}
+#fareBase {
+    border: 1.25px solid #26aabd;
+}
+
+.btn {
+    background-color: #26aabd;
+   
+}
+
+.btn:hover {
+    background-color: #1f8d9d;
+}
+
+.btn:active {
+    background: #26aabd !important;
+}
+
+.datepicker1 {
+    display:inline-flex;
+}
+
+.datepicker{
+    display:inline-flex;
 }
 
 /*.navbar-brand {
