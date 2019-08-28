@@ -33,34 +33,6 @@ namespace AerLingus.Controllers
             client = new HttpClient();
         }
 
-        public ActionResult FlightRecordForm(Flight_Records sfr)
-        { 
-            if (!String.IsNullOrEmpty(sfr.firstName) || !String.IsNullOrEmpty(sfr.lastName))
-            {
-                //Ako je sfr formular popunjen salju se podaci u API kako bi se sacuvali u bazu
-                HttpClient hc = new HttpClient();
-                hc.BaseAddress = new Uri(@"http://localhost:54789/api/FlightRecordsAPI/AddFlightRecord");
-                var insertRecord = hc.PostAsJsonAsync<Flight_Records>("", sfr);
-                insertRecord.Wait();
-                var recorddisplay = insertRecord.Result;
-                if (recorddisplay.IsSuccessStatusCode)
-                {
-                    //redirekcija u listu svih flight rekorda
-                    return RedirectToAction("Index", "Home");
-                }
-            }
-            //Prikazuje formular za dodavanje single flight rekorda ako zeli da doda novi sfr ili ako prethodno popunjavanje nije proslo kako treba
-            List<SelectListItem> listItems = new List<SelectListItem>();
-            listItems.Add(new SelectListItem
-            {
-                Text = "AI",
-                Value = "AI"
-            });
-            listItems.Add(new SelectListItem
-            {
-                Text = "AB",
-                Value = "AB",
-            });
         public ActionResult Upload(HttpPostedFileBase file)
         {
             if (file == null)
@@ -105,7 +77,45 @@ namespace AerLingus.Controllers
                 return View("Error", errorMessage);
             }
         }
+        public ActionResult FlightRecordForm(Flight_Records sfr)
+        { 
+            if (!String.IsNullOrEmpty(sfr.firstName) || !String.IsNullOrEmpty(sfr.lastName))
+            {
+                //Ako je sfr formular popunjen salju se podaci u API kako bi se sacuvali u bazu
+                HttpClient hc = new HttpClient();
+                hc.BaseAddress = new Uri(@"http://localhost:54789/api/FlightRecordsAPI/AddFlightRecord");
+                var insertRecord = hc.PostAsJsonAsync<Flight_Records>("", sfr);
+                insertRecord.Wait();
+                var recorddisplay = insertRecord.Result;
+                if (recorddisplay.IsSuccessStatusCode)
+                {
+                    //redirekcija u listu svih flight rekorda
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+            //Prikazuje formular za dodavanje single flight rekorda ako zeli da doda novi sfr ili ako prethodno popunjavanje nije proslo kako treba
+            List<SelectListItem> listItems = new List<SelectListItem>();
+            listItems.Add(new SelectListItem
+            {
+                Text = "AI",
+                Value = "AI"
+            });
+            listItems.Add(new SelectListItem
+            {
+                Text = "AB",
+                Value = "AB",
+            });
 
+        public ActionResult FlightRecordForm()
+        {
+            return View();
+        }
+
+        [System.Web.Http.HttpPost]
+        public ActionResult DragAndDrop()
+        {
+            int counter = 1;
+            string fname = string.Empty;
             List<SelectListItem> listItems2 = new List<SelectListItem>();
             listItems2.Add(new SelectListItem
             {
@@ -127,17 +137,8 @@ namespace AerLingus.Controllers
                 Text = "Y",
                 Value = "Y",
             });
-        public ActionResult FlightRecordForm()
-        {
-            return View();
-        }
 
-        [System.Web.Http.HttpPost]
-        public ActionResult DragAndDrop()
-        {
-            int counter = 1;
-            string fname = string.Empty;
-
+        
             List<SelectListItem> listItems3 = new List<SelectListItem>();
             listItems3.Add(new SelectListItem
             {
@@ -155,14 +156,14 @@ namespace AerLingus.Controllers
                 Text = "I",
                 Value = "I",
             });
-        
 
-            StreamReader sr = new StreamReader(HostingEnvironment.ApplicationPhysicalPath + "/Content/currencies.txt");
             try
             { 
                 foreach (string fileName in Request.Files)
                 {
+            StreamReader sr = new StreamReader(HostingEnvironment.ApplicationPhysicalPath + "/Content/currencies.txt");
 
+            List<string> listItems4 = new List<string>();
                     string errorMessage = "";
                     HttpPostedFileBase file = Request.Files[fileName];
                     fname = file.FileName;
@@ -170,8 +171,14 @@ namespace AerLingus.Controllers
                     {
                         var path = Path.Combine(Server.MapPath("~/UploadedFiles"));
                         string pathString = Path.Combine(path.ToString());
-            List<string> listItems4 = new List<string>();
 
+                        if(Path.GetExtension(file.FileName) != ".csv")
+                        {
+                            errorMessage += errorMessage + "File[" + counter + "] - ERROR 421: File must have .csv extension" + "\n";
+                            counter++;
+                            continue;
+                        }
+                       
             while (!sr.EndOfStream)
             {
                 listItems4.Add(sr.ReadLine());
@@ -181,13 +188,6 @@ namespace AerLingus.Controllers
             ViewBag.list2 = listItems2;
             ViewBag.list3 = listItems3;
             ViewBag.list4 = listItems4;
-                        if(Path.GetExtension(file.FileName) != ".csv")
-                        {
-                            errorMessage += errorMessage + "File[" + counter + "] - ERROR 421: File must have .csv extension" + "\n";
-                            counter++;
-                            continue;
-                        }
-                       
 
                         string fileName1 = fname + Path.GetExtension(file.FileName);
                         string uploadPath = string.Format("{0}\\{1}", pathString, fileName1);
