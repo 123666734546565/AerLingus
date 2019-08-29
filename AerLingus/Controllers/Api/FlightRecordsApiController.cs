@@ -536,7 +536,7 @@ namespace AerLingus.Controllers.Api
                                             {
                                                 if (record.ticketNo != string.Empty)
                                                 {
-                                                    if (Validation.TickerNoValidation(record) != null)
+                                                    if (Validation.TicketNoValidation(record) != null)
                                                     {
                                                         failedToAddRecords = failedToAddRecords + tempRecord + "\n";
                                                         recordsNotAdded++;
@@ -592,7 +592,7 @@ namespace AerLingus.Controllers.Api
                                         {
                                             if (record.ticketNo != string.Empty)
                                             {
-                                                if (Validation.TickerNoValidation(record) != null)
+                                                if (Validation.TicketNoValidation(record) != null)
                                                 {
                                                     failedToAddRecords = failedToAddRecords + tempRecord + "\n";
                                                     recordsNotAdded++;
@@ -679,9 +679,42 @@ namespace AerLingus.Controllers.Api
         // POST: api/FlightRecordsAPI/AddFlightRecord
         public async Task<HttpResponseMessage> AddFlightRecord([FromBody] Flight_Records sfr)
         {
-            entities.Flight_Records.Add(sfr);
-            await entities.SaveChangesAsync();
-            return Request.CreateResponse(HttpStatusCode.OK);
+
+            if(sfr.ticketNo != string.Empty || sfr.externalPaxID != string.Empty)
+                                        {
+                if (sfr.ticketNo != string.Empty)
+                {
+                    if (Validation.TicketNoValidation(sfr) == null)
+                    {
+                        entities.Flight_Records.Add(sfr);
+                        await entities.SaveChangesAsync();
+                        return Request.CreateResponse(HttpStatusCode.OK);
+                    }
+                    else 
+                        return Request.CreateResponse(HttpStatusCode.Conflict );
+
+                }
+                else if (sfr.externalPaxID != string.Empty)
+                {
+                    if (Validation.ExternalPaxIDValidation(sfr) == null)
+                    {
+                        entities.Flight_Records.Add(sfr);
+                        await entities.SaveChangesAsync();
+                        return Request.CreateResponse(HttpStatusCode.OK);
+                    }
+                    else 
+                        return Request.CreateResponse(HttpStatusCode.Conflict);
+
+                }
+                else
+                    return Request.CreateResponse(HttpStatusCode.Conflict);
+
+
+            }
+            else
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+
+
 
         }
     }
