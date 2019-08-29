@@ -681,7 +681,7 @@ namespace AerLingus.Controllers.Api
         {
 
             if(sfr.ticketNo != string.Empty || sfr.externalPaxID != string.Empty)
-                                        {
+            {
                 if (sfr.ticketNo != string.Empty)
                 {
                     if (Validation.TicketNoValidation(sfr) == null)

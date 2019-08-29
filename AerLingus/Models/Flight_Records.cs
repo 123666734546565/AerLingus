@@ -14,6 +14,7 @@ namespace AerLingus.Models
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.ComponentModel;
+    using AerLingus.Validations;
 
     public partial class Flight_Records
     {
@@ -98,11 +99,13 @@ namespace AerLingus.Models
 
         [MinLength(13)]
         [MaxLength(14)]
+        [TicketExternalValidation]
         [DisplayName("Ticket number")]
         public string ticketNo { get; set; }
 
         [DisplayName("External PaxID")]
         [MaxLength(25)]
+        [TicketExternalValidation]
         public string externalPaxID { get; set; }
 
         [MaxLength(2)]
