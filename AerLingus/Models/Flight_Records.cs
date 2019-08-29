@@ -31,12 +31,12 @@ namespace AerLingus.Models
         public string transactionType { get; set; }
 
         [DisplayName("Other FFP number")]
-        [MinLength(0)]
+       
         [MaxLength(30, ErrorMessage = "Max lenght is 30 characters!")]
         public string otherFFPNo { get; set; }
 
         [DisplayName("Other FFP scheme")]
-        [MinLength(0)]
+        
         [MaxLength(30, ErrorMessage = "Max lenght is 30 characters!")]
         public string otherFFPScheme { get; set; }
 
@@ -53,12 +53,12 @@ namespace AerLingus.Models
         public string lastName { get; set; }
 
         [DisplayName("Partner transaction number")]
-        [MinLength(0)]
+        
         [MaxLength(100, ErrorMessage = "Max lenght is 30 characters!")]
         public string partnerTransactionNo { get; set; }
 
         [DisplayName("Booking date")]
-       // [Required(ErrorMessage = "Field is required!")]
+       
         [DataType(DataType.DateTime)]
         [Display(Name = "Booking Date") ,DisplayFormat(ApplyFormatInEditMode = true)]
         public DateTime bookingDate { get; set; }
@@ -88,7 +88,7 @@ namespace AerLingus.Models
         public string bookingClass { get; set; }
 
         [DisplayName("Cabin class")]
-        [MinLength(0)]
+       
         [MaxLength(1, ErrorMessage = "Max lenght is 1 character!")]
         public string cabinClass { get; set; }
 
@@ -122,12 +122,12 @@ namespace AerLingus.Models
         public string ticketNo { get; set; }
 
         [DisplayName("External PaxID")]
-        [MinLength(0)]
+       
         [MaxLength(25, ErrorMessage = "Max lenght is 25 characters!")]
         public string externalPaxID { get; set; }
 
         [DisplayName("Coupon number")]
-        [MinLength(0)]
+        
         [MaxLength(2, ErrorMessage = "Max lenght is 2 characters!")]
         public string couponNo { get; set; }
 
@@ -142,15 +142,15 @@ namespace AerLingus.Models
         public Nullable<long> distance { get; set; }
 
         [DisplayName("Base fare")]
-        [Range(minimum: 0, maximum: 999999999, ErrorMessage = "Insert number in range from 0 to 999999999!")]
+        [Range(minimum: 0, maximum: 99999999, ErrorMessage = "Insert number in range from 0 to 99999999!")]
         public Nullable<float> baseFare { get; set; }
 
         [DisplayName("Discount base")]
-        [Range(minimum: 0, maximum: 999999999, ErrorMessage = "Insert number in range from 0 to 999999999!")]
+        [Range(minimum: 0, maximum: 99999999, ErrorMessage = "Insert number in range from 0 to 99999999!")]
         public Nullable<float> discountBase { get; set; }
 
         [DisplayName("Excise tax")]
-        [Range(minimum: 0, maximum: 999999999, ErrorMessage = "Insert number in range from 0 to 999999999!")]
+        [Range(minimum: 0, maximum: 99999999, ErrorMessage = "Insert number in range from 0 to 99999999!")]
         public Nullable<float> exciseTax { get; set; }
 
         [DisplayName("Customer type")]
@@ -159,18 +159,18 @@ namespace AerLingus.Models
         public string customerType { get; set; }
 
         [DisplayName("Promotion code")]
-        [MinLength(0)]
+        
         [MaxLength(1, ErrorMessage = "Max lenght is 1 character!")]
         public string promotionCode { get; set; }
 
         [DisplayName("Ticket currency")]
-        [MinLength(0)]
+        
         [MaxLength(3, ErrorMessage = "Max lenght is 3 characters!")]
         [EIValidation]
         public string ticketCurrency { get; set; }
 
         [DisplayName("Target currency")]
-        [MinLength(0)]
+        
         [MaxLength(3, ErrorMessage = "Max lenght is 3 characters!")]
         [EIValidation]
         public string targetCurrency { get; set; }
@@ -181,7 +181,7 @@ namespace AerLingus.Models
         public Nullable<float> exchangeRate { get; set; }
 
         [DisplayName("Fare basis")]
-        [MinLength(0)]
+        
         [MaxLength(10, ErrorMessage = "Max lenght is 3 characters!")]
         public string fareBasis { get; set; }
     }
