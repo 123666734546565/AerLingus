@@ -18,7 +18,9 @@ namespace AerLingus.Validations
                 return new ValidationResult("Either the ticket number or externalPaxID has to be provided!");
             }
 
-            return base.IsValid(value, validationContext);
+            return ValidationResult.Success;
+
+
         }
     }
 }
