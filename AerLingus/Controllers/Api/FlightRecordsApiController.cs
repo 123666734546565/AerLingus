@@ -17,7 +17,7 @@ namespace AerLingus.Controllers.Api
     public class FlightRecordsApiController : ApiController
     {
         private AerLingus_databaseEntities entities;
-
+        public string poruka;
         public FlightRecordsApiController()
         {
             entities = new AerLingus_databaseEntities();
@@ -43,6 +43,7 @@ namespace AerLingus.Controllers.Api
         [System.Web.Http.HttpPost]
         public HttpResponseMessage Upload(HttpPostedFileBase file)
         {
+
             Stream stream = file.InputStream;
 
             if (file == null)
@@ -669,10 +670,10 @@ namespace AerLingus.Controllers.Api
             }
             catch (Exception e)
             {
+                poruka = e.Message;
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
         }
-        //FORMULAR 
 
         [System.Web.Http.HttpPost]
         [Route("api/FlightRecordsAPI/AddFlightRecord")]

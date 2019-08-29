@@ -67,7 +67,7 @@ namespace AerLingus.Controllers
                     errorMessage = "ERROR 412: No record added to database because the number of footer records does not match with the number of existing records in the file";
                 else if (returnedStatusCode == System.Net.HttpStatusCode.Conflict)
                     errorMessage = "ERROR 409: File with that header already exists in database";
-                else errorMessage = "ERROR 500: Internal Server Error";
+                else errorMessage = api.poruka;/*"ERROR 500: Internal Server Error";*/
                 return View("Error", errorMessage);
             }
         }
@@ -167,7 +167,7 @@ namespace AerLingus.Controllers
                 if (recorddisplay.IsSuccessStatusCode)
                 {
                     //redirekcija u listu svih flight rekorda
-                    return RedirectToAction("Index", "Home");
+                    return View("UploadSuccessful");
                 }
             }
             //Prikazuje formular za dodavanje single flight rekorda ako zeli da doda novi sfr ili ako prethodno popunjavanje nije proslo kako treba
