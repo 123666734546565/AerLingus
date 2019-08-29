@@ -163,12 +163,54 @@ textarea {
 .Upload {
     display: inline-block;
     padding: 0px 50px ;
-    margin: 0;
+    margin: 0 200px 0 100px;
     position: absolute;
 }
-#fileupload{
-    position:static;
+#fileupload {
+	position: fixed;
+	margin: 0px;
 }
 #draganddrop{
     position:static;
+}
+.dropzone{
+	padding: 50px 50px !important;
+	background-color: lightgray !important;
+	border: solid !important;
+	border-color: darkgray !important;
+	border-radius: 10px !important;
+	border-width : 1px !important;
+	color: dimgray;
+}
+#mydrop {
+	position: fixed;
+	margin: 280px 0;
+
+}
+
+.form-group #file {
+	display: inline-block;
+}
+.form-group #dugmeSubmit {
+	background-color: #26aabd;
+	color: white;
+	font-weight: 500;
+	padding: 5px 15px;
+	border:none;
+	border-radius: 5px;
+}
+	.form-group #dugmeSubmit:hover {
+		background-color: #1f8d9d;
+	}
+	.form-group #dugmeSubmit:active {
+		background: #26aabd !important;
+	}
+
+
+.naslov{
+	padding-bottom: 30px;
+}
+.drugiNaslov{
+	padding-bottom:10px;
+	padding-top:90px;
 }
