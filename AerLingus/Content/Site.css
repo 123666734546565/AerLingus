@@ -153,6 +153,22 @@ textarea {
     display:inline-flex;
 }
 
-.datepicker{
-    display:inline-flex;
+.datepicker {
+    display: inline-flex;
+}
+
+.Formular{
+    display: inline-block;
+}
+.Upload {
+    display: inline-block;
+    padding: 0px 50px ;
+    margin: 0;
+    position: absolute;
+}
+#fileupload{
+    position:static;
+}
+#draganddrop{
+    position:static;
 }
