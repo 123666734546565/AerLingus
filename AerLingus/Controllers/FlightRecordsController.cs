@@ -118,32 +118,32 @@ namespace AerLingus.Controllers
                         if (returnedStatusCode == System.Net.HttpStatusCode.OK)
                            // ViewBag.ErrorMessages = ViewBag.ErrorMessages + "File[" + counter + "] - STATUS 201: Successful" + "\n";
                         errorMessage += errorMessage + "File[" + counter + "] - STATUS 201: Successfull" + "\n";
-                        else
-                        {
-                            if (returnedStatusCode == System.Net.HttpStatusCode.NotFound)
-                                //ViewBag.ErrorMessages = ViewBag.ErrorMessages + "File[" + counter + "] - ERROR 404: No file selected" + "\n";
-                                errorMessage += errorMessage + "File[" + counter + "] - ERROR 404: No file selected" + "\n";
-                            else if (returnedStatusCode == System.Net.HttpStatusCode.NoContent)
-                                //ViewBag.ErrorMessages = ViewBag.ErrorMessages + "File[" + counter + "] - ERROR 204: File is empty" + "\n";
-                            errorMessage += errorMessage + "File[" + counter + "] - ERROR 204: File is empty" + "\n";
-                            else if (returnedStatusCode == System.Net.HttpStatusCode.NotAcceptable)
-                                //ViewBag.ErrorMessages = ViewBag.ErrorMessages + "File[" + counter + "] - ERROR 406: File is missing header or footer or they are not prefixed with H or F" + "\n";
-                            errorMessage += errorMessage + "File[" + counter + "] - ERROR 406: File is missing header or footer or they are not prefixed with H or F" + "\n";
-                            else if (returnedStatusCode == System.Net.HttpStatusCode.BadRequest)
-                                //ViewBag.ErrorMessages = ViewBag.ErrorMessages + "File[" + counter + "] - ERROR 400: Footer does not have the number of potential records" + "\n";
-                            errorMessage += errorMessage + "File[" + counter + "] - ERROR 400: Footer does not have the number of potential records" + "\n";
-                            else if (returnedStatusCode == System.Net.HttpStatusCode.PreconditionFailed)
-                                //ViewBag.ErrorMessages = ViewBag.ErrorMessages + "File[" + counter + "] - ERROR 412: No record added to database because the number of footer records does not match with the number of existing records in the file" + "\n";
-                            errorMessage += errorMessage + "File[" + counter + "] - ERROR 412: No record added to database because the number of footer records does not match with the number of existing records in the file" + "\n";
-                            else if (returnedStatusCode == System.Net.HttpStatusCode.Conflict)
-                                //ViewBag.ErrorMessages = ViewBag.ErrorMessages + "File[" + counter + "] - ERROR 409: File with that header already exists in database" + "\n";
-                            errorMessage += errorMessage + "File[" + counter + "] - ERROR 409: File with that header already exists in database" + "\n";
-                            //else ViewBag.ErrorMessages = ViewBag.ErrorMessages + "File[" + counter + "] - ERROR 500: Internal Server Error" + "\n";
-                            else errorMessage += errorMessage + "File[" + counter + "] - ERROR 500: Internal Server Error" + "\n";
-                            counter++;
+                        //else
+                        //{
+                        //    if (returnedStatusCode == System.Net.HttpStatusCode.NotFound)
+                        //        //ViewBag.ErrorMessages = ViewBag.ErrorMessages + "File[" + counter + "] - ERROR 404: No file selected" + "\n";
+                        //        errorMessage += errorMessage + "File[" + counter + "] - ERROR 404: No file selected" + "\n";
+                        //    else if (returnedStatusCode == System.Net.HttpStatusCode.NoContent)
+                        //        //ViewBag.ErrorMessages = ViewBag.ErrorMessages + "File[" + counter + "] - ERROR 204: File is empty" + "\n";
+                        //    errorMessage += errorMessage + "File[" + counter + "] - ERROR 204: File is empty" + "\n";
+                        //    else if (returnedStatusCode == System.Net.HttpStatusCode.NotAcceptable)
+                        //        //ViewBag.ErrorMessages = ViewBag.ErrorMessages + "File[" + counter + "] - ERROR 406: File is missing header or footer or they are not prefixed with H or F" + "\n";
+                        //    errorMessage += errorMessage + "File[" + counter + "] - ERROR 406: File is missing header or footer or they are not prefixed with H or F" + "\n";
+                        //    else if (returnedStatusCode == System.Net.HttpStatusCode.BadRequest)
+                        //        //ViewBag.ErrorMessages = ViewBag.ErrorMessages + "File[" + counter + "] - ERROR 400: Footer does not have the number of potential records" + "\n";
+                        //    errorMessage += errorMessage + "File[" + counter + "] - ERROR 400: Footer does not have the number of potential records" + "\n";
+                        //    else if (returnedStatusCode == System.Net.HttpStatusCode.PreconditionFailed)
+                        //        //ViewBag.ErrorMessages = ViewBag.ErrorMessages + "File[" + counter + "] - ERROR 412: No record added to database because the number of footer records does not match with the number of existing records in the file" + "\n";
+                        //    errorMessage += errorMessage + "File[" + counter + "] - ERROR 412: No record added to database because the number of footer records does not match with the number of existing records in the file" + "\n";
+                        //    else if (returnedStatusCode == System.Net.HttpStatusCode.Conflict)
+                        //        //ViewBag.ErrorMessages = ViewBag.ErrorMessages + "File[" + counter + "] - ERROR 409: File with that header already exists in database" + "\n";
+                        //    errorMessage += errorMessage + "File[" + counter + "] - ERROR 409: File with that header already exists in database" + "\n";
+                        //    //else ViewBag.ErrorMessages = ViewBag.ErrorMessages + "File[" + counter + "] - ERROR 500: Internal Server Error" + "\n";
+                        //    else errorMessage += errorMessage + "File[" + counter + "] - ERROR 500: Internal Server Error" + "\n";
+                        //    counter++;
 
-                            return Content(errorMessage);
-                        }
+                        //    return Content(errorMessage);
+                        //}
                     }
                   
                 }

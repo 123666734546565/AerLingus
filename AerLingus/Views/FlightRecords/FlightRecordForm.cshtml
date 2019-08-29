@@ -235,7 +235,7 @@
 
 <div class="Upload">
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-6"  id="fileupload">
             @using (Html.BeginForm("Upload", "FlightRecords", FormMethod.Post, new { @enctype = "multipart/form-data" }))
             {
                 <div class="form-group">
@@ -247,7 +247,7 @@
             }
         </div>
 
-        <div id="mydrop" class="col-md-6">
+        <div id="mydrop" class="col-md-6" id="draganddrop">
             <form action="DragAndDrop" class="dropzone" id="dropzoneform" style="background-color:#E3FCFF;border:dashed">
                 <div>
                     <button class="form-control btn btn-info" type="submit" style="position:absolute;left:5%;right:5%;bottom:2%;top:75%; width:90%;">Save</button>
