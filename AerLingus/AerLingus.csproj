@@ -204,27 +204,27 @@
     <Compile Include="Helpers\Razor\HtmlHelpers.cs" />
     <Compile Include="Helpers\Razor\TemplatesConsts.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\Aerlingus.Context.cs">
+    <Compile Include="Models\AerLingusDatabase.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Aerlingus.Context.tt</DependentUpon>
+      <DependentUpon>AerLingusDatabase.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Aerlingus.cs">
+    <Compile Include="Models\AerLingusDatabase.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Aerlingus.tt</DependentUpon>
+      <DependentUpon>AerLingusDatabase.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Aerlingus.Designer.cs">
+    <Compile Include="Models\AerLingusDatabase.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Aerlingus.edmx</DependentUpon>
+      <DependentUpon>AerLingusDatabase.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\EIValidation.cs" />
     <Compile Include="Models\Flight_Records.cs">
-      <DependentUpon>Aerlingus.tt</DependentUpon>
+      <DependentUpon>AerLingusDatabase.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\FR_Batch_Files.cs">
-      <DependentUpon>Aerlingus.tt</DependentUpon>
+      <DependentUpon>AerLingusDatabase.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -271,15 +271,15 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Models\Aerlingus.Context.tt">
+    <Content Include="Models\AerLingusDatabase.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Aerlingus.edmx</DependentUpon>
-      <LastGenOutput>Aerlingus.Context.cs</LastGenOutput>
+      <DependentUpon>AerLingusDatabase.edmx</DependentUpon>
+      <LastGenOutput>AerLingusDatabase.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\Aerlingus.tt">
+    <Content Include="Models\AerLingusDatabase.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Aerlingus.edmx</DependentUpon>
-      <LastGenOutput>Aerlingus.cs</LastGenOutput>
+      <DependentUpon>AerLingusDatabase.edmx</DependentUpon>
+      <LastGenOutput>AerLingusDatabase.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -313,12 +313,12 @@
     <Content Include="Areas\Shared\Views\Partial\DisplayTemplates\Date.cshtml" />
     <Content Include="Areas\Shared\Views\Partial\DisplayTemplates\Currency.cshtml" />
     <Content Include="Areas\Shared\Views\Partial\DisplayTemplates\Boolean.cshtml" />
-    <EntityDeploy Include="Models\Aerlingus.edmx">
+    <EntityDeploy Include="Models\AerLingusDatabase.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Aerlingus.Designer.cs</LastGenOutput>
+      <LastGenOutput>AerLingusDatabase.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\Aerlingus.edmx.diagram">
-      <DependentUpon>Aerlingus.edmx</DependentUpon>
+    <Content Include="Models\AerLingusDatabase.edmx.diagram">
+      <DependentUpon>AerLingusDatabase.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\i18n\jquery-ui-timepicker-addon-i18n.js" />
