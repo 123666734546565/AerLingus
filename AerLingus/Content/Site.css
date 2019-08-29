@@ -162,13 +162,30 @@ textarea {
 }
 .Upload {
     display: inline-block;
-    padding: 0px 50px ;
+    padding: 0px 350px ;
     margin: 0;
     position: absolute;
 }
 #fileupload{
-    position:static;
+    position:static;   
+    clear:both;
+    
 }
+
+#mydrop {
+    clear:both; 
+}
+
+#file{
+    float:left;
+}
+
 #draganddrop{
     position:static;
 }
+
+/*#dropzoneform {
+    padding: 0px 50px;
+}*/
+
+
