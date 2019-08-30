@@ -17,7 +17,7 @@ namespace AerLingus.Controllers.Api
     public class FlightRecordsApiController : ApiController
     {
         private AerLingus_databaseEntities entities;
-
+        public string poruka;
         public FlightRecordsApiController()
         {
             entities = new AerLingus_databaseEntities();
@@ -43,6 +43,7 @@ namespace AerLingus.Controllers.Api
         [System.Web.Http.HttpPost]
         public HttpResponseMessage Upload(HttpPostedFileBase file)
         {
+
             Stream stream = file.InputStream;
 
             if (file == null)
@@ -669,17 +670,16 @@ namespace AerLingus.Controllers.Api
             }
             catch (Exception e)
             {
+                poruka = e.Message;
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
         }
-        //FORMULAR 
 
         [System.Web.Http.HttpPost]
-        [Route("api/FlightRecordsAPI/AddFlightRecord")]
-        // POST: api/FlightRecordsAPI/AddFlightRecord
+        [Route("api/FlightRecordsApi/AddFlightRecord")]
+        // POST: api/FlightRecordsApi/AddFlightRecord
         public async Task<HttpResponseMessage> AddFlightRecord([FromBody] Flight_Records sfr)
         {
-
             if(sfr.ticketNo != string.Empty || sfr.externalPaxID != string.Empty)
             {
                 if (sfr.ticketNo != string.Empty)
@@ -690,9 +690,7 @@ namespace AerLingus.Controllers.Api
                         await entities.SaveChangesAsync();
                         return Request.CreateResponse(HttpStatusCode.OK);
                     }
-                    else 
-                        return Request.CreateResponse(HttpStatusCode.Conflict );
-
+                    else return Request.CreateResponse(HttpStatusCode.Conflict);
                 }
                 else if (sfr.externalPaxID != string.Empty)
                 {
@@ -702,20 +700,11 @@ namespace AerLingus.Controllers.Api
                         await entities.SaveChangesAsync();
                         return Request.CreateResponse(HttpStatusCode.OK);
                     }
-                    else 
-                        return Request.CreateResponse(HttpStatusCode.Conflict);
-
+                    else return Request.CreateResponse(HttpStatusCode.Conflict);
                 }
-                else
-                    return Request.CreateResponse(HttpStatusCode.Conflict);
-
-
+                else return Request.CreateResponse(HttpStatusCode.Conflict);
             }
-            else
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
-
-
-
+            else return Request.CreateResponse(HttpStatusCode.BadRequest);
         }
     }
 
