@@ -19,28 +19,13 @@
     @using (Html.BeginForm("FlightRecordForm", "FlightRecords"))
     {
 
-        <div class="form-group">
-            @Html.LabelFor(fr => fr.identifierNo)
-            @Html.TextBoxFor(fr => fr.identifierNo, new { @class = "form-control" })
-            @Html.ValidationMessageFor(fr => fr.identifierNo, "", new { @class = "text-danger" })
-        </div>
-
+        //----------------------------------------------------------------------------------//
+        //REQUIRED
+     <div class="obaveznaPolja">
         <div class="form-group">
             @Html.LabelFor(fr => fr.transactionType)
             @Html.DropDownListFor(fr => fr.transactionType, new SelectList(ViewBag.list1, "Text", "Value"), "", new { @class = "form-control" })
             @Html.ValidationMessageFor(fr => fr.transactionType)
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(fr => fr.otherFFPNo)
-            @Html.TextBoxFor(fr => fr.otherFFPNo, new { @class = "form-control" })
-            @Html.ValidationMessageFor(fr => fr.otherFFPNo, "", new { @class = "text-danger" })
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(fr => fr.otherFFPScheme)
-            @Html.TextBoxFor(fr => fr.otherFFPScheme, new { @class = "form-control" })
-            @Html.ValidationMessageFor(fr => fr.otherFFPScheme, "", new { @class = "text-danger" })
         </div>
 
         <div class="form-group">
@@ -56,29 +41,13 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(fr => fr.partnerTransactionNo)
-            @Html.TextBoxFor(fr => fr.partnerTransactionNo, new { @class = "form-control" })
-            @Html.ValidationMessageFor(fr => fr.partnerTransactionNo, "", new { @class = "text-danger" })
-        </div>
-
-
-        <div class="form-group">
-            @Html.LabelFor(fr => fr.bookingDate)
-            <div class"form-group>
-                @Html.EditorFor(fr => fr.bookingDate, new { htmlAttributes = new { @class = "datepicker form-control", autocomplete = "off" } })
-            </div>
-            @Html.ValidationMessageFor(fr => fr.bookingDate, "", new { id = "idValidacija" })
-        </div>
-
-
-        <div class="form-group">
             @Html.LabelFor(fr => fr.departureDate)
             <div class"form-group>
                 @Html.EditorFor(fr => fr.departureDate, new { htmlAttributes = new { @class = "datepicker1 form-control", type = "text", autocomplete = "off" } })
-
             </div>
             @Html.ValidationMessageFor(fr => fr.departureDate, "", new { id = "idValidacija" })
         </div>
+
         <div class="form-group">
             @Html.LabelFor(fr => fr.origin)
             @Html.TextBoxFor(fr => fr.origin, new { @class = "form-control" })
@@ -95,13 +64,6 @@
             @Html.LabelFor(fr => fr.bookingClass)
             @Html.TextBoxFor(fr => fr.bookingClass, new { @class = "form-control" })
             @Html.ValidationMessageFor(fr => fr.bookingClass, "", new { @class = "text-danger" })
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(fr => fr.cabinClass)
-            @Html.TextBoxFor(fr => fr.cabinClass, new { @class = "form-control" })
-            @*@Html.DropDownListFor(fr => fr.cabinClass, new SelectList(ViewBag.list2, "Text", "Value"), new { @class = "form-control"})*@
-            @Html.ValidationMessageFor(fr => fr.cabinClass)
         </div>
 
         <div class="form-group">
@@ -141,77 +103,120 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(fr => fr.couponNo)
-            @Html.TextBoxFor(fr => fr.couponNo, new { @class = "form-control" })
-            @Html.ValidationMessageFor(fr => fr.couponNo, "", new { @class = "text-danger" })
-        </div>
-
-        <div class="form-group">
             @Html.LabelFor(fr => fr.pnrNo)
             @Html.TextBoxFor(fr => fr.pnrNo, new { @class = "form-control" })
             @Html.ValidationMessageFor(fr => fr.pnrNo, "", new { @class = "text-danger" })
         </div>
+    </div>
+        //----------------------------------------------------------------------//
+        //Non-Required
+     <div class="neobaveznaPolja">
+         <div class="form-group">
+             @Html.LabelFor(fr => fr.identifierNo)
+             @Html.TextBoxFor(fr => fr.identifierNo, new { @class = "form-control" })
+             @Html.ValidationMessageFor(fr => fr.identifierNo, "", new { @class = "text-danger" })
+         </div>
+         <div class="form-group">
+             @Html.LabelFor(fr => fr.otherFFPNo)
+             @Html.TextBoxFor(fr => fr.otherFFPNo, new { @class = "form-control" })
+             @Html.ValidationMessageFor(fr => fr.otherFFPNo, "", new { @class = "text-danger" })
+         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(fr => fr.distance)
-            @Html.TextBoxFor(fr => fr.distance, new { @class = "form-control" })
-            @Html.ValidationMessageFor(fr => fr.distance, "", new { @class = "text-danger" })
-        </div>
+         <div class="form-group">
+             @Html.LabelFor(fr => fr.otherFFPScheme)
+             @Html.TextBoxFor(fr => fr.otherFFPScheme, new { @class = "form-control" })
+             @Html.ValidationMessageFor(fr => fr.otherFFPScheme, "", new { @class = "text-danger" })
+         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(fr => fr.baseFare)
-            @Html.TextBoxFor(fr => fr.baseFare, new { @class = "form-control" })
-            @Html.ValidationMessageFor(fr => fr.baseFare, "", new { @class = "text-danger" })
-        </div>
+         <div class="form-group">
+             @Html.LabelFor(fr => fr.partnerTransactionNo)
+             @Html.TextBoxFor(fr => fr.partnerTransactionNo, new { @class = "form-control" })
+             @Html.ValidationMessageFor(fr => fr.partnerTransactionNo, "", new { @class = "text-danger" })
+         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(fr => fr.discountBase)
-            @Html.TextBoxFor(fr => fr.discountBase, new { @class = "form-control" })
-            @Html.ValidationMessageFor(fr => fr.discountBase, "", new { @class = "text-danger" })
-        </div>
+         <div class="form-group">
+             @Html.LabelFor(fr => fr.bookingDate)
+             <div class"form-group>
+                 @Html.EditorFor(fr => fr.bookingDate, new { htmlAttributes = new { @class = "datepicker form-control", autocomplete = "off" } })
+             </div>
+             @Html.ValidationMessageFor(fr => fr.bookingDate, "", new { id = "idValidacija" })
+         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(fr => fr.exciseTax)
-            @Html.TextBoxFor(fr => fr.exciseTax, new { @class = "form-control" })
-            @Html.ValidationMessageFor(fr => fr.exciseTax, "", new { @class = "text-danger" })
-        </div>
+         <div class="form-group">
+             @Html.LabelFor(fr => fr.cabinClass)
+             @Html.TextBoxFor(fr => fr.cabinClass, new { @class = "form-control" })
+             @*@Html.DropDownListFor(fr => fr.cabinClass, new SelectList(ViewBag.list2, "Text", "Value"), new { @class = "form-control"})*@
+             @Html.ValidationMessageFor(fr => fr.cabinClass)
+         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(fr => fr.customerType)
-            @Html.DropDownListFor(fr => fr.customerType, new SelectList(ViewBag.list3, "Text", "Value"), "", new { @class = "form-control" })
-            @Html.ValidationMessageFor(fr => fr.customerType, "", new { @class = "text-danger" })
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(fr => fr.promotionCode)
-            @Html.TextBoxFor(fr => fr.promotionCode, new { @class = "form-control" })
-            @Html.ValidationMessageFor(fr => fr.promotionCode, "", new { @class = "text-danger" })
-        </div>
+         <div class="form-group">
+             @Html.LabelFor(fr => fr.couponNo)
+             @Html.TextBoxFor(fr => fr.couponNo, new { @class = "form-control" })
+             @Html.ValidationMessageFor(fr => fr.couponNo, "", new { @class = "text-danger" })
+         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(fr => fr.ticketCurrency)
-            @Html.DropDownListFor(fr => fr.ticketCurrency, new SelectList(ViewBag.list4), "", new { @class = "form-control" })
-            @Html.ValidationMessageFor(fr => fr.ticketCurrency, "", new { @class = "text-danger" })
-        </div>
+         <div class="form-group">
+             @Html.LabelFor(fr => fr.distance)
+             @Html.TextBoxFor(fr => fr.distance, new { @class = "form-control" })
+             @Html.ValidationMessageFor(fr => fr.distance, "", new { @class = "text-danger" })
+         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(fr => fr.targetCurrency)
-            @Html.DropDownListFor(fr => fr.targetCurrency, new SelectList(ViewBag.list4), "", new { @class = "form-control" })
-            @Html.ValidationMessageFor(fr => fr.targetCurrency, "", new { @class = "text-danger" })
+         <div class="form-group">
+             @Html.LabelFor(fr => fr.baseFare)
+             @Html.TextBoxFor(fr => fr.baseFare, new { @class = "form-control" })
+             @Html.ValidationMessageFor(fr => fr.baseFare, "", new { @class = "text-danger" })
+         </div>
 
-        </div>
+         <div class="form-group">
+             @Html.LabelFor(fr => fr.discountBase)
+             @Html.TextBoxFor(fr => fr.discountBase, new { @class = "form-control" })
+             @Html.ValidationMessageFor(fr => fr.discountBase, "", new { @class = "text-danger" })
+         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(fr => fr.exchangeRate)
-            @Html.TextBoxFor(fr => fr.exchangeRate, new { @class = "form-control" })
-            @Html.ValidationMessageFor(fr => fr.exchangeRate, "", new { @class = "text-danger" })
-        </div>
+         <div class="form-group">
+             @Html.LabelFor(fr => fr.exciseTax)
+             @Html.TextBoxFor(fr => fr.exciseTax, new { @class = "form-control" })
+             @Html.ValidationMessageFor(fr => fr.exciseTax, "", new { @class = "text-danger" })
+         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(fr => fr.fareBasis)
-            @Html.DropDownListFor(fr => fr.fareBasis, new SelectList(ViewBag.list4), "", new { @class = "form-control" })
-            @Html.ValidationMessageFor(fr => fr.fareBasis, "", new { @class = "text-danger" })
-        </div>
+         <div class="form-group">
+             @Html.LabelFor(fr => fr.customerType)
+             @Html.DropDownListFor(fr => fr.customerType, new SelectList(ViewBag.list3, "Text", "Value"), "", new { @class = "form-control" })
+             @Html.ValidationMessageFor(fr => fr.customerType, "", new { @class = "text-danger" })
+         </div>
+
+         <div class="form-group">
+             @Html.LabelFor(fr => fr.promotionCode)
+             @Html.TextBoxFor(fr => fr.promotionCode, new { @class = "form-control" })
+             @Html.ValidationMessageFor(fr => fr.promotionCode, "", new { @class = "text-danger" })
+         </div>
+
+         <div class="form-group">
+             @Html.LabelFor(fr => fr.ticketCurrency)
+             @Html.DropDownListFor(fr => fr.ticketCurrency, new SelectList(ViewBag.list4), "", new { @class = "form-control" })
+             @Html.ValidationMessageFor(fr => fr.ticketCurrency, "", new { @class = "text-danger" })
+         </div>
+
+         <div class="form-group">
+             @Html.LabelFor(fr => fr.targetCurrency)
+             @Html.DropDownListFor(fr => fr.targetCurrency, new SelectList(ViewBag.list4), "", new { @class = "form-control" })
+             @Html.ValidationMessageFor(fr => fr.targetCurrency, "", new { @class = "text-danger" })
+         </div>
+
+         <div class="form-group">
+             @Html.LabelFor(fr => fr.exchangeRate)
+             @Html.TextBoxFor(fr => fr.exchangeRate, new { @class = "form-control" })
+             @Html.ValidationMessageFor(fr => fr.exchangeRate, "", new { @class = "text-danger" })
+         </div>
+
+         <div class="form-group">
+             @Html.LabelFor(fr => fr.fareBasis)
+             @Html.DropDownListFor(fr => fr.fareBasis, new SelectList(ViewBag.list4), "", new { @class = "form-control" })
+             @Html.ValidationMessageFor(fr => fr.fareBasis, "", new { @class = "text-danger" })
+         </div>
+     </div>
+        //-----------------------------------------------------------//
 
         <button type="submit" class="btn btn-success">Save</button>
 
