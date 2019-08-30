@@ -13,14 +13,11 @@ namespace AerLingus.Validations
         {
             var fr = (Flight_Records)validationContext.ObjectInstance;
 
-            if(fr.externalPaxID==null || fr.ticketNo==null )
+            if(fr.externalPaxID == null && fr.ticketNo == null )
             {
                 return new ValidationResult("Either the ticket number or externalPaxID has to be provided!");
             }
-
             return ValidationResult.Success;
-
-
         }
     }
 }

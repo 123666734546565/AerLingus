@@ -92,13 +92,13 @@ namespace AerLingus.Models
 
         [MinLength(13)]
         [MaxLength(14)]
-        //[TicketExternalValidation]
+        [TicketExternalValidation]
         [DisplayName("Ticket number")]
         public string ticketNo { get; set; }
 
         [DisplayName("External PaxID")]
         [MaxLength(25)]
-        //[TicketExternalValidation]
+        [TicketExternalValidation]
         public string externalPaxID { get; set; }
 
         [MaxLength(2)]
@@ -130,23 +130,23 @@ namespace AerLingus.Models
         [DisplayName("Customer type")]
         public string customerType { get; set; }
 
-        [MaxLength(1)]
+        [MaxLength(100)]
         [DisplayName("Promotion code")]
         public string promotionCode { get; set; }
 
         [MaxLength(3)]
         [DisplayName("Ticket currency")]
-       // [EIValidation]
+        [EIValidation]
         public string ticketCurrency { get; set; }
 
         [MaxLength(3)]
         [DisplayName("Target currency")]
-      //  [EIValidation]
+        [EIValidation]
         public string targetCurrency { get; set; }
 
         [Range(0, 9999999999)]
         [DisplayName("Exchange rate")]
-        //[EIValidation]
+        [EIValidation]
         public Nullable<double> exchangeRate { get; set; }
 
         [MaxLength(10)]

@@ -676,11 +676,10 @@ namespace AerLingus.Controllers.Api
         }
 
         [System.Web.Http.HttpPost]
-        [Route("api/FlightRecordsAPI/AddFlightRecord")]
-        // POST: api/FlightRecordsAPI/AddFlightRecord
+        [Route("api/FlightRecordsApi/AddFlightRecord")]
+        // POST: api/FlightRecordsApi/AddFlightRecord
         public async Task<HttpResponseMessage> AddFlightRecord([FromBody] Flight_Records sfr)
         {
-
             if(sfr.ticketNo != string.Empty || sfr.externalPaxID != string.Empty)
             {
                 if (sfr.ticketNo != string.Empty)
@@ -691,9 +690,7 @@ namespace AerLingus.Controllers.Api
                         await entities.SaveChangesAsync();
                         return Request.CreateResponse(HttpStatusCode.OK);
                     }
-                    else 
-                        return Request.CreateResponse(HttpStatusCode.Conflict );
-
+                    else return Request.CreateResponse(HttpStatusCode.Conflict);
                 }
                 else if (sfr.externalPaxID != string.Empty)
                 {
@@ -703,20 +700,11 @@ namespace AerLingus.Controllers.Api
                         await entities.SaveChangesAsync();
                         return Request.CreateResponse(HttpStatusCode.OK);
                     }
-                    else 
-                        return Request.CreateResponse(HttpStatusCode.Conflict);
-
+                    else return Request.CreateResponse(HttpStatusCode.Conflict);
                 }
-                else
-                    return Request.CreateResponse(HttpStatusCode.Conflict);
-
-
+                else return Request.CreateResponse(HttpStatusCode.Conflict);
             }
-            else
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
-
-
-
+            else return Request.CreateResponse(HttpStatusCode.BadRequest);
         }
     }
 
