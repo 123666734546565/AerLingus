@@ -227,6 +227,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Validations\TicketExternalValidation.cs" />
     <Compile Include="Validations\Validation.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -238,7 +239,6 @@
     <Content Include="Content\currencies.txt" />
     <Content Include="Content\dropzone.min.css" />
     <Content Include="Content\HomePageScreen.css" />
-    <Content Include="Content\Images\AerLingusLogo.png" />
     <Content Include="Content\Images\Background1980x1080.png" />
     <Content Include="Content\jquery-ui-timepicker-addon.css" />
     <Content Include="Content\jquery-ui-timepicker-addon.min.css" />

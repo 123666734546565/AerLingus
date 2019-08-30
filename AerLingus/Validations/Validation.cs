@@ -10,7 +10,7 @@ namespace AerLingus.Validations
     {
         private static AerLingus_databaseEntities entities = new AerLingus_databaseEntities();
 
-        public static Flight_Records TickerNoValidation(Flight_Records record)
+        public static Flight_Records TicketNoValidation(Flight_Records record)
         {
             return (from recordInDatabase in entities.Flight_Records
                     where recordInDatabase.ticketNo == record.ticketNo &&
