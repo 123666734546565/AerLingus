@@ -11,33 +11,33 @@ namespace AerLingus.Models
 
     public partial class Flight_Records
     {
-        [DisplayName("Identifier number")]
         [MaxLength(16)]
+        [DisplayName("Identifier number")]
         public string identifierNo { get; set; }
 
-        [DisplayName("Transaction type")]
         [Required]
         [MaxLength(2)]
+        [DisplayName("Transaction type")]
         public string transactionType { get; set; }
 
-        [DisplayName("Other FFP number")]
         [MaxLength(30)]
+        [DisplayName("Other FFP number")]
         public string otherFFPNo { get; set; }
 
         [MaxLength(30)]
         [DisplayName("Other FFP scheme")]
         public string otherFFPScheme { get; set; }
 
+        [Required]
         [MinLength(2)]
         [MaxLength(30)]
         [DisplayName("First name")]
-        [Required]
         public string firstName { get; set; }
 
+        [Required]
         [MinLength(2)]
         [MaxLength(30)]
         [DisplayName("Last name")]
-        [Required]
         public string lastName { get; set; }
 
         [MaxLength(100)]
@@ -47,47 +47,47 @@ namespace AerLingus.Models
         [DisplayName("Booking date")]
         public Nullable<System.DateTime> bookingDate { get; set; }
 
-        [DisplayName("Departure date")]
         [Required]
+        [DisplayName("Departure date")]
         public System.DateTime departureDate { get; set; }
 
-        [DisplayName("Origin")]
         [Required]
+        [DisplayName("Origin")]
         [StringLength(maximumLength: 3, MinimumLength = 3)]
         public string origin { get; set; }
 
-        [DisplayName("Destination")]
         [Required]
+        [DisplayName("Destination")]
         [StringLength(maximumLength: 3, MinimumLength = 3)]
         public string destination { get; set; }
 
-        [DisplayName("Booking class")]
         [Required]
         [MaxLength(2)]
+        [DisplayName("Booking class")]
         public string bookingClass { get; set; }
 
-        [DisplayName("Cabin class")]
         [MaxLength(1)]
+        [DisplayName("Cabin class")]
         public string cabinClass { get; set; }
 
-        [DisplayName("Marketing flight number")]
         [Required]
         [MaxLength(4)]
+        [DisplayName("Marketing flight number")]
         public string marketingFlightNo { get; set; }
 
+        [Required]
         [MaxLength(2)]
         [DisplayName("Marketing airline")]
-        [Required]
         public string marketingAirline { get; set; }
 
+        [Required]
         [MaxLength(4)]
         [DisplayName("Operating flight number")]
-        [Required]
         public string operatingFlightNo { get; set; }
 
+        [Required]
         [MaxLength(2)]
         [DisplayName("Operating airline")]
-        [Required]
         public string operatingAirline { get; set; }
 
         [MinLength(13)]
@@ -96,22 +96,22 @@ namespace AerLingus.Models
         [DisplayName("Ticket number")]
         public string ticketNo { get; set; }
 
-        [DisplayName("External PaxID")]
         [MaxLength(25)]
         [TicketExternalValidation]
+        [DisplayName("External PaxID")]
         public string externalPaxID { get; set; }
 
         [MaxLength(2)]
         [DisplayName("Coupon number")]
         public string couponNo { get; set; }
 
+        [Required]
         [MaxLength(6)]
         [DisplayName("pnrNo number")]
-        [Required]
         public string pnrNo { get; set; }
 
-        [DisplayName("Distance")]
         [Range(0, 99999)]
+        [DisplayName("Distance")]
         public Nullable<long> distance { get; set; }
 
         [Range(0, 999999999)]
@@ -139,14 +139,14 @@ namespace AerLingus.Models
         [EIValidation]
         public string ticketCurrency { get; set; }
 
+        [EIValidation]
         [MaxLength(3)]
         [DisplayName("Target currency")]
-        [EIValidation]
         public string targetCurrency { get; set; }
 
+        [EIValidation]
         [Range(0, 9999999999)]
         [DisplayName("Exchange rate")]
-        [EIValidation]
         public Nullable<double> exchangeRate { get; set; }
 
         [MaxLength(10)]
