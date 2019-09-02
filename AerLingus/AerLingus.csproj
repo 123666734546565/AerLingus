@@ -200,6 +200,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\ApiViewBag.cs" />
+    <Compile Include="Helpers\SearchFlightRecord.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AerLingusDatabase.Context.cs">
       <AutoGen>True</AutoGen>

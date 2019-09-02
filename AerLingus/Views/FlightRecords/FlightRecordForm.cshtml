@@ -214,24 +214,22 @@
         </div>
 
         <button type="submit" class="btn btn-success">Save</button>
-
     }
 
 </div>
 
 <div class="Upload">
     <div class="row">
-        <div class="col-md-6"  id="fileupload">
-            @using (Html.BeginForm("Upload", "FlightRecords", FormMethod.Post, new { @enctype = "multipart/form-data" }))
-            {
+        <div class="col-md-6" id="fileupload">
+            <form action="http://localhost:54789/FlightRecords/Upload" method="post" name="file" enctype="multipart/form-data">
                 <h3 class="drugiNaslov">Choose a file to upload</h3>
                 <div class="form-group" id="browse">
                     <input type="file" accept=".csv" name="file" id="file" required />
                 </div>
                 <div class="form-group" id="uploadSubmit">
-                    <input type="submit" id="dugmeSubmit" title="Submit"/>
+                    <input type="submit" id="dugmeSubmit" title="Submit" name="aleksa"/>
                 </div>
-            }
+            </form>
         </div>
 
         <div id="mydrop" class="col-md-6" id="draganddrop">

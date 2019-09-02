@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using AerLingus.Models;
+using AerLingus.Helpers;
 
 namespace AerLingus.Validations
 {
@@ -49,6 +50,11 @@ namespace AerLingus.Validations
             record.targetCurrency = record.targetCurrency == string.Empty ? null : record.targetCurrency;
             record.exchangeRate = record.exchangeRate == default(double) ? null : record.exchangeRate;
             record.fareBasis = record.fareBasis == string.Empty ? null : record.fareBasis;
+        }
+
+        public static void SetEmptyPropertiesToNull(SearchFlightRecord search)
+        {
+
         }
     }
 }
