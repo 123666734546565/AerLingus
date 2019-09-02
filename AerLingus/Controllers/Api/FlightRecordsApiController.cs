@@ -18,6 +18,7 @@ namespace AerLingus.Controllers.Api
     public class FlightRecordsApiController : ApiController
     {
         private AerLingus_databaseEntities entities;
+    
 
         public FlightRecordsApiController()
         {
