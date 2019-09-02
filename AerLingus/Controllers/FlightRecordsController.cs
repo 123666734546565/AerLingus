@@ -152,10 +152,24 @@ namespace AerLingus.Controllers
             return View();
         }
 
-        [System.Web.Http.HttpGet]
-        public ActionResult GetSearchedFlightRecords(SearchFlightRecord search)
-        {
+        //[System.Web.Http.HttpGet]
+        //public ActionResult GetSearchedFlightRecords(SearchFlightRecord search)
+        //{
+        //    try
+        //    {
+        //        FlightRecordsApiController api = new FlightRecordsApiController()
+        //        {
+        //            Request = new HttpRequestMessage(),
+        //            Configuration = new HttpConfiguration()
+        //        };
+        //        var statusCode = api.GetSearchedFlightRecords(search);
 
-        }
+        //        return View("SearchFlightRecords", );
+        //    }
+        //    catch(Exception ex)
+        //    {
+        //        return View("Error: " + ex.Message);
+        //    }
+        //}
     }
 }

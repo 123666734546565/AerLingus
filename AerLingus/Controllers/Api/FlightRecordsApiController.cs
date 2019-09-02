@@ -24,13 +24,36 @@ namespace AerLingus.Controllers.Api
             entities = new AerLingus_databaseEntities();
         }
 
-        [System.Web.Http.HttpGet]
+        [HttpGet]
+        [Route("api/FlightRecordsApi")]
         public IEnumerable<Flight_Records> GetFlightRecords()
         {
             return entities.Flight_Records;
         }
 
-        [System.Web.Http.HttpGet]
+        [HttpGet]
+        [Route("api/FlightRecordsApi/Search")]
+        public IEnumerable<Flight_Records> GetSearchedFlightRecords(SearchFlightRecord search)
+        {
+            var searchedRecords = entities.Flight_Records.Where(fr =>
+                                                        fr.identifierNo == (search.S_identifierNo ?? fr.identifierNo) &&
+                                                        fr.otherFFPNo == (search.S_otherFFPNo ?? fr.otherFFPNo) &&
+                                                        fr.firstName == (search.S_firstName ?? fr.firstName) &&
+                                                        fr.lastName == (search.S_lastName ?? fr.lastName) &&
+                                                        fr.departureDate == (search.S_departureDate ?? fr.departureDate) &&
+                                                        fr.origin == (search.S_Origin ?? fr.origin) &&
+                                                        fr.destination == (search.S_destination ?? fr.destination) &&
+                                                        fr.bookingClass == (search.S_bookingClass ?? fr.bookingClass) &&
+                                                        fr.operatingAirline == (search.S_operatingAirline ?? fr.operatingAirline) &&
+                                                        fr.ticketNo == (search.S_ticketNo ?? fr.ticketNo) &&
+                                                        fr.externalPaxID == (search.S_externalPaxID ?? fr.externalPaxID) &&
+                                                        fr.pnrNo == (search.S_pnrNo ?? fr.pnrNo)
+                                                                );
+
+            return searchedRecords;
+        }
+
+        [HttpGet]
         public IHttpActionResult GetFlightRecord(int id)
         {
             var flightRecord = entities.Flight_Records.SingleOrDefault(fr => fr.ID == id);
@@ -41,7 +64,7 @@ namespace AerLingus.Controllers.Api
             return Ok(flightRecord);
         }
 
-        [System.Web.Http.HttpPost]
+        [HttpPost]
         [Route("api/FlightRecordsApi/Upload")]
         public HttpResponseMessage Upload()
         {
@@ -1323,7 +1346,7 @@ namespace AerLingus.Controllers.Api
             }
         }
 
-        [System.Web.Http.HttpPost]
+        [HttpPost]
         [Route("api/FlightRecordsApi/AddFlightRecord")]
         // POST: api/FlightRecordsApi/AddFlightRecord
         public async Task<HttpResponseMessage> AddFlightRecord([FromBody] Flight_Records sfr)

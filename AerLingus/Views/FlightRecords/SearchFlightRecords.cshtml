@@ -8,7 +8,6 @@
 
 @using (Html.BeginForm("GetSearchedFlightRecords", "FlightRecords", FormMethod.Get))
 {
-
     <div class="form-group">
         @Html.LabelFor(fr => fr.S_identifierNo)
         @Html.TextBoxFor(fr => fr.S_identifierNo, new { @class = "form-control" })
@@ -69,4 +68,6 @@
         @Html.LabelFor(fr => fr.S_pnrNo)
         @Html.TextBoxFor(fr => fr.S_pnrNo, new { @class = "form-control" })
     </div>
+
+    <button type="submit" class="btn btn-success">Search</button>
 }

@@ -21,7 +21,7 @@ namespace AerLingus.Helpers
 		public string S_lastName { get; set; }
 
 		[Display(Name = "Departure Date")]
-		public DateTime S_departureDate { get; set; }
+		public Nullable<DateTime> S_departureDate { get; set; }
 
 		[Display(Name = "Origin")]
 		public string S_Origin { get; set; }
