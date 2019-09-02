@@ -329,6 +329,7 @@
     <Content Include="Views\FlightRecords\FlightRecordForm.cshtml" />
     <Content Include="Views\FlightRecords\UploadSuccessful.cshtml" />
     <Content Include="Views\FlightRecords\DragAndDropStatusMessages.cshtml" />
+    <Content Include="Views\FlightRecords\SearchFlightRecords.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

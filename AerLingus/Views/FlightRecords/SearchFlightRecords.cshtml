@@ -1,0 +1,72 @@
+﻿@model AerLingus.Helpers.SearchFlightRecord
+@{
+    ViewBag.Title = "SearchFlightRecords";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Search Flight Record</h2>
+
+@using (Html.BeginForm("GetSearchedFlightRecords", "FlightRecords", FormMethod.Get))
+{
+
+    <div class="form-group">
+        @Html.LabelFor(fr => fr.S_identifierNo)
+        @Html.TextBoxFor(fr => fr.S_identifierNo, new { @class = "form-control" })
+        @Html.ValidationMessageFor(fr => fr.S_identifierNo, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(fr => fr.S_otherFFPNo)
+        @Html.TextBoxFor(fr => fr.S_otherFFPNo, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(fr => fr.S_firstName)
+        @Html.TextBoxFor(fr => fr.S_firstName, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(fr => fr.S_lastName)
+        @Html.TextBoxFor(fr => fr.S_lastName, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(fr => fr.S_departureDate)
+        @Html.EditorFor(fr => fr.S_departureDate, new { htmlAttributes = new { @class = "datepicker1 form-control", type = "text", autocomplete = "off" } })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(fr => fr.S_Origin)
+        @Html.TextBoxFor(fr => fr.S_Origin, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(fr => fr.S_destination)
+        @Html.TextBoxFor(fr => fr.S_destination, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(fr => fr.S_bookingClass)
+        @Html.TextBoxFor(fr => fr.S_bookingClass, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(fr => fr.S_operatingAirline)
+        @Html.TextBoxFor(fr => fr.S_operatingAirline, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(fr => fr.S_ticketNo)
+        @Html.TextBoxFor(fr => fr.S_ticketNo, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(fr => fr.S_externalPaxID)
+        @Html.TextBoxFor(fr => fr.S_externalPaxID, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(fr => fr.S_pnrNo)
+        @Html.TextBoxFor(fr => fr.S_pnrNo, new { @class = "form-control" })
+    </div>
+}
