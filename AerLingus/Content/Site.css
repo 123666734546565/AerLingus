@@ -229,11 +229,9 @@ textarea {
 	margin: 20px 0;
 	border-radius: 10px;
 }
-.ExportSection {
+#ExportSection {
     margin: 10px 0;
     float: left;
+    text-decoration: none;
+    padding: 35px 5px;
 }
- .ExportSection a {
-        text-decoration: none;
-        padding: 0 5px 0 0;
-    }

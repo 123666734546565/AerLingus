@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "SearchFlightRecords";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
 }
 
 <h2>Search Flight Record</h2>
@@ -71,8 +72,8 @@
 
     <button type="submit" class="btn btn-success">Search</button>
 }
-<div class="ExportSection">
-    <h2>Export to Excel and CSV</h2>
+<div id="ExportSection">
+    <p>Export to Excel and CSV</p>
     @Html.ActionLink("Download CSV", "ExportToCSV");
     @Html.ActionLink("Download XLSX", "ExportToExcel");
 </div>
