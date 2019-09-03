@@ -201,7 +201,7 @@ namespace AerLingus.Controllers
              StringWriter sw = new StringWriter();
             Response.ClearContent();
             Response.ContentType = "text/csv";
-            Response.AddHeader("content-disposition", "attachment;filename=Exported_Users.csv");
+            Response.AddHeader("content-disposition", "attachment;filename=FlightRecords"+DateTime.Now.ToShortDateString()+".csv");
 
 
             foreach (var client in listaSearch)
@@ -261,7 +261,7 @@ namespace AerLingus.Controllers
             grid.DataBind();
 
             Response.ClearContent();
-            Response.AddHeader("content-disposition", "attachment;filename=ExportedClientsList.xlsx");
+            Response.AddHeader("content-disposition", "attachment;filename=FlightRecords" + DateTime.Now.ToShortDateString() + ".xlsx");
             Response.ContentType = "application/excel";
             StringWriter sw = new StringWriter();
             
