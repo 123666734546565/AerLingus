@@ -200,11 +200,13 @@ namespace AerLingus.Controllers
  
              StringWriter sw = new StringWriter();
             Response.ClearContent();
-            Response.AddHeader("content-disposition", "attachment;filename=ExportedClientsList.csv");
-         
-            foreach(var client in listaSearch)
+            Response.ContentType = "text/csv";
+            Response.AddHeader("content-disposition", "attachment;filename=Exported_Users.csv");
+
+
+            foreach (var client in listaSearch)
             {
-                sw.WriteLine(string.Format("",
+                sw.WriteLine(string.Format("\"{0}\",\"{1}\",\"{2}\",\"{3}\",\"{4}\",\"{5}\",\"{6}\",\"{7}\",\"{8}\",\"{9}\",\"{10}\",\"{11}\"",
                     client.S_identifierNo,
                     client.S_otherFFPNo,
                     client.S_firstName,
@@ -223,6 +225,22 @@ namespace AerLingus.Controllers
         }
         public void ExportToExcel()
         {
+            listaSearch.Add(new SearchFlightRecord()
+            {
+                S_identifierNo = "1234567891011",
+                S_otherFFPNo = "123",
+                S_firstName = "Stefan",
+                S_lastName = "Filipovic",
+                S_departureDate = null,
+                S_Origin = "Rome",
+                S_destination = "Belgrade",
+                S_bookingClass = "A",
+                S_operatingAirline = "AirSerbia",
+                S_ticketNo = "963255741",
+                S_externalPaxID = "  1254982985985457",
+                S_pnrNo = " 654231"
+            });
+
             var grid = new GridView();
             grid.DataSource = from client in listaSearch
                               select new
