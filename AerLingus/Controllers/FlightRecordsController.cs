@@ -12,17 +12,24 @@ using AerLingus.Controllers.Api;
 using System.Web.Http;
 using System.Web.Hosting;
 using AerLingus.Helpers;
+using System.Web.UI.WebControls;
+using System.Web.UI;
 
 namespace AerLingus.Controllers
+    
 {
     public class FlightRecordsController : Controller
     {
         List<Flight_Records> flight_Records = new List<Flight_Records>();
         private HttpClient client;
+        List<SearchFlightRecord> listaSearch = new List<SearchFlightRecord>();
+
 
         public FlightRecordsController()
         {
             client = new HttpClient();
+            FlightRecordsApiController api = new FlightRecordsApiController();
+            
         }
 
         public ActionResult Upload(HttpPostedFileBase file)
@@ -162,14 +169,109 @@ namespace AerLingus.Controllers
         //            Request = new HttpRequestMessage(),
         //            Configuration = new HttpConfiguration()
         //        };
-        //        var statusCode = api.GetSearchedFlightRecords(search);
+        //        IEnumerable<Flight_Records> gg = api.GetSearchedFlightRecords(search);
 
-        //        return View("SearchFlightRecords", );
+        //        return View("SearchFlightRecords", gg);
         //    }
-        //    catch(Exception ex)
+        //    catch (Exception ex)
         //    {
         //        return View("Error: " + ex.Message);
         //    }
         //}
+
+
+        public void ExportToCSV()
+        {
+            listaSearch.Add(new SearchFlightRecord()
+            {
+                S_identifierNo = "1234567891011",
+                S_otherFFPNo = "123",
+                S_firstName = "Stefan",
+                S_lastName = "Filipovic",
+                S_departureDate = null,
+                S_Origin = "Rome",
+                S_destination = "Belgrade",
+                S_bookingClass = "A",
+                S_operatingAirline = "AirSerbia",
+                S_ticketNo = "963255741",
+                S_externalPaxID = "  1254982985985457",
+                S_pnrNo = " 654231"
+            });
+ 
+             StringWriter sw = new StringWriter();
+            Response.ClearContent();
+            Response.ContentType = "text/csv";
+            Response.AddHeader("content-disposition", "attachment;filename=FlightRecords"+DateTime.Now.ToShortDateString()+".csv");
+
+
+            foreach (var client in listaSearch)
+            {
+                sw.WriteLine(string.Format("\"{0}\",\"{1}\",\"{2}\",\"{3}\",\"{4}\",\"{5}\",\"{6}\",\"{7}\",\"{8}\",\"{9}\",\"{10}\",\"{11}\"",
+                    client.S_identifierNo,
+                    client.S_otherFFPNo,
+                    client.S_firstName,
+                    client.S_lastName,
+                    client.S_departureDate,
+                    client.S_Origin,
+                    client.S_destination,
+                    client.S_bookingClass,
+                    client.S_operatingAirline,
+                    client.S_ticketNo,
+                    client.S_externalPaxID,
+                    client.S_pnrNo));
+            }
+            Response.Write(sw.ToString());
+            Response.End();
+        }
+        public void ExportToExcel()
+        {
+            listaSearch.Add(new SearchFlightRecord()
+            {
+                S_identifierNo = "1234567891011",
+                S_otherFFPNo = "123",
+                S_firstName = "Stefan",
+                S_lastName = "Filipovic",
+                S_departureDate = null,
+                S_Origin = "Rome",
+                S_destination = "Belgrade",
+                S_bookingClass = "A",
+                S_operatingAirline = "AirSerbia",
+                S_ticketNo = "963255741",
+                S_externalPaxID = "  1254982985985457",
+                S_pnrNo = " 654231"
+            });
+
+            var grid = new GridView();
+            grid.DataSource = from client in listaSearch
+                              select new
+                              {
+                                  S_identifierNo = client.S_identifierNo,
+                                  S_otherFFPNo = client.S_otherFFPNo,
+                                  S_firstName = client.S_firstName,
+                                  S_lastName = client.S_lastName,
+                                  S_departureDate = client.S_departureDate,
+                                  S_Origin = client.S_Origin,
+                                  S_destination = client.S_destination,
+                                  S_bookingClass = client.S_bookingClass,
+                                  S_operatingAirline = client.S_operatingAirline,
+                                  S_ticketNo = client.S_ticketNo,
+                                  S_externalPaxID = client.S_externalPaxID,
+                                  S_pnrNo = client.S_pnrNo
+                              };
+            grid.DataBind();
+
+            Response.ClearContent();
+            Response.AddHeader("content-disposition", "attachment;filename=FlightRecords" + DateTime.Now.ToShortDateString() + ".xlsx");
+            Response.ContentType = "application/excel";
+            StringWriter sw = new StringWriter();
+            
+            HtmlTextWriter htmlTextWriter = new HtmlTextWriter(sw);
+
+            grid.RenderControl(htmlTextWriter);
+            Response.Write(sw.ToString());
+
+            Response.End();
+
+        }
     }
 }
