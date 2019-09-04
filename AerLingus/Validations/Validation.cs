@@ -54,7 +54,33 @@ namespace AerLingus.Validations
 
         public static void SetEmptyPropertiesToNull(SearchFlightRecord search)
         {
+            search.S_identifierNo = search.S_identifierNo == string.Empty ? null : search.S_identifierNo;
+            search.S_otherFFPNo = search.S_otherFFPNo == string.Empty ? null : search.S_otherFFPNo;
+            search.S_firstName = search.S_firstName == string.Empty ? null : search.S_firstName;
+            search.S_lastName = search.S_lastName == string.Empty ? null : search.S_lastName;
+            search.S_departureDate = search.S_departureDate == null ? null : search.S_departureDate;
+            search.S_Origin = search.S_Origin == string.Empty ? null : search.S_Origin;
+            search.S_destination = search.S_destination == string.Empty ? null : search.S_destination;
+            search.S_bookingClass = search.S_bookingClass == string.Empty ? null : search.S_bookingClass;
+            search.S_operatingAirline = search.S_operatingAirline == string.Empty ? null : search.S_operatingAirline;
+            search.S_ticketNo = search.S_ticketNo == string.Empty ? null : search.S_ticketNo;
+            search.S_externalPaxID = search.S_externalPaxID == string.Empty ? null : search.S_externalPaxID;
+            search.S_pnrNo = search.S_pnrNo == string.Empty ? null : search.S_pnrNo;
+        }
 
+        public static void TrimBeginEnd(SearchFlightRecord search)
+        {
+            search.S_identifierNo = search.S_identifierNo.Trim();
+            search.S_firstName = search.S_firstName.Trim();
+            search.S_lastName = search.S_lastName.Trim();
+            search.S_externalPaxID = search.S_externalPaxID.Trim();
+            search.S_ticketNo = search.S_ticketNo.Trim();
+            search.S_otherFFPNo = search.S_otherFFPNo.Trim();
+            search.S_Origin = search.S_Origin.Trim();
+            search.S_operatingAirline = search.S_operatingAirline.Trim();
+            search.S_destination = search.S_destination.Trim();
+            search.S_bookingClass = search.S_bookingClass.Trim();
+            search.S_pnrNo = search.S_pnrNo.Trim();
         }
     }
 }

@@ -67,7 +67,7 @@ namespace AerLingus.Controllers
             {
                 //Ako je sfr formular popunjen salju se podaci u API kako bi se sacuvali u bazu
                 HttpClient hc = new HttpClient();
-                hc.BaseAddress = new Uri(@"http://localhost:54789/api/FlightRecordsAPI/AddFlightRecord");
+                hc.BaseAddress = new Uri(@"http://localhost:54789/api/FlightRecordsApi/AddFlightRecord");
                 var insertRecord = hc.PostAsJsonAsync<Flight_Records>("", sfr);
                 insertRecord.Wait();
                 var recorddisplay = insertRecord.Result;
@@ -157,16 +157,12 @@ namespace AerLingus.Controllers
         //{
         //    try
         //    {
-        //        FlightRecordsApiController api = new FlightRecordsApiController()
-        //        {
-        //            Request = new HttpRequestMessage(),
-        //            Configuration = new HttpConfiguration()
-        //        };
-        //        var statusCode = api.GetSearchedFlightRecords(search);
+        //        var response = client.GetAsync(@"http://localhost:54789/api/FlightRecordsApi/" + search.S_identifierNo).Result;
 
-        //        return View("SearchFlightRecords", );
+        //        if(response.IsSuccessStatusCode)
+        //            return Content(response.Content.ReadAsAsync)
         //    }
-        //    catch(Exception ex)
+        //    catch (Exception ex)
         //    {
         //        return View("Error: " + ex.Message);
         //    }
