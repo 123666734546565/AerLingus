@@ -31,7 +31,9 @@
 
     <div class="form-group">
         @Html.LabelFor(fr => fr.S_departureDate)
-        @Html.EditorFor(fr => fr.S_departureDate, new { htmlAttributes = new { @class = "datepicker1 form-control", type = "text", autocomplete = "off" } })
+        <div>
+            @Html.EditorFor(fr => fr.S_departureDate, new { htmlAttributes = new { @class = "datepicker1 form-control", type = "text", autocomplete = "off" } })
+        </div>
     </div>
 
     <div class="form-group">
@@ -70,4 +72,40 @@
     </div>
 
     <button type="submit" class="btn btn-success">Search</button>
+}
+<link href="~/Content/Site.css" rel="stylesheet" />
+<link href="~/Content/jquery-ui.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<link href="~/Content/jquery-ui-timepicker-addon.min.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery-ui-timepicker-addon.min.js"></script>
+<script src="~/Scripts/jquery.validate-vsdoc.js"></script>
+
+
+
+
+@section scripts{
+
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/jquery-ui.min.js"></script>
+    <script>
+        $(function () {
+            $(".datepicker1").datepicker({
+                dateFormat: "yy-mm-dd",
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "-10:+10",
+                showOn: "both",
+                buttonText: "<i class='fa fa-calendar' style='font - size:74x'></i>"
+
+            })
+        })
+    </script>
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <script src="~/Scripts/jquery-ui-timepicker-addon.min.js"></script>
+    <script type="text/javascript"></script>
 }
