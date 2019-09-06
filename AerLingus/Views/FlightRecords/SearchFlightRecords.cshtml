@@ -80,15 +80,17 @@
         @if (ViewBag.A)
         {
             if (!Model.FlightRecords.Any())
-            {               
-            <h2>No records match search criteria.</h2>
+            {
+                <h2>No records match search criteria.</h2>
             }
             else
             {
                 @Html.ActionLink("Export To CSV", "ExportToCSV")
+                @Html.ActionLink("     Export To XLSX", "ExportToExcel")
+
                 foreach (var record in Model.FlightRecords)
                 {
-                <h6>@Html.ActionLink(record.firstName, "RecordDetails")</h6>
+                    <h6>@Html.ActionLink(record.firstName, "RecordDetails")</h6>
                 }
             }
         }

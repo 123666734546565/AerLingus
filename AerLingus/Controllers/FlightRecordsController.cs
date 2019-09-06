@@ -186,6 +186,7 @@ namespace AerLingus.Controllers
                     {
                         listaSearch.Add(searchRecord);
                     }
+                    
                     ViewBag.A = true;
 
                     ModelState.Clear();
@@ -216,21 +217,33 @@ namespace AerLingus.Controllers
             }
         }
 
-        public ActionResult ExportToCSV()
+        
+
+        public void ExportToCSV(SearchFlightRecord search)
         {
-            return Content(listaSearch.Count.ToString());
-            //string g = string.Empty;
-            //foreach(var d in listaSearch)
-            //{
-            //    g = g + d.firstName + "\n";
-            //}
-
-
-
             StringWriter sw = new StringWriter();
             Response.ClearContent();
             Response.ContentType = "text/csv";
             Response.AddHeader("content-disposition", "attachment;filename=FlightRecords" + DateTime.Now.ToShortDateString() + ".csv");
+
+
+            FlightRecordsApiController api = new FlightRecordsApiController()
+            {
+                Request = new HttpRequestMessage(),
+                Configuration = new HttpConfiguration()
+            };
+
+            SearchViewModel viewModel = new SearchViewModel
+            {
+                FlightRecords = api.GetSearchedFlightRecords(search)
+            };
+
+
+            foreach (Flight_Records searchRecord in viewModel.FlightRecords)
+            {
+                listaSearch.Add(searchRecord);
+            }
+
 
             foreach (var client in listaSearch)
             {
@@ -252,25 +265,26 @@ namespace AerLingus.Controllers
             Response.End();
         }
 
-        public void ExportToExcel()
+        public void ExportToExcel(SearchFlightRecord search)
         {
-            //listaSearch.Add(new SearchFlightRecord()
-            //{
-            //    S_identifierNo = "1234567891011",
-            //    S_otherFFPNo = "123",
-            //    S_firstName = "Stefan",
-            //    S_lastName = "Filipovic",
-            //    S_departureDate = null,
-            //    S_Origin = "Rome",
-            //    S_destination = "Belgrade",
-            //    S_bookingClass = "A",
-            //    S_operatingAirline = "AirSerbia",
-            //    S_ticketNo = "963255741",
-            //    S_externalPaxID = "  1254982985985457",
-            //    S_pnrNo = " 654231"
-            //});
-
             var grid = new GridView();
+
+            FlightRecordsApiController api = new FlightRecordsApiController()
+            {
+                Request = new HttpRequestMessage(),
+                Configuration = new HttpConfiguration()
+            };
+
+            SearchViewModel viewModel = new SearchViewModel
+            {
+                FlightRecords = api.GetSearchedFlightRecords(search)
+            };
+
+
+            foreach (Flight_Records searchRecord in viewModel.FlightRecords)
+            {
+                listaSearch.Add(searchRecord);
+            }
 
             grid.DataSource = from client in listaSearch
                               select new
@@ -289,6 +303,7 @@ namespace AerLingus.Controllers
                                   pnrNo = client.pnrNo
                               };
             grid.DataBind();
+
 
             Response.ClearContent();
             Response.AddHeader("content-disposition", "attachment;filename=FlightRecords" + DateTime.Now.ToShortDateString() + ".xlsx");
