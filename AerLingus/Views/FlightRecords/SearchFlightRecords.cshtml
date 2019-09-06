@@ -85,35 +85,32 @@
             }
             else
             {
-                <h3>
-                    @*@Html.ActionLink("Export To CSV", "ExportToCSV")*@
+                
+                <div class="dugme">
                     @using (Html.BeginForm("ExportToCSV", "FlightRecords", FormMethod.Post))
                     {
 
-                    <input type="submit" value="ExportToCSV" />
+                        <input type="submit" value="ExportToCSV" />
                     }
-                </h3>
-                <div>
-                    <h3>
-                        @*@Html.ActionLink("  Export To XLSX", "ExportToExcel")*@
-
+                    </div>
+                    <div class="dugme2">
                         @using (Html.BeginForm("ExportToExcel", "FlightRecords", FormMethod.Post))
                         {
 
                             <input type="submit" value="ExportToXLSX" />
                         }
-                    </h3>
-                </div>
-                <div class="lista">
-                   @foreach (var record in Model.FlightRecords)
-                    {
-                    <p>@record.identifierNo | @record.transactionType | @record.otherFFPNo | @record.otherFFPScheme | @record.firstName | @record.lastName | @record.partnerTransactionNo | @record.bookingDate | @record.departureDate | @record.origin | @record.destination | @record.bookingClass | @record.cabinClass | @record.marketingFlightNo | @record.marketingFlightNo | @record.operatingFlightNo | @record.operatingAirline | @record.ticketNo | @record.externalPaxID | @record.couponNo | @record.pnrNo | @record.distance | @record.baseFare | @record.discountBase | @record.exciseTax | @record.customerType | @record.promotionCode | @record.ticketCurrency | @record.targetCurrency | @record.exchangeRate | @record.fareBasis</p>
+                    </div>
+
+                    <div class="lista">
+                        @foreach (var record in Model.FlightRecords)
+                        {
+                            <p>@record.identifierNo | @record.transactionType | @record.otherFFPNo | @record.otherFFPScheme | @record.firstName | @record.lastName | @record.partnerTransactionNo | @record.bookingDate | @record.departureDate | @record.origin | @record.destination | @record.bookingClass | @record.cabinClass | @record.marketingFlightNo | @record.marketingFlightNo | @record.operatingFlightNo | @record.operatingAirline | @record.ticketNo | @record.externalPaxID | @record.couponNo | @record.pnrNo | @record.distance | @record.baseFare | @record.discountBase | @record.exciseTax | @record.customerType | @record.promotionCode | @record.ticketCurrency | @record.targetCurrency | @record.exchangeRate | @record.fareBasis</p>
+                        }
+                    </div>
+                    }
+
                     }
                 </div>
-            }
-        
-        }
-    </div>
 </div>
 
 <link href="~/Content/Site.css" rel="stylesheet" />

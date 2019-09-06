@@ -247,3 +247,9 @@ textarea {
     height: 815px;
     width: 800px;
 }
+.dugme{
+    float:left;
+}
+.dugme2{
+    float:right;
+}
