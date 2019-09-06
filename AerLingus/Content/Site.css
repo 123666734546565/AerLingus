@@ -250,12 +250,28 @@ textarea {
 .dugme {
     float: left;
     margin: 20px 0;
-    background-color: #26aabd;
+    /*background-color: #26aabd;*/
     border-color: #4cae4c;
 }
 .dugme2 {
     float: right;
     margin: 20px 0;
+   
+}
+
+.drugo {
     background-color: #26aabd;
-    border-color: #4cae4c;
+    border-radius: 4px;
+    color: white;
+    height: 30px;
+    width: 120px;
+}
+
+
+.prvo {
+    background-color: #26aabd;
+    border-radius: 4px;
+    color: white;
+    height: 30px;
+    width: 120px;
 }
