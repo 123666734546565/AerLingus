@@ -76,6 +76,8 @@
             <button type="submit" class="btn btn-success">Search</button>
         }
     </div>
+
+
     <div class="col-md-6">
         @if (ViewBag.A)
         {
@@ -89,17 +91,22 @@
                 <div>
                     <h3> @Html.ActionLink("  Export To XLSX", "ExportToExcel")</h3>
                 </div>
+
+             
                 <div class="lista">
-                   @foreach (var record in Model.FlightRecords)
+
+                    @foreach (var record in Model.FlightRecords)
                     {
-                    <p>@record.identifierNo | @record.transactionType | @record.otherFFPNo | @record.otherFFPScheme | @record.firstName | @record.lastName | @record.partnerTransactionNo | @record.bookingDate | @record.departureDate | @record.origin | @record.destination | @record.bookingClass | @record.cabinClass | @record.marketingFlightNo | @record.marketingFlightNo | @record.operatingFlightNo | @record.operatingAirline | @record.ticketNo | @record.externalPaxID | @record.couponNo | @record.pnrNo | @record.distance | @record.baseFare | @record.discountBase | @record.exciseTax | @record.customerType | @record.promotionCode | @record.ticketCurrency | @record.targetCurrency | @record.exchangeRate | @record.fareBasis</p>
+                        <p>@record.identifierNo | @record.transactionType | @record.otherFFPNo | @record.otherFFPScheme | @record.firstName | @record.lastName | @record.partnerTransactionNo | @record.bookingDate | @record.departureDate | @record.origin | @record.destination | @record.bookingClass | @record.cabinClass | @record.marketingFlightNo | @record.marketingFlightNo | @record.operatingFlightNo | @record.operatingAirline | @record.ticketNo | @record.externalPaxID | @record.couponNo | @record.pnrNo | @record.distance | @record.baseFare | @record.discountBase | @record.exciseTax | @record.customerType | @record.promotionCode | @record.ticketCurrency | @record.targetCurrency | @record.exchangeRate | @record.fareBasis</p>
                     }
                 </div>
             }
-        
+
         }
     </div>
 </div>
+
+
 
 <link href="~/Content/Site.css" rel="stylesheet" />
 <link href="~/Content/jquery-ui.min.css" rel="stylesheet" />

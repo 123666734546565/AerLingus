@@ -161,7 +161,7 @@ namespace AerLingus.Controllers
                 Search = new SearchFlightRecord()
             });
         }
-        //ZA NADICU NACKU
+        
         [System.Web.Http.HttpGet]
         public ActionResult GetSearchedFlightRecords(SearchFlightRecord search)
         {
