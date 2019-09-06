@@ -14,22 +14,20 @@ using System.Web.Hosting;
 using AerLingus.Helpers;
 using System.Web.UI.WebControls;
 using System.Web.UI;
+using AerLingus.View_Models;
 
 namespace AerLingus.Controllers
     
 {
     public class FlightRecordsController : Controller
     {
-        List<Flight_Records> flight_Records = new List<Flight_Records>();
+        private List<Flight_Records> flight_Records = new List<Flight_Records>();
         private HttpClient client;
-        List<SearchFlightRecord> listaSearch = new List<SearchFlightRecord>();
-
+        private List<Flight_Records> listaSearch = new List<Flight_Records>();
 
         public FlightRecordsController()
         {
-            client = new HttpClient();
-            FlightRecordsApiController api = new FlightRecordsApiController();
-            
+            client = new HttpClient();         
         }
 
         public ActionResult Upload(HttpPostedFileBase file)
@@ -156,110 +154,139 @@ namespace AerLingus.Controllers
 
         public ActionResult SearchFlightRecords()
         {
-            return View();
+            ViewBag.A = false;
+            return View(new SearchViewModel
+            {
+                FlightRecords = flight_Records,
+                Search = new SearchFlightRecord()
+            });
         }
 
-        //[System.Web.Http.HttpGet]
-        //public ActionResult GetSearchedFlightRecords(SearchFlightRecord search)
-        //{
-        //    try
-        //    {
-        //        FlightRecordsApiController api = new FlightRecordsApiController()
-        //        {
-        //            Request = new HttpRequestMessage(),
-        //            Configuration = new HttpConfiguration()
-        //        };
-        //        IEnumerable<Flight_Records> gg = api.GetSearchedFlightRecords(search);
-        //        var response = client.GetAsync(@"http://localhost:54789/api/FlightRecordsApi/" + search.S_identifierNo).Result;
-
-        //        return View("SearchFlightRecords", gg);
-        //        if(response.IsSuccessStatusCode)
-        //            return Content(response.Content.ReadAsAsync)
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return View("Error: " + ex.Message);
-        //    }
-        //}
-
-
-        public void ExportToCSV()
+        [System.Web.Http.HttpGet]
+        public ActionResult GetSearchedFlightRecords(SearchFlightRecord search)
         {
-            listaSearch.Add(new SearchFlightRecord()
+            try
             {
-                S_identifierNo = "1234567891011",
-                S_otherFFPNo = "123",
-                S_firstName = "Stefan",
-                S_lastName = "Filipovic",
-                S_departureDate = null,
-                S_Origin = "Rome",
-                S_destination = "Belgrade",
-                S_bookingClass = "A",
-                S_operatingAirline = "AirSerbia",
-                S_ticketNo = "963255741",
-                S_externalPaxID = "  1254982985985457",
-                S_pnrNo = " 654231"
-            });
- 
-             StringWriter sw = new StringWriter();
+                FlightRecordsApiController api = new FlightRecordsApiController()
+                {
+                    Request = new HttpRequestMessage(),
+                    Configuration = new HttpConfiguration()
+                };
+
+                //listaSearch = api.GetSearchedFlightRecords(search);
+
+                if (ModelState.IsValid)
+                {                  
+                    SearchViewModel viewModel = new SearchViewModel
+                    {                        
+                        FlightRecords = api.GetSearchedFlightRecords(search)
+                    };
+
+                    foreach (Flight_Records searchRecord in viewModel.FlightRecords)
+                    {
+                        listaSearch.Add(searchRecord);
+                    }
+                    ViewBag.A = true;
+
+                    ModelState.Clear();
+
+                    return View("SearchFlightRecords", viewModel);
+                }
+                else
+                {
+                    ViewBag.A = true;
+
+                    SearchViewModel viewModel = new SearchViewModel
+                    {
+                        FlightRecords = new List<Flight_Records>()
+                    };
+
+                    //listaSearch = api.GetSearchedFlightRecords(search);
+
+                    //ModelState.Clear();
+
+                    return View("SearchFlightRecords", viewModel);
+                }
+            }
+            catch (Exception ex)
+            {
+                object errorMessage = ex.Message;
+
+                return View("Error", errorMessage);
+            }
+        }
+
+        public ActionResult ExportToCSV()
+        {
+            return Content(listaSearch.Count.ToString());
+            //string g = string.Empty;
+            //foreach(var d in listaSearch)
+            //{
+            //    g = g + d.firstName + "\n";
+            //}
+
+
+
+            StringWriter sw = new StringWriter();
             Response.ClearContent();
             Response.ContentType = "text/csv";
-            Response.AddHeader("content-disposition", "attachment;filename=FlightRecords"+DateTime.Now.ToShortDateString()+".csv");
-
+            Response.AddHeader("content-disposition", "attachment;filename=FlightRecords" + DateTime.Now.ToShortDateString() + ".csv");
 
             foreach (var client in listaSearch)
             {
                 sw.WriteLine(string.Format("\"{0}\",\"{1}\",\"{2}\",\"{3}\",\"{4}\",\"{5}\",\"{6}\",\"{7}\",\"{8}\",\"{9}\",\"{10}\",\"{11}\"",
-                    client.S_identifierNo,
-                    client.S_otherFFPNo,
-                    client.S_firstName,
-                    client.S_lastName,
-                    client.S_departureDate,
-                    client.S_Origin,
-                    client.S_destination,
-                    client.S_bookingClass,
-                    client.S_operatingAirline,
-                    client.S_ticketNo,
-                    client.S_externalPaxID,
-                    client.S_pnrNo));
+                    client.identifierNo,
+                    client.otherFFPNo,
+                    client.firstName,
+                    client.lastName,
+                    client.departureDate,
+                    client.origin,
+                    client.destination,
+                    client.bookingClass,
+                    client.operatingAirline,
+                    client.ticketNo,
+                    client.externalPaxID,
+                    client.pnrNo));
             }
             Response.Write(sw.ToString());
             Response.End();
         }
+
         public void ExportToExcel()
         {
-            listaSearch.Add(new SearchFlightRecord()
-            {
-                S_identifierNo = "1234567891011",
-                S_otherFFPNo = "123",
-                S_firstName = "Stefan",
-                S_lastName = "Filipovic",
-                S_departureDate = null,
-                S_Origin = "Rome",
-                S_destination = "Belgrade",
-                S_bookingClass = "A",
-                S_operatingAirline = "AirSerbia",
-                S_ticketNo = "963255741",
-                S_externalPaxID = "  1254982985985457",
-                S_pnrNo = " 654231"
-            });
+            //listaSearch.Add(new SearchFlightRecord()
+            //{
+            //    S_identifierNo = "1234567891011",
+            //    S_otherFFPNo = "123",
+            //    S_firstName = "Stefan",
+            //    S_lastName = "Filipovic",
+            //    S_departureDate = null,
+            //    S_Origin = "Rome",
+            //    S_destination = "Belgrade",
+            //    S_bookingClass = "A",
+            //    S_operatingAirline = "AirSerbia",
+            //    S_ticketNo = "963255741",
+            //    S_externalPaxID = "  1254982985985457",
+            //    S_pnrNo = " 654231"
+            //});
 
             var grid = new GridView();
+
             grid.DataSource = from client in listaSearch
                               select new
                               {
-                                  S_identifierNo = client.S_identifierNo,
-                                  S_otherFFPNo = client.S_otherFFPNo,
-                                  S_firstName = client.S_firstName,
-                                  S_lastName = client.S_lastName,
-                                  S_departureDate = client.S_departureDate,
-                                  S_Origin = client.S_Origin,
-                                  S_destination = client.S_destination,
-                                  S_bookingClass = client.S_bookingClass,
-                                  S_operatingAirline = client.S_operatingAirline,
-                                  S_ticketNo = client.S_ticketNo,
-                                  S_externalPaxID = client.S_externalPaxID,
-                                  S_pnrNo = client.S_pnrNo
+                                  identifierNo = client.identifierNo,
+                                  otherFFPNo = client.otherFFPNo,
+                                  firstName = client.firstName,
+                                  lastName = client.lastName,
+                                  departureDate = client.departureDate,
+                                  origin = client.origin,
+                                  destination = client.destination,
+                                  bookingClass = client.bookingClass,
+                                  operatingAirline = client.operatingAirline,
+                                  ticketNo = client.ticketNo,
+                                  externalPaxID = client.externalPaxID,
+                                  pnrNo = client.pnrNo
                               };
             grid.DataBind();
 
@@ -274,7 +301,6 @@ namespace AerLingus.Controllers
             Response.Write(sw.ToString());
 
             Response.End();
-
         }
     }
 }

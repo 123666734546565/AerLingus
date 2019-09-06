@@ -43,36 +43,36 @@ namespace AerLingus.Controllers.Api
         }
 
         [HttpGet]
-        [Route("api/FlightRecordsApi/sve/{fa}/{last}")]
+        [Route("api/FlightRecordsApi/Search/{fa}/{last}")]
         public IEnumerable<Flight_Records> GetRecords(string fa, string last)
         {
-            Request.GetQueryNameValuePairs()
+            //Request.GetQueryNameValuePairs()
             return entities.Flight_Records.Where(f => f.firstName == fa && f.lastName == last);
         }
 
         [HttpGet]
         [Route("api/FlightRecordsApi/Search")]
-        public IEnumerable<Flight_Records> GetSearchedFlightRecords(SearchFlightRecord search)
+        public List<Flight_Records> GetSearchedFlightRecords(SearchFlightRecord search)
         {
-            Validation.TrimBeginEnd(search);
-            Validation.SetEmptyPropertiesToNull(search);
+            //Validation.TrimBeginEnd(search);
+            //Validation.SetEmptyPropertiesToNull(search);
 
             var searchedRecords = entities.Flight_Records.Where(fr =>
-                                                        search.S_identifierNo != null ? fr.identifierNo.StartsWith(search.S_identifierNo) : fr.identifierNo == fr.identifierNo &&
-                                                        search.S_otherFFPNo != null ? fr.otherFFPNo.StartsWith(search.S_otherFFPNo) : fr.otherFFPNo == fr.otherFFPNo &&
-                                                        search.S_pnrNo != null ? fr.pnrNo.StartsWith(search.S_pnrNo) : fr.pnrNo == fr.pnrNo &&
-                                                        search.S_firstName != null ? fr.firstName.StartsWith(search.S_firstName) : fr.firstName == fr.firstName &&
-                                                        search.S_lastName != null ? fr.lastName.StartsWith(search.S_lastName) : fr.lastName == fr.lastName &&
-                                                        search.S_operatingAirline != null ? fr.operatingAirline.StartsWith(fr.operatingAirline) : fr.operatingAirline == fr.operatingAirline &&
-                                                        search.S_externalPaxID != null ? fr.externalPaxID.StartsWith(search.S_externalPaxID) : fr.externalPaxID == fr.externalPaxID &&
-                                                        search.S_ticketNo != null ? fr.ticketNo.StartsWith(search.S_ticketNo) : fr.ticketNo == fr.ticketNo &&
-                                                        search.S_bookingClass != null ? fr.bookingClass.StartsWith(search.S_bookingClass) : fr.bookingClass == fr.bookingClass &&
-                                                        search.S_departureDate != null ? fr.departureDate == search.S_departureDate : fr.departureDate == fr.departureDate &&
-                                                        search.S_destination != null ? fr.destination.StartsWith(search.S_destination) : fr.destination == fr.destination &&
-                                                        search.S_Origin != null ? fr.origin.StartsWith(search.S_Origin) : fr.origin == fr.origin
+                                                        (search.S_identifierNo != null ? fr.identifierNo.StartsWith(search.S_identifierNo) : fr.identifierNo == fr.identifierNo) &&
+                                                        (search.S_otherFFPNo != null ? fr.otherFFPNo.StartsWith(search.S_otherFFPNo) : fr.otherFFPNo == fr.otherFFPNo) &&
+                                                        (search.S_pnrNo != null ? fr.pnrNo.StartsWith(search.S_pnrNo) : fr.pnrNo == fr.pnrNo) &&
+                                                        (search.S_firstName != null ? fr.firstName.StartsWith(search.S_firstName) : fr.firstName == fr.firstName) &&
+                                                        (search.S_lastName != null ? fr.lastName.StartsWith(search.S_lastName) : fr.lastName == fr.lastName) &&
+                                                        (search.S_operatingAirline != null ? fr.operatingAirline.StartsWith(fr.operatingAirline) : fr.operatingAirline == fr.operatingAirline) &&
+                                                        (search.S_externalPaxID != null ? fr.externalPaxID.StartsWith(search.S_externalPaxID) : fr.externalPaxID == fr.externalPaxID) &&
+                                                        (search.S_ticketNo != null ? fr.ticketNo.StartsWith(search.S_ticketNo) : fr.ticketNo == fr.ticketNo) &&
+                                                        (search.S_bookingClass != null ? fr.bookingClass.StartsWith(search.S_bookingClass) : fr.bookingClass == fr.bookingClass) &&
+                                                        (search.S_departureDate != null ? fr.departureDate == search.S_departureDate : fr.departureDate == fr.departureDate) &&
+                                                        (search.S_destination != null ? fr.destination.StartsWith(search.S_destination) : fr.destination == fr.destination) &&
+                                                        (search.S_Origin != null ? fr.origin.StartsWith(search.S_Origin) : fr.origin == fr.origin)
                                                         );
 
-            return searchedRecords;
+            return searchedRecords.ToList();
         }
 
         [System.Web.Http.HttpPost]
@@ -715,7 +715,7 @@ namespace AerLingus.Controllers.Api
 
                     return Request.CreateResponse(HttpStatusCode.OK);
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     return Request.CreateResponse(HttpStatusCode.InternalServerError);
                 }
