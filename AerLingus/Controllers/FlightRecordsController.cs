@@ -161,7 +161,7 @@ namespace AerLingus.Controllers
                 Search = new SearchFlightRecord()
             });
         }
-
+        
         [System.Web.Http.HttpGet]
         public ActionResult GetSearchedFlightRecords(SearchFlightRecord search)
         {
