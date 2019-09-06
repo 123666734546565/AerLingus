@@ -86,8 +86,9 @@
             else
             {
                 @Html.ActionLink("Export To CSV", "ExportToCSV")
-                @Html.ActionLink("     Export To XLSX", "ExportToExcel")
-
+                <div>
+                    @Html.ActionLink("  Export To XLSX", "ExportToExcel")
+                </div>
                 foreach (var record in Model.FlightRecords)
                 {
                     <h6>@Html.ActionLink(record.firstName, "RecordDetails")</h6>
