@@ -85,7 +85,14 @@
             }
             else
             {
-                <h3> @Html.ActionLink("Export To CSV", "ExportToCSV")</h3>
+                <h3>
+                    @*@Html.ActionLink("Export To CSV", "ExportToCSV")*@
+                    @using (Html.BeginForm("ExportToCSV", "FlightRecords", FormMethod.Post))
+                    {
+
+                    <input type="submit" value="ExportToCSV" />
+                    }
+                </h3>
                 <div>
                     <h3> @Html.ActionLink("  Export To XLSX", "ExportToExcel")</h3>
                 </div>
