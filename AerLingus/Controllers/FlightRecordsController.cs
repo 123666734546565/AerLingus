@@ -355,5 +355,10 @@ namespace AerLingus.Controllers
 
             Response.End();
         }
+
+        public ActionResult Details()
+        {
+            return View();
+        }
     }
 }
