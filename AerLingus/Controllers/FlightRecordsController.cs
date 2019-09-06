@@ -290,17 +290,36 @@ namespace AerLingus.Controllers
                               select new
                               {
                                   identifierNo = client.identifierNo,
+                                  transactionType = client.transactionType,
                                   otherFFPNo = client.otherFFPNo,
+                                  otherFFPScheme = client.otherFFPScheme,
                                   firstName = client.firstName,
                                   lastName = client.lastName,
+                                  partnerTransactionNo = client.partnerTransactionNo,
+                                  bookingDate = client.bookingDate,
                                   departureDate = client.departureDate,
                                   origin = client.origin,
                                   destination = client.destination,
                                   bookingClass = client.bookingClass,
+                                  cabinClass =client.cabinClass,
+                                  marketingAirline = client.marketingAirline,
+                                  operatingFlightNo=client.operatingFlightNo,
                                   operatingAirline = client.operatingAirline,
                                   ticketNo = client.ticketNo,
                                   externalPaxID = client.externalPaxID,
-                                  pnrNo = client.pnrNo
+                                  couponNo=client.couponNo,
+                                  pnrNo = client.pnrNo,
+                                  distance= client.distance,
+                                  baseFare=client.baseFare,
+                                  discountBase=client.discountBase,
+                                  exciseTax=client.exciseTax,
+                                  customerType= client.customerType,
+                                  promotionCode= client.promotionCode,
+                                  ticketCurrency  =client.ticketCurrency,
+                                  targetCurrency= client.targetCurrency,
+                                  exchangeRate=client.exchangeRate,
+                                  fareBasis= client.fareBasis,
+ 
                               };
             grid.DataBind();
 
