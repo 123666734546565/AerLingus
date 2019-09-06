@@ -161,7 +161,7 @@ namespace AerLingus.Controllers
                 Search = new SearchFlightRecord()
             });
         }
-
+        
         [System.Web.Http.HttpGet]
         public ActionResult GetSearchedFlightRecords(SearchFlightRecord search)
         {
@@ -354,6 +354,11 @@ namespace AerLingus.Controllers
             Response.Write(sw.ToString());
 
             Response.End();
+        }
+
+        public ActionResult Details()
+        {
+            return View();
         }
     }
 }
