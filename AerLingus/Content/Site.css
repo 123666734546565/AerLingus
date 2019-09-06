@@ -247,9 +247,15 @@ textarea {
     height: 815px;
     width: 800px;
 }
-.dugme{
-    float:left;
+.dugme {
+    float: left;
+    margin: 20px 0;
+    background-color: #26aabd;
+    border-color: #4cae4c;
 }
-.dugme2{
-    float:right;
+.dugme2 {
+    float: right;
+    margin: 20px 0;
+    background-color: #26aabd;
+    border-color: #4cae4c;
 }
