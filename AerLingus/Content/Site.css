@@ -275,9 +275,34 @@ textarea {
     height: 30px;
     width: 120px;
 }
-.trece{
-    float:right;
+.trece {
+    float: left;
+    background-color: #26aabd;
+    border-radius: 4px;
+    color: white;
+    border:none;
+    opacity: 0.6;
+    transition: 0.3s;
 }
-.trece1{
-    float:left;
+.trece1 {
+    margin-left: 20px;
+    float: left;
+    background-color: #26aabd;
+    border-radius: 4px;
+    color: white;
+    border: none;
+    opacity: 0.6;
+    transition: 0.3s;
+}
+
+.trece:hover {
+    opacity: 20;
+}
+
+.trece1:hover {
+    opacity: 20;
+}
+
+.hl{
+    margin-top:20px;
 }

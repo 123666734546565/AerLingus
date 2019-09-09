@@ -358,7 +358,14 @@ namespace AerLingus.Controllers
 
         public ActionResult Details()
         {
-            return View();
+
+            var record = flight_Records.Where(p => p.ID == ViewBag.ID).FirstOrDefault();
+
+            if (ViewBag.ID == null)
+            {
+                return HttpNotFound("Record with requested ID has not been found.");
+            }
+            return View(record);
         }
 
         public ActionResult Edit()
