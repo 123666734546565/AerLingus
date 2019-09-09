@@ -275,9 +275,10 @@ textarea {
     height: 30px;
     width: 120px;
 }
-.trece{
-    float:right;
-}
-.trece1{
+.trece {
     float:left;
+}
+.trece1 {
+    float:left;
+    margin-left: 20px;
 }
