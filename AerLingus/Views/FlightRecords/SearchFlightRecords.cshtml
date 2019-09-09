@@ -104,7 +104,7 @@
                     <div class="lista">
                         @foreach (var record in Model.FlightRecords)
                         {
-                            <p>@record.identifierNo | @record.transactionType | @record.otherFFPNo | @record.otherFFPScheme | @record.firstName | @record.lastName | @record.partnerTransactionNo | @record.bookingDate | @record.departureDate | @record.origin | @record.destination | @record.bookingClass | @record.cabinClass | @record.marketingFlightNo | @record.marketingFlightNo | @record.operatingFlightNo | @record.operatingAirline | @record.ticketNo | @record.externalPaxID | @record.couponNo | @record.pnrNo | @record.distance | @record.baseFare | @record.discountBase | @record.exciseTax | @record.customerType | @record.promotionCode | @record.ticketCurrency | @record.targetCurrency | @record.exchangeRate | @record.fareBasis</p>
+                        <p class="hl"> @record.identifierNo | @record.transactionType | @record.otherFFPNo | @record.otherFFPScheme | @record.firstName | @record.lastName | @record.partnerTransactionNo | @record.bookingDate | @record.departureDate | @record.origin | @record.destination | @record.bookingClass | @record.cabinClass | @record.marketingFlightNo | @record.marketingFlightNo | @record.operatingFlightNo | @record.operatingAirline | @record.ticketNo | @record.externalPaxID | @record.couponNo | @record.pnrNo | @record.distance | @record.baseFare | @record.discountBase | @record.exciseTax | @record.customerType | @record.promotionCode | @record.ticketCurrency | @record.targetCurrency | @record.exchangeRate | @record.fareBasis  </p>
                             <div class="dugme3">
                                 @using (Html.BeginForm("Details", "FlightRecords", FormMethod.Post))
                                 {
@@ -115,6 +115,7 @@
                                 {
 
                                     <input class="trece1" type="submit" value="Edit" />
+                                    <br></br>
                                 }
                             </div>
 
