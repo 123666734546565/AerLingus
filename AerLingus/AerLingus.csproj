@@ -333,6 +333,7 @@
     <Content Include="Views\FlightRecords\DragAndDropStatusMessages.cshtml" />
     <Content Include="Views\FlightRecords\SearchFlightRecords.cshtml" />
     <Content Include="Views\FlightRecords\Details.cshtml" />
+    <Content Include="Views\FlightRecords\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

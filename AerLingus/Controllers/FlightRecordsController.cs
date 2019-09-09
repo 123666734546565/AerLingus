@@ -360,5 +360,10 @@ namespace AerLingus.Controllers
         {
             return View();
         }
+
+        public ActionResult Edit()
+        {
+            return View();
+        }
     }
 }
