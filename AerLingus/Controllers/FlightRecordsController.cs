@@ -356,12 +356,12 @@ namespace AerLingus.Controllers
             Response.End();
         }
 
-        public ActionResult Details(int id)
+        public ActionResult Details()
         {
 
-            var record = flight_Records.Find(p => p.ID == id);
+            var record = flight_Records.Where(p => p.ID == ViewBag.ID).FirstOrDefault();
 
-            if (record == null)
+            if (ViewBag.ID == null)
             {
                 return HttpNotFound("Record with requested ID has not been found.");
             }

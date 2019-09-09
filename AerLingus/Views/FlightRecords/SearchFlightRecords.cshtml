@@ -108,8 +108,8 @@
                             <div class="dugme3">
                                 @using (Html.BeginForm("Details", "FlightRecords", FormMethod.Post))
                                 {
-
-                                    <input class="trece" type="submit" value="Details" />
+                                    ViewBag.ID = record.ID;
+                                    <input class="trece" type="submit"  value="Details"/>
                                 }
                                 @using (Html.BeginForm("Edit", "FlightRecords", FormMethod.Post))
                                 {
