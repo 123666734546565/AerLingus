@@ -356,9 +356,16 @@ namespace AerLingus.Controllers
             Response.End();
         }
 
-        public ActionResult Details()
+        public ActionResult Details(int id)
         {
-            return View();
+
+            var record = flight_Records.Find(p => p.ID == id);
+
+            if (record == null)
+            {
+                return HttpNotFound("Record with requested ID has not been found.");
+            }
+            return View(record);
         }
 
         public ActionResult Edit()

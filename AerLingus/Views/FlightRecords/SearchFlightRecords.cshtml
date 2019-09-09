@@ -104,7 +104,11 @@
                     <div class="lista">
                         @foreach (var record in Model.FlightRecords)
                         {
-                            <p>@record.identifierNo | @record.transactionType | @record.otherFFPNo | @record.otherFFPScheme | @record.firstName | @record.lastName | @record.partnerTransactionNo | @record.bookingDate | @record.departureDate | @record.origin | @record.destination | @record.bookingClass | @record.cabinClass | @record.marketingFlightNo | @record.marketingFlightNo | @record.operatingFlightNo | @record.operatingAirline | @record.ticketNo | @record.externalPaxID | @record.couponNo | @record.pnrNo | @record.distance | @record.baseFare | @record.discountBase | @record.exciseTax | @record.customerType | @record.promotionCode | @record.ticketCurrency | @record.targetCurrency | @record.exchangeRate | @record.fareBasis</p>
+                            int id = record.ID;
+                            <p>
+                                @record.identifierNo | @record.transactionType | @record.otherFFPNo | @record.otherFFPScheme | @record.firstName | @record.lastName | @record.partnerTransactionNo | @record.bookingDate | @record.departureDate | @record.origin | @record.destination | @record.bookingClass | @record.cabinClass | @record.marketingFlightNo | @record.marketingFlightNo | @record.operatingFlightNo | @record.operatingAirline | @record.ticketNo | @record.externalPaxID | @record.couponNo | @record.pnrNo | @record.distance | @record.baseFare | @record.discountBase | @record.exciseTax | @record.customerType | @record.promotionCode | @record.ticketCurrency | @record.targetCurrency | @record.exchangeRate | @record.fareBasis
+                                        
+                            </p>
                         }
                     </div>
                     }
