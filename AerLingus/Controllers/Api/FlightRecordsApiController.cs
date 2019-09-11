@@ -42,21 +42,18 @@ namespace AerLingus.Controllers.Api
             return Ok(flightRecord);
         }
 
-        [HttpGet]
-        [Route("api/FlightRecordsApi/Search/{fa}/{last}")]
-        public IEnumerable<Flight_Records> GetRecords(string fa, string last)
-        {
-            //Request.GetQueryNameValuePairs()
-            return entities.Flight_Records.Where(f => f.firstName == fa && f.lastName == last);
-        }
+        //[HttpGet]
+        //[Route("api/FlightRecordsApi/Search/{fa}/{last}")]
+        //public IEnumerable<Flight_Records> GetRecords(string fa, string last)
+        //{
+        //    //Request.GetQueryNameValuePairs()
+        //    return entities.Flight_Records.Where(f => f.firstName == fa && f.lastName == last);
+        //}
 
         [HttpGet]
         [Route("api/FlightRecordsApi/Search")]
         public List<Flight_Records> GetSearchedFlightRecords(SearchFlightRecord search)
         {
-            //Validation.TrimBeginEnd(search);
-            //Validation.SetEmptyPropertiesToNull(search);
-
             var searchedRecords = entities.Flight_Records.Where(fr =>
                                                         (search.S_identifierNo != null ? fr.identifierNo.StartsWith(search.S_identifierNo) : fr.identifierNo == fr.identifierNo) &&
                                                         (search.S_otherFFPNo != null ? fr.otherFFPNo.StartsWith(search.S_otherFFPNo) : fr.otherFFPNo == fr.otherFFPNo) &&
@@ -75,7 +72,7 @@ namespace AerLingus.Controllers.Api
             return searchedRecords.ToList();
         }
 
-        [System.Web.Http.HttpPost]
+        [HttpPost]
         [Route("api/FlightRecordsApi/Upload")]
         public HttpResponseMessage Upload()
         {
@@ -1357,7 +1354,7 @@ namespace AerLingus.Controllers.Api
             }
         }
 
-        [System.Web.Http.HttpPost]
+        [HttpPost]
         [Route("api/FlightRecordsApi/AddFlightRecord")]
         // POST: api/FlightRecordsApi/AddFlightRecord
         public async Task<HttpResponseMessage> AddFlightRecord([FromBody] Flight_Records sfr)
@@ -1387,6 +1384,64 @@ namespace AerLingus.Controllers.Api
                 else return Request.CreateResponse(HttpStatusCode.Conflict);
             }
             else return Request.CreateResponse(HttpStatusCode.BadRequest);
+        }
+
+        [HttpPut]
+        public HttpResponseMessage EditFlightRecord(int id, Flight_Records record)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return Request.CreateResponse(HttpStatusCode.BadRequest);
+
+                var recordInDatabase = entities.Flight_Records.SingleOrDefault(f => f.ID == id);
+
+                if (recordInDatabase == null)
+                    return Request.CreateResponse(HttpStatusCode.NotFound);
+
+                recordInDatabase.firstName = record.firstName;
+                recordInDatabase.lastName = record.lastName;
+                recordInDatabase.identifierNo = record.identifierNo;
+                recordInDatabase.transactionType = record.transactionType;
+                recordInDatabase.otherFFPNo = record.otherFFPNo;
+                recordInDatabase.otherFFPScheme = record.otherFFPScheme;
+                recordInDatabase.partnerTransactionNo = record.partnerTransactionNo;
+                recordInDatabase.bookingDate = record.bookingDate;
+                recordInDatabase.departureDate = record.departureDate;
+                recordInDatabase.origin = record.origin;
+                recordInDatabase.destination = record.destination;
+                recordInDatabase.bookingClass = record.bookingClass;
+                recordInDatabase.cabinClass = record.cabinClass;
+                recordInDatabase.marketingFlightNo = record.marketingFlightNo;
+                recordInDatabase.marketingAirline = record.marketingAirline;
+                recordInDatabase.operatingFlightNo = record.operatingFlightNo;
+                recordInDatabase.operatingAirline = record.operatingAirline;
+                recordInDatabase.externalPaxID = record.externalPaxID;
+                recordInDatabase.ticketNo = record.ticketNo;
+                recordInDatabase.couponNo = record.couponNo;
+                recordInDatabase.pnrNo = record.pnrNo;
+                recordInDatabase.distance = record.distance;
+                recordInDatabase.baseFare = record.baseFare;
+                recordInDatabase.discountBase = record.discountBase;
+                recordInDatabase.exciseTax = record.exciseTax;
+                recordInDatabase.customerType = record.customerType;
+                recordInDatabase.promotionCode = record.promotionCode;
+                recordInDatabase.ticketCurrency = record.ticketCurrency;
+                recordInDatabase.targetCurrency = record.targetCurrency;
+                recordInDatabase.exchangeRate = record.exchangeRate;
+                recordInDatabase.fareBasis = record.fareBasis;
+
+                if (!ModelState.IsValid)
+                    return Request.CreateResponse(HttpStatusCode.BadRequest);
+
+                entities.SaveChanges();
+
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (Exception)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
         }
     }
 }

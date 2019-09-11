@@ -24,9 +24,11 @@ namespace AerLingus.Controllers
         private List<Flight_Records> flight_Records = new List<Flight_Records>();
         private HttpClient client;
         private List<Flight_Records> listaSearch = new List<Flight_Records>();
+        private AerLingus_databaseEntities entities;
 
         public FlightRecordsController()
         {
+            entities = new AerLingus_databaseEntities();
             client = new HttpClient();         
         }
 
@@ -217,8 +219,6 @@ namespace AerLingus.Controllers
             }
         }
 
-        
-
         public void ExportToCSV(SearchFlightRecord search)
         {
             StringWriter sw = new StringWriter();
@@ -356,21 +356,166 @@ namespace AerLingus.Controllers
             Response.End();
         }
 
-        public ActionResult Details()
+        public ActionResult Details(int id)
         {
+            var record = entities.Flight_Records.SingleOrDefault(fr => fr.ID == id);
 
-            var record = flight_Records.Where(p => p.ID == ViewBag.ID).FirstOrDefault();
-
-            if (ViewBag.ID == null)
+            if (record == null)
             {
-                return HttpNotFound("Record with requested ID has not been found.");
+                object errorMessage = "ERROR 404: Record with requested ID has not been found.";
+
+                return View("Error", errorMessage);
             }
+
             return View(record);
         }
 
-        public ActionResult Edit()
+        public ActionResult Edit(int id)
         {
-            return View();
+
+
+            var searchedFlightRecord = entities.Flight_Records.SingleOrDefault(f => f.ID == id);
+
+            if (searchedFlightRecord == null)
+                return HttpNotFound("Record with requested ID has not been found.");
+
+            List<SelectListItem> listItems = new List<SelectListItem>();
+            listItems.Add(new SelectListItem
+            {
+                Text = "AI",
+                Value = "AI"
+            });
+            listItems.Add(new SelectListItem
+            {
+                Text = "AB",
+                Value = "AB",
+            });
+
+            List<SelectListItem> listItems2 = new List<SelectListItem>();
+            listItems2.Add(new SelectListItem
+            {
+                Text = "F",
+                Value = "F"
+            });
+            listItems2.Add(new SelectListItem
+            {
+                Text = "J",
+                Value = "J",
+            });
+            listItems2.Add(new SelectListItem
+            {
+                Text = "W",
+                Value = "W",
+            });
+            listItems2.Add(new SelectListItem
+            {
+                Text = "Y",
+                Value = "Y",
+            });
+
+            List<SelectListItem> listItems3 = new List<SelectListItem>();
+            listItems3.Add(new SelectListItem
+            {
+                Text = "A",
+                Value = "A"
+            });
+            listItems3.Add(new SelectListItem
+            {
+                Text = "C",
+                Value = "C",
+
+            });
+            listItems3.Add(new SelectListItem
+            {
+                Text = "I",
+                Value = "I",
+            });
+
+            StreamReader sr = new StreamReader(HostingEnvironment.ApplicationPhysicalPath + "/Content/currencies.txt");
+
+            List<string> listItems4 = new List<string>();
+
+            while (!sr.EndOfStream)
+            {
+                listItems4.Add(sr.ReadLine());
+            }
+
+            ViewBag.list1 = listItems;
+            ViewBag.list2 = listItems2;
+            ViewBag.list3 = listItems3;
+            ViewBag.list4 = listItems4;
+
+            return View(searchedFlightRecord);
+        }
+
+        [System.Web.Http.HttpPost]
+        public async Task<ActionResult> EditFlightRecord(Flight_Records record)
+        {
+            try
+            {
+                //var recordInDatabase = entities.Flight_Records.SingleOrDefault(f => f.ID == record.ID);
+
+                //recordInDatabase.firstName = record.firstName;
+                //recordInDatabase.lastName = record.lastName;
+                //recordInDatabase.identifierNo = record.identifierNo;
+                //recordInDatabase.transactionType = record.transactionType;
+                //recordInDatabase.otherFFPNo = record.otherFFPNo;
+                //recordInDatabase.otherFFPScheme = record.otherFFPScheme;
+                //recordInDatabase.partnerTransactionNo = record.partnerTransactionNo;
+                //recordInDatabase.bookingDate = record.bookingDate;
+                //recordInDatabase.departureDate = record.departureDate;
+                //recordInDatabase.origin = record.origin;
+                //recordInDatabase.destination = record.destination;
+                //recordInDatabase.bookingClass = record.bookingClass;
+                //recordInDatabase.cabinClass = record.cabinClass;
+                //recordInDatabase.marketingFlightNo = record.marketingFlightNo;
+                //recordInDatabase.marketingAirline = record.marketingAirline;
+                //recordInDatabase.operatingFlightNo = record.operatingFlightNo;
+                //recordInDatabase.operatingAirline = record.operatingAirline;
+                //recordInDatabase.externalPaxID = record.externalPaxID;
+                //recordInDatabase.ticketNo = record.ticketNo;
+                //recordInDatabase.couponNo = record.couponNo;
+                //recordInDatabase.pnrNo = record.pnrNo;
+                //recordInDatabase.distance = record.distance;
+                //recordInDatabase.baseFare = record.baseFare;
+                //recordInDatabase.discountBase = record.discountBase;
+                //recordInDatabase.exciseTax = record.exciseTax;
+                //recordInDatabase.customerType = record.customerType;
+                //recordInDatabase.promotionCode = record.promotionCode;
+                //recordInDatabase.ticketCurrency = record.ticketCurrency;
+                //recordInDatabase.targetCurrency = record.targetCurrency;
+                //recordInDatabase.exchangeRate = record.exchangeRate;
+                //recordInDatabase.fareBasis = record.fareBasis;
+
+                //if (!ModelState.IsValid)
+                //    throw new Exception();
+
+                //entities.SaveChanges();
+
+                //return Content("EDIT OK");
+
+                var response = await client.PutAsJsonAsync(@"http://localhost:54789/api/FlightRecordsApi/" + record.ID.ToString(), record);
+
+                object errorMessage = null;
+
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    return View("UploadSuccessful");
+                }
+                else if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                    errorMessage = "ERROR 400: Invalid Model State";
+                else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+                    errorMessage = "ERROR 404: Record with requested ID has not been found";
+                else errorMessage = "ERROR 500: Internal Server Error";
+
+                return View("Error", errorMessage);
+            }
+            catch (Exception ex)
+            {
+                object errorMessage = "500: " + ex.Message;
+
+                return View("Error", errorMessage);
+            }
         }
     }
 }
