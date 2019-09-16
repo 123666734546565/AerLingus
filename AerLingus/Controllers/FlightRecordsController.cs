@@ -4,7 +4,6 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using AerLingus.Models;
-using System.Data.Entity;
 using System.IO;
 using System.Threading.Tasks;
 using System.Net.Http;
@@ -20,148 +19,172 @@ namespace AerLingus.Controllers
     
 {
     public class FlightRecordsController : Controller
-    {
-        private List<Flight_Records> flight_Records = new List<Flight_Records>();
-        private HttpClient client;
-        private List<Flight_Records> listaSearch = new List<Flight_Records>();
+    {    
+        private HttpClient client;    
+        private List<Flight_Records> listaSearch;
+        private List<Flight_Records> flight_Records;
         private AerLingus_databaseEntities entities;
 
         public FlightRecordsController()
         {
+            client = new HttpClient();
             entities = new AerLingus_databaseEntities();
-            client = new HttpClient();         
+            listaSearch = new List<Flight_Records>();
+            flight_Records = new List<Flight_Records>();
         }
 
         public ActionResult Upload(HttpPostedFileBase file)
         {
-            ApiViewBag.RequestIsComingFromController = true;
-            ApiViewBag.RequestedFile = file;
-
-            FlightRecordsApiController api = new FlightRecordsApiController()
+            try
             {
-                Request = new HttpRequestMessage(),
-                Configuration = new HttpConfiguration()
-            };
+                ApiViewBag.RequestIsComingFromController = true;
+                ApiViewBag.RequestedFile = file;
 
-            var returnedStatusCode = api.Upload().StatusCode;                     
+                FlightRecordsApiController api = new FlightRecordsApiController()
+                {
+                    Request = new HttpRequestMessage(),
+                    Configuration = new HttpConfiguration()
+                };
 
-            if (returnedStatusCode == System.Net.HttpStatusCode.OK)
-                return View("UploadSuccessful");
-            else
+                var returnedStatusCode = api.Upload().StatusCode;
+
+                if (returnedStatusCode == System.Net.HttpStatusCode.OK)
+                    return View("UploadSuccessful");
+                else
+                {
+                    object errorMessage = null;
+
+                    if (returnedStatusCode == System.Net.HttpStatusCode.NotFound)
+                        errorMessage = "ERROR 404: No file selected";
+                    else if (returnedStatusCode == System.Net.HttpStatusCode.NoContent)
+                        errorMessage = "ERROR 204: File is empty";
+                    else if (returnedStatusCode == System.Net.HttpStatusCode.NotAcceptable)
+                        errorMessage = "ERROR 406: File is missing header or footer or they are not prefixed with H or F";
+                    else if (returnedStatusCode == System.Net.HttpStatusCode.BadRequest)
+                        errorMessage = "ERROR 400: Footer does not have the number of potential records";
+                    else if (returnedStatusCode == System.Net.HttpStatusCode.PreconditionFailed)
+                        errorMessage = "ERROR 412: No record added to database because the number of footer records does not match with the number of existing records in the file";
+                    else if (returnedStatusCode == System.Net.HttpStatusCode.Conflict)
+                        errorMessage = "ERROR 409: File with that header already exists in database";
+                    else errorMessage = "ERROR 500: Internal Server Error";
+                    return View("Error", errorMessage);
+                }
+            }
+            catch(Exception ex)
             {
-                object errorMessage = null;
-
-                if (returnedStatusCode == System.Net.HttpStatusCode.NotFound)
-                    errorMessage = "ERROR 404: No file selected";
-                else if (returnedStatusCode == System.Net.HttpStatusCode.NoContent)
-                    errorMessage = "ERROR 204: File is empty";
-                else if (returnedStatusCode == System.Net.HttpStatusCode.NotAcceptable)
-                    errorMessage = "ERROR 406: File is missing header or footer or they are not prefixed with H or F";
-                else if (returnedStatusCode == System.Net.HttpStatusCode.BadRequest)
-                    errorMessage = "ERROR 400: Footer does not have the number of potential records";
-                else if (returnedStatusCode == System.Net.HttpStatusCode.PreconditionFailed)
-                    errorMessage = "ERROR 412: No record added to database because the number of footer records does not match with the number of existing records in the file";
-                else if (returnedStatusCode == System.Net.HttpStatusCode.Conflict)
-                    errorMessage = "ERROR 409: File with that header already exists in database";
-                else errorMessage = "ERROR 500: Internal Server Error";
-                return View("Error", errorMessage);
+                return View("Error", (object)"ERROR 500: " + ex.Message);
             }
         }
 
         public ActionResult FlightRecordForm(Flight_Records sfr)
         {
-            if (!String.IsNullOrEmpty(sfr.firstName) || !String.IsNullOrEmpty(sfr.lastName))
+            try
             {
-                //Ako je sfr formular popunjen salju se podaci u API kako bi se sacuvali u bazu
-                HttpClient hc = new HttpClient();
-                hc.BaseAddress = new Uri(@"http://localhost:54789/api/FlightRecordsApi/AddFlightRecord");
-                var insertRecord = hc.PostAsJsonAsync<Flight_Records>("", sfr);
-                insertRecord.Wait();
-                var recorddisplay = insertRecord.Result;
-                if (recorddisplay.IsSuccessStatusCode)
+                if (!String.IsNullOrEmpty(sfr.firstName) || !String.IsNullOrEmpty(sfr.lastName))
                 {
-                    //redirekcija u listu svih flight rekorda
-                    return View("UploadSuccessful");
+                    //Ako je sfr formular popunjen salju se podaci u API kako bi se sacuvali u bazu
+                    HttpClient hc = new HttpClient();
+                    hc.BaseAddress = new Uri(@"http://localhost:54789/api/FlightRecordsApi/AddFlightRecord");
+                    var insertRecord = hc.PostAsJsonAsync<Flight_Records>("", sfr);
+                    insertRecord.Wait();
+                    var recorddisplay = insertRecord.Result;
+                    if (recorddisplay.IsSuccessStatusCode)
+                    {
+                        //redirekcija u listu svih flight rekorda
+                        return View("UploadSuccessful");
+                    }
                 }
+
+                //Prikazuje formular za dodavanje single flight rekorda ako zeli da doda novi sfr ili ako prethodno popunjavanje nije proslo kako treba
+                List<SelectListItem> listItems = new List<SelectListItem>();
+                listItems.Add(new SelectListItem
+                {
+                    Text = "AI",
+                    Value = "AI"
+                });
+                listItems.Add(new SelectListItem
+                {
+                    Text = "AB",
+                    Value = "AB",
+                });
+
+                List<SelectListItem> listItems2 = new List<SelectListItem>();
+                listItems2.Add(new SelectListItem
+                {
+                    Text = "F",
+                    Value = "F"
+                });
+                listItems2.Add(new SelectListItem
+                {
+                    Text = "J",
+                    Value = "J",
+                });
+                listItems2.Add(new SelectListItem
+                {
+                    Text = "W",
+                    Value = "W",
+                });
+                listItems2.Add(new SelectListItem
+                {
+                    Text = "Y",
+                    Value = "Y",
+                });
+
+                List<SelectListItem> listItems3 = new List<SelectListItem>();
+                listItems3.Add(new SelectListItem
+                {
+                    Text = "A",
+                    Value = "A"
+                });
+                listItems3.Add(new SelectListItem
+                {
+                    Text = "C",
+                    Value = "C",
+
+                });
+                listItems3.Add(new SelectListItem
+                {
+                    Text = "I",
+                    Value = "I",
+                });
+
+                StreamReader sr = new StreamReader(HostingEnvironment.ApplicationPhysicalPath + "/Content/currencies.txt");
+
+                List<string> listItems4 = new List<string>();
+
+                while (!sr.EndOfStream)
+                {
+                    listItems4.Add(sr.ReadLine());
+                }
+
+                ViewBag.list1 = listItems;
+                ViewBag.list2 = listItems2;
+                ViewBag.list3 = listItems3;
+                ViewBag.list4 = listItems4;
+
+                return View();
             }
-            //Prikazuje formular za dodavanje single flight rekorda ako zeli da doda novi sfr ili ako prethodno popunjavanje nije proslo kako treba
-            List<SelectListItem> listItems = new List<SelectListItem>();
-            listItems.Add(new SelectListItem
+            catch(Exception ex)
             {
-                Text = "AI",
-                Value = "AI"
-            });
-            listItems.Add(new SelectListItem
-            {
-                Text = "AB",
-                Value = "AB",
-            });
-
-            List<SelectListItem> listItems2 = new List<SelectListItem>();
-            listItems2.Add(new SelectListItem
-            {
-                Text = "F",
-                Value = "F"
-            });
-            listItems2.Add(new SelectListItem
-            {
-                Text = "J",
-                Value = "J",
-            });
-            listItems2.Add(new SelectListItem
-            {
-                Text = "W",
-                Value = "W",
-            });
-            listItems2.Add(new SelectListItem
-            {
-                Text = "Y",
-                Value = "Y",
-            });
-
-            List<SelectListItem> listItems3 = new List<SelectListItem>();
-            listItems3.Add(new SelectListItem
-            {
-                Text = "A",
-                Value = "A"
-            });
-            listItems3.Add(new SelectListItem
-            {
-                Text = "C",
-                Value = "C",
-
-            });
-            listItems3.Add(new SelectListItem
-            {
-                Text = "I",
-                Value = "I",
-            });
-
-            StreamReader sr = new StreamReader(HostingEnvironment.ApplicationPhysicalPath + "/Content/currencies.txt");
-
-            List<string> listItems4 = new List<string>();
-
-            while (!sr.EndOfStream)
-            {
-                listItems4.Add(sr.ReadLine());
+                return View("Error", (object)"ERROR 500: " + ex.Message);
             }
-
-            ViewBag.list1 = listItems;
-            ViewBag.list2 = listItems2;
-            ViewBag.list3 = listItems3;
-            ViewBag.list4 = listItems4;
-
-            return View();
         }
 
         public ActionResult SearchFlightRecords()
         {
-            ViewBag.A = false;
-            return View(new SearchViewModel
+            try
             {
-                FlightRecords = flight_Records,
-                Search = new SearchFlightRecord()
-            });
+                ViewBag.A = false;
+                return View(new SearchViewModel
+                {
+                    FlightRecords = flight_Records,
+                    Search = new SearchFlightRecord()
+                });
+            }
+            catch(Exception ex)
+            {
+                return View("Error", (object)"ERROR 500: " + ex.Message);
+            }
         }
         
         [System.Web.Http.HttpGet]
@@ -174,8 +197,6 @@ namespace AerLingus.Controllers
                     Request = new HttpRequestMessage(),
                     Configuration = new HttpConfiguration()
                 };
-
-                //listaSearch = api.GetSearchedFlightRecords(search);
 
                 if (ModelState.IsValid)
                 {                  
@@ -356,144 +377,111 @@ namespace AerLingus.Controllers
             Response.End();
         }
 
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
-            var record = entities.Flight_Records.SingleOrDefault(fr => fr.ID == id);
-
-            if (record == null)
+            try
             {
-                object errorMessage = "ERROR 404: Record with requested ID has not been found.";
+                var response = await client.GetAsync(@"http://localhost:54789/api/FlightRecordsApi/" + id.ToString());
 
-                return View("Error", errorMessage);
+                if (response.IsSuccessStatusCode)
+                    return View(await response.Content.ReadAsAsync<Flight_Records>());
+
+                else return View("Error", (object)"ERROR 404: Record with requested ID has not been found");
             }
-
-            return View(record);
+            catch(Exception ex)
+            {
+                return View("Error", (object)"ERROR 500: " + ex.Message);
+            }
         }
 
         public ActionResult Edit(int id)
         {
-
-
-            var searchedFlightRecord = entities.Flight_Records.SingleOrDefault(f => f.ID == id);
-
-            if (searchedFlightRecord == null)
-                return HttpNotFound("Record with requested ID has not been found.");
-
-            List<SelectListItem> listItems = new List<SelectListItem>();
-            listItems.Add(new SelectListItem
+            try
             {
-                Text = "AI",
-                Value = "AI"
-            });
-            listItems.Add(new SelectListItem
-            {
-                Text = "AB",
-                Value = "AB",
-            });
+                var searchedFlightRecord = entities.Flight_Records.SingleOrDefault(f => f.ID == id);
 
-            List<SelectListItem> listItems2 = new List<SelectListItem>();
-            listItems2.Add(new SelectListItem
-            {
-                Text = "F",
-                Value = "F"
-            });
-            listItems2.Add(new SelectListItem
-            {
-                Text = "J",
-                Value = "J",
-            });
-            listItems2.Add(new SelectListItem
-            {
-                Text = "W",
-                Value = "W",
-            });
-            listItems2.Add(new SelectListItem
-            {
-                Text = "Y",
-                Value = "Y",
-            });
+                if (searchedFlightRecord == null)
+                    return HttpNotFound("Record with requested ID has not been found.");
 
-            List<SelectListItem> listItems3 = new List<SelectListItem>();
-            listItems3.Add(new SelectListItem
-            {
-                Text = "A",
-                Value = "A"
-            });
-            listItems3.Add(new SelectListItem
-            {
-                Text = "C",
-                Value = "C",
+                List<SelectListItem> listItems = new List<SelectListItem>();
+                listItems.Add(new SelectListItem
+                {
+                    Text = "AI",
+                    Value = "AI"
+                });
+                listItems.Add(new SelectListItem
+                {
+                    Text = "AB",
+                    Value = "AB",
+                });
 
-            });
-            listItems3.Add(new SelectListItem
-            {
-                Text = "I",
-                Value = "I",
-            });
+                List<SelectListItem> listItems2 = new List<SelectListItem>();
+                listItems2.Add(new SelectListItem
+                {
+                    Text = "F",
+                    Value = "F"
+                });
+                listItems2.Add(new SelectListItem
+                {
+                    Text = "J",
+                    Value = "J",
+                });
+                listItems2.Add(new SelectListItem
+                {
+                    Text = "W",
+                    Value = "W",
+                });
+                listItems2.Add(new SelectListItem
+                {
+                    Text = "Y",
+                    Value = "Y",
+                });
 
-            StreamReader sr = new StreamReader(HostingEnvironment.ApplicationPhysicalPath + "/Content/currencies.txt");
+                List<SelectListItem> listItems3 = new List<SelectListItem>();
+                listItems3.Add(new SelectListItem
+                {
+                    Text = "A",
+                    Value = "A"
+                });
+                listItems3.Add(new SelectListItem
+                {
+                    Text = "C",
+                    Value = "C",
 
-            List<string> listItems4 = new List<string>();
+                });
+                listItems3.Add(new SelectListItem
+                {
+                    Text = "I",
+                    Value = "I",
+                });
 
-            while (!sr.EndOfStream)
-            {
-                listItems4.Add(sr.ReadLine());
+                StreamReader sr = new StreamReader(HostingEnvironment.ApplicationPhysicalPath + "/Content/currencies.txt");
+
+                List<string> listItems4 = new List<string>();
+
+                while (!sr.EndOfStream)
+                {
+                    listItems4.Add(sr.ReadLine());
+                }
+
+                ViewBag.list1 = listItems;
+                ViewBag.list2 = listItems2;
+                ViewBag.list3 = listItems3;
+                ViewBag.list4 = listItems4;
+
+                return View(searchedFlightRecord);
             }
-
-            ViewBag.list1 = listItems;
-            ViewBag.list2 = listItems2;
-            ViewBag.list3 = listItems3;
-            ViewBag.list4 = listItems4;
-
-            return View(searchedFlightRecord);
+            catch(Exception ex)
+            {
+                return View("Error", (object)"ERROR 500: " + ex.Message);
+            }
         }
 
         [System.Web.Http.HttpPost]
         public async Task<ActionResult> EditFlightRecord(Flight_Records record)
         {
             try
-            {
-                //var recordInDatabase = entities.Flight_Records.SingleOrDefault(f => f.ID == record.ID);
-
-                //recordInDatabase.firstName = record.firstName;
-                //recordInDatabase.lastName = record.lastName;
-                //recordInDatabase.identifierNo = record.identifierNo;
-                //recordInDatabase.transactionType = record.transactionType;
-                //recordInDatabase.otherFFPNo = record.otherFFPNo;
-                //recordInDatabase.otherFFPScheme = record.otherFFPScheme;
-                //recordInDatabase.partnerTransactionNo = record.partnerTransactionNo;
-                //recordInDatabase.bookingDate = record.bookingDate;
-                //recordInDatabase.departureDate = record.departureDate;
-                //recordInDatabase.origin = record.origin;
-                //recordInDatabase.destination = record.destination;
-                //recordInDatabase.bookingClass = record.bookingClass;
-                //recordInDatabase.cabinClass = record.cabinClass;
-                //recordInDatabase.marketingFlightNo = record.marketingFlightNo;
-                //recordInDatabase.marketingAirline = record.marketingAirline;
-                //recordInDatabase.operatingFlightNo = record.operatingFlightNo;
-                //recordInDatabase.operatingAirline = record.operatingAirline;
-                //recordInDatabase.externalPaxID = record.externalPaxID;
-                //recordInDatabase.ticketNo = record.ticketNo;
-                //recordInDatabase.couponNo = record.couponNo;
-                //recordInDatabase.pnrNo = record.pnrNo;
-                //recordInDatabase.distance = record.distance;
-                //recordInDatabase.baseFare = record.baseFare;
-                //recordInDatabase.discountBase = record.discountBase;
-                //recordInDatabase.exciseTax = record.exciseTax;
-                //recordInDatabase.customerType = record.customerType;
-                //recordInDatabase.promotionCode = record.promotionCode;
-                //recordInDatabase.ticketCurrency = record.ticketCurrency;
-                //recordInDatabase.targetCurrency = record.targetCurrency;
-                //recordInDatabase.exchangeRate = record.exchangeRate;
-                //recordInDatabase.fareBasis = record.fareBasis;
-
-                //if (!ModelState.IsValid)
-                //    throw new Exception();
-
-                //entities.SaveChanges();
-
-                //return Content("EDIT OK");
-
+            {                
                 var response = await client.PutAsJsonAsync(@"http://localhost:54789/api/FlightRecordsApi/" + record.ID.ToString(), record);
 
                 object errorMessage = null;
@@ -512,7 +500,7 @@ namespace AerLingus.Controllers
             }
             catch (Exception ex)
             {
-                object errorMessage = "500: " + ex.Message;
+                object errorMessage = "ERROR 500: " + ex.Message;
 
                 return View("Error", errorMessage);
             }
