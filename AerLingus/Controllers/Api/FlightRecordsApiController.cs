@@ -1443,5 +1443,32 @@ namespace AerLingus.Controllers.Api
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
         }
+
+        [HttpDelete]
+        public HttpResponseMessage DeleteFlightRecord(int id, Flight_Records record)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return Request.CreateResponse(HttpStatusCode.BadRequest);
+
+                var recordInDatabase = entities.Flight_Records.SingleOrDefault(f => f.ID == id);
+
+                if (recordInDatabase == null)
+                    return Request.CreateResponse(HttpStatusCode.NotFound);
+
+                entities.Flight_Records.Remove(recordInDatabase);
+
+              
+
+                entities.SaveChanges();
+
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (Exception)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
+        }
     }
 }

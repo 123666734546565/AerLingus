@@ -16,11 +16,11 @@ using System.Web.UI;
 using AerLingus.View_Models;
 
 namespace AerLingus.Controllers
-    
+
 {
     public class FlightRecordsController : Controller
-    {    
-        private HttpClient client;    
+    {
+        private HttpClient client;
         private List<Flight_Records> listaSearch;
         private List<Flight_Records> flight_Records;
         private AerLingus_databaseEntities entities;
@@ -70,7 +70,7 @@ namespace AerLingus.Controllers
                     return View("Error", errorMessage);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return View("Error", (object)"ERROR 500: " + ex.Message);
             }
@@ -164,7 +164,7 @@ namespace AerLingus.Controllers
 
                 return View();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return View("Error", (object)"ERROR 500: " + ex.Message);
             }
@@ -181,12 +181,12 @@ namespace AerLingus.Controllers
                     Search = new SearchFlightRecord()
                 });
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return View("Error", (object)"ERROR 500: " + ex.Message);
             }
         }
-        
+
         [System.Web.Http.HttpGet]
         public ActionResult GetSearchedFlightRecords(SearchFlightRecord search)
         {
@@ -199,9 +199,9 @@ namespace AerLingus.Controllers
                 };
 
                 if (ModelState.IsValid)
-                {                  
+                {
                     SearchViewModel viewModel = new SearchViewModel
-                    {                        
+                    {
                         FlightRecords = api.GetSearchedFlightRecords(search)
                     };
 
@@ -209,7 +209,7 @@ namespace AerLingus.Controllers
                     {
                         listaSearch.Add(searchRecord);
                     }
-                    
+
                     ViewBag.A = true;
 
                     ModelState.Clear();
@@ -340,26 +340,26 @@ namespace AerLingus.Controllers
                                   origin = client.origin,
                                   destination = client.destination,
                                   bookingClass = client.bookingClass,
-                                  cabinClass =client.cabinClass,
-                                  marketingFlightNo= client.marketingFlightNo,
+                                  cabinClass = client.cabinClass,
+                                  marketingFlightNo = client.marketingFlightNo,
                                   marketingAirline = client.marketingAirline,
-                                  operatingFlightNo=client.operatingFlightNo,
+                                  operatingFlightNo = client.operatingFlightNo,
                                   operatingAirline = client.operatingAirline,
                                   ticketNo = client.ticketNo,
                                   externalPaxID = client.externalPaxID,
-                                  couponNo=client.couponNo,
+                                  couponNo = client.couponNo,
                                   pnrNo = client.pnrNo,
-                                  distance= client.distance,
-                                  baseFare=client.baseFare,
-                                  discountBase=client.discountBase,
-                                  exciseTax=client.exciseTax,
-                                  customerType= client.customerType,
-                                  promotionCode= client.promotionCode,
-                                  ticketCurrency  =client.ticketCurrency,
-                                  targetCurrency= client.targetCurrency,
-                                  exchangeRate=client.exchangeRate,
-                                  fareBasis= client.fareBasis,
- 
+                                  distance = client.distance,
+                                  baseFare = client.baseFare,
+                                  discountBase = client.discountBase,
+                                  exciseTax = client.exciseTax,
+                                  customerType = client.customerType,
+                                  promotionCode = client.promotionCode,
+                                  ticketCurrency = client.ticketCurrency,
+                                  targetCurrency = client.targetCurrency,
+                                  exchangeRate = client.exchangeRate,
+                                  fareBasis = client.fareBasis,
+
                               };
             grid.DataBind();
 
@@ -368,7 +368,7 @@ namespace AerLingus.Controllers
             Response.AddHeader("content-disposition", "attachment;filename=FlightRecords" + DateTime.Now.ToShortDateString() + ".xlsx");
             Response.ContentType = "application/excel";
             StringWriter sw = new StringWriter();
-            
+
             HtmlTextWriter htmlTextWriter = new HtmlTextWriter(sw);
 
             grid.RenderControl(htmlTextWriter);
@@ -388,7 +388,7 @@ namespace AerLingus.Controllers
 
                 else return View("Error", (object)"ERROR 404: Record with requested ID has not been found");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return View("Error", (object)"ERROR 500: " + ex.Message);
             }
@@ -471,7 +471,7 @@ namespace AerLingus.Controllers
 
                 return View(searchedFlightRecord);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return View("Error", (object)"ERROR 500: " + ex.Message);
             }
@@ -481,8 +481,57 @@ namespace AerLingus.Controllers
         public async Task<ActionResult> EditFlightRecord(Flight_Records record)
         {
             try
-            {                
+            {
                 var response = await client.PutAsJsonAsync(@"http://localhost:54789/api/FlightRecordsApi/" + record.ID.ToString(), record);
+
+                object errorMessage = null;
+
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    return View("UploadSuccessful");
+                }
+                else if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                    errorMessage = "ERROR 400: Invalid Model State";
+                else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+                    errorMessage = "ERROR 404: Record with requested ID has not been found";
+                else errorMessage = "ERROR 500: Internal Server Error";
+
+                return View("Error", errorMessage);
+            }
+            catch (Exception ex)
+            {
+                object errorMessage = "ERROR 500: " + ex.Message;
+
+                return View("Error", errorMessage);
+            }
+        }
+
+
+        public ActionResult Delete(int id)
+        {
+            try
+            {
+                var searchedFlightRecord = entities.Flight_Records.SingleOrDefault(f => f.ID == id);
+
+                if (searchedFlightRecord == null)
+                    return HttpNotFound("Record with requested ID has not been found.");
+                
+
+                return View(searchedFlightRecord);
+            }
+            catch(Exception ex)
+            {
+                return View("Error", (object)"ERROR 500: " + ex.Message);
+            }
+        }
+
+
+        [System.Web.Http.HttpDelete]
+        public async Task<ActionResult> DeleteFlightRecord(Flight_Records record)
+        {
+            try
+            {
+                var response = await client.DeleteAsync(@"http://localhost:54789/api/FlightRecordsApi/" + record.ID.ToString());
 
                 object errorMessage = null;
 

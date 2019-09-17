@@ -333,6 +333,7 @@
     <Content Include="Views\FlightRecords\SearchFlightRecords.cshtml" />
     <Content Include="Views\FlightRecords\Details.cshtml" />
     <Content Include="Views\FlightRecords\Edit.cshtml" />
+    <Content Include="Views\FlightRecords\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
