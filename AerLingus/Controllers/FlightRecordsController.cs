@@ -477,7 +477,7 @@ namespace AerLingus.Controllers
             }
         }
 
-        [System.Web.Http.HttpPost]
+        [System.Web.Http.HttpPut]
         public async Task<ActionResult> EditFlightRecord(Flight_Records record)
         {
             try
