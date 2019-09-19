@@ -303,6 +303,11 @@ textarea {
     opacity: 20;
 }
 
-.hl{
-    margin-top:20px;
+.hl {
+    margin-top: 20px;
+}
+
+#dugmence{
+    float:right;
+    background-color:red;
 }
