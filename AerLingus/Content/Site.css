@@ -312,3 +312,12 @@ textarea {
     left:4.5%;
 
 }
+.BackToList {
+    position: relative;
+    right:2.5%;
+}
+.DeleteDugme {
+    position: relative;
+    left: 4.5%;
+    padding-top:25px;
+}
