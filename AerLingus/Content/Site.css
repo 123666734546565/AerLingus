@@ -308,8 +308,9 @@ textarea {
 }
 
 .dugmence{
-    position:relative;
-    left:4.5%;
+    /*position:relative;*/
+    /*left:4.5%;*/
+  
 
 }
 .BackToList {
@@ -320,4 +321,12 @@ textarea {
     position: relative;
    
     padding-top:15px;
+}
+
+.col-md-1{
+    margin-right:20px !important; 
+}
+
+#EditDugme{
+    margin-right:3.5px !important;
 }
