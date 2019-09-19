@@ -307,7 +307,8 @@ textarea {
     margin-top: 20px;
 }
 
-#dugmence{
-    float:right;
-    background-color:red;
+.dugmence{
+    position:relative;
+    left:4.5%;
+
 }
