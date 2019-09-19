@@ -37,8 +37,8 @@ namespace AerLingus.Controllers
         {
             try
             {
-                ApiViewBag.RequestIsComingFromController = true;
-                ApiViewBag.RequestedFile = file;
+                ApiViewBag.UploadRequest.RequestIsComingFromController = true;
+                ApiViewBag.UploadRequest.RequestedFile = file;
 
                 FlightRecordsApiController api = new FlightRecordsApiController()
                 {
