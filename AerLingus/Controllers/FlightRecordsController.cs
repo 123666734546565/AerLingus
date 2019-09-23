@@ -212,7 +212,7 @@ namespace AerLingus.Controllers
 
                     ViewBag.A = true;
 
-                    ModelState.Clear();
+                    //ModelState.Clear();
 
                     return View("SearchFlightRecords", viewModel);
                 }
