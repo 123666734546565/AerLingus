@@ -194,14 +194,17 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Api\FlightRecordsApiController.cs" />
+    <Compile Include="Controllers\Api\JourneyApiController.cs" />
     <Compile Include="Controllers\FlightRecordsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\JourneyController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\ApiViewBag.cs" />
     <Compile Include="Helpers\SearchFlightRecord.cs" />
+    <Compile Include="Helpers\SearchJourney.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AerLingusDatabase.Context.cs">
       <AutoGen>True</AutoGen>
@@ -235,9 +238,11 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="Validations\SearchValidation.cs" />
+    <Compile Include="Validations\SearchFlightRecordValidation.cs" />
+    <Compile Include="Validations\SearchJourneyValidation.cs" />
     <Compile Include="Validations\TicketExternalValidation.cs" />
     <Compile Include="Validations\Validation.cs" />
+    <Compile Include="View Models\SearchJourneyViewModel.cs" />
     <Compile Include="View Models\SearchViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -343,6 +348,7 @@
     <Content Include="Views\FlightRecords\Details.cshtml" />
     <Content Include="Views\FlightRecords\Edit.cshtml" />
     <Content Include="Views\FlightRecords\Delete.cshtml" />
+    <Content Include="Views\Journey\SearchJourney.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

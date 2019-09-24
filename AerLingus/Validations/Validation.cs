@@ -52,6 +52,27 @@ namespace AerLingus.Validations
             record.fareBasis = record.fareBasis == string.Empty ? null : record.fareBasis;
         }
 
+        public static bool Exists(Flight_Records record)
+        {
+            if (record.ticketNo != null)
+            {
+                if (TicketNoValidation(record) != null)
+                {
+                    return true;
+                }
+                else return false;
+            }
+            else if (record.externalPaxID != null)
+            {
+                if (ExternalPaxIDValidation(record) != null)
+                {
+                    return true;
+                }
+                else return false;
+            }
+            else throw new Exception("Record must either have Ticket Number or External Pax ID");
+        }
+
         public static void SetEmptyPropertiesToNull(SearchFlightRecord search)
         {
             search.S_identifierNo = search.S_identifierNo == string.Empty ? null : search.S_identifierNo;

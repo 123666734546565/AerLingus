@@ -81,11 +81,11 @@
         {
             if (!Model.FlightRecords.Any())
             {
-                <h2>No records match search criteria.</h2>
+                <h2>No record matches search criteria.</h2>
             }
             else
             {
-                
+
                 <div class="dugme">
                     @using (Html.BeginForm("ExportToCSV", "FlightRecords", FormMethod.Post))
                     {
@@ -116,11 +116,11 @@
                                 @Html.ActionLink("Delete", "Delete", "FlightRecords", new { id = record.ID }, new { @class = "btn btn-success" })
                             </div>
                         </div>
-                            }
+                        }
                         </div>
-                    }
+            }
 
-                    }
+        }
                 </div>
 </div>
 

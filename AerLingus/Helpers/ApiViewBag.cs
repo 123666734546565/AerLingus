@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using AerLingus.Models;
 
 namespace AerLingus.Helpers
 {
@@ -28,6 +29,11 @@ namespace AerLingus.Helpers
             public static string ticketNo { get; set; }
             public static string externalPaxID { get; set; }
             public static string pnrNo { get; set; }
+        }
+
+        public static class ExportRequest
+        {
+            public static List<Flight_Records> SearchedItems { get; set; }
         }
     }
 }

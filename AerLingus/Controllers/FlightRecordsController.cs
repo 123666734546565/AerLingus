@@ -177,7 +177,8 @@ namespace AerLingus.Controllers
                 ViewBag.A = false;
                 return View(new SearchViewModel
                 {
-                    FlightRecords = flight_Records,
+                    //FlightRecords = flight_Records,
+                    FlightRecords = new List<Flight_Records>(),
                     Search = new SearchFlightRecord()
                 });
             }
@@ -234,9 +235,7 @@ namespace AerLingus.Controllers
             }
             catch (Exception ex)
             {
-                object errorMessage = ex.Message;
-
-                return View("Error", errorMessage);
+                return View("Error", (object)"ERROR 500: " + ex.Message);
             }
         }
 
