@@ -23,5 +23,21 @@ namespace AerLingus.Controllers.Api
         //{
 
         //}
+
+        [HttpPost]
+        [Route("api/JourneyApi/AddJourney")]
+        public async Task<HttpResponseMessage> AddJourneyAsync([FromBody] Journey j)
+        {
+            if (j.TicketNo != string.Empty)
+            {
+
+                entities.Journeys.Add(j);
+                await entities.SaveChangesAsync();
+
+                return Request.CreateResponse(HttpStatusCode.OK);
+
+            }
+            else return Request.CreateResponse(HttpStatusCode.Conflict);
+        }
     }
 }
