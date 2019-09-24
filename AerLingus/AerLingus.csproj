@@ -349,6 +349,7 @@
     <Content Include="Views\FlightRecords\Edit.cshtml" />
     <Content Include="Views\FlightRecords\Delete.cshtml" />
     <Content Include="Views\Journey\SearchJourney.cshtml" />
+    <Content Include="Views\FlightRecords\JourneyForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

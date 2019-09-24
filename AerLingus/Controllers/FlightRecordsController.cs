@@ -553,5 +553,31 @@ namespace AerLingus.Controllers
                 return View("Error", errorMessage);
             }
         }
+
+        public ActionResult JourneyForm(Journey j)
+        {
+            if (!String.IsNullOrEmpty(j.TicketNo))
+            {
+                //Ako je sfr formular popunjen salju se podaci u API kako bi se sacuvali u bazu
+                HttpClient hc = new HttpClient();
+                hc.BaseAddress = new Uri(@"http://localhost:54789/api/FlightRecordsApi/AddJourney");
+                var insertRecord = hc.PostAsJsonAsync<Journey>("", j);
+                insertRecord.Wait();
+                var recorddisplay = insertRecord.Result;
+                if (recorddisplay.IsSuccessStatusCode)
+                {
+                    //redirekcija u listu svih flight rekorda
+                    return View("UploadSuccessful");
+                }
+                else
+                {
+                    return View("Error", j);
+                }
+            }
+            else
+            {
+                return View("Error", j);
+            }
+        }
     }
 }
