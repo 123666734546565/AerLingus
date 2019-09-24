@@ -13,7 +13,7 @@ namespace AerLingus.Validations
         {
             var journey = (SearchJourney)validationContext.ObjectInstance;
 
-            if(journey.otherFFPNo == null && journey.lastName == null &&
+            if(journey.identifierNo == null && journey.lastName == null &&
                 journey.firstName == null && journey.ticketNo == null)
             {
                 return new ValidationResult("At least one field is required");

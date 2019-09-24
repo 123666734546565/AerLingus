@@ -9,13 +9,9 @@
 
 namespace AerLingus.Models
 {
-    using AerLingus.Validations;
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-
+    
     public partial class Flight_Records
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -23,152 +19,40 @@ namespace AerLingus.Models
         {
             this.JourneySegments = new HashSet<JourneySegment>();
         }
-
-        [MaxLength(16)]
-        [DisplayName("Identifier Number")]
+    
         public string identifierNo { get; set; }
-
-        [Required]
-        [MaxLength(2)]
-        [DisplayName("Transaction Type")]
         public string transactionType { get; set; }
-
-        [MaxLength(30)]
-        [DisplayName("Other FFP Number")]
         public string otherFFPNo { get; set; }
-
-        [MaxLength(30)]
-        [DisplayName("Other FFP Scheme")]
         public string otherFFPScheme { get; set; }
-
-        [Required]
-        [MinLength(2)]
-        [MaxLength(30)]
-        [DisplayName("First Name")]
         public string firstName { get; set; }
-
-        [Required]
-        [MinLength(2)]
-        [MaxLength(30)]
-        [DisplayName("Last Name")]
         public string lastName { get; set; }
-
-        [MaxLength(100)]
-        [DisplayName("Partner Transaction Number")]
         public string partnerTransactionNo { get; set; }
-
-        [DisplayName("Booking Date")]
         public Nullable<System.DateTime> bookingDate { get; set; }
-
-        [Required]
-        [DisplayName("Departure Date")]
         public System.DateTime departureDate { get; set; }
-
-        [Required]
-        [DisplayName("Origin")]
-        [StringLength(maximumLength: 3, MinimumLength = 3)]
         public string origin { get; set; }
-
-        [Required]
-        [DisplayName("Destination")]
-        [StringLength(maximumLength: 3, MinimumLength = 3)]
         public string destination { get; set; }
-
-        [Required]
-        [MaxLength(2)]
-        [DisplayName("Booking Class")]
         public string bookingClass { get; set; }
-
-        [MaxLength(1)]
-        [DisplayName("Cabin Class")]
         public string cabinClass { get; set; }
-
-        [Required]
-        [MaxLength(4)]
-        [DisplayName("Marketing Flight Number")]
         public string marketingFlightNo { get; set; }
-
-        [Required]
-        [MaxLength(2)]
-        [DisplayName("Marketing Airline")]
         public string marketingAirline { get; set; }
-
-        [Required]
-        [MaxLength(4)]
-        [DisplayName("Operating Flight Number")]
         public string operatingFlightNo { get; set; }
-
-        [Required]
-        [MaxLength(2)]
-        [DisplayName("Operating Airline")]
         public string operatingAirline { get; set; }
-
-        [MinLength(13)]
-        [MaxLength(14)]
-        [TicketExternalValidation]
-        [DisplayName("Ticket Number")]
         public string ticketNo { get; set; }
-
-        [MaxLength(25)]
-        [TicketExternalValidation]
-        [DisplayName("External PaxID")]
         public string externalPaxID { get; set; }
-
-        [MaxLength(2)]
-        [DisplayName("Coupon Number")]
         public string couponNo { get; set; }
-
-        [Required]
-        [MaxLength(6)]
-        [DisplayName("PNR Number")]
         public string pnrNo { get; set; }
-
-        [Range(0, 99999)]
-        [DisplayName("Distance")]
         public Nullable<long> distance { get; set; }
-
-        [Range(0, 999999999)]
-        [DisplayName("Base Fare")]
         public Nullable<double> baseFare { get; set; }
-
-        [Range(0, 999999999)]
-        [DisplayName("Discount Base")]
         public Nullable<double> discountBase { get; set; }
-
-        [Range(0, 999999999)]
-        [DisplayName("Excise Tax")]
         public Nullable<double> exciseTax { get; set; }
-
-        [MaxLength(1)]
-        [DisplayName("Customer Type")]
         public string customerType { get; set; }
-
-        [MaxLength(100)]
-        [DisplayName("Promotion Code")]
         public string promotionCode { get; set; }
-
-        [MaxLength(3)]
-        [DisplayName("Ticket Currency")]
-        [EIValidation]
         public string ticketCurrency { get; set; }
-
-        [EIValidation]
-        [MaxLength(3)]
-        [DisplayName("Target Currency")]
         public string targetCurrency { get; set; }
-
-        [EIValidation]
-        [Range(0, 9999999999)]
-        [DisplayName("Exchange Rate")]
         public Nullable<double> exchangeRate { get; set; }
-
-        [MaxLength(10)]
-        [DisplayName("Fare Basis")]
         public string fareBasis { get; set; }
-
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
-
+    
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<JourneySegment> JourneySegments { get; set; }
     }

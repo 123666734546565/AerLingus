@@ -11,6 +11,8 @@ namespace AerLingus.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
     
     public partial class Journey
     {
@@ -20,10 +22,19 @@ namespace AerLingus.Models
             this.JourneySegments = new HashSet<JourneySegment>();
         }
     
+        [Required]
         public string IdentifierNo { get; set; }
+
+        [Required]
         public string TicketNo { get; set; }
+
+        [Required]
         public string FirstName { get; set; }
+
+        [Required]
         public string LastName { get; set; }
+
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

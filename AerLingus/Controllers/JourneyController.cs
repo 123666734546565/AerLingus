@@ -15,12 +15,15 @@ namespace AerLingus.Controllers
     public class JourneyController : Controller
     {
         private HttpClient client;
-
+        private List<Journey> listaSearch;
+        private List<Journey> journeys;
         private AerLingus_databaseEntities entities;
 
         public JourneyController()
         {
             client = new HttpClient();
+            journeys = new List<Journey>();
+            listaSearch = new List<Journey>();         
             entities = new AerLingus_databaseEntities();
         }
         
@@ -41,34 +44,70 @@ namespace AerLingus.Controllers
             }
         }
 
-        //[System.Web.Http.HttpGet]
-        //public ActionResult GetSearchedJourneys(SearchJourney search)
-        //{
-        //    try
-        //    {
-        //        JourneyApiController api = new JourneyApiController()
-        //        {
-        //            Request = new HttpRequestMessage(),
-        //            Configuration = new HttpConfiguration
-        //        };
+        [System.Web.Http.HttpGet]
+        public ActionResult GetSearchedJourneys(SearchJourneyViewModel searchV)
+        {
+            var search = searchV.SearchJourney;
 
-        //        if (ModelState.IsValid)
-        //        {
-        //            SearchJourneyViewModel viewModel = new SearchJourneyViewModel
-        //            {
-        //                Journeys = api.GetSearchedJourneys(search)
-        //            };
+            try
+            {
+                JourneyApiController api = new JourneyApiController()
+                {
+                    Request = new HttpRequestMessage(),
+                    Configuration = new HttpConfiguration()
+                };
 
-        //            foreach(Journey searchJourney in viewModel.Journeys)
-        //            {
+                if (ModelState.IsValid)
+                {
+                    SearchJourneyViewModel viewModel = new SearchJourneyViewModel
+                    {
+                        Journeys = api.GetSearchedJourneys(search)
+                    };
 
-        //            }
-        //        }
-        //    }
-        //    catch(Exception ex)
-        //    {
-        //        return View("Error", (object)"ERROR 500: " + ex.Message);
-        //    }
-        //}
+                    foreach (Journey searchJourney in viewModel.Journeys)
+                    {
+                        listaSearch.Add(searchJourney);
+                    }
+
+                    ViewBag.A = true;
+
+                    //ModelState.Clear();
+
+                    return View("SearchJourney", viewModel);
+                }
+                else
+                {
+                    ViewBag.A = true;
+
+                    SearchJourneyViewModel viewModel = new SearchJourneyViewModel
+                    {
+                        Journeys = new List<Journey>()
+                    };
+
+                    return View("SearchJourney", viewModel);
+                }
+            }
+            catch (Exception ex)
+            {
+                return View("Error", (object)"ERROR 500: " + ex.Message);
+            }
+        }
+
+        public ActionResult Edit(int id)
+        {
+            try
+            {
+                var searchedJourney = entities.Journeys.SingleOrDefault(j => j.ID == id);
+
+                if (searchedJourney == null)
+                    return HttpNotFound("Journey with requested ID has not been found.");
+
+                return View(searchedJourney);
+            }
+            catch(Exception ex)
+            {
+                return View("Error", (object)"ERROR 500: " + ex.Message);
+            }
+        }
     }
 }
