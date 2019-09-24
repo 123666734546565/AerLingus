@@ -44,6 +44,49 @@ namespace AerLingus.Controllers
             }
         }
 
+        public ActionResult JourneyForm()
+        {
+           
+                return View();
+            
+        }
+
+        public ActionResult AddJourney(Journey j)
+        {
+            if (!String.IsNullOrEmpty(j.TicketNo))
+            {
+                //Ako je sfr formular popunjen salju se podaci u API kako bi se sacuvali u bazu
+                
+                client.BaseAddress = new Uri(@"http://localhost:54789/api/JourneyApi/AddJourney");
+                var insertRecord = client.PostAsJsonAsync<Journey>("", j);
+                insertRecord.Wait();
+                var recorddisplay = insertRecord.Result;
+                if (recorddisplay.IsSuccessStatusCode)
+                {
+                    //redirekcija u listu svih flight rekorda
+                    return View("UploadSuccessful");
+                }
+                else
+                {
+                    return View("Error", j);
+                }
+            }
+            else
+            {
+                return View("Error", j);
+            }
+        }
+
+        //[System.Web.Http.HttpGet]
+        //public ActionResult GetSearchedJourneys(SearchJourney search)
+        //{
+        //    try
+        //    {
+        //        JourneyApiController api = new JourneyApiController()
+        //        {
+        //            Request = new HttpRequestMessage(),
+        //            Configuration = new HttpConfiguration
+        //        };
         [System.Web.Http.HttpGet]
         public ActionResult GetSearchedJourneys(SearchJourneyViewModel searchV)
         {
