@@ -47,8 +47,7 @@ namespace AerLingus.Controllers
         public ActionResult JourneyForm()
         {
            
-                return View();
-            
+                return View();          
         }
 
         public ActionResult AddJourney(Journey j)
