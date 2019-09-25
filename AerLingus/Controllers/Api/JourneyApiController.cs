@@ -31,12 +31,15 @@ namespace AerLingus.Controllers.Api
         {
             if (j.TicketNo != string.Empty)
             {
+                if (entities.Journeys.Any(b => b.TicketNo == j.TicketNo))
+                    return Request.CreateResponse(HttpStatusCode.Conflict);
+                else
+                {
+                    entities.Journeys.Add(j);
+                    await entities.SaveChangesAsync();
 
-                entities.Journeys.Add(j);
-                await entities.SaveChangesAsync();
-
-                return Request.CreateResponse(HttpStatusCode.OK);
-
+                    return Request.CreateResponse(HttpStatusCode.OK);
+                }
             }
             else return Request.CreateResponse(HttpStatusCode.Conflict);
         }
