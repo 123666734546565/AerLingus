@@ -27,8 +27,8 @@ namespace AerLingus.Controllers.Api
                                                         (search.firstName != null ? j.FirstName.StartsWith(search.firstName) : j.FirstName == j.FirstName) &&
                                                         (search.lastName != null ? j.LastName.StartsWith(search.lastName) : j.LastName == j.LastName) &&
                                                         (search.ticketNo != null ? j.TicketNo.StartsWith(search.ticketNo) : search.ticketNo == search.ticketNo)).ToList();
-
-        //}
+            return searchedJourneys;
+        }
 
         [HttpPost]
         [Route("api/JourneyApi/AddJourney")]
@@ -48,7 +48,7 @@ namespace AerLingus.Controllers.Api
             }
             else return Request.CreateResponse(HttpStatusCode.Conflict);
         }
-            return searchedJourneys;
-        }
+            
+        
     }
 }
