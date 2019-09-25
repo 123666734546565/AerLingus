@@ -50,9 +50,7 @@ namespace AerLingus.Controllers.Api
             return searchedJourneys;
         }
 
-            return searchedJourneys;
-
-        }
+        
         [HttpPost]
         [Route("api/JourneyApi/AddJourney")]
         public async Task<HttpResponseMessage> AddJourneyAsync([FromBody] Journey j)
@@ -80,7 +78,7 @@ namespace AerLingus.Controllers.Api
             {
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
-        }
+        
 
         [HttpPut]
         public HttpResponseMessage EditJourney(int id, Journey journey)
