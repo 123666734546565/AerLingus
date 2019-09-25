@@ -56,27 +56,25 @@ namespace AerLingus.Controllers.Api
         [Route("api/JourneyApi/AddJourney")]
         public async Task<HttpResponseMessage> AddJourneyAsync([FromBody] Journey j)
         {
-            if (j.TicketNo != string.Empty)
+            try
             {
+                if (j.TicketNo != string.Empty)
+                {
                 if (entities.Journeys.Any(b => b.TicketNo == j.TicketNo))
                     return Request.CreateResponse(HttpStatusCode.Conflict);
                 else
                 {
                     entities.Journeys.Add(j);
                     await entities.SaveChangesAsync();
+                        return Request.CreateResponse(HttpStatusCode.OK);
                 }
-            }
-            try
-            {
-                if (j.TicketNo != string.Empty)
-                {
-                    entities.Journeys.Add(j);
-                    await entities.SaveChangesAsync();
-
-                    return Request.CreateResponse(HttpStatusCode.OK);
+                
                 }
                 else return Request.CreateResponse(HttpStatusCode.Conflict);
             }
+            
+                
+            
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
@@ -180,6 +178,18 @@ namespace AerLingus.Controllers.Api
             }
         }
 
+        [Route("api/JourneyApi/Search")]
+        public List<Journey> GetJourneyRecords(Journey search)
+        {
 
+
+            var searchedRecords = entities.Journeys.Where(fr =>
+                                                            (search.IdentifierNo != null ? fr.IdentifierNo.StartsWith(search.IdentifierNo) : fr.IdentifierNo == fr.IdentifierNo) &&
+                                                            (search.FirstName != null ? fr.FirstName.StartsWith(search.FirstName) : fr.FirstName == fr.FirstName) &&
+                                                            (search.LastName != null ? fr.LastName.StartsWith(search.LastName) : fr.LastName == fr.LastName) &&
+                                                            (search.TicketNo != null ? fr.TicketNo.StartsWith(search.TicketNo) : fr.TicketNo == fr.TicketNo)).ToList();
+
+            return searchedRecords;
+        }
     }
 }

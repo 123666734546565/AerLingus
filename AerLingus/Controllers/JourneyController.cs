@@ -69,7 +69,27 @@ namespace AerLingus.Controllers
                 }
                 else
                 {
-                    return View("Error", (object)"ERROR 500:   ");
+
+                    object errorMessage = null;
+
+                    if (recorddisplay.StatusCode  == System.Net.HttpStatusCode.NotFound)
+                        errorMessage = "ERROR 404: No file selected";
+                    else if (recorddisplay.StatusCode == System.Net.HttpStatusCode.NoContent)
+                        errorMessage = "ERROR 204: File is empty";
+                    else if (recorddisplay.StatusCode == System.Net.HttpStatusCode.NotAcceptable)
+                        errorMessage = "ERROR 406: File is missing header or footer or they are not prefixed with H or F";
+                    else if (recorddisplay.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                        errorMessage = "ERROR 400: Footer does not have the number of potential records";
+                    else if (recorddisplay.StatusCode == System.Net.HttpStatusCode.PreconditionFailed)
+                        errorMessage = "ERROR 412: No record added to database because the number of footer records does not match with the number of existing records in the file";
+                    else if (recorddisplay.StatusCode == System.Net.HttpStatusCode.Conflict)
+                        errorMessage = "ERROR 409: File with that header already exists in database";
+                    else errorMessage = "ERROR 500: Internal Server Error";
+                    return View("Error", errorMessage);
+
+
+
+                    
                 }
             }
             else
