@@ -4,9 +4,13 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="1246e9a697e64adabc76685ff52da7b7" Name="Diagram1" ZoomLevel="97">
+      <Diagram DiagramId="1246e9a697e64adabc76685ff52da7b7" Name="Diagram1" ZoomLevel="69">
         <EntityTypeShape EntityType="AerLingus_databaseModel.Flight_Records" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="AerLingus_databaseModel.FR_Batch_Files" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AerLingus_databaseModel.Journey" Width="1.5" PointX="0.75" PointY="9.375" />
+        <EntityTypeShape EntityType="AerLingus_databaseModel.JourneySegment" Width="1.5" PointX="3" PointY="4" />
+        <AssociationConnector Association="AerLingus_databaseModel.FK_JourneySegment_Flight_Records" />
+        <AssociationConnector Association="AerLingus_databaseModel.FK_JourneySegment_Journey" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

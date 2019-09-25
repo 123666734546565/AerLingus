@@ -177,7 +177,8 @@ namespace AerLingus.Controllers
                 ViewBag.A = false;
                 return View(new SearchViewModel
                 {
-                    FlightRecords = flight_Records,
+                    //FlightRecords = flight_Records,
+                    FlightRecords = new List<Flight_Records>(),
                     Search = new SearchFlightRecord()
                 });
             }
@@ -188,8 +189,10 @@ namespace AerLingus.Controllers
         }
 
         [System.Web.Http.HttpGet]
-        public ActionResult GetSearchedFlightRecords(SearchFlightRecord search)
+        public ActionResult GetSearchedFlightRecords(SearchViewModel searchV)
         {
+            var search = searchV.Search;
+
             try
             {
                 FlightRecordsApiController api = new FlightRecordsApiController()
@@ -212,9 +215,9 @@ namespace AerLingus.Controllers
 
                     ViewBag.A = true;
 
-                    ModelState.Clear();
+                    //ModelState.Clear();
 
-                    return PartialView("_PartialViewList", viewModel);
+                    return View("SearchFlightRecords", viewModel);
                 }
                 else
                 {
@@ -225,19 +228,16 @@ namespace AerLingus.Controllers
                         FlightRecords = new List<Flight_Records>()
                     };
 
-					//listaSearch = api.GetSearchedFlightRecords(search);
+                    //listaSearch = api.GetSearchedFlightRecords(search);
 
-					//ModelState.Clear();
+                    //ModelState.Clear();
 
-
-					return PartialView("_PartialViewList", viewModel);
-				}
+                    return View("SearchFlightRecords", viewModel);
+                }
             }
             catch (Exception ex)
             {
-                object errorMessage = ex.Message;
-
-                return View("Error", errorMessage);
+                return View("Error", (object)"ERROR 500: " + ex.Message);
             }
         }
 
@@ -501,12 +501,9 @@ namespace AerLingus.Controllers
             }
             catch (Exception ex)
             {
-                object errorMessage = "ERROR 500: " + ex.Message;
-
-                return View("Error", errorMessage);
+                return View("Error", (object)"ERROR 500: " + ex.Message);
             }
         }
-
 
         public ActionResult Delete(int id)
         {
@@ -516,16 +513,14 @@ namespace AerLingus.Controllers
 
                 if (searchedFlightRecord == null)
                     return HttpNotFound("Record with requested ID has not been found.");
-                
 
                 return View(searchedFlightRecord);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return View("Error", (object)"ERROR 500: " + ex.Message);
             }
         }
-
 
         [System.Web.Http.HttpDelete]
         public async Task<ActionResult> DeleteFlightRecord(Flight_Records record)
@@ -550,12 +545,8 @@ namespace AerLingus.Controllers
             }
             catch (Exception ex)
             {
-                object errorMessage = "ERROR 500: " + ex.Message;
-
-                return View("Error", errorMessage);
+                return View("Error", (object)"ERROR 500: " + ex.Message);
             }
-        }
-
-
+        }      
     }
 }

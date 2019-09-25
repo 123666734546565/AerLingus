@@ -8,7 +8,7 @@ using AerLingus.Helpers;
 
 namespace AerLingus.Validations
 {
-    public class SearchValidation : ValidationAttribute
+    public class SearchFlightRecordValidation : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
@@ -21,8 +21,9 @@ namespace AerLingus.Validations
                 fr.S_departureDate == null && fr.S_operatingAirline == null && fr.S_otherFFPNo == null
                 )
             {
-                return new ValidationResult("At least one field is required.");
+                return new ValidationResult("At least one field is required");
             }
+
             return ValidationResult.Success;
         }
     }

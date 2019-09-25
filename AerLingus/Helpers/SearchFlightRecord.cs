@@ -10,7 +10,7 @@ namespace AerLingus.Helpers
 {
     public class SearchFlightRecord
     {
-        [SearchValidation]
+        [SearchFlightRecordValidation]
 		[Display(Name = "Identifier Number")]
         [MaxLength(16)]
         public string S_identifierNo { get; set; }
