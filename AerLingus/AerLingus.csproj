@@ -351,6 +351,7 @@
     <Content Include="Views\Journey\SearchJourney.cshtml" />
     <Content Include="Views\Journey\JourneyForm.cshtml" />
     <Content Include="Views\Journey\Edit.cshtml" />
+    <Content Include="Views\Journey\UploadSuccessful.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

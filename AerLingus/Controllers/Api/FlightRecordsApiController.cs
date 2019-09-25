@@ -17,8 +17,7 @@ namespace AerLingus.Controllers.Api
 {
     public class FlightRecordsApiController : ApiController
     {
-        private AerLingus_databaseEntities entities;
-    
+        private AerLingus_databaseEntities entities;    
 
         public FlightRecordsApiController()
         {
@@ -28,6 +27,9 @@ namespace AerLingus.Controllers.Api
         [HttpGet]
         public IEnumerable<Flight_Records> GetFlightRecords()
         {
+            if (!entities.Flight_Records.Any())
+                return default(IEnumerable<Flight_Records>);
+
             return entities.Flight_Records;
         }
 
@@ -1508,7 +1510,7 @@ namespace AerLingus.Controllers.Api
         }
 
         [HttpDelete]
-        public HttpResponseMessage DeleteFlightRecord(int id, Flight_Records record)
+        public HttpResponseMessage DeleteFlightRecord(int id)
         {
             try
             {
@@ -1521,7 +1523,6 @@ namespace AerLingus.Controllers.Api
                     return Request.CreateResponse(HttpStatusCode.NotFound);
 
                 entities.Flight_Records.Remove(recordInDatabase);
-            
                 entities.SaveChanges();
 
                 return Request.CreateResponse(HttpStatusCode.OK);

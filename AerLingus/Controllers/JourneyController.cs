@@ -9,14 +9,15 @@ using AerLingus.Models;
 using AerLingus.View_Models;
 using AerLingus.Controllers.Api;
 using System.Web.Http;
+using System.Threading.Tasks;
 
 namespace AerLingus.Controllers
 {
     public class JourneyController : Controller
     {
         private HttpClient client;
-        private List<Journey> listaSearch;
         private List<Journey> journeys;
+        private List<Journey> listaSearch;
         private AerLingus_databaseEntities entities;
 
         public JourneyController()
@@ -46,9 +47,7 @@ namespace AerLingus.Controllers
 
         public ActionResult JourneyForm()
         {
-           
-                return View();
-            
+            return View();
         }
 
         public ActionResult AddJourney(Journey j)
@@ -77,16 +76,6 @@ namespace AerLingus.Controllers
             }
         }
 
-        //[System.Web.Http.HttpGet]
-        //public ActionResult GetSearchedJourneys(SearchJourney search)
-        //{
-        //    try
-        //    {
-        //        JourneyApiController api = new JourneyApiController()
-        //        {
-        //            Request = new HttpRequestMessage(),
-        //            Configuration = new HttpConfiguration
-        //        };
         [System.Web.Http.HttpGet]
         public ActionResult GetSearchedJourneys(SearchJourneyViewModel searchV)
         {
@@ -114,7 +103,7 @@ namespace AerLingus.Controllers
 
                     ViewBag.A = true;
 
-                    //ModelState.Clear();
+                    ModelState.Clear();
 
                     return View("SearchJourney", viewModel);
                 }
@@ -148,6 +137,95 @@ namespace AerLingus.Controllers
                 return View(searchedJourney);
             }
             catch(Exception ex)
+            {
+                return View("Error", (object)"ERROR 500: " + ex.Message);
+            }
+        }
+
+        [System.Web.Http.HttpPut]
+        public async Task<ActionResult> EditJourney(Journey journey)
+        {
+            try
+            {
+                var response = await client.PutAsJsonAsync(@"http://localhost:54789/api/JourneyApi/" + journey.ID.ToString(), journey);
+
+                object errorMessage = null;
+
+                if(response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    return View("UploadSuccessful");
+                }
+                else if(response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                    errorMessage = "ERROR 400: Invalid Model State";
+                else if(response.StatusCode == System.Net.HttpStatusCode.NotFound)
+                    errorMessage = "ERROR 404: Record with requested ID has not been found";
+                else errorMessage = "ERROR 500: Internal Server Error";
+
+                return View("Error", errorMessage);
+            }
+            catch(Exception ex)
+            {
+                return View("Error", (object)"ERROR 500: " + ex.Message);
+
+            }
+        }
+
+        public async Task<ActionResult> Details(int id)
+        {
+            try
+            {
+                var response = await client.GetAsync(@"http://localhost:54789/api/JourneyApi/" + id.ToString());
+
+                if (response.IsSuccessStatusCode)
+                    return View(await response.Content.ReadAsAsync<Journey>());
+
+                else return View("Error", (object)"ERROR 404: Record with requested ID has not been found");
+            }
+            catch(Exception ex)
+            {
+                return View("Error", (object)"ERROR 500: " + ex.Message);
+            }
+        }
+
+        public ActionResult Delete(int id)
+        {
+            try
+            {
+                var searchedJourney = entities.Journeys.SingleOrDefault(j => j.ID == id);
+
+                if (searchedJourney == null)
+                    return HttpNotFound("Journey with requested ID has not been found.");
+
+                return View(searchedJourney);
+            }
+            catch(Exception ex)
+            {
+                return View("Error", (object)"ERROR 500: " + ex.Message);
+            }
+        }
+
+        [System.Web.Http.HttpDelete]
+        public async Task<ActionResult> DeleteJourney(Journey journey)
+        {
+            try
+            {
+                var response = await client.DeleteAsync(@"http://localhost:54789/api/JourneyApi/" + journey.ID.ToString());
+
+                object errorMessage = null;
+
+                if(response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    return View("UploadSuccessful");
+                }
+                else if(response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                    errorMessage = "ERROR 400: Invalid Model State";
+                else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+                    errorMessage = "ERROR 404: Journey with requested ID has not been found";
+                else errorMessage = "ERROR 500: Internal Server Error";
+
+                return View("Error", errorMessage);
+            }
+            catch (Exception ex)
             {
                 return View("Error", (object)"ERROR 500: " + ex.Message);
             }
