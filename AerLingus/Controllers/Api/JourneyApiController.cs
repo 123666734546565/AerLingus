@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 using AerLingus.Helpers;
 using AerLingus.Models;
@@ -50,11 +51,32 @@ namespace AerLingus.Controllers.Api
             return searchedJourneys;
         }
 
+        [Route("api/JourneyApi/SearchApi")]
+        public List<Journey> GetSearchedJourneysApi()
+        {
+            string identifierNo = HttpContext.Current.Request.QueryString["IdentifierNo"] != null ? HttpContext.Current.Request.QueryString["IdentifierNo"] : null;
+            string firstName = HttpContext.Current.Request.QueryString["FirstName"] != null ? HttpContext.Current.Request.QueryString["FirstName"] : null;
+            string lastName = HttpContext.Current.Request.QueryString["LastName"] != null ? HttpContext.Current.Request.QueryString["LastName"] : null;
+            string ticketNo = HttpContext.Current.Request.QueryString["TicketNo"] != null ? HttpContext.Current.Request.QueryString["TicketNo"] : null;
+
+            if (identifierNo == null && firstName == null &&
+                lastName == null && ticketNo == null)
+                return default(List<Journey>);
+
+            var searchedJourneys = entities.Journeys.Where(j =>
+                                                (identifierNo != null ? j.IdentifierNo.StartsWith(identifierNo) : j.IdentifierNo == j.IdentifierNo) &&
+                                                (firstName != null ? j.FirstName.StartsWith(firstName) : j.FirstName == j.FirstName) &&
+                                                (lastName != null ? j.LastName.StartsWith(lastName) : j.LastName == j.LastName) &&
+                                                (ticketNo != null ? j.TicketNo.StartsWith(ticketNo) : j.TicketNo == j.TicketNo)).ToList();
+
+            return searchedJourneys;
+        }
+
         [HttpPost]
         [Route("api/JourneyApi/AddJourney")]
         public async Task<HttpResponseMessage> AddJourneyAsync([FromBody] Journey j)
         {
-            if (j.TicketNo != string.Empty)
+            if (j.TicketNo != null)
             {
                 if (entities.Journeys.Any(b => b.TicketNo == j.TicketNo))
                     return Request.CreateResponse(HttpStatusCode.Conflict);
@@ -62,21 +84,11 @@ namespace AerLingus.Controllers.Api
                 {
                     entities.Journeys.Add(j);
                     await entities.SaveChangesAsync();
-            try
-            {
-                if (j.TicketNo != string.Empty)
-                {
-                    entities.Journeys.Add(j);
-                    await entities.SaveChangesAsync();
 
                     return Request.CreateResponse(HttpStatusCode.OK);
                 }
-                else return Request.CreateResponse(HttpStatusCode.Conflict);
             }
-            catch (Exception)
-            {
-                return Request.CreateResponse(HttpStatusCode.InternalServerError);
-            }
+            else return Request.CreateResponse(HttpStatusCode.NotAcceptable);
         }
 
         [HttpPut]
@@ -104,7 +116,7 @@ namespace AerLingus.Controllers.Api
 
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
@@ -133,12 +145,7 @@ namespace AerLingus.Controllers.Api
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
         }
-                    return Request.CreateResponse(HttpStatusCode.OK);
-                }
-            }
-            else return Request.CreateResponse(HttpStatusCode.Conflict);
-        }
-            
-        
+
+
     }
 }
