@@ -79,6 +79,31 @@ namespace AerLingus.Controllers.Api
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
         
+          
+
+        
+    [HttpPost]
+    [Route("api/JourneyApi/AddJourney")]
+    public async Task<HttpResponseMessage> AddJourneyAsync([FromBody] Journey j)
+    {
+        if (j.TicketNo != string.Empty)
+        {
+            if (entities.Journeys.Any(b => b.TicketNo == j.TicketNo))
+                return Request.CreateResponse(HttpStatusCode.Conflict);
+            else
+            {
+                entities.Journeys.Add(j);
+                await entities.SaveChangesAsync();
+                return Request.CreateResponse(HttpStatusCode.OK);
+
+
+
+
+            }
+                
+        }
+        else return Request.CreateResponse(HttpStatusCode.Conflict);
+    } 
 
         [HttpPut]
         public HttpResponseMessage EditJourney(int id, Journey journey)
@@ -133,12 +158,9 @@ namespace AerLingus.Controllers.Api
             {
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
+
         }
-                    return Request.CreateResponse(HttpStatusCode.OK);
-                }
-            }
-            else return Request.CreateResponse(HttpStatusCode.Conflict);
-        }
+               
           
     }
 }
