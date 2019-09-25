@@ -19,9 +19,14 @@ namespace AerLingus.Controllers.Api
             entities = new AerLingus_databaseEntities();
         }
 
-        //[Route("api/JourneysApi/Search")]
-        //public List<Journey> GetSearchedJourneys(SearchJourney search)
-        //{
+        [Route("api/JourneysApi/Search")]
+        public List<Journey> GetSearchedJourneys(SearchJourney search)
+        {
+            var searchedJourneys = entities.Journeys.Where(j =>
+                                                        (search.identifierNo != null ? j.IdentifierNo.StartsWith(search.identifierNo) : j.IdentifierNo == j.IdentifierNo) &&
+                                                        (search.firstName != null ? j.FirstName.StartsWith(search.firstName) : j.FirstName == j.FirstName) &&
+                                                        (search.lastName != null ? j.LastName.StartsWith(search.lastName) : j.LastName == j.LastName) &&
+                                                        (search.ticketNo != null ? j.TicketNo.StartsWith(search.ticketNo) : search.ticketNo == search.ticketNo)).ToList();
 
         //}
 
@@ -42,6 +47,8 @@ namespace AerLingus.Controllers.Api
                 }
             }
             else return Request.CreateResponse(HttpStatusCode.Conflict);
+        }
+            return searchedJourneys;
         }
     }
 }

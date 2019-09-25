@@ -110,12 +110,12 @@ namespace AerLingus.Controllers.Api
         [Route("api/FlightRecordsApi/Search")]
         public List<Flight_Records> GetSearchedFlightRecords(SearchFlightRecord search)
         {
-            if (search.S_identifierNo == null && search.S_otherFFPNo == null && search.S_pnrNo == null &&
+            /*if (search.S_identifierNo == null && search.S_otherFFPNo == null && search.S_pnrNo == null &&
                 search.S_firstName == null && search.S_lastName == null && search.S_operatingAirline == null &&
                 search.S_externalPaxID == null && search.S_ticketNo == null && search.S_Origin == null &&
                 search.S_bookingClass == null && search.S_departureDate == null && search.S_destination == null
                 )
-                return new List<Flight_Records>();
+                return new List<Flight_Records>();*/
 
             var searchedRecords = entities.Flight_Records.Where(fr =>
                                                             (search.S_identifierNo != null ? fr.identifierNo.StartsWith(search.S_identifierNo) : fr.identifierNo == fr.identifierNo) &&

@@ -12,8 +12,8 @@ namespace AerLingus.Helpers
     {
         [MaxLength(30)]
         [SearchJourneyValidation]
-        [DisplayName("Other FFP Number")]
-        public string otherFFPNo { get; set; }
+        [DisplayName("Identifier Number")]
+        public string identifierNo { get; set; }
 
         [MaxLength(30)]
         [DisplayName("First Name")]

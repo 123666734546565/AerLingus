@@ -189,8 +189,10 @@ namespace AerLingus.Controllers
         }
 
         [System.Web.Http.HttpGet]
-        public ActionResult GetSearchedFlightRecords(SearchFlightRecord search)
+        public ActionResult GetSearchedFlightRecords(SearchViewModel searchV)
         {
+            var search = searchV.Search;
+
             try
             {
                 FlightRecordsApiController api = new FlightRecordsApiController()
@@ -504,26 +506,6 @@ namespace AerLingus.Controllers
                 return View("Error", errorMessage);
             }
         }
-
-
-        public ActionResult Delete(int id)
-        {
-            try
-            {
-                var searchedFlightRecord = entities.Flight_Records.SingleOrDefault(f => f.ID == id);
-
-                if (searchedFlightRecord == null)
-                    return HttpNotFound("Record with requested ID has not been found.");
-                
-
-                return View(searchedFlightRecord);
-            }
-            catch(Exception ex)
-            {
-                return View("Error", (object)"ERROR 500: " + ex.Message);
-            }
-        }
-
 
         [System.Web.Http.HttpDelete]
         public async Task<ActionResult> DeleteFlightRecord(Flight_Records record)
