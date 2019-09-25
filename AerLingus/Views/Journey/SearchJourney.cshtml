@@ -31,11 +31,17 @@
                 @Html.TextBoxFor(j => j.SearchJourney.ticketNo, new { @class = "form-control" })
             </div>
 
-            <button type="submit" class="btn btn-success">Search</button>
+            <input type="submit" name="Submit" value="Submit" />
         }
     </div>
     <div id="searchResults" class="col-md-6">
-       
+
     </div>
 </div>
 
+@section scripts
+    {
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    }
