@@ -501,9 +501,24 @@ namespace AerLingus.Controllers
             }
             catch (Exception ex)
             {
-                object errorMessage = "ERROR 500: " + ex.Message;
+                return View("Error", (object)"ERROR 500: " + ex.Message);
+            }
+        }
 
-                return View("Error", errorMessage);
+        public ActionResult Delete(int id)
+        {
+            try
+            {
+                var searchedFlightRecord = entities.Flight_Records.SingleOrDefault(f => f.ID == id);
+
+                if (searchedFlightRecord == null)
+                    return HttpNotFound("Record with requested ID has not been found.");
+
+                return View(searchedFlightRecord);
+            }
+            catch (Exception ex)
+            {
+                return View("Error", (object)"ERROR 500: " + ex.Message);
             }
         }
 
@@ -530,12 +545,8 @@ namespace AerLingus.Controllers
             }
             catch (Exception ex)
             {
-                object errorMessage = "ERROR 500: " + ex.Message;
-
-                return View("Error", errorMessage);
+                return View("Error", (object)"ERROR 500: " + ex.Message);
             }
-        }
-
-        
+        }      
     }
 }
