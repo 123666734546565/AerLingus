@@ -49,7 +49,7 @@ namespace AerLingus.Controllers
         {
             return View();
            
-                return View();          
+                
         }
 
         public ActionResult AddJourney(Journey j)
@@ -69,12 +69,12 @@ namespace AerLingus.Controllers
                 }
                 else
                 {
-                    return View("Error", j);
+                    return View("Error", (object)"ERROR 500:   ");
                 }
             }
             else
             {
-                return View("Error", j);
+                return View("Error", (object)"ERROR 409: Journey already exists");
             }
         }
 
