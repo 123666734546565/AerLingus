@@ -7,7 +7,7 @@
 <div class="row">
     <h2>Search Journey</h2>
     <div class="col-md-5">
-        @using (Ajax.BeginForm("GetSearchedJourneys", "Journey", new AjaxOptions { HttpMethod = "POST", InsertionMode = InsertionMode.ReplaceWith, UpdateTargetId = "searchResults" }))
+        @using (Ajax.BeginForm("GetSearchedJourneys", "Journey", new AjaxOptions { HttpMethod = "POST", InsertionMode = InsertionMode.Replace, UpdateTargetId = "searchResults" }))
         {
             <h4>@Html.ValidationSummary(false, "", new { @class = "text-danger" })</h4>
 
