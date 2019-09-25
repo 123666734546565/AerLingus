@@ -214,7 +214,7 @@ namespace AerLingus.Controllers
 
                     ModelState.Clear();
 
-                    return View("SearchFlightRecords", viewModel);
+                    return PartialView("_PartialViewList", viewModel);
                 }
                 else
                 {
@@ -225,12 +225,13 @@ namespace AerLingus.Controllers
                         FlightRecords = new List<Flight_Records>()
                     };
 
-                    //listaSearch = api.GetSearchedFlightRecords(search);
+					//listaSearch = api.GetSearchedFlightRecords(search);
 
-                    //ModelState.Clear();
+					//ModelState.Clear();
 
-                    return View("SearchFlightRecords", viewModel);
-                }
+
+					return PartialView("_PartialViewList", viewModel);
+				}
             }
             catch (Exception ex)
             {
@@ -554,5 +555,7 @@ namespace AerLingus.Controllers
                 return View("Error", errorMessage);
             }
         }
+
+
     }
 }

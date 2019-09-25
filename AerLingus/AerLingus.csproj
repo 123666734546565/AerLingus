@@ -287,6 +287,8 @@
     <Content Include="Scripts\jquery-ui-timepicker-addon.min.js" />
     <Content Include="Scripts\jquery-ui.min.js" />
     <Content Include="Scripts\jquery.filedrop.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -294,7 +296,9 @@
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\WelcomeAnimation.js" />
     <Content Include="Scripts\WelcomeAnimationGoogleApi.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -334,6 +338,7 @@
     <Content Include="Views\FlightRecords\Details.cshtml" />
     <Content Include="Views\FlightRecords\Edit.cshtml" />
     <Content Include="Views\FlightRecords\Delete.cshtml" />
+    <Content Include="Views\FlightRecords\_PartialViewList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
