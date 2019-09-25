@@ -125,7 +125,7 @@ namespace AerLingus.Controllers
 
                     ModelState.Clear();
 
-                    return View("SearchJourney", viewModel);
+                    return View("_SearchJourneyList", viewModel);
                 }
                 else
                 {
@@ -136,7 +136,7 @@ namespace AerLingus.Controllers
                         Journeys = new List<Journey>()
                     };
 
-                    return View("SearchJourney", viewModel);
+                    return View("_SearchJourneyList", viewModel);
                 }
             }
             catch (Exception ex)

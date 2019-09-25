@@ -217,7 +217,7 @@ namespace AerLingus.Controllers
 
                     //ModelState.Clear();
 
-                    return View("SearchFlightRecords", viewModel);
+                    return View("_PartialViewList", viewModel);
                 }
                 else
                 {
@@ -232,7 +232,7 @@ namespace AerLingus.Controllers
 
                     //ModelState.Clear();
 
-                    return View("SearchFlightRecords", viewModel);
+                    return View("_PartialViewList", viewModel);
                 }
             }
             catch (Exception ex)
