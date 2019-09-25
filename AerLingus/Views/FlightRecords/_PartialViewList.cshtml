@@ -1,0 +1,51 @@
+﻿@model AerLingus.View_Models.SearchViewModel
+
+
+<div id="searchResults">
+    <div class="col-md-6">
+        @if (ViewBag.A)
+        {
+            if (!Model.FlightRecords.Any())
+            {
+                <h2>No records match search criteria.</h2>
+            }
+            else
+            {
+
+                <div class="dugme">
+                    @using (Html.BeginForm("ExportToCSV", "FlightRecords", FormMethod.Post))
+                    {
+
+                        <input class="prvo" type="submit" value="ExportToCSV" />
+                    }
+                </div>
+                <div class="dugme2">
+                    @using (Html.BeginForm("ExportToExcel", "FlightRecords", FormMethod.Post))
+                    {
+
+                        <input class="drugo" type="submit" value="ExportToXLSX" />
+                    }
+                </div>
+
+                <div class="lista">
+                    @foreach (var record in Model.FlightRecords)
+                    {
+                        <p class="hl"> @record.identifierNo | @record.transactionType | @record.otherFFPNo | @record.otherFFPScheme | @record.firstName | @record.lastName | @record.partnerTransactionNo | @record.bookingDate | @record.departureDate | @record.origin | @record.destination | @record.bookingClass | @record.cabinClass | @record.marketingFlightNo | @record.marketingFlightNo | @record.operatingFlightNo | @record.operatingAirline | @record.ticketNo | @record.externalPaxID | @record.couponNo | @record.pnrNo | @record.distance | @record.baseFare | @record.discountBase | @record.exciseTax | @record.customerType | @record.promotionCode | @record.ticketCurrency | @record.targetCurrency | @record.exchangeRate | @record.fareBasis  </p>
+                        <div class="row">
+                            <div class="col-md-1" id="EditDugme">
+                                @Html.ActionLink("Edit", "Edit", "FlightRecords", new { id = record.ID }, new { @class = "btn btn-success" })
+                            </div>
+                            <div class="col-md-1">
+                                @Html.ActionLink("Details", "Details", "FlightRecords", new { id = record.ID }, new { @class = "btn btn-success" })
+                            </div>
+                            <div class="col-md-1">
+                                @Html.ActionLink("Delete", "Delete", "FlightRecords", new { id = record.ID }, new { @class = "btn btn-success" })
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+
+        }
+    </div>
+</div>
