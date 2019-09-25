@@ -355,6 +355,7 @@
     <Content Include="Views\Journey\Edit.cshtml" />
     <Content Include="Views\Journey\UploadSuccessful.cshtml" />
     <Content Include="Views\FlightRecords\_PartialViewList.cshtml" />
+    <Content Include="Views\Journey\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
