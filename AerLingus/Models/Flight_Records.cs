@@ -11,166 +11,40 @@ namespace AerLingus.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-     
+    
     public partial class Flight_Records
     {
-        //[MinLength(0)]
-        [MaxLength(16)]
-        [Display(Name = "Identifier Number")]
         public string identifierNo { get; set; }
-
-        [Required]
-        //[MinLength(1)]
-        [MaxLength(2)]
-        [Display(Name = "Transaction Type")]
         public string transactionType { get; set; }
-
-        //[MinLength(0)]
-        [MaxLength(30)]
-        [Display(Name = "Other FFP Number")]
         public string otherFFPNo { get; set; }
-
-        //[MinLength(0)]
-        [MaxLength(30)]
-        [Display(Name = "Other FFP Scheme")]
         public string otherFFPScheme { get; set; }
-
-        [Required]
-        //[MinLength(1)]
-        [MaxLength(30)]
-        [Display(Name = "First Name")]
         public string firstName { get; set; }
-
-        [Required]
-        //[MinLength(1)]
-        [MaxLength(30)]
-        [Display(Name = "Last Name")]
         public string lastName { get; set; }
-
-        //[MinLength(0)]
-        [MaxLength(100)]
-        [Display(Name = "Partner Transaction Number")]
         public string partnerTransactionNo { get; set; }
-
-        [Display(Name = "Booking Date")]
-        public DateTime bookingDate { get; set; }
-
-        [Required]
-        [Display(Name = "Departure Date")]
-        public string departureDate { get; set; }
-
-        [Required]
-        //[MinLength(1)]
-        [MaxLength(3)]
-        [Display(Name = "Origin")]
+        public Nullable<System.DateTime> bookingDate { get; set; }
+        public System.DateTime departureDate { get; set; }
         public string origin { get; set; }
-
-        [Required]
-        //[MinLength(1)]
-        [MaxLength(3)]
-        [Display(Name = "Destination")]
         public string destination { get; set; }
-
-        [Required]
-        //[MinLength(1)]
-        [MaxLength(2)]
-        [Display(Name = "Booking Class")]
         public string bookingClass { get; set; }
-
-        //[MinLength(0)]
-        [MaxLength(1)]
-        [Display(Name = "Cabin Class")]
         public string cabinClass { get; set; }
-
-        [Required]
-        //[MinLength(1)]
-        [MaxLength(4)]
-        [Display(Name = "Marketing Flight Number")]
         public string marketingFlightNo { get; set; }
-
-        [Required]
-        //[MinLength(1)]
-        [MaxLength(2)]
-        [Display(Name = "Marketing Airline")]
         public string marketingAirline { get; set; }
-
-        [Required]
-        //[MinLength(1)]
-        [MaxLength(4)]
-        [Display(Name = "Operating Flight Number")]
         public string operatingFlightNo { get; set; }
-
-        [Required]
-        //[MinLength(1)]
-        [MaxLength(2)]
-        [Display(Name = "Operating Airline")]
         public string operatingAirline { get; set; }
-
-        [MinLength(13)]
-        [MaxLength(14)]
-        [Display(Name = "Ticket Number")]
         public string ticketNo { get; set; }
-
-        //[MinLength(0)]
-        [MaxLength(25)]
-        [Display(Name = "External Pax ID")]
         public string externalPaxID { get; set; }
-
-        //[MinLength(0)]
-        [MaxLength(2)]
-        [Display(Name = "Coupon Number")]
         public string couponNo { get; set; }
-
-        [Required]
-        [MinLength(1)]
-        [MaxLength(6)]
-        [Display(Name = "PNR Number")]
         public string pnrNo { get; set; }
-
-        [Range(minimum: 0, maximum: 99999)]
-        [Display(Name = "Distance")]
-        public long distance { get; set; }
-
-        [Range(minimum: 0, maximum: 999999999)]
-        [Display(Name = "Base Fare")]
-        public double baseFare { get; set; }
-
-        [Range(minimum: 0, maximum: 999999999)]
-        [Display(Name = "Discount Base")]
-        public double discountBase { get; set; }
-
-        [Range(minimum: 0, maximum: 999999999)]
-        [Display(Name = "Excise Tax")]
-        public double exciseTax { get; set; }
-
-        //[MinLength(0)]
-        [MaxLength(1)]
-        [Display(Name = "Customer Type")]
+        public Nullable<long> distance { get; set; }
+        public Nullable<double> baseFare { get; set; }
+        public Nullable<double> discountBase { get; set; }
+        public Nullable<double> exciseTax { get; set; }
         public string customerType { get; set; }
-
-        //[MinLength(0)]
-        [MaxLength(100)]
-        [Display(Name = "Promotion Code")]
         public string promotionCode { get; set; }
-
-        //[MinLength(0)]
-        [MaxLength(3)]
-        [Display(Name = "Ticket Currency")]
         public string ticketCurrency { get; set; }
-
-        //[MinLength(0)]
-        [MaxLength(3)]
-        [Display(Name = "Target Currency")]
         public string targetCurrency { get; set; }
-
-        [Range(minimum: 0, maximum: 9999999999)]
-        [Display(Name = "Exchange Rate")]
-        public double exchangeRate { get; set; }
-
-        //[MinLength(0)]
-        [MaxLength(10)]
-        [Display(Name = "Fare Basis")]
+        public Nullable<double> exchangeRate { get; set; }
         public string fareBasis { get; set; }
+        public int ID { get; set; }
     }
 }
