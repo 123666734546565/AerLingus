@@ -55,10 +55,10 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="IdentifierNo" Type="nvarchar" MaxLength="16" />
-          <Property Name="TicketNo" Type="nvarchar" MaxLength="14" />
           <Property Name="FirstName" Type="nvarchar" MaxLength="30" />
           <Property Name="LastName" Type="nvarchar" MaxLength="30" />
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TicketNo" Type="nvarchar" MaxLength="14" />
         </EntityType>
         <EntityType Name="JourneySegment">
           <Key>
@@ -69,8 +69,8 @@
           <Property Name="origin" Type="nvarchar" MaxLength="3" />
           <Property Name="destination" Type="nvarchar" MaxLength="3" />
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IDJourney" Type="int" />
           <Property Name="IDFR" Type="int" />
+          <Property Name="ticketNo" Type="nvarchar" MaxLength="14" />
         </EntityType>
         <Association Name="FK_JourneySegment_Flight_Records">
           <End Role="Flight_Records" Type="Self.Flight_Records" Multiplicity="0..1" />
@@ -84,18 +84,37 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_JourneySegment_Journey">
-          <End Role="Journey" Type="Self.Journey" Multiplicity="0..1" />
-          <End Role="JourneySegment" Type="Self.JourneySegment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Journey">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="JourneySegment">
-              <PropertyRef Name="IDJourney" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="AerLingus_databaseModelStoreContainer">
           <EntitySet Name="Flight_Records" EntityType="Self.Flight_Records" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FR_Batch_Files" EntityType="Self.FR_Batch_Files" Schema="dbo" store:Type="Tables" />
@@ -105,74 +124,12 @@
             <End Role="Flight_Records" EntitySet="Flight_Records" />
             <End Role="JourneySegment" EntitySet="JourneySegment" />
           </AssociationSet>
-          <AssociationSet Name="FK_JourneySegment_Journey" Association="Self.FK_JourneySegment_Journey">
-            <End Role="Journey" EntitySet="Journey" />
-            <End Role="JourneySegment" EntitySet="JourneySegment" />
-          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="AerLingus_databaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Flight_Records">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="identifierNo" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
-          <Property Name="transactionType" Type="String" MaxLength="2" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="otherFFPNo" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="otherFFPScheme" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="firstName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="lastName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="partnerTransactionNo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="bookingDate" Type="DateTime" Precision="3" />
-          <Property Name="departureDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="origin" Type="String" MaxLength="3" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="destination" Type="String" MaxLength="3" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="bookingClass" Type="String" MaxLength="2" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="cabinClass" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
-          <Property Name="marketingFlightNo" Type="String" MaxLength="4" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="marketingAirline" Type="String" MaxLength="2" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="operatingFlightNo" Type="String" MaxLength="4" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="operatingAirline" Type="String" MaxLength="2" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ticketNo" Type="String" MaxLength="14" FixedLength="false" Unicode="true" />
-          <Property Name="externalPaxID" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
-          <Property Name="couponNo" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
-          <Property Name="pnrNo" Type="String" MaxLength="6" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="distance" Type="Int64" />
-          <Property Name="baseFare" Type="Double" />
-          <Property Name="discountBase" Type="Double" />
-          <Property Name="exciseTax" Type="Double" />
-          <Property Name="customerType" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
-          <Property Name="promotionCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="ticketCurrency" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="targetCurrency" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="exchangeRate" Type="Double" />
-          <Property Name="fareBasis" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="JourneySegments" Relationship="AerLingus_databaseModel.FK_JourneySegment_Flight_Records" FromRole="Flight_Records" ToRole="JourneySegment" />
-        </EntityType>
-        <EntityType Name="FR_Batch_Files">
-          <Key>
-            <PropertyRef Name="Header" />
-          </Key>
-          <Property Name="Header" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Footer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-        </EntityType>
         <EntityContainer Name="AerLingus_databaseEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Flight_Records" EntityType="Self.Flight_Records" />
-          <EntitySet Name="FR_Batch_Files" EntityType="Self.FR_Batch_Files" />
-          <EntitySet Name="Journeys" EntityType="AerLingus_databaseModel.Journey" />
-          <EntitySet Name="JourneySegments" EntityType="AerLingus_databaseModel.JourneySegment" />
-          <AssociationSet Name="FK_JourneySegment_Flight_Records" Association="AerLingus_databaseModel.FK_JourneySegment_Flight_Records">
-            <End Role="Flight_Records" EntitySet="Flight_Records" />
-            <End Role="JourneySegment" EntitySet="JourneySegments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_JourneySegment_Journey" Association="AerLingus_databaseModel.FK_JourneySegment_Journey">
-            <End Role="Journey" EntitySet="Journeys" />
-            <End Role="JourneySegment" EntitySet="JourneySegments" />
-          </AssociationSet>
           <FunctionImport Name="sp_alterdiagram">
             <Parameter Name="diagramname" Mode="In" Type="String" />
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
@@ -203,17 +160,100 @@
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
+          <EntitySet Name="Flight_Records" EntityType="AerLingus_databaseModel.Flight_Records" />
+          <EntitySet Name="FR_Batch_Files" EntityType="AerLingus_databaseModel.FR_Batch_Files" />
+          <EntitySet Name="Journeys" EntityType="AerLingus_databaseModel.Journey" />
+          <EntitySet Name="JourneySegments" EntityType="AerLingus_databaseModel.JourneySegment" />
+          <AssociationSet Name="FK_JourneySegment_Flight_Records" Association="AerLingus_databaseModel.FK_JourneySegment_Flight_Records">
+            <End Role="Flight_Records" EntitySet="Flight_Records" />
+            <End Role="JourneySegment" EntitySet="JourneySegments" />
+          </AssociationSet>
+          <FunctionImport Name="sp_alterdiagram1">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram1">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram1">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition1">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams1">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram1">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams1" />
         </EntityContainer>
+        <EntityType Name="Flight_Records">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="identifierNo" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
+          <Property Name="transactionType" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="otherFFPNo" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="otherFFPScheme" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="firstName" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="lastName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="partnerTransactionNo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="bookingDate" Type="DateTime" Precision="3" />
+          <Property Name="departureDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="origin" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="destination" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="bookingClass" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="cabinClass" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="marketingFlightNo" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="true" />
+          <Property Name="marketingAirline" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="operatingFlightNo" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="true" />
+          <Property Name="operatingAirline" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="ticketNo" Type="String" MaxLength="14" FixedLength="false" Unicode="true" />
+          <Property Name="externalPaxID" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="couponNo" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="pnrNo" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="distance" Type="Int64" />
+          <Property Name="baseFare" Type="Double" />
+          <Property Name="discountBase" Type="Double" />
+          <Property Name="exciseTax" Type="Double" />
+          <Property Name="customerType" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="promotionCode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ticketCurrency" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="targetCurrency" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="exchangeRate" Type="Double" />
+          <Property Name="fareBasis" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="JourneySegments" Relationship="AerLingus_databaseModel.FK_JourneySegment_Flight_Records" FromRole="Flight_Records" ToRole="JourneySegment" />
+        </EntityType>
+        <EntityType Name="FR_Batch_Files">
+          <Key>
+            <PropertyRef Name="Header" />
+          </Key>
+          <Property Name="Header" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Content" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Footer" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
         <EntityType Name="Journey">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="IdentifierNo" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
-          <Property Name="TicketNo" Type="String" MaxLength="14" FixedLength="false" Unicode="true" />
           <Property Name="FirstName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Name="LastName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="JourneySegments" Relationship="AerLingus_databaseModel.FK_JourneySegment_Journey" FromRole="Journey" ToRole="JourneySegment" />
+          <Property Name="TicketNo" Type="String" MaxLength="14" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="JourneySegment">
           <Key>
@@ -224,10 +264,9 @@
           <Property Name="origin" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
           <Property Name="destination" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IDJourney" Type="Int32" />
           <Property Name="IDFR" Type="Int32" />
+          <Property Name="ticketNo" Type="String" MaxLength="14" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Flight_Records" Relationship="AerLingus_databaseModel.FK_JourneySegment_Flight_Records" FromRole="JourneySegment" ToRole="Flight_Records" />
-          <NavigationProperty Name="Journey" Relationship="AerLingus_databaseModel.FK_JourneySegment_Journey" FromRole="JourneySegment" ToRole="Journey" />
         </EntityType>
         <Association Name="FK_JourneySegment_Flight_Records">
           <End Type="AerLingus_databaseModel.Flight_Records" Role="Flight_Records" Multiplicity="0..1" />
@@ -241,19 +280,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_JourneySegment_Journey">
-          <End Type="AerLingus_databaseModel.Journey" Role="Journey" Multiplicity="0..1" />
-          <End Type="AerLingus_databaseModel.JourneySegment" Role="JourneySegment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Journey">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="JourneySegment">
-              <PropertyRef Name="IDJourney" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -262,57 +289,57 @@
           <EntitySetMapping Name="Flight_Records">
             <EntityTypeMapping TypeName="AerLingus_databaseModel.Flight_Records">
               <MappingFragment StoreEntitySet="Flight_Records">
-                <ScalarProperty Name="identifierNo" ColumnName="identifierNo" />
-                <ScalarProperty Name="transactionType" ColumnName="transactionType" />
-                <ScalarProperty Name="otherFFPNo" ColumnName="otherFFPNo" />
-                <ScalarProperty Name="otherFFPScheme" ColumnName="otherFFPScheme" />
-                <ScalarProperty Name="firstName" ColumnName="firstName" />
-                <ScalarProperty Name="lastName" ColumnName="lastName" />
-                <ScalarProperty Name="partnerTransactionNo" ColumnName="partnerTransactionNo" />
-                <ScalarProperty Name="bookingDate" ColumnName="bookingDate" />
-                <ScalarProperty Name="departureDate" ColumnName="departureDate" />
-                <ScalarProperty Name="origin" ColumnName="origin" />
-                <ScalarProperty Name="destination" ColumnName="destination" />
-                <ScalarProperty Name="bookingClass" ColumnName="bookingClass" />
-                <ScalarProperty Name="cabinClass" ColumnName="cabinClass" />
-                <ScalarProperty Name="marketingFlightNo" ColumnName="marketingFlightNo" />
-                <ScalarProperty Name="marketingAirline" ColumnName="marketingAirline" />
-                <ScalarProperty Name="operatingFlightNo" ColumnName="operatingFlightNo" />
-                <ScalarProperty Name="operatingAirline" ColumnName="operatingAirline" />
-                <ScalarProperty Name="ticketNo" ColumnName="ticketNo" />
-                <ScalarProperty Name="externalPaxID" ColumnName="externalPaxID" />
-                <ScalarProperty Name="couponNo" ColumnName="couponNo" />
-                <ScalarProperty Name="pnrNo" ColumnName="pnrNo" />
-                <ScalarProperty Name="distance" ColumnName="distance" />
-                <ScalarProperty Name="baseFare" ColumnName="baseFare" />
-                <ScalarProperty Name="discountBase" ColumnName="discountBase" />
-                <ScalarProperty Name="exciseTax" ColumnName="exciseTax" />
-                <ScalarProperty Name="customerType" ColumnName="customerType" />
-                <ScalarProperty Name="promotionCode" ColumnName="promotionCode" />
-                <ScalarProperty Name="ticketCurrency" ColumnName="ticketCurrency" />
-                <ScalarProperty Name="targetCurrency" ColumnName="targetCurrency" />
-                <ScalarProperty Name="exchangeRate" ColumnName="exchangeRate" />
-                <ScalarProperty Name="fareBasis" ColumnName="fareBasis" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="fareBasis" ColumnName="fareBasis" />
+                <ScalarProperty Name="exchangeRate" ColumnName="exchangeRate" />
+                <ScalarProperty Name="targetCurrency" ColumnName="targetCurrency" />
+                <ScalarProperty Name="ticketCurrency" ColumnName="ticketCurrency" />
+                <ScalarProperty Name="promotionCode" ColumnName="promotionCode" />
+                <ScalarProperty Name="customerType" ColumnName="customerType" />
+                <ScalarProperty Name="exciseTax" ColumnName="exciseTax" />
+                <ScalarProperty Name="discountBase" ColumnName="discountBase" />
+                <ScalarProperty Name="baseFare" ColumnName="baseFare" />
+                <ScalarProperty Name="distance" ColumnName="distance" />
+                <ScalarProperty Name="pnrNo" ColumnName="pnrNo" />
+                <ScalarProperty Name="couponNo" ColumnName="couponNo" />
+                <ScalarProperty Name="externalPaxID" ColumnName="externalPaxID" />
+                <ScalarProperty Name="ticketNo" ColumnName="ticketNo" />
+                <ScalarProperty Name="operatingAirline" ColumnName="operatingAirline" />
+                <ScalarProperty Name="operatingFlightNo" ColumnName="operatingFlightNo" />
+                <ScalarProperty Name="marketingAirline" ColumnName="marketingAirline" />
+                <ScalarProperty Name="marketingFlightNo" ColumnName="marketingFlightNo" />
+                <ScalarProperty Name="cabinClass" ColumnName="cabinClass" />
+                <ScalarProperty Name="bookingClass" ColumnName="bookingClass" />
+                <ScalarProperty Name="destination" ColumnName="destination" />
+                <ScalarProperty Name="origin" ColumnName="origin" />
+                <ScalarProperty Name="departureDate" ColumnName="departureDate" />
+                <ScalarProperty Name="bookingDate" ColumnName="bookingDate" />
+                <ScalarProperty Name="partnerTransactionNo" ColumnName="partnerTransactionNo" />
+                <ScalarProperty Name="lastName" ColumnName="lastName" />
+                <ScalarProperty Name="firstName" ColumnName="firstName" />
+                <ScalarProperty Name="otherFFPScheme" ColumnName="otherFFPScheme" />
+                <ScalarProperty Name="otherFFPNo" ColumnName="otherFFPNo" />
+                <ScalarProperty Name="transactionType" ColumnName="transactionType" />
+                <ScalarProperty Name="identifierNo" ColumnName="identifierNo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="FR_Batch_Files">
             <EntityTypeMapping TypeName="AerLingus_databaseModel.FR_Batch_Files">
               <MappingFragment StoreEntitySet="FR_Batch_Files">
-                <ScalarProperty Name="Header" ColumnName="Header" />
-                <ScalarProperty Name="Content" ColumnName="Content" />
                 <ScalarProperty Name="Footer" ColumnName="Footer" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="Header" ColumnName="Header" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Journeys">
             <EntityTypeMapping TypeName="AerLingus_databaseModel.Journey">
               <MappingFragment StoreEntitySet="Journey">
+                <ScalarProperty Name="TicketNo" ColumnName="TicketNo" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="TicketNo" ColumnName="TicketNo" />
                 <ScalarProperty Name="IdentifierNo" ColumnName="IdentifierNo" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -320,8 +347,8 @@
           <EntitySetMapping Name="JourneySegments">
             <EntityTypeMapping TypeName="AerLingus_databaseModel.JourneySegment">
               <MappingFragment StoreEntitySet="JourneySegment">
+                <ScalarProperty Name="ticketNo" ColumnName="ticketNo" />
                 <ScalarProperty Name="IDFR" ColumnName="IDFR" />
-                <ScalarProperty Name="IDJourney" ColumnName="IDJourney" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="destination" ColumnName="destination" />
                 <ScalarProperty Name="origin" ColumnName="origin" />
@@ -330,7 +357,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          </EntityContainerMapping>
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram1" FunctionName="AerLingus_databaseModel.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram1" FunctionName="AerLingus_databaseModel.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram1" FunctionName="AerLingus_databaseModel.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition1" FunctionName="AerLingus_databaseModel.Store.sp_helpdiagramdefinition" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams1" FunctionName="AerLingus_databaseModel.Store.sp_helpdiagrams" />
+          <FunctionImportMapping FunctionImportName="sp_renamediagram1" FunctionName="AerLingus_databaseModel.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams1" FunctionName="AerLingus_databaseModel.Store.sp_upgraddiagrams" />
+        </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>
