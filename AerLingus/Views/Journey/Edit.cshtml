@@ -43,12 +43,10 @@
                 </div>
             </div>
         </div>
-
-        <button type="submit" class="btn btn-success">Save changes</button>
+        <button type="submit" class="btn btn-success">Save</button>
     }
     <div>
-        @Html.ActionLink("Back to List", "SearchJourney");
-
+        @Html.ActionLink("Back to List", "SearchJourney", "Journey", new { @class = "btn btn-success" })
     </div>
 
 </div>

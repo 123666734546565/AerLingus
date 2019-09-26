@@ -10,6 +10,7 @@
 namespace AerLingus.Models
 {
     using System;
+    using AerLingus.Validations;
     using System.Collections.Generic;
     
     public partial class Journey
