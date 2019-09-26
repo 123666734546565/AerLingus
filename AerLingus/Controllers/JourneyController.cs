@@ -225,11 +225,11 @@ namespace AerLingus.Controllers
         }
 
         [System.Web.Http.HttpDelete]
-        public async Task<ActionResult> DeleteJourney(Journey journey)
+        public async Task<ActionResult> DeleteJourney(int id)
         {
             try
             {
-                var response = await client.DeleteAsync(@"http://localhost:54789/api/JourneyApi/" + journey.ID.ToString());
+                var response = await client.DeleteAsync(@"http://localhost:54789/api/JourneyApi/" + id.ToString());
 
                 object errorMessage = null;
 
