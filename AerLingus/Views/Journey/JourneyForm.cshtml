@@ -4,11 +4,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>JourneyForm</h2>
+<h2>Add a Journey</h2>
 @using (Html.BeginForm("AddJourney", "Journey"))
 {
-
-
     <div class="Formular">
         <div class="form-group">
             @Html.LabelFor(j => j.IdentifierNo)
@@ -36,6 +34,5 @@
 
         <button type="submit" class="btn btn-success">Save</button>
     </div>
-
 }
 

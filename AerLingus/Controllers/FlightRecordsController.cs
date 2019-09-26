@@ -523,11 +523,11 @@ namespace AerLingus.Controllers
         }
 
         [System.Web.Http.HttpDelete]
-        public async Task<ActionResult> DeleteFlightRecord(Flight_Records record)
+        public async Task<ActionResult> DeleteFlightRecord(int id)
         {
             try
             {
-                var response = await client.DeleteAsync(@"http://localhost:54789/api/FlightRecordsApi/" + record.ID.ToString());
+                var response = await client.DeleteAsync(@"http://localhost:54789/api/FlightRecordsApi/" + id.ToString());
 
                 object errorMessage = null;
 

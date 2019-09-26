@@ -11,6 +11,5 @@
 <p>Identifier Number: @(Model.IdentifierNo == null ? "-" : Model.IdentifierNo)</p>
 
 <div>
-    @Html.ActionLink("Back to List", "SearchJourney");
-
+    @Html.ActionLink("Back to List", "SearchJourney", "Journey", new { @class = "btn btn-success" })
 </div>

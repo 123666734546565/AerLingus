@@ -219,11 +219,10 @@
         </div>
         //-----------------------------------------------------------//
 
-        <button type="submit" class="btn btn-success">Save changes</button>
+        <button type="submit" class="btn btn-success">Save</button>
     }
     <div>
-        @Html.ActionLink("Back to List", "SearchFlightRecords");
-
+        @Html.ActionLink("Back to List", "SearchFlightRecords", "FlightRecords", new { @class = "btn btn-success" })
     </div>
 
 </div>
