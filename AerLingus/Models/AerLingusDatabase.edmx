@@ -69,21 +69,8 @@
           <Property Name="origin" Type="nvarchar" MaxLength="3" />
           <Property Name="destination" Type="nvarchar" MaxLength="3" />
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IDFR" Type="int" />
           <Property Name="ticketNo" Type="nvarchar" MaxLength="14" />
         </EntityType>
-        <Association Name="FK_JourneySegment_Flight_Records">
-          <End Role="Flight_Records" Type="Self.Flight_Records" Multiplicity="0..1" />
-          <End Role="JourneySegment" Type="Self.JourneySegment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Flight_Records">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="JourneySegment">
-              <PropertyRef Name="IDFR" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
         <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
@@ -120,10 +107,6 @@
           <EntitySet Name="FR_Batch_Files" EntityType="Self.FR_Batch_Files" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Journey" EntityType="Self.Journey" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="JourneySegment" EntityType="Self.JourneySegment" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_JourneySegment_Flight_Records" Association="Self.FK_JourneySegment_Flight_Records">
-            <End Role="Flight_Records" EntitySet="Flight_Records" />
-            <End Role="JourneySegment" EntitySet="JourneySegment" />
-          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -160,14 +143,6 @@
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
-          <EntitySet Name="Flight_Records" EntityType="AerLingus_databaseModel.Flight_Records" />
-          <EntitySet Name="FR_Batch_Files" EntityType="AerLingus_databaseModel.FR_Batch_Files" />
-          <EntitySet Name="Journeys" EntityType="AerLingus_databaseModel.Journey" />
-          <EntitySet Name="JourneySegments" EntityType="AerLingus_databaseModel.JourneySegment" />
-          <AssociationSet Name="FK_JourneySegment_Flight_Records" Association="AerLingus_databaseModel.FK_JourneySegment_Flight_Records">
-            <End Role="Flight_Records" EntitySet="Flight_Records" />
-            <End Role="JourneySegment" EntitySet="JourneySegments" />
-          </AssociationSet>
           <FunctionImport Name="sp_alterdiagram1">
             <Parameter Name="diagramname" Mode="In" Type="String" />
             <Parameter Name="owner_id" Mode="In" Type="Int32" />
@@ -198,6 +173,10 @@
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams1" />
+          <EntitySet Name="Flight_Records" EntityType="AerLingus_databaseModel.Flight_Records" />
+          <EntitySet Name="FR_Batch_Files" EntityType="AerLingus_databaseModel.FR_Batch_Files" />
+          <EntitySet Name="Journeys" EntityType="AerLingus_databaseModel.Journey" />
+          <EntitySet Name="JourneySegments" EntityType="AerLingus_databaseModel.JourneySegment" />
         </EntityContainer>
         <EntityType Name="Flight_Records">
           <Key>
@@ -235,7 +214,6 @@
           <Property Name="exchangeRate" Type="Double" />
           <Property Name="fareBasis" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="JourneySegments" Relationship="AerLingus_databaseModel.FK_JourneySegment_Flight_Records" FromRole="Flight_Records" ToRole="JourneySegment" />
         </EntityType>
         <EntityType Name="FR_Batch_Files">
           <Key>
@@ -264,28 +242,21 @@
           <Property Name="origin" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
           <Property Name="destination" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IDFR" Type="Int32" />
           <Property Name="ticketNo" Type="String" MaxLength="14" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Flight_Records" Relationship="AerLingus_databaseModel.FK_JourneySegment_Flight_Records" FromRole="JourneySegment" ToRole="Flight_Records" />
         </EntityType>
-        <Association Name="FK_JourneySegment_Flight_Records">
-          <End Type="AerLingus_databaseModel.Flight_Records" Role="Flight_Records" Multiplicity="0..1" />
-          <End Type="AerLingus_databaseModel.JourneySegment" Role="JourneySegment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Flight_Records">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="JourneySegment">
-              <PropertyRef Name="IDFR" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="AerLingus_databaseModelStoreContainer" CdmEntityContainer="AerLingus_databaseEntities">
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram1" FunctionName="AerLingus_databaseModel.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram1" FunctionName="AerLingus_databaseModel.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram1" FunctionName="AerLingus_databaseModel.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition1" FunctionName="AerLingus_databaseModel.Store.sp_helpdiagramdefinition" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams1" FunctionName="AerLingus_databaseModel.Store.sp_helpdiagrams" />
+          <FunctionImportMapping FunctionImportName="sp_renamediagram1" FunctionName="AerLingus_databaseModel.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams1" FunctionName="AerLingus_databaseModel.Store.sp_upgraddiagrams" />
           <EntitySetMapping Name="Flight_Records">
             <EntityTypeMapping TypeName="AerLingus_databaseModel.Flight_Records">
               <MappingFragment StoreEntitySet="Flight_Records">
@@ -348,7 +319,6 @@
             <EntityTypeMapping TypeName="AerLingus_databaseModel.JourneySegment">
               <MappingFragment StoreEntitySet="JourneySegment">
                 <ScalarProperty Name="ticketNo" ColumnName="ticketNo" />
-                <ScalarProperty Name="IDFR" ColumnName="IDFR" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="destination" ColumnName="destination" />
                 <ScalarProperty Name="origin" ColumnName="origin" />
@@ -357,14 +327,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="sp_alterdiagram1" FunctionName="AerLingus_databaseModel.Store.sp_alterdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_creatediagram1" FunctionName="AerLingus_databaseModel.Store.sp_creatediagram" />
-          <FunctionImportMapping FunctionImportName="sp_dropdiagram1" FunctionName="AerLingus_databaseModel.Store.sp_dropdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition1" FunctionName="AerLingus_databaseModel.Store.sp_helpdiagramdefinition" />
-          <FunctionImportMapping FunctionImportName="sp_helpdiagrams1" FunctionName="AerLingus_databaseModel.Store.sp_helpdiagrams" />
-          <FunctionImportMapping FunctionImportName="sp_renamediagram1" FunctionName="AerLingus_databaseModel.Store.sp_renamediagram" />
-          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams1" FunctionName="AerLingus_databaseModel.Store.sp_upgraddiagrams" />
-        </EntityContainerMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>
