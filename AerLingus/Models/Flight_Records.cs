@@ -163,6 +163,7 @@ namespace AerLingus.Models
         [MaxLength(3)]
         [Display(Name = "Target Currency")]
         public string targetCurrency { get; set; }
+     //   pppp 
 
         [Range(minimum: 0, maximum: 9999999999)]
         [Display(Name = "Exchange Rate")]
