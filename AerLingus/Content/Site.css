@@ -190,7 +190,9 @@ textarea {
 
 .form-group #file {
 	display: inline-block;
+    
 }
+
 .form-group #dugmeSubmit {
 	background-color: #26aabd;
 	color: white;
@@ -206,9 +208,8 @@ textarea {
 		background: #26aabd !important;
 	}
 
-
-.naslov{
-	padding-bottom: 30px;
+.naslov {
+    padding-bottom: 30px;
 }
 .drugiNaslov{
 	padding-bottom:10px;

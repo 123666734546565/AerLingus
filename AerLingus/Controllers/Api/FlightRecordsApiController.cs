@@ -1412,7 +1412,7 @@ namespace AerLingus.Controllers.Api
 
                     return Request.CreateResponse(HttpStatusCode.OK);
                 }
-                catch (Exception e)
+                catch (Exception ex)
                 {
                     return Request.CreateResponse(HttpStatusCode.InternalServerError);
                 }

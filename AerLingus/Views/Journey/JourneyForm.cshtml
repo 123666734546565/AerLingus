@@ -4,13 +4,15 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Add a Journey</h2>
+<h2> Add a Journey</h2>
 @using (Html.BeginForm("AddJourney", "Journey"))
 {
-    <div class="Formular">
+    
+<div class="Formular">
+    <div class="obaveznaPolja">
         <div class="form-group">
             @Html.LabelFor(j => j.IdentifierNo)
-            @Html.TextBoxFor(j => j.IdentifierNo, new { @class = "form-control" })
+            @Html.TextBoxFor(j => j.IdentifierNo, new { @class = "form-control", style = "width:300px" })
             @Html.ValidationMessageFor(j => j.IdentifierNo)
         </div>
 
@@ -32,7 +34,8 @@
             @Html.ValidationMessageFor(j => j.LastName)
         </div>
 
+     </div>
         <button type="submit" class="btn btn-success">Save</button>
     </div>
-}
+    }
 

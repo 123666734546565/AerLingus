@@ -5,10 +5,11 @@
 }
 
 <div class="row">
-    <h2>Search Journey</h2>
+    <h2> Search Journey </h2>
     <div class="col-md-5">
         @using (Ajax.BeginForm("GetSearchedJourneys", "Journey", new AjaxOptions { HttpMethod = "POST", InsertionMode = InsertionMode.Replace, UpdateTargetId = "searchResults" }))
         {
+            <div class="obaveznaPolja">
             <h4>@Html.ValidationSummary(false, "", new { @class = "text-danger" })</h4>
 
             <div class="form-group">
@@ -30,7 +31,7 @@
                 @Html.LabelFor(j => j.SearchJourney.ticketNo)
                 @Html.TextBoxFor(j => j.SearchJourney.ticketNo, new { @class = "form-control" })
             </div>
-
+            </div>
             <input type="submit" class="btn btn-success" name="Submit" value="Submit" />
         }
     </div>
