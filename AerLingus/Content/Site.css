@@ -35,7 +35,9 @@ textarea {
 
 #identifierNo{
     border: 1.25px solid #26aabd; 
+
 }
+
 #transactionType {
     border: 1.25px solid #26aabd;
 }
@@ -188,9 +190,12 @@ textarea {
 
 }
 
+.form-group{
+    width:auto;
+}
+
 .form-group #file {
 	display: inline-block;
-    
 }
 
 .form-group #dugmeSubmit {

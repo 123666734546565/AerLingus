@@ -14,7 +14,7 @@
 
                 <div class="form-group">
                     @Html.LabelFor(j => j.SearchJourney.identifierNo)
-                    @Html.TextBoxFor(j => j.SearchJourney.identifierNo, new { @class = "form-control" })
+                    @Html.TextBoxFor(j => j.SearchJourney.identifierNo, new { @class = "form-control", style = "width:300px" })
                 </div>
 
                 <div class="form-group">
@@ -38,7 +38,7 @@
                 </br>
             </div>
 
-            <input type="submit" class="btn" name="Submit" value="Submit" />
+            <input type="submit" class="btn btn-success" name="Submit" value="Submit" />
         }
     </div>
 

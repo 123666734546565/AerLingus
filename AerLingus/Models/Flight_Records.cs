@@ -11,6 +11,7 @@ namespace AerLingus.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     
     public partial class Flight_Records
     {
@@ -46,5 +47,7 @@ namespace AerLingus.Models
         public Nullable<double> exchangeRate { get; set; }
         public string fareBasis { get; set; }
         public int ID { get; set; }
+
+
     }
 }
