@@ -6,10 +6,10 @@
 
 <div class="row">
     <h2>Search Flight Record</h2>
-        <div class="col-md-5">
-            @using (Ajax.BeginForm("GetSearchedFlightRecords", "FlightRecords", new AjaxOptions { HttpMethod = "POST", InsertionMode = InsertionMode.Replace, UpdateTargetId = "searchResults" }))
-            {
-                <div class="obaveznaPolja">
+    <div class="col-md-5">
+        @using (Ajax.BeginForm("GetSearchedFlightRecords", "FlightRecords", new AjaxOptions { HttpMethod = "POST", InsertionMode = InsertionMode.Replace, UpdateTargetId = "searchResults" }))
+        {
+            <div class="obaveznaPolja">
                 <div class="form-group">
                     @Html.LabelFor(fr => fr.Search.S_identifierNo)
                     @Html.TextBoxFor(fr => fr.Search.S_identifierNo, new { @class = "form-control" })
@@ -72,17 +72,21 @@
                     @Html.TextBoxFor(fr => fr.Search.S_pnrNo, new { @class = "form-control" })
                 </div>
 
-                </div>
-                <input type="submit" class="btn btn-success" name="Submit" value="Submit" />
+            </div>
+
+            <div>
+                <br></br>
+            </div>
+            <input type="submit" class="btn btn-success" name="Submit" value="Submit" />
 
 
-             }
+        }
 
         <div id="searchResults">
 
         </div>
 
-      
+
     </div>
 
     <link href="~/Content/Site.css" rel="stylesheet" />

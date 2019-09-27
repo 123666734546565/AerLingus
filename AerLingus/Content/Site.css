@@ -216,12 +216,13 @@ textarea {
 	padding-top:90px;
 }
 .obaveznaPolja {
-	border: solid;
-	border-color: #26aabd;
-	border-width: 2px;
-	border-radius: 10px;
-	padding: 20px;
+    border: solid;
+    border-color: #26aabd;
+    border-width: 2px;
+    border-radius: 10px;
+    padding: 20px;
 }
+
 .neobaveznaPolja {
 	border: solid;
 	border-color: #26aabd;
