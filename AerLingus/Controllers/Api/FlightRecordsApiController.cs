@@ -17,10 +17,12 @@ namespace AerLingus.Controllers.Api
 {
     public class FlightRecordsApiController : ApiController
     {
-        private AerLingus_databaseEntities entities;    
+        public string FailedRecords { get; set; }
+        private AerLingus_databaseEntities entities;
 
         public FlightRecordsApiController()
         {
+            FailedRecords = string.Empty;
             entities = new AerLingus_databaseEntities();
         }
 
@@ -775,9 +777,11 @@ namespace AerLingus.Controllers.Api
                     entities.FR_Batch_Files.Add(batch);
                     entities.SaveChanges();
 
+                    FailedRecords = failedToAddRecords;
+
                     return Request.CreateResponse(HttpStatusCode.OK);
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
                     return Request.CreateResponse(HttpStatusCode.InternalServerError);
                 }
@@ -1409,6 +1413,8 @@ namespace AerLingus.Controllers.Api
 
                     entities.FR_Batch_Files.Add(batch);
                     entities.SaveChanges();
+
+                    FailedRecords = failedToAddRecords;
 
                     return Request.CreateResponse(HttpStatusCode.OK);
                 }

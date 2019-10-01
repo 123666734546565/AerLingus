@@ -72,7 +72,7 @@ namespace AerLingus.Controllers
             }
             catch (Exception ex)
             {
-                return View("Error", (object)"ERROR 500: " + ex.Message);
+                return View("Error", (object)("ERROR 500: " + ex.Message));
             }
         }
 
@@ -166,7 +166,7 @@ namespace AerLingus.Controllers
             }
             catch (Exception ex)
             {
-                return View("Error", (object)"ERROR 500: " + ex.Message);
+                return View("Error", (object)("ERROR 500: " + ex.Message));
             }
         }
 
@@ -184,7 +184,7 @@ namespace AerLingus.Controllers
             }
             catch (Exception ex)
             {
-                return View("Error", (object)"ERROR 500: " + ex.Message);
+                return View("Error", (object)("ERROR 500: " + ex.Message));
             }
         }
 
@@ -237,145 +237,159 @@ namespace AerLingus.Controllers
             }
             catch (Exception ex)
             {
-                return View("Error", (object)"ERROR 500: " + ex.Message);
+                return View("Error", (object)("ERROR 500: " + ex.Message));
             }
         }
 
         public void ExportToCSV(SearchFlightRecord search)
         {
-            StringWriter sw = new StringWriter();
-            Response.ClearContent();
-            Response.ContentType = "text/csv";
-            Response.AddHeader("content-disposition", "attachment;filename=FlightRecords" + DateTime.Now.ToShortDateString() + ".csv");
-
-
-            FlightRecordsApiController api = new FlightRecordsApiController()
+            try
             {
-                Request = new HttpRequestMessage(),
-                Configuration = new HttpConfiguration()
-            };
-
-            SearchViewModel viewModel = new SearchViewModel
-            {
-                FlightRecords = api.GetSearchedFlightRecords(search)
-            };
+                StringWriter sw = new StringWriter();
+                Response.ClearContent();
+                Response.ContentType = "text/csv";
+                Response.AddHeader("content-disposition", "attachment;filename=FlightRecords" + DateTime.Now.ToShortDateString() + ".csv");
 
 
-            foreach (Flight_Records searchRecord in viewModel.FlightRecords)
-            {
-                listaSearch.Add(searchRecord);
+                FlightRecordsApiController api = new FlightRecordsApiController()
+                {
+                    Request = new HttpRequestMessage(),
+                    Configuration = new HttpConfiguration()
+                };
+
+                SearchViewModel viewModel = new SearchViewModel
+                {
+                    FlightRecords = api.GetSearchedFlightRecords(search)
+                };
+
+
+                foreach (Flight_Records searchRecord in viewModel.FlightRecords)
+                {
+                    listaSearch.Add(searchRecord);
+                }
+
+
+                foreach (var client in listaSearch)
+                {
+                    sw.WriteLine(string.Format("\"{0}\",\"{1}\",\"{2}\",\"{3}\",\"{4}\",\"{5}\",\"{6}\",\"{7}\",\"{8}\",\"{9}\",\"{10}\",\"{11}\",\"{12}\",\"{13}\",\"{14}\",\"{15}\",\"{16}\",\"{17}\",\"{18}\",\"{19}\",\"{20}\",\"{21}\",\"{22}\",\"{23}\",\"{24}\",\"{25}\",\"{26}\",\"{27}\",\"{28}\",\"{29}\"",
+                                      client.identifierNo,
+                                      client.transactionType,
+                                      client.otherFFPNo,
+                                      client.otherFFPScheme,
+                                      client.firstName,
+                                       client.lastName,
+                                       client.partnerTransactionNo,
+                                       client.bookingDate,
+                                       client.departureDate,
+                                       client.origin,
+                                       client.destination,
+                                       client.bookingClass,
+                                       client.cabinClass,
+                                       client.marketingFlightNo,
+                                       client.marketingAirline,
+                                       client.operatingFlightNo,
+                                       client.operatingAirline,
+                                       client.externalPaxID,
+                                       client.couponNo,
+                                       client.pnrNo,
+                                       client.distance,
+                                       client.baseFare,
+                                       client.discountBase,
+                                       client.exciseTax,
+                                       client.customerType,
+                                       client.promotionCode,
+                                       client.ticketCurrency,
+                                       client.targetCurrency,
+                                       client.exchangeRate,
+                                       client.fareBasis));
+                }
+                Response.Write(sw.ToString());
+                Response.End();
             }
-
-
-            foreach (var client in listaSearch)
+            catch(Exception ex)
             {
-                sw.WriteLine(string.Format("\"{0}\",\"{1}\",\"{2}\",\"{3}\",\"{4}\",\"{5}\",\"{6}\",\"{7}\",\"{8}\",\"{9}\",\"{10}\",\"{11}\",\"{12}\",\"{13}\",\"{14}\",\"{15}\",\"{16}\",\"{17}\",\"{18}\",\"{19}\",\"{20}\",\"{21}\",\"{22}\",\"{23}\",\"{24}\",\"{25}\",\"{26}\",\"{27}\",\"{28}\",\"{29}\"",
-                                  client.identifierNo,
-                                  client.transactionType,
-                                  client.otherFFPNo,
-                                  client.otherFFPScheme,
-                                  client.firstName,
-                                   client.lastName,
-                                   client.partnerTransactionNo,
-                                   client.bookingDate,
-                                   client.departureDate,
-                                   client.origin,
-                                   client.destination,
-                                   client.bookingClass,
-                                   client.cabinClass,
-                                   client.marketingFlightNo,
-                                   client.marketingAirline,
-                                   client.operatingFlightNo,
-                                   client.operatingAirline,
-                                   client.externalPaxID,
-                                   client.couponNo,
-                                   client.pnrNo,
-                                   client.distance,
-                                   client.baseFare,
-                                   client.discountBase,
-                                   client.exciseTax,
-                                   client.customerType,
-                                   client.promotionCode,
-                                   client.ticketCurrency,
-                                   client.targetCurrency,
-                                   client.exchangeRate,
-                                   client.fareBasis));
+                View("Error", (object)("ERROR 500: " + ex.Message));
             }
-            Response.Write(sw.ToString());
-            Response.End();
         }
 
         public void ExportToExcel(SearchFlightRecord search)
         {
-            var grid = new GridView();
-
-            FlightRecordsApiController api = new FlightRecordsApiController()
+            try
             {
-                Request = new HttpRequestMessage(),
-                Configuration = new HttpConfiguration()
-            };
+                var grid = new GridView();
 
-            SearchViewModel viewModel = new SearchViewModel
-            {
-                FlightRecords = api.GetSearchedFlightRecords(search)
-            };
+                FlightRecordsApiController api = new FlightRecordsApiController()
+                {
+                    Request = new HttpRequestMessage(),
+                    Configuration = new HttpConfiguration()
+                };
+
+                SearchViewModel viewModel = new SearchViewModel
+                {
+                    FlightRecords = api.GetSearchedFlightRecords(search)
+                };
 
 
-            foreach (Flight_Records searchRecord in viewModel.FlightRecords)
-            {
-                listaSearch.Add(searchRecord);
+                foreach (Flight_Records searchRecord in viewModel.FlightRecords)
+                {
+                    listaSearch.Add(searchRecord);
+                }
+
+                grid.DataSource = from client in listaSearch
+                                  select new
+                                  {
+                                      identifierNo = client.identifierNo,
+                                      transactionType = client.transactionType,
+                                      otherFFPNo = client.otherFFPNo,
+                                      otherFFPScheme = client.otherFFPScheme,
+                                      firstName = client.firstName,
+                                      lastName = client.lastName,
+                                      partnerTransactionNo = client.partnerTransactionNo,
+                                      bookingDate = client.bookingDate,
+                                      departureDate = client.departureDate,
+                                      origin = client.origin,
+                                      destination = client.destination,
+                                      bookingClass = client.bookingClass,
+                                      cabinClass = client.cabinClass,
+                                      marketingFlightNo = client.marketingFlightNo,
+                                      marketingAirline = client.marketingAirline,
+                                      operatingFlightNo = client.operatingFlightNo,
+                                      operatingAirline = client.operatingAirline,
+                                      ticketNo = client.ticketNo,
+                                      externalPaxID = client.externalPaxID,
+                                      couponNo = client.couponNo,
+                                      pnrNo = client.pnrNo,
+                                      distance = client.distance,
+                                      baseFare = client.baseFare,
+                                      discountBase = client.discountBase,
+                                      exciseTax = client.exciseTax,
+                                      customerType = client.customerType,
+                                      promotionCode = client.promotionCode,
+                                      ticketCurrency = client.ticketCurrency,
+                                      targetCurrency = client.targetCurrency,
+                                      exchangeRate = client.exchangeRate,
+                                      fareBasis = client.fareBasis,
+
+                                  };
+                grid.DataBind();
+
+
+                Response.ClearContent();
+                Response.AddHeader("content-disposition", "attachment;filename=FlightRecords" + DateTime.Now.ToShortDateString() + ".xlsx");
+                Response.ContentType = "application/excel";
+                StringWriter sw = new StringWriter();
+
+                HtmlTextWriter htmlTextWriter = new HtmlTextWriter(sw);
+
+                grid.RenderControl(htmlTextWriter);
+                Response.Write(sw.ToString());
+
+                Response.End();
             }
-
-            grid.DataSource = from client in listaSearch
-                              select new
-                              {
-                                  identifierNo = client.identifierNo,
-                                  transactionType = client.transactionType,
-                                  otherFFPNo = client.otherFFPNo,
-                                  otherFFPScheme = client.otherFFPScheme,
-                                  firstName = client.firstName,
-                                  lastName = client.lastName,
-                                  partnerTransactionNo = client.partnerTransactionNo,
-                                  bookingDate = client.bookingDate,
-                                  departureDate = client.departureDate,
-                                  origin = client.origin,
-                                  destination = client.destination,
-                                  bookingClass = client.bookingClass,
-                                  cabinClass = client.cabinClass,
-                                  marketingFlightNo = client.marketingFlightNo,
-                                  marketingAirline = client.marketingAirline,
-                                  operatingFlightNo = client.operatingFlightNo,
-                                  operatingAirline = client.operatingAirline,
-                                  ticketNo = client.ticketNo,
-                                  externalPaxID = client.externalPaxID,
-                                  couponNo = client.couponNo,
-                                  pnrNo = client.pnrNo,
-                                  distance = client.distance,
-                                  baseFare = client.baseFare,
-                                  discountBase = client.discountBase,
-                                  exciseTax = client.exciseTax,
-                                  customerType = client.customerType,
-                                  promotionCode = client.promotionCode,
-                                  ticketCurrency = client.ticketCurrency,
-                                  targetCurrency = client.targetCurrency,
-                                  exchangeRate = client.exchangeRate,
-                                  fareBasis = client.fareBasis,
-
-                              };
-            grid.DataBind();
-
-
-            Response.ClearContent();
-            Response.AddHeader("content-disposition", "attachment;filename=FlightRecords" + DateTime.Now.ToShortDateString() + ".xlsx");
-            Response.ContentType = "application/excel";
-            StringWriter sw = new StringWriter();
-
-            HtmlTextWriter htmlTextWriter = new HtmlTextWriter(sw);
-
-            grid.RenderControl(htmlTextWriter);
-            Response.Write(sw.ToString());
-
-            Response.End();
+            catch(Exception ex)
+            {
+                View("Error", (object)("ERROR 500: " + ex.Message));
+            }
         }
 
         public async Task<ActionResult> Details(int id)
@@ -391,7 +405,7 @@ namespace AerLingus.Controllers
             }
             catch (Exception ex)
             {
-                return View("Error", (object)"ERROR 500: " + ex.Message);
+                return View("Error", (object)("ERROR 500: " + ex.Message));
             }
         }
 
@@ -474,7 +488,7 @@ namespace AerLingus.Controllers
             }
             catch (Exception ex)
             {
-                return View("Error", (object)"ERROR 500: " + ex.Message);
+                return View("Error", (object)("ERROR 500: " + ex.Message));
             }
         }
 
@@ -501,7 +515,7 @@ namespace AerLingus.Controllers
             }
             catch (Exception ex)
             {
-                return View("Error", (object)"ERROR 500: " + ex.Message);
+                return View("Error", (object)("ERROR 500: " + ex.Message));
             }
         }
 
@@ -518,7 +532,7 @@ namespace AerLingus.Controllers
             }
             catch (Exception ex)
             {
-                return View("Error", (object)"ERROR 500: " + ex.Message);
+                return View("Error", (object)("ERROR 500: " + ex.Message));
             }
         }
 
@@ -545,7 +559,7 @@ namespace AerLingus.Controllers
             }
             catch (Exception ex)
             {
-                return View("Error", (object)"ERROR 500: " + ex.Message);
+                return View("Error", (object)("ERROR 500: " + ex.Message));
             }
         }      
     }
