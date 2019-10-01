@@ -11,33 +11,22 @@ namespace AerLingus.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using AerLingus.Validations;
-    using System.ComponentModel.DataAnnotations.Schema;
     
     public partial class Journey
     {
-        [Required]
-        [Display(Name = "Identifier Number")]
-        [MaxLength(16)]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Journey()
+        {
+            this.JourneySegments = new HashSet<JourneySegment>();
+        }
+    
         public string IdentifierNo { get; set; }
-
-        [Required]
-        [Display(Name = "First Name")]
-        [MaxLength(30)]
-        public string FirstName { get; set; }
-
-        [Required]
-        [Display(Name = "Last Name")]
-        [MaxLength(30)]
-        public string LastName { get; set; }
-
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ID { get; set; }
-
-        [Required]
-        [Display(Name = "Ticket Number")]
-        [MaxLength(14)]
         public string TicketNo { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public int ID { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<JourneySegment> JourneySegments { get; set; }
     }
 }

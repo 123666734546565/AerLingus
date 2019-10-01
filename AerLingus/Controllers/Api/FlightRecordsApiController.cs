@@ -1502,6 +1502,28 @@ namespace AerLingus.Controllers.Api
                 recordInDatabase.exchangeRate = record.exchangeRate;
                 recordInDatabase.fareBasis = record.fareBasis;
 
+                var journeyInDatabase = entities.Journeys.SingleOrDefault(j => j.TicketNo == recordInDatabase.ticketNo);
+
+                if(journeyInDatabase != null)
+                {
+                    journeyInDatabase.IdentifierNo = recordInDatabase.identifierNo;
+                    journeyInDatabase.FirstName = recordInDatabase.firstName;
+                    journeyInDatabase.LastName = recordInDatabase.lastName;
+                    journeyInDatabase.TicketNo = recordInDatabase.ticketNo;
+
+                    var journeySegmentInDatabase = entities.JourneySegments.SingleOrDefault(js => js.ticketNo == recordInDatabase.ticketNo && js.couponNo == recordInDatabase.couponNo);
+
+                    if(journeySegmentInDatabase != null)
+                    {
+                        journeySegmentInDatabase.couponNo = recordInDatabase.couponNo;
+                        journeySegmentInDatabase.departureDate = recordInDatabase.departureDate;
+                        journeySegmentInDatabase.destination = recordInDatabase.destination;
+                        journeySegmentInDatabase.origin = recordInDatabase.origin;
+                        journeySegmentInDatabase.IDFR = recordInDatabase.ID;
+                        journeySegmentInDatabase.IDJourney = journeyInDatabase.ID;
+                    }
+                }
+
                 if (!ModelState.IsValid)
                     return Request.CreateResponse(HttpStatusCode.BadRequest);
 

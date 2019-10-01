@@ -51,14 +51,13 @@ namespace AerLingus.Controllers.Api
             return searchedJourneys;
         }
 
-
         [HttpPost]
         [Route("api/JourneyApi/AddJourney")]
         public async Task<HttpResponseMessage> AddJourneyAsync([FromBody] Journey j)
         {
             try
             {
-                if (j.TicketNo != string.Empty)
+                if (ModelState.IsValid)
                 {
                 if (entities.Journeys.Any(b => b.TicketNo == j.TicketNo))
                     return Request.CreateResponse(HttpStatusCode.Conflict);
@@ -80,9 +79,7 @@ namespace AerLingus.Controllers.Api
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
         }
-            
-        
-          
+                  
         [Route("api/JourneyApi/SearchApi")]
         public List<Journey> GetSearchedJourneysApi()
         {

@@ -11,10 +11,15 @@ namespace AerLingus.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
     
     public partial class Flight_Records
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Flight_Records()
+        {
+            this.JourneySegments = new HashSet<JourneySegment>();
+        }
+    
         public string identifierNo { get; set; }
         public string transactionType { get; set; }
         public string otherFFPNo { get; set; }
@@ -47,7 +52,8 @@ namespace AerLingus.Models
         public Nullable<double> exchangeRate { get; set; }
         public string fareBasis { get; set; }
         public int ID { get; set; }
-
-
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<JourneySegment> JourneySegments { get; set; }
     }
 }

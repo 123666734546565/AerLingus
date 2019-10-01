@@ -54,45 +54,18 @@ namespace AerLingus.Controllers
 
         public ActionResult AddJourney(Journey j)
         {
-            if (!String.IsNullOrEmpty(j.TicketNo))
+            client.BaseAddress = new Uri(@"http://localhost:54789/api/JourneyApi/AddJourney");
+            var insertRecord = client.PostAsJsonAsync<Journey>("", j);
+            insertRecord.Wait();
+            var recorddisplay = insertRecord.Result;
+            if (recorddisplay.IsSuccessStatusCode)
             {
-                //Ako je sfr formular popunjen salju se podaci u API kako bi se sacuvali u bazu
-                
-                client.BaseAddress = new Uri(@"http://localhost:54789/api/JourneyApi/AddJourney");
-                var insertRecord = client.PostAsJsonAsync<Journey>("", j);
-                insertRecord.Wait();
-                var recorddisplay = insertRecord.Result;
-                if (recorddisplay.IsSuccessStatusCode)
-                {
-                    //redirekcija u listu svih flight rekorda
-                    return View("UploadSuccessful");
-                }
-                else
-                {
-
-                    object errorMessage = null;
-
-                    if (recorddisplay.StatusCode  == System.Net.HttpStatusCode.NotFound)
-                        errorMessage = "ERROR 404: ";
-                    else if (recorddisplay.StatusCode == System.Net.HttpStatusCode.NoContent)
-                        errorMessage = "ERROR 204: ";
-                    else if (recorddisplay.StatusCode == System.Net.HttpStatusCode.NotAcceptable)
-                        errorMessage = "ERROR 406: ";
-                    else if (recorddisplay.StatusCode == System.Net.HttpStatusCode.BadRequest)
-                        errorMessage = "ERROR 400: ";
-                    else if (recorddisplay.StatusCode == System.Net.HttpStatusCode.Conflict)
-                        errorMessage = "ERROR 409: Journey with that ticketNo already exists in database";
-                    else errorMessage = "ERROR 500: Internal Server Error";
-
-
-                    return View("Error", errorMessage);
-
-                    
-                }
+                //redirekcija u listu svih flight rekorda
+                return View("UploadSuccessful");
             }
             else
             {
-                return View("Error", (object)"ERROR 409: Journey already exists");
+                return View("JourneyForm");
             }
         }
 
