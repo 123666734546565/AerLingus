@@ -1502,32 +1502,38 @@ namespace AerLingus.Controllers.Api
                 recordInDatabase.exchangeRate = record.exchangeRate;
                 recordInDatabase.fareBasis = record.fareBasis;
 
-                var journeyInDatabase = entities.Journeys.SingleOrDefault(j => j.TicketNo == recordInDatabase.ticketNo);
+                entities.SaveChanges();
+
+                var journeyInDatabase = entities.Journeys.SingleOrDefault(j => j.TicketNo == record.ticketNo);
 
                 if(journeyInDatabase != null)
                 {
-                    journeyInDatabase.IdentifierNo = recordInDatabase.identifierNo;
-                    journeyInDatabase.FirstName = recordInDatabase.firstName;
-                    journeyInDatabase.LastName = recordInDatabase.lastName;
-                    journeyInDatabase.TicketNo = recordInDatabase.ticketNo;
+                    journeyInDatabase.IdentifierNo = record.identifierNo;
+                    journeyInDatabase.FirstName = record.firstName;
+                    journeyInDatabase.LastName = record.lastName;
+                    journeyInDatabase.TicketNo = record.ticketNo;
 
-                    var journeySegmentInDatabase = entities.JourneySegments.SingleOrDefault(js => js.ticketNo == recordInDatabase.ticketNo && js.couponNo == recordInDatabase.couponNo);
+                    entities.SaveChanges();
+
+                    var journeySegmentInDatabase = entities.JourneySegments.SingleOrDefault(js => js.IDFR == record.ID && js.couponNo == record.couponNo); //ako ne radi skloniti drugi deo
 
                     if(journeySegmentInDatabase != null)
                     {
-                        journeySegmentInDatabase.couponNo = recordInDatabase.couponNo;
-                        journeySegmentInDatabase.departureDate = recordInDatabase.departureDate;
-                        journeySegmentInDatabase.destination = recordInDatabase.destination;
-                        journeySegmentInDatabase.origin = recordInDatabase.origin;
-                        journeySegmentInDatabase.IDFR = recordInDatabase.ID;
+                        journeySegmentInDatabase.couponNo = record.couponNo;
+                        journeySegmentInDatabase.departureDate = record.departureDate;
+                        journeySegmentInDatabase.destination = record.destination;
+                        journeySegmentInDatabase.origin = record.origin;
+                        journeySegmentInDatabase.IDFR = record.ID;
                         journeySegmentInDatabase.IDJourney = journeyInDatabase.ID;
+
+                        entities.SaveChanges();
                     }
                 }
 
-                if (!ModelState.IsValid)
-                    return Request.CreateResponse(HttpStatusCode.BadRequest);
+                //if (!ModelState.IsValid)
+                //    return Request.CreateResponse(HttpStatusCode.BadRequest);
 
-                entities.SaveChanges();
+                //entities.SaveChanges();
 
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
