@@ -5,8 +5,9 @@
 }
 
 <div class="row">
-    <h2>Search Flight Record</h2>
-    <div class="col-md-5">
+    <h2 class="naslov" style="padding-left:18px;">Search Flight Record</h2>
+
+    <div class="col-md-5", style="width:350px">
         @using (Ajax.BeginForm("GetSearchedFlightRecords", "FlightRecords", new AjaxOptions { HttpMethod = "POST", InsertionMode = InsertionMode.Replace, UpdateTargetId = "searchResults" }))
         {
             <div class="obaveznaPolja">
