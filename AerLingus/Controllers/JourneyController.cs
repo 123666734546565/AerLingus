@@ -10,12 +10,14 @@ using AerLingus.View_Models;
 using AerLingus.Controllers.Api;
 using System.Web.Http;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace AerLingus.Controllers
 {
     public class JourneyController : Controller
     {
         private HttpClient client;
+        private HttpClient client1;
         private List<Journey> journeys;
         private List<Journey> listaSearch;
         private AerLingus_databaseEntities entities;
@@ -23,6 +25,7 @@ namespace AerLingus.Controllers
         public JourneyController()
         {
             client = new HttpClient();
+            client1 = new HttpClient();
             journeys = new List<Journey>();
             listaSearch = new List<Journey>();         
             entities = new AerLingus_databaseEntities();
@@ -223,35 +226,33 @@ namespace AerLingus.Controllers
 
         public async Task<ActionResult> JourneySegmentDetails(int id)
         {
-            var responseJourney = await client.GetAsync(@"http://localhost:54789/api/JourneyApi/" + id.ToString());
+            try
+            {
+                var responseJourney = await client.GetAsync(@"http://localhost:54789/api/JourneyApi/" + id.ToString());
 
-            if (responseJourney.StatusCode == System.Net.HttpStatusCode.NotFound)
-                return View("Error", (object)("ERROR 404: Journey with requested ID has not been found."));
+                if (responseJourney.StatusCode == System.Net.HttpStatusCode.NotFound)
+                    return View("Error", (object)("ERROR 404: Journey with requested ID has not been found."));
 
-            var journey = await responseJourney.Content.ReadAsAsync<Journey>();
+                var journey = await responseJourney.Content.ReadAsAsync<Journey>();
 
-            //var tempTickeNo = Convert.ToInt32(journey.TicketNo);
+                JourneySegmentsApiController api = new JourneySegmentsApiController
+                {
+                    Request = new HttpRequestMessage(),
+                    Configuration = new HttpConfiguration()
+                };
 
-            var responseJourneySegment = await client.GetAsync(@"http://localhost:54789/api/JourneySegmentsApi/" + journey.TicketNo.ToString());
+                var journeySegments = api.GetJourneySegments(journey.TicketNo);
 
-            if(!responseJourneySegment.IsSuccessStatusCode)
-                return View("Error", (object)("ERROR 404: Journey Segments with requested Ticket Number have not been found."));
+                //var responseJourneySegment = await client1.GetAsync(@"http://localhost:54789/api/JourneySegmentsApi/" + journey.TicketNo.ToString());
 
-            var r = await responseJourneySegment.Content.ReadAsAsync<IEnumerable<JourneySegment>>();
+                //var r = await responseJourneySegment.Content.ReadAsAsync<List<JourneySegment>>();
 
-            return View(r.ToList());
-
-            ////var selectedJourney = entities.Journeys.SingleOrDefault(j => j.ID == id);
-
-            //if (selectedJourney == null)
-            //    return HttpNotFound("Journey with requested ID has not been found.");
-
-            //var journeySegment = entities.JourneySegments.Where(js => js.TicketNo == selectedJourney.TicketNo).ToList();
-
-            //if (journeySegment == null)
-            //    return HttpNotFound("Journey Segments with requested ticket number have not been found.");
-
-            //return View(journeySegment);
+                return View(journeySegments);
+            }
+            catch(Exception ex)
+            {
+                return View("Error", (object)("ERROR 500: " + ex.Message));
+            }
         }
     }
 }
