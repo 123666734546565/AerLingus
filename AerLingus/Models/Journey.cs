@@ -11,13 +11,29 @@ namespace AerLingus.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
     
     public partial class Journey
     {
+        [Required]
+        [Display(Name = "Identifier Number")]
         public string IdentifierNo { get; set; }
+
+        [Required]
+        [Display(Name = "Ticket Number")]
         public string TicketNo { get; set; }
+
+        [Required]
+        [Display(Name = "First Name")]
         public string FirstName { get; set; }
+
+        [Required]
+        [Display(Name = "Last Name")]
         public string LastName { get; set; }
+
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
     }
 }
