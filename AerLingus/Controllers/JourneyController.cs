@@ -224,19 +224,37 @@ namespace AerLingus.Controllers
             }
         }
 
-        public ActionResult JourneySegmentDetails(int id)
+        public async Task<ActionResult> JourneySegmentDetails(int id)
         {
-            var selectedJourney = entities.Journeys.SingleOrDefault(j => j.ID == id);
+            var responseJourney = await client.GetAsync(@"http://localhost:54789/api/JourneyApi/" + id.ToString());
 
-            if (selectedJourney == null)
+            if (responseJourney.StatusCode == System.Net.HttpStatusCode.NotFound)
                 return HttpNotFound("Journey with requested ID has not been found.");
 
-            var journeySegment = entities.JourneySegments.Where(js => js.TicketNo == selectedJourney.TicketNo).ToList();
+            var journey = await responseJourney.Content.ReadAsAsync<Journey>();
 
-            if (journeySegment == null)
+            //var tempTickeNo = Convert.ToInt32(journey.TicketNo);
+
+            var responseJourneySegment = await client.GetAsync(@"http://localhost:54789/api/JourneySegmentsApi/" + journey.TicketNo.ToString());
+
+            if(!responseJourneySegment.IsSuccessStatusCode)
                 return HttpNotFound("Journey Segments with requested ticket number have not been found.");
 
-            return View(journeySegment);
+            var r = await responseJourneySegment.Content.ReadAsAsync<IEnumerable<JourneySegment>>();
+
+            return View(r.ToList());
+
+            ////var selectedJourney = entities.Journeys.SingleOrDefault(j => j.ID == id);
+
+            //if (selectedJourney == null)
+            //    return HttpNotFound("Journey with requested ID has not been found.");
+
+            //var journeySegment = entities.JourneySegments.Where(js => js.TicketNo == selectedJourney.TicketNo).ToList();
+
+            //if (journeySegment == null)
+            //    return HttpNotFound("Journey Segments with requested ticket number have not been found.");
+
+            //return View(journeySegment);
         }
     }
 }
