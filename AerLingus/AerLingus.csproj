@@ -358,7 +358,7 @@
     <Content Include="Views\Journey\Details.cshtml" />
     <Content Include="Views\Shared\_SearchJourneyList.cshtml" />
     <Content Include="Views\Journey\Delete.cshtml" />
-    <Content Include="Views\Journey\JourneySegments.cshtml" />
+    <Content Include="Views\Journey\JourneySegmentDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -224,9 +224,19 @@ namespace AerLingus.Controllers
             }
         }
 
-        //public ActionResult JourneySegments(int id)
-        //{
-        //    var journeySegment = entities.JourneySegments.SingleOrDefault(js => js.);
-        //}
+        public ActionResult JourneySegmentDetails(int id)
+        {
+            var selectedJourney = entities.Journeys.SingleOrDefault(j => j.ID == id);
+
+            if (selectedJourney == null)
+                return HttpNotFound("Journey with requested ID has not been found.");
+
+            var journeySegment = entities.JourneySegments.Where(js => js.TicketNo == selectedJourney.TicketNo).ToList();
+
+            if (journeySegment == null)
+                return HttpNotFound("Journey Segments with requested ticket number have not been found.");
+
+            return View(journeySegment);
+        }
     }
 }

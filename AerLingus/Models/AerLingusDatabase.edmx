@@ -69,7 +69,7 @@
           <Property Name="origin" Type="nvarchar" MaxLength="3" />
           <Property Name="destination" Type="nvarchar" MaxLength="3" />
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="TicketNo" Type="int" />
+          <Property Name="TicketNo" Type="nvarchar" MaxLength="14" />
           <Property Name="IDFR" Type="int" />
         </EntityType>
         <Association Name="FK_JourneySegment_Flight_Records">
@@ -173,7 +173,7 @@
           <Property Name="origin" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
           <Property Name="destination" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TicketNo" Type="Int32" />
+          <Property Name="TicketNo" Type="String" />
           <Property Name="IDFR" Type="Int32" />
           <NavigationProperty Name="Flight_Records" Relationship="AerLingus_databaseModel.FK_JourneySegment_Flight_Records" FromRole="JourneySegment" ToRole="Flight_Records" />
         </EntityType>

@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="a6a31ffbf41a4be1beb2ba7e0b0e8248" Name="Diagram1">
+      <Diagram DiagramId="a6a31ffbf41a4be1beb2ba7e0b0e8248" Name="Diagram1" ZoomLevel="73">
         <EntityTypeShape EntityType="AerLingus_databaseModel.Flight_Records" Width="1.5" PointX="0.75" PointY="1.25" />
         <EntityTypeShape EntityType="AerLingus_databaseModel.FR_Batch_Files" Width="1.5" PointX="2.75" PointY="0.75" />
         <EntityTypeShape EntityType="AerLingus_databaseModel.Journey" Width="1.5" PointX="4.75" PointY="0.75" />
