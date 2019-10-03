@@ -41,15 +41,13 @@ namespace AerLingus.Controllers
             }
             catch(Exception ex)
             {
-                return View("Error", (object)"ERROR 500: " + ex.Message);
+                return View("Error", (object)("ERROR 500: " + ex.Message));
             }
         }
 
         public ActionResult JourneyForm()
         {
-            return View();
-           
-                
+            return View();    
         }
 
         public ActionResult AddJourney(Journey j)
@@ -114,7 +112,7 @@ namespace AerLingus.Controllers
             }
             catch (Exception ex)
             {
-                return View("Error", (object)"ERROR 500: " + ex.Message);
+                return View("Error", (object)("ERROR 500: " + ex.Message));
             }
         }
 
@@ -131,7 +129,7 @@ namespace AerLingus.Controllers
             }
             catch(Exception ex)
             {
-                return View("Error", (object)"ERROR 500: " + ex.Message);
+                return View("Error", (object)("ERROR 500: " + ex.Message));
             }
         }
 
@@ -158,8 +156,7 @@ namespace AerLingus.Controllers
             }
             catch(Exception ex)
             {
-                return View("Error", (object)"ERROR 500: " + ex.Message);
-
+                return View("Error", (object)("ERROR 500: " + ex.Message));
             }
         }
 
@@ -172,11 +169,11 @@ namespace AerLingus.Controllers
                 if (response.IsSuccessStatusCode)
                     return View(await response.Content.ReadAsAsync<Journey>());
 
-                else return View("Error", (object)"ERROR 404: Record with requested ID has not been found");
+                else return View("Error", (object)("ERROR 404: Record with requested ID has not been found"));
             }
             catch(Exception ex)
             {
-                return View("Error", (object)"ERROR 500: " + ex.Message);
+                return View("Error", (object)("ERROR 500: " + ex.Message));
             }
         }
 
@@ -187,13 +184,13 @@ namespace AerLingus.Controllers
                 var searchedJourney = entities.Journeys.SingleOrDefault(j => j.ID == id);
 
                 if (searchedJourney == null)
-                    return HttpNotFound("Journey with requested ID has not been found.");
+                    return View("Error", (object)("ERROR 404: Journey with requested ID has not been found."));
 
                 return View(searchedJourney);
             }
             catch(Exception ex)
             {
-                return View("Error", (object)"ERROR 500: " + ex.Message);
+                return View("Error", (object)("ERROR 500: " + ex.Message));
             }
         }
 
@@ -220,7 +217,7 @@ namespace AerLingus.Controllers
             }
             catch (Exception ex)
             {
-                return View("Error", (object)"ERROR 500: " + ex.Message);
+                return View("Error", (object)("ERROR 500: " + ex.Message));
             }
         }
 
@@ -229,7 +226,7 @@ namespace AerLingus.Controllers
             var responseJourney = await client.GetAsync(@"http://localhost:54789/api/JourneyApi/" + id.ToString());
 
             if (responseJourney.StatusCode == System.Net.HttpStatusCode.NotFound)
-                return HttpNotFound("Journey with requested ID has not been found.");
+                return View("Error", (object)("ERROR 404: Journey with requested ID has not been found."));
 
             var journey = await responseJourney.Content.ReadAsAsync<Journey>();
 
@@ -238,7 +235,7 @@ namespace AerLingus.Controllers
             var responseJourneySegment = await client.GetAsync(@"http://localhost:54789/api/JourneySegmentsApi/" + journey.TicketNo.ToString());
 
             if(!responseJourneySegment.IsSuccessStatusCode)
-                return HttpNotFound("Journey Segments with requested ticket number have not been found.");
+                return View("Error", (object)("ERROR 404: Journey Segments with requested Ticket Number have not been found."));
 
             var r = await responseJourneySegment.Content.ReadAsAsync<IEnumerable<JourneySegment>>();
 
