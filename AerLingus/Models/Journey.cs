@@ -14,19 +14,10 @@ namespace AerLingus.Models
     
     public partial class Journey
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Journey()
-        {
-            this.JourneySegments = new HashSet<JourneySegment>();
-        }
-    
         public string IdentifierNo { get; set; }
         public string TicketNo { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public int ID { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<JourneySegment> JourneySegments { get; set; }
     }
 }

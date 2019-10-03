@@ -1430,9 +1430,9 @@ namespace AerLingus.Controllers.Api
         // POST: api/FlightRecordsApi/AddFlightRecord
         public async Task<HttpResponseMessage> AddFlightRecord([FromBody] Flight_Records sfr)
         {
-            if(sfr.ticketNo != string.Empty || sfr.externalPaxID != string.Empty)
+            if(!string.IsNullOrEmpty(sfr.ticketNo) || !string.IsNullOrEmpty(sfr.externalPaxID))
             {
-                if (sfr.ticketNo != string.Empty)
+                if (!string.IsNullOrEmpty(sfr.ticketNo))
                 {
                     if (Validation.TicketNoValidation(sfr) == null)
                     {
@@ -1442,7 +1442,7 @@ namespace AerLingus.Controllers.Api
                     }
                     else return Request.CreateResponse(HttpStatusCode.Conflict);
                 }
-                else if (sfr.externalPaxID != string.Empty)
+                else if (!string.IsNullOrEmpty(sfr.externalPaxID))
                 {
                     if (Validation.ExternalPaxIDValidation(sfr) == null)
                     {
@@ -1502,38 +1502,38 @@ namespace AerLingus.Controllers.Api
                 recordInDatabase.exchangeRate = record.exchangeRate;
                 recordInDatabase.fareBasis = record.fareBasis;
 
-                entities.SaveChanges();
-
-                var journeyInDatabase = entities.Journeys.SingleOrDefault(j => j.TicketNo == record.ticketNo);
-
-                if(journeyInDatabase != null)
-                {
-                    journeyInDatabase.IdentifierNo = record.identifierNo;
-                    journeyInDatabase.FirstName = record.firstName;
-                    journeyInDatabase.LastName = record.lastName;
-                    journeyInDatabase.TicketNo = record.ticketNo;
-
-                    entities.SaveChanges();
-
-                    var journeySegmentInDatabase = entities.JourneySegments.SingleOrDefault(js => js.IDFR == record.ID && js.couponNo == record.couponNo); //ako ne radi skloniti drugi deo
-
-                    if(journeySegmentInDatabase != null)
-                    {
-                        journeySegmentInDatabase.couponNo = record.couponNo;
-                        journeySegmentInDatabase.departureDate = record.departureDate;
-                        journeySegmentInDatabase.destination = record.destination;
-                        journeySegmentInDatabase.origin = record.origin;
-                        journeySegmentInDatabase.IDFR = record.ID;
-                        journeySegmentInDatabase.IDJourney = journeyInDatabase.ID;
-
-                        entities.SaveChanges();
-                    }
-                }
-
-                //if (!ModelState.IsValid)
-                //    return Request.CreateResponse(HttpStatusCode.BadRequest);
-
                 //entities.SaveChanges();
+
+                //var journeyInDatabase = entities.Journeys.SingleOrDefault(j => j.TicketNo == record.ticketNo);
+
+                //if(journeyInDatabase != null)
+                //{
+                //    journeyInDatabase.IdentifierNo = record.identifierNo;
+                //    journeyInDatabase.FirstName = record.firstName;
+                //    journeyInDatabase.LastName = record.lastName;
+                //    journeyInDatabase.TicketNo = record.ticketNo;
+
+                //    //entities.SaveChanges();
+
+                //    var journeySegmentInDatabase = entities.JourneySegments.SingleOrDefault(js => js.IDFR == record.ID && js.couponNo == record.couponNo); //ako ne radi skloniti drugi deo
+
+                //    if(journeySegmentInDatabase != null)
+                //    {
+                //        journeySegmentInDatabase.couponNo = record.couponNo;
+                //        journeySegmentInDatabase.departureDate = record.departureDate;
+                //        journeySegmentInDatabase.destination = record.destination;
+                //        journeySegmentInDatabase.origin = record.origin;
+                //        journeySegmentInDatabase.IDFR = record.ID;
+                //        journeySegmentInDatabase.IDJourney = journeyInDatabase.ID;
+
+                //        //entities.SaveChanges();
+                //    }
+                //}
+
+                if (!ModelState.IsValid)
+                    return Request.CreateResponse(HttpStatusCode.BadRequest);
+
+                entities.SaveChanges();
 
                 return Request.CreateResponse(HttpStatusCode.OK);
             }

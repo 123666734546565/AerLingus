@@ -223,5 +223,10 @@ namespace AerLingus.Controllers
                 return View("Error", (object)"ERROR 500: " + ex.Message);
             }
         }
+
+        //public ActionResult JourneySegments(int id)
+        //{
+        //    var journeySegment = entities.JourneySegments.SingleOrDefault(js => js.);
+        //}
     }
 }

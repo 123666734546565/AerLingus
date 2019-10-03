@@ -19,10 +19,9 @@ namespace AerLingus.Models
         public string origin { get; set; }
         public string destination { get; set; }
         public int ID { get; set; }
-        public Nullable<int> IDJourney { get; set; }
+        public Nullable<int> TicketNo { get; set; }
         public Nullable<int> IDFR { get; set; }
     
         public virtual Flight_Records Flight_Records { get; set; }
-        public virtual Journey Journey { get; set; }
     }
 }
