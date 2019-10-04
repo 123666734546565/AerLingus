@@ -18,17 +18,25 @@ namespace AerLingus.Models
     public partial class Journey
     {
         [Required]
+        [MaxLength(16)]
         [Display(Name = "Identifier Number")]
         public string IdentifierNo { get; set; }
 
+
+        [MinLength(13)]
+        [MaxLength(14)]
         [Required]
         [Display(Name = "Ticket Number")]
         public string TicketNo { get; set; }
 
+
+        [MaxLength(30)]
         [Required]
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
 
+
+        [MaxLength(30)]
         [Required]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
