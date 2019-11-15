@@ -371,11 +371,11 @@
     <Content Include="Views\Shared\_SearchJourneyList.cshtml" />
     <Content Include="Views\Journey\Delete.cshtml" />
     <Content Include="Views\Journey\JourneySegmentDetails.cshtml" />
+    <Content Include="Views\JourneySegments\JourneySegmentForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="UploadedFiles\" />
-    <Folder Include="Views\JourneySegments\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
