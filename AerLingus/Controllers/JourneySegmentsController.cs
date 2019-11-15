@@ -44,7 +44,7 @@ namespace AerLingus.Controllers
             }
             else
             {
-                return View("JournezSegmentForm");
+                return View("JourneySegmentForm");
             }
         }
         public ActionResult JourneySegmentForm()
