@@ -18,12 +18,12 @@ namespace AerLingus.Controllers.Api
         }
 
         [HttpGet]
-        public IEnumerable<JourneySegment> GetJourneySegments(int id) //ovo ID je ticketNo
+        public IEnumerable<JourneySegment> GetJourneySegments(string ticketNo) //ovo ID je ticketNo
         {
             if (!entities.JourneySegments.Any())
                 return default(IEnumerable<JourneySegment>);
 
-            return entities.JourneySegments.Where(js => js.TicketNo == id.ToString()).AsEnumerable();
+            return entities.JourneySegments.Where(js => js.TicketNo == ticketNo).AsEnumerable();
         }
     }
 }
