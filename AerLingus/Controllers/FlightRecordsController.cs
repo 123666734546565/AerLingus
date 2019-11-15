@@ -24,6 +24,7 @@ namespace AerLingus.Controllers
         private List<Flight_Records> listaSearch;
         private List<Flight_Records> flight_Records;
         private AerLingus_databaseEntities entities;
+        private Dictionary<int, string> errors;
 
         public FlightRecordsController()
         {
@@ -31,6 +32,8 @@ namespace AerLingus.Controllers
             entities = new AerLingus_databaseEntities();
             listaSearch = new List<Flight_Records>();
             flight_Records = new List<Flight_Records>();
+            errors = new Dictionary<int, string>();
+            fillErrors(errors);
         }
 
         public ActionResult Upload(HttpPostedFileBase file)
@@ -55,18 +58,18 @@ namespace AerLingus.Controllers
                     object errorMessage = null;
 
                     if (returnedStatusCode == System.Net.HttpStatusCode.NotFound)
-                        errorMessage = "ERROR 404: No file selected";
+                        errorMessage = errors[404];
                     else if (returnedStatusCode == System.Net.HttpStatusCode.NoContent)
-                        errorMessage = "ERROR 204: File is empty";
+                        errorMessage = errors[204];
                     else if (returnedStatusCode == System.Net.HttpStatusCode.NotAcceptable)
-                        errorMessage = "ERROR 406: File is missing header or footer or they are not prefixed with H or F";
+                        errorMessage = errors[406];
                     else if (returnedStatusCode == System.Net.HttpStatusCode.BadRequest)
-                        errorMessage = "ERROR 400: Footer does not have the number of potential records";
+                        errorMessage = errors[400];
                     else if (returnedStatusCode == System.Net.HttpStatusCode.PreconditionFailed)
-                        errorMessage = "ERROR 412: No record added to database because the number of footer records does not match with the number of existing records in the file";
+                        errorMessage = errors[412];
                     else if (returnedStatusCode == System.Net.HttpStatusCode.Conflict)
-                        errorMessage = "ERROR 409: File with that header already exists in database";
-                    else errorMessage = "ERROR 500: Internal Server Error";
+                        errorMessage = errors[409];
+                    else errorMessage = errors[500];
                     return View("Error", errorMessage);
                 }
             }
@@ -401,7 +404,7 @@ namespace AerLingus.Controllers
                 if (response.IsSuccessStatusCode)
                     return View(await response.Content.ReadAsAsync<Flight_Records>());
 
-                else return View("Error", (object)"ERROR 404: Record with requested ID has not been found");
+                else return View("Error", (object)(errors[404]));
             }
             catch (Exception ex)
             {
@@ -416,7 +419,7 @@ namespace AerLingus.Controllers
                 var searchedFlightRecord = entities.Flight_Records.SingleOrDefault(f => f.ID == id);
 
                 if (searchedFlightRecord == null)
-                    return HttpNotFound("Record with requested ID has not been found.");
+                    return View("Error", (object)(errors[404]));
 
                 List<SelectListItem> listItems = new List<SelectListItem>();
                 listItems.Add(new SelectListItem
@@ -506,10 +509,10 @@ namespace AerLingus.Controllers
                     return View("UploadSuccessful");
                 }
                 else if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
-                    errorMessage = "ERROR 400: Invalid Model State";
+                    errorMessage = errors[400];
                 else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
-                    errorMessage = "ERROR 404: Record with requested ID has not been found";
-                else errorMessage = "ERROR 500: Internal Server Error";
+                    errorMessage = errors[404];
+                else errorMessage = errors[500];
 
                 return View("Error", errorMessage);
             }
@@ -526,7 +529,7 @@ namespace AerLingus.Controllers
                 var searchedFlightRecord = entities.Flight_Records.SingleOrDefault(f => f.ID == id);
 
                 if (searchedFlightRecord == null)
-                    return HttpNotFound("Record with requested ID has not been found.");
+                    return View("Error", (object)(errors[404]));
 
                 return View(searchedFlightRecord);
             }
@@ -550,10 +553,10 @@ namespace AerLingus.Controllers
                     return View("UploadSuccessful");
                 }
                 else if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
-                    errorMessage = "ERROR 400: Invalid Model State";
+                    errorMessage = errors[400];
                 else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
-                    errorMessage = "ERROR 404: Record with requested ID has not been found";
-                else errorMessage = "ERROR 500: Internal Server Error";
+                    errorMessage = errors[404];
+                else errorMessage = errors[500];
 
                 return View("Error", errorMessage);
             }
@@ -562,5 +565,21 @@ namespace AerLingus.Controllers
                 return View("Error", (object)("ERROR 500: " + ex.Message));
             }
         }      
+
+        public ActionResult aa()
+        {
+            return Content("error kod je: " + errors[500]);
+        }
+
+        private void fillErrors(Dictionary<int, string> errors)
+        {
+            errors.Add(204, "ERROR 204: No content");
+            errors.Add(400, "ERROR 400: Bad request");
+            errors.Add(404, "ERROR 404: Not found");
+            errors.Add(406, "ERROR 406: Not acceptable");
+            errors.Add(409, "ERROR 409: Conflict");
+            errors.Add(412, "ERROR 412: Precondition failed");
+            errors.Add(500, "ERROR 500: Internal server error");                          
+        }
     }
 }
