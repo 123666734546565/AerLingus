@@ -21,6 +21,7 @@ namespace AerLingus.Controllers
         private List<Journey> journeys;
         private List<Journey> listaSearch;
         private AerLingus_databaseEntities entities;
+        private Dictionary<int, string> errors;
 
         public JourneyController()
         {
@@ -29,6 +30,8 @@ namespace AerLingus.Controllers
             journeys = new List<Journey>();
             listaSearch = new List<Journey>();         
             entities = new AerLingus_databaseEntities();
+            errors = new Dictionary<int, string>();
+            fillErrors(errors);
         }
         
         public ActionResult SearchJourney()
@@ -126,7 +129,7 @@ namespace AerLingus.Controllers
                 var searchedJourney = entities.Journeys.SingleOrDefault(j => j.ID == id);
 
                 if (searchedJourney == null)
-                    return HttpNotFound("Journey with requested ID has not been found.");
+                    return View("Error", (object)(errors[404]));
 
                 return View(searchedJourney);
             }
@@ -150,10 +153,10 @@ namespace AerLingus.Controllers
                     return View("UploadSuccessful");
                 }
                 else if(response.StatusCode == System.Net.HttpStatusCode.BadRequest)
-                    errorMessage = "ERROR 400: Invalid Model State";
+                    errorMessage = errors[400];
                 else if(response.StatusCode == System.Net.HttpStatusCode.NotFound)
-                    errorMessage = "ERROR 404: Record with requested ID has not been found";
-                else errorMessage = "ERROR 500: Internal Server Error";
+                    errorMessage = errors[404];
+                else errorMessage = errors[500];
 
                 return View("Error", errorMessage);
             }
@@ -172,7 +175,7 @@ namespace AerLingus.Controllers
                 if (response.IsSuccessStatusCode)
                     return View(await response.Content.ReadAsAsync<Journey>());
 
-                else return View("Error", (object)("ERROR 404: Record with requested ID has not been found"));
+                else return View("Error", (object)(errors[404]));
             }
             catch(Exception ex)
             {
@@ -187,7 +190,7 @@ namespace AerLingus.Controllers
                 var searchedJourney = entities.Journeys.SingleOrDefault(j => j.ID == id);
 
                 if (searchedJourney == null)
-                    return View("Error", (object)("ERROR 404: Journey with requested ID has not been found."));
+                    return View("Error", (object)(errors[404]));
 
                 return View(searchedJourney);
             }
@@ -211,10 +214,10 @@ namespace AerLingus.Controllers
                     return View("UploadSuccessful");
                 }
                 else if(response.StatusCode == System.Net.HttpStatusCode.BadRequest)
-                    errorMessage = "ERROR 400: Invalid Model State";
+                    errorMessage = errors[400];
                 else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
-                    errorMessage = "ERROR 404: Journey with requested ID has not been found";
-                else errorMessage = "ERROR 500: Internal Server Error";
+                    errorMessage = errors[404];
+                else errorMessage = errors[500];
 
                 return View("Error", errorMessage);
             }
@@ -231,7 +234,7 @@ namespace AerLingus.Controllers
                 var responseJourney = await client.GetAsync(@"http://localhost:54789/api/JourneyApi/" + id.ToString());
 
                 if (responseJourney.StatusCode == System.Net.HttpStatusCode.NotFound)
-                    return View("Error", (object)("ERROR 404: Journey with requested ID has not been found."));
+                    return View("Error", (object)(errors[404]));
 
                 var journey = await responseJourney.Content.ReadAsAsync<Journey>();
 
@@ -243,16 +246,23 @@ namespace AerLingus.Controllers
 
                 var journeySegments = api.GetJourneySegments(journey.TicketNo);
 
-                //var responseJourneySegment = await client1.GetAsync(@"http://localhost:54789/api/JourneySegmentsApi/" + journey.TicketNo.ToString());
-
-                //var r = await responseJourneySegment.Content.ReadAsAsync<List<JourneySegment>>();
-
                 return View(journeySegments);
             }
             catch(Exception ex)
             {
                 return View("Error", (object)("ERROR 500: " + ex.Message));
             }
+        }
+
+        private void fillErrors(Dictionary<int, string> errors)
+        {
+            errors.Add(204, "ERROR 204: No content");
+            errors.Add(400, "ERROR 400: Bad request");
+            errors.Add(404, "ERROR 404: Not found");
+            errors.Add(406, "ERROR 406: Not acceptable");
+            errors.Add(409, "ERROR 409: Conflict");
+            errors.Add(412, "ERROR 412: Precondition failed");
+            errors.Add(500, "ERROR 500: Internal server error");
         }
     }
 }
