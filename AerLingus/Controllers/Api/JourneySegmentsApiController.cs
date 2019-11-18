@@ -57,6 +57,39 @@ namespace AerLingus.Controllers.Api
             }
         }
 
+        [HttpPut]
+        public HttpResponseMessage EditJourney(int id, JourneySegment journeySegment)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return Request.CreateResponse(HttpStatusCode.BadRequest);
+
+                var journeyInDatabase = entities.JourneySegments.SingleOrDefault(j => j.ID == id);
+
+                if (journeyInDatabase == null)
+                    return Request.CreateResponse(HttpStatusCode.NotFound);
+
+                journeyInDatabase.TicketNo = journeySegment.TicketNo;
+                journeyInDatabase.couponNo = journeySegment.couponNo;
+                journeyInDatabase.destination = journeySegment.destination;
+                journeyInDatabase.origin = journeySegment.origin;
+                journeyInDatabase.departureDate = journeySegment.departureDate;
+
+
+                if (!ModelState.IsValid)
+                    return Request.CreateResponse(HttpStatusCode.BadRequest);
+
+                entities.SaveChanges();
+
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (Exception)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
+        }
+
 
     }
 }

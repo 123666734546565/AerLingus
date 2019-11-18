@@ -372,6 +372,7 @@
     <Content Include="Views\Journey\Delete.cshtml" />
     <Content Include="Views\Journey\JourneySegmentDetails.cshtml" />
     <Content Include="Views\JourneySegments\JourneySegmentForm.cshtml" />
+    <Content Include="Views\JourneySegments\UploadSuccessful.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
