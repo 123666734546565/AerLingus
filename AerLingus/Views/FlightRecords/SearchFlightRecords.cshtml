@@ -34,7 +34,8 @@
                 <div class="form-group">
                     @Html.LabelFor(fr => fr.Search.S_departureDate)
                     <div>
-                        @Html.EditorFor(fr => fr.Search.S_departureDate, new { htmlAttributes = new { @class = "datepicker1 form-control", type = "text", autocomplete = "off" } })
+                        @*@Html.EditorFor(fr => fr.Search.S_departureDate, new { htmlAttributes = new { @class = "datepicker1 form-control", type = "text", autocomplete = "off" } })*@
+                        <input type="date" style="border: 1.25px solid #26aabd; border-radius: 5px; padding: 5px; width: 500px;" />
                     </div>
                 </div>
 
