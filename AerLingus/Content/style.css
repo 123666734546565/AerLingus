@@ -122,3 +122,6 @@ ul {
     display: block;
     letter-spacing: 2px;
 }
+th, td{
+    width:50px;
+}

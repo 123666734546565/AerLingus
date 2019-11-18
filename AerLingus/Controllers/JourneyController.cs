@@ -236,7 +236,7 @@ namespace AerLingus.Controllers
                 if (responseJourney.StatusCode == System.Net.HttpStatusCode.NotFound)
                     return View("Error", (object)(errors[404]));
 
-                var journey = await responseJourney.Content.ReadAsAsync<Journey>();
+                var journey = await responseJourney.Content.ReadAsAsync<JourneySegment>();
 
                 JourneySegmentsApiController api = new JourneySegmentsApiController
                 {
@@ -253,6 +253,8 @@ namespace AerLingus.Controllers
                 return View("Error", (object)("ERROR 500: " + ex.Message));
             }
         }
+
+        
 
         private void fillErrors(Dictionary<int, string> errors)
         {

@@ -31,6 +31,12 @@ else
                 <td>@js.origin</td>
                 <td>@js.destination</td>
                 <td>@js.departureDate</td>
+                <td>
+                    
+                @Html.ActionLink("Edit", "Edit", "JourneySegments", new { id = js.ID }, new { @class = "btn btn-success" })
+                @Html.ActionLink("Delete", "Delete", "JourneySegments", new { id = js.ID}, new { @class = "btn btn-success" })
+                       
+                </td>
             </tr>
             }
         </tbody>

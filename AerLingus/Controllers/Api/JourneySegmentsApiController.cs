@@ -58,28 +58,54 @@ namespace AerLingus.Controllers.Api
         }
 
         [HttpPut]
-        public HttpResponseMessage EditJourney(int id, JourneySegment journeySegment)
+        public HttpResponseMessage EditJourneySegment(int id, JourneySegment journeySegment)
         {
             try
             {
                 if (!ModelState.IsValid)
                     return Request.CreateResponse(HttpStatusCode.BadRequest);
 
-                var journeyInDatabase = entities.JourneySegments.SingleOrDefault(j => j.ID == id);
+                var journeySegmentInDatabase = entities.JourneySegments.SingleOrDefault(j => j.ID == id);
 
-                if (journeyInDatabase == null)
+                if (journeySegmentInDatabase == null)
                     return Request.CreateResponse(HttpStatusCode.NotFound);
 
-                journeyInDatabase.TicketNo = journeySegment.TicketNo;
-                journeyInDatabase.couponNo = journeySegment.couponNo;
-                journeyInDatabase.destination = journeySegment.destination;
-                journeyInDatabase.origin = journeySegment.origin;
-                journeyInDatabase.departureDate = journeySegment.departureDate;
+              //  journeyInDatabase.TicketNo = journeySegment.TicketNo;
+                journeySegmentInDatabase.couponNo = journeySegment.couponNo;
+                journeySegmentInDatabase.destination = journeySegment.destination;
+                journeySegmentInDatabase.origin = journeySegment.origin;
+                journeySegmentInDatabase.departureDate = journeySegment.departureDate;
 
 
                 if (!ModelState.IsValid)
                     return Request.CreateResponse(HttpStatusCode.BadRequest);
 
+                entities.SaveChanges();
+
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (Exception)
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
+        }
+
+
+
+        [HttpDelete]
+        public HttpResponseMessage DeleteJourneySegment(int id)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return Request.CreateResponse(HttpStatusCode.BadRequest);
+
+                var journeySegmentInDatabase = entities.JourneySegments.SingleOrDefault(j => j.ID == id);
+
+                if (journeySegmentInDatabase == null)
+                    return Request.CreateResponse(HttpStatusCode.NotFound);
+
+                entities.JourneySegments.Remove(journeySegmentInDatabase);
                 entities.SaveChanges();
 
                 return Request.CreateResponse(HttpStatusCode.OK);

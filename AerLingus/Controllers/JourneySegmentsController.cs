@@ -25,6 +25,7 @@ namespace AerLingus.Controllers
             journeySegments = new List<JourneySegment>();
             listaSearch = new List<JourneySegment>();
             entities = new AerLingus_databaseEntities();
+            errors = new Dictionary<int, string>();
             fillErrors(errors);
         }
 
@@ -52,14 +53,46 @@ namespace AerLingus.Controllers
         }
 
 
-
-
-        [System.Web.Http.HttpPut]
-        public async Task<ActionResult> EditJourney(JourneySegment journeySegment)
+        public ActionResult Delete(int id)
         {
             try
             {
-                var response = await client.PutAsJsonAsync(@"http://localhost:54789/api/JourneyApi/" + journeySegment.ID.ToString(), journeySegment);
+                var searchedJourney = entities.JourneySegments.SingleOrDefault(j => j.ID == id);
+
+                if (searchedJourney == null)
+                    return View("Error", (object)(errors[404]));
+
+                return View("Delete");
+            }
+            catch (Exception ex)
+            {
+                return View("Error", (object)("ERROR 500: " + ex.Message));
+            }
+        }
+
+        public ActionResult Edit(int id)
+        {
+            try
+            {
+                var searchedJourney = entities.JourneySegments.SingleOrDefault(j => j.ID == id);
+
+                if (searchedJourney == null)
+                    return View("Error", (object)(errors[404]));
+
+                return View("Edit");
+            }
+            catch (Exception ex)
+            {
+                return View("Error", (object)("ERROR 500: " + ex.Message));
+            }
+        }
+
+        [System.Web.Http.HttpPut]
+        public async Task<ActionResult> EditJourneySegment(JourneySegment journeySegment)
+        {
+            try
+            {
+                var response = await client.PutAsJsonAsync(@"http://localhost:54789/api/JourneySegmentsApi/" + journeySegment.ID.ToString(), journeySegment);
 
                 object errorMessage = null;
 
@@ -80,6 +113,36 @@ namespace AerLingus.Controllers
                 return View("Error", (object)("ERROR 500: " + ex.Message));
             }
         }
+
+        [System.Web.Http.HttpDelete]
+        public async Task<ActionResult> DeleteJourneySegment(int id)
+        {
+            try
+            {
+                var response = await client.DeleteAsync(@"http://localhost:54789/api/JourneySegmentsApi/" + id.ToString());
+
+                object errorMessage = null;
+
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    return View("UploadSuccessful");
+                }
+                else if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                    errorMessage = errors[400];
+                else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+                    errorMessage = errors[404];
+                else errorMessage = errors[500];
+
+                return View("Error", errorMessage);
+            }
+            catch (Exception ex)
+            {
+                return View("Error", (object)("ERROR 500: " + ex.Message));
+            }
+        }
+
+
+
 
         public ActionResult JourneySegmentForm()
         {
