@@ -39,6 +39,8 @@
                 @Html.LabelFor(j => j.departureDate)
                 <div class"form-group>
                     @Html.EditorFor(j => j.departureDate, new { htmlAttributes = new { @class = "datepicker1 form-control", type = "text", autocomplete = "off" } })
+                    @*<input type="date" style="border: 1.25px solid #26aabd; border-radius: 5px; padding: 5px; width: 500px;" />*@
+
                 </div>
                 @Html.ValidationMessageFor(j => j.departureDate, "", new { id = "idValidacija" })
             </div>
