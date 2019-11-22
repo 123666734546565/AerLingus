@@ -43,7 +43,9 @@
                 <div class="form-group">
                     @Html.LabelFor(fr => fr.departureDate)
                     <div class"form-group>
-                        @Html.EditorFor(fr => fr.departureDate, new { htmlAttributes = new { @class = "datepicker1 form-control", type = "text", autocomplete = "off" } })
+                        <input type="date" style="border: 1.25px solid #26aabd; border-radius: 5px; padding: 5px; width: 500px;" />
+
+                        @*@Html.EditorFor(fr => fr.departureDate, new { htmlAttributes = new { @class = "datepicker1 form-control", type = "text", autocomplete = "off" } })*@
                     </div>
                     @Html.ValidationMessageFor(fr => fr.departureDate, "", new { id = "idValidacija" })
                 </div>
@@ -137,7 +139,9 @@
                 <div class="form-group">
                     @Html.LabelFor(fr => fr.bookingDate)
                     <div class"form-group>
-                        @Html.EditorFor(fr => fr.bookingDate, new { htmlAttributes = new { @class = "datepicker form-control", autocomplete = "off" } })
+                        <input type="date" style="border: 1.25px solid #26aabd; border-radius: 5px; padding: 5px; width: 500px;" />
+
+                        @*@Html.EditorFor(fr => fr.bookingDate, new { htmlAttributes = new { @class = "datepicker form-control", autocomplete = "off" } })*@
                     </div>
                     @Html.ValidationMessageFor(fr => fr.bookingDate, "", new { id = "idValidacija" })
                 </div>
