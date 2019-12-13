@@ -141,9 +141,6 @@ namespace AerLingus.Controllers
             }
         }
 
-
-
-
         public ActionResult JourneySegmentForm()
         {
             return View("JourneySegmentForm");

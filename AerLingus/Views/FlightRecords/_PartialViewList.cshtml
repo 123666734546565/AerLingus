@@ -15,20 +15,35 @@
                 <div class="dugme">
                     @using (Html.BeginForm("ExportToCSV", "FlightRecords", FormMethod.Post))
                     {
-
                         <input class="prvo" type="submit" value="ExportToCSV" />
                     }
                 </div>
                 <div class="dugme2">
                     @using (Html.BeginForm("ExportToExcel", "FlightRecords", FormMethod.Post))
                     {
-
                         <input class="drugo" type="submit" value="ExportToXLSX" />
                     }
                 </div>
 
                 <div class="lista">
-                    @foreach (var record in Model.FlightRecords)
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th align="center">Info</th>
+                                <th align="center">Options</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach(var record in Model.FlightRecords)
+                            {
+                                <tr>
+                                    <td align="center">@Html.ActionLink(@record.identifierNo + " | " + @record.transactionType + " | " + @record.otherFFPNo + " | " + @record.otherFFPScheme + " | " + @record.firstName + " | " + @record.lastName + " | " + @record.partnerTransactionNo + " | " + @record.bookingDate + " | " + @record.departureDate + " | " + @record.origin + " | " + @record.destination + " | " + @record.bookingClass + " | " + @record.cabinClassc + " | " + @record.marketingFlightNo + " | " + @record.marketingFlightNo + " | " + @record.operatingFlightNo + " | " + @record.operatingAirline + " | " + @record.ticketNo + " | " + @record.externalPaxID + " | " + @record.couponNo + " | " + @record.pnrNo + " | " + @record.distance + " | " + @record.baseFare + " | " + @record.discountBase + " | " + @record.exciseTax + " | " + @record.customerType + " | " + @record.promotionCode + " | " + @record.ticketCurrency + " | " + @record.targetCurrency + " | " + @record.exchangeRate + " | " + @record.fareBasis, "Details", new { id = record.ID })</td>
+                                    @*<td align="center">@Html.ActionLink()</td>*@
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    @*@foreach (var record in Model.FlightRecords)
                     {
                         <p class="hl"> @record.identifierNo | @record.transactionType | @record.otherFFPNo | @record.otherFFPScheme | @record.firstName | @record.lastName | @record.partnerTransactionNo | @record.bookingDate | @record.departureDate | @record.origin | @record.destination | @record.bookingClass | @record.cabinClass | @record.marketingFlightNo | @record.marketingFlightNo | @record.operatingFlightNo | @record.operatingAirline | @record.ticketNo | @record.externalPaxID | @record.couponNo | @record.pnrNo | @record.distance | @record.baseFare | @record.discountBase | @record.exciseTax | @record.customerType | @record.promotionCode | @record.ticketCurrency | @record.targetCurrency | @record.exchangeRate | @record.fareBasis  </p>
                         <div class="row">
@@ -42,7 +57,7 @@
                                 @Html.ActionLink("Delete", "Delete", "FlightRecords", new { id = record.ID }, new { @class = "btn btn-success" })
                             </div>
                         </div>
-                    }
+                    }*@
                 </div>
             }
 
