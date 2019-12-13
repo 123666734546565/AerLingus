@@ -27,7 +27,6 @@ namespace AerLingus.Controllers.Api
             return entities.JourneySegments.Where(js => js.TicketNo == ticketNo).AsEnumerable();
         }
 
-
         [HttpPost]
         [Route("api/JourneySegmentsApi/AddJourneySegment")]
         public async Task<HttpResponseMessage> AddJourneySegmentAsync([FromBody] JourneySegment j)
@@ -90,8 +89,6 @@ namespace AerLingus.Controllers.Api
             }
         }
 
-
-
         [HttpDelete]
         public HttpResponseMessage DeleteJourneySegment(int id)
         {
@@ -115,7 +112,5 @@ namespace AerLingus.Controllers.Api
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
         }
-
-
     }
 }

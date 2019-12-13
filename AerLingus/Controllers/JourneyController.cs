@@ -254,8 +254,6 @@ namespace AerLingus.Controllers
             }
         }
 
-        
-
         private void fillErrors(Dictionary<int, string> errors)
         {
             errors.Add(204, "ERROR 204: No content");

@@ -566,11 +566,6 @@ namespace AerLingus.Controllers
             }
         }      
 
-        public ActionResult aa()
-        {
-            return Content("error kod je: " + errors[500]);
-        }
-
         private void fillErrors(Dictionary<int, string> errors)
         {
             errors.Add(204, "ERROR 204: No content");
