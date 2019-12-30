@@ -39,5 +39,7 @@
 <p>Fare Basis: @(Model.fareBasis == null ? "-" : Model.fareBasis)</p>
 
 <div>
+    @Html.ActionLink("Edit", "Edit", "FlightRecords", new { id = Model.ID }, new { @class = "btn btn-success" })
+    @Html.ActionLink("Delete", "Delete", "FlightRecords", new { id = Model.ID }, new { @class = "btn btn-danger" })
     @Html.ActionLink("Back to List", "SearchFlightRecords", "FlightRecords", new { @class = "btn btn-success" })
 </div>

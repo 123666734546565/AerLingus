@@ -148,13 +148,13 @@ namespace AerLingus.Controllers
 
                 object errorMessage = null;
 
-                if(response.StatusCode == System.Net.HttpStatusCode.OK)
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
                     return View("UploadSuccessful");
                 }
-                else if(response.StatusCode == System.Net.HttpStatusCode.BadRequest)
-                    errorMessage = errors[400];
-                else if(response.StatusCode == System.Net.HttpStatusCode.NotFound)
+                else if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                    return View("Edit", journey);
+                else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
                     errorMessage = errors[404];
                 else errorMessage = errors[500];
 
