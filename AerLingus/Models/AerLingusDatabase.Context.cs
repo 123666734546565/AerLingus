@@ -29,5 +29,6 @@ namespace AerLingus.Models
         public virtual DbSet<FR_Batch_Files> FR_Batch_Files { get; set; }
         public virtual DbSet<Journey> Journeys { get; set; }
         public virtual DbSet<JourneySegment> JourneySegments { get; set; }
+        public virtual DbSet<DeletedRecord> DeletedRecords { get; set; }
     }
 }

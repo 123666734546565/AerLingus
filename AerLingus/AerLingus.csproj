@@ -233,6 +233,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AerLingusDatabase.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\DeletedRecord.cs">
+      <DependentUpon>AerLingusDatabase.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\EIValidation.cs" />
     <Compile Include="Models\Flight_Records.cs">
       <DependentUpon>AerLingusDatabase.tt</DependentUpon>
