@@ -14,7 +14,7 @@ namespace AerLingus.Models
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    
+
     public partial class Journey
     {
         [Required]

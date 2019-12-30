@@ -12,7 +12,7 @@ namespace AerLingus.Models
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations.Schema;
-    
+
     public partial class JourneySegment
     {
         public string couponNo { get; set; }
@@ -24,7 +24,7 @@ namespace AerLingus.Models
         public int ID { get; set; }
         public string TicketNo { get; set; }
         public Nullable<int> IDFR { get; set; }
-    
+
         public virtual Flight_Records Flight_Records { get; set; }
     }
 }

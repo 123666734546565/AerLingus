@@ -83,13 +83,13 @@ namespace AerLingus.Controllers
         {
             try
             {
-                if (!String.IsNullOrEmpty(sfr.firstName) || !String.IsNullOrEmpty(sfr.lastName))
+                if (!String.IsNullOrEmpty(sfr.firstName) && !String.IsNullOrEmpty(sfr.lastName))
                 {
                     //Ako je sfr formular popunjen salju se podaci u API kako bi se sacuvali u bazu
                     HttpClient hc = new HttpClient();
                     hc.BaseAddress = new Uri(@"http://localhost:54789/api/FlightRecordsApi/AddFlightRecord");
-                    var insertRecord = hc.PostAsJsonAsync<Flight_Records>("", sfr);
-                    insertRecord.Wait();
+                    var insertRecord = hc.PostAsJsonAsync("", sfr);
+                    //insertRecord.Wait();
                     var recorddisplay = insertRecord.Result;
                     if (recorddisplay.IsSuccessStatusCode)
                     {
@@ -218,7 +218,7 @@ namespace AerLingus.Controllers
 
                     ViewBag.A = true;
 
-                    //ModelState.Clear();
+                    ModelState.Clear();
 
                     return View("_PartialViewList", viewModel);
                 }
@@ -234,7 +234,6 @@ namespace AerLingus.Controllers
                     //listaSearch = api.GetSearchedFlightRecords(search);
 
                     //ModelState.Clear();
-
                     return View("_PartialViewList", viewModel);
                 }
             }

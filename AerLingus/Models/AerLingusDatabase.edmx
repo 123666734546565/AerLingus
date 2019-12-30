@@ -173,7 +173,7 @@
           <Property Name="origin" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
           <Property Name="destination" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TicketNo" Type="String" />
+          <Property Name="TicketNo" Type="String" MaxLength="14" Unicode="true" FixedLength="false" />
           <Property Name="IDFR" Type="Int32" />
           <NavigationProperty Name="Flight_Records" Relationship="AerLingus_databaseModel.FK_JourneySegment_Flight_Records" FromRole="JourneySegment" ToRole="Flight_Records" />
         </EntityType>

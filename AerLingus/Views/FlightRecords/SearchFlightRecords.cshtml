@@ -7,13 +7,13 @@
 <div class="row">
     <h2 class="naslov" style="padding-left:18px;">Search Flight Record</h2>
 
-    <div class="col-md-5", style="width:350px">
+    <div class="col-md-5" , style="width:350px">
         @using (Ajax.BeginForm("GetSearchedFlightRecords", "FlightRecords", new AjaxOptions { HttpMethod = "POST", InsertionMode = InsertionMode.Replace, UpdateTargetId = "searchResults" }))
         {
             <div class="obaveznaPolja">
                 <div class="form-group">
                     @Html.LabelFor(fr => fr.Search.S_identifierNo)
-                    @Html.TextBoxFor(fr => fr.Search.S_identifierNo, new { @class = "form-control"})
+                    @Html.TextBoxFor(fr => fr.Search.S_identifierNo, new { @class = "form-control" })
                 </div>
 
                 <div class="form-group">
@@ -73,27 +73,26 @@
                     @Html.LabelFor(fr => fr.Search.S_pnrNo)
                     @Html.TextBoxFor(fr => fr.Search.S_pnrNo, new { @class = "form-control" })
                 </div>
-
             </div>
 
             <div>
-                <br></br>
+                <br />
             </div>
+
             <input type="submit" class="btn btn-success" name="Submit" value="Submit" />
-
-
         }
-
-        <div id="searchResults">
-
-        </div>
-
-
     </div>
 
-    <link href="~/Content/Site.css" rel="stylesheet" />
+        <div id="searchResults" class="col-md-6">
+
+        </div>
+</div>
+
+    
+
+    @*<link href="~/Content/Site.css" rel="stylesheet" />
     <link href="~/Content/jquery-ui.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />*@
 
 
 
@@ -111,6 +110,7 @@
         <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
         <script src="~/Scripts/jquery-ui-timepicker-addon.min.js"></script>
         <script type="text/javascript"></script>
+        }
         @*<script>
                 var url = '@Url.Action("LoadPartialViewList", "FlightRecords")';
                 $('form').submit(function ()
@@ -121,7 +121,7 @@
                     $('#searchResults').load(url, $('form'.Serialize()));
                     return false; // prevent the default submit action
                 })
-            </script>*@
+            </script>
 
         @Scripts.Render("~/bundles/jqueryval")
         <script src="~/Scripts/jquery-ui.min.js"></script>
@@ -139,6 +139,6 @@
         </script>
 
 
-    }
+    }*@
 
-
+</div>
