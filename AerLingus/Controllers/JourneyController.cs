@@ -61,15 +61,21 @@ namespace AerLingus.Controllers
             client.BaseAddress = new Uri(@"http://localhost:54789/api/JourneyApi/AddJourney");
             var insertRecord = client.PostAsJsonAsync<Journey>("", j);
             insertRecord.Wait();
+            
             var recorddisplay = insertRecord.Result;
+            
             if (recorddisplay.IsSuccessStatusCode)
             {
                 //redirekcija u listu svih flight rekorda
                 return View("UploadSuccessful");
             }
+            else if(recorddisplay.StatusCode == System.Net.HttpStatusCode.BadRequest)
+            {
+                return View("JourneyForm", j);
+            }
             else
             {
-                return View("JourneyForm");
+                return View("Error", (object)errors[409]);
             }
         }
 
@@ -201,23 +207,32 @@ namespace AerLingus.Controllers
         }
 
         [System.Web.Http.HttpDelete]
-        public async Task<ActionResult> DeleteJourney(int id)
+        public async Task<ActionResult> DeleteJourney(int id, string komentar)
         {
+            //return Content("Ovo: " + komentar);
             try
             {
-                var response = await client.DeleteAsync(@"http://localhost:54789/api/JourneyApi/" + id.ToString());
+                //var response = await client.DeleteAsync(@"http://localhost:54789/api/JourneyApi/" + id.ToString());
+
+                JourneyApiController api = new JourneyApiController()
+                {
+                    Request = new HttpRequestMessage(),
+                    Configuration = new HttpConfiguration()
+                };
+
+                var response = api.DeleteJourneyWithComment(id, komentar);
 
                 object errorMessage = null;
 
-                if(response.StatusCode == System.Net.HttpStatusCode.OK)
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
-                    return View("UploadSuccessful");
+                    return Content(api.poruka);
                 }
-                else if(response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                else if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
                     errorMessage = errors[400];
                 else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
                     errorMessage = errors[404];
-                else errorMessage = errors[500];
+                else errorMessage = api.poruka;/*errors[500];*/
 
                 return View("Error", errorMessage);
             }

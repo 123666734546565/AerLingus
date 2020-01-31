@@ -11,37 +11,13 @@ namespace AerLingus.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-
+    
     public partial class Journey
     {
-        [Required]
-        [MaxLength(16)]
-        [Display(Name = "Identifier Number")]
         public string IdentifierNo { get; set; }
-
-
-        [MinLength(13)]
-        [MaxLength(14)]
-        [Required]
-        [Display(Name = "Ticket Number")]
         public string TicketNo { get; set; }
-
-
-        [MaxLength(30)]
-        [Required]
-        [Display(Name = "First Name")]
         public string FirstName { get; set; }
-
-
-        [MaxLength(30)]
-        [Required]
-        [Display(Name = "Last Name")]
         public string LastName { get; set; }
-
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
@@ -13,7 +14,9 @@ namespace AerLingus.Controllers.Api
 {
     public class JourneyApiController : ApiController
     {
-        AerLingus_databaseEntities entities;
+        public string poruka = "pocetnaPoruka";
+
+        private AerLingus_databaseEntities entities;
 
         public JourneyApiController()
         {
@@ -59,27 +62,27 @@ namespace AerLingus.Controllers.Api
             {
                 if (ModelState.IsValid)
                 {
-                if (entities.Journeys.Any(b => b.TicketNo == j.TicketNo))
-                    return Request.CreateResponse(HttpStatusCode.Conflict);
-                else
-                {
-                    entities.Journeys.Add(j);
-                    await entities.SaveChangesAsync();
+                    if (entities.Journeys.Any(b => b.TicketNo == j.TicketNo))
+                        return Request.CreateResponse(HttpStatusCode.Conflict);
+                    else
+                    {
+                        entities.Journeys.Add(j);
+                        await entities.SaveChangesAsync();
                         return Request.CreateResponse(HttpStatusCode.OK);
+                    }
+
                 }
-                
-                }
-                else return Request.CreateResponse(HttpStatusCode.Conflict);
+                else return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
-            
-                
-            
+
+
+
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
         }
-                  
+
         [Route("api/JourneyApi/SearchApi")]
         public List<Journey> GetSearchedJourneysApi()
         {
@@ -132,6 +135,7 @@ namespace AerLingus.Controllers.Api
             }
         }
 
+        //BESKORISTAN
         [HttpDelete]
         public HttpResponseMessage DeleteJourney(int id)
         {
@@ -168,6 +172,49 @@ namespace AerLingus.Controllers.Api
                                                             (search.TicketNo != null ? fr.TicketNo.StartsWith(search.TicketNo) : fr.TicketNo == fr.TicketNo)).ToList();
 
             return searchedRecords;
+        }
+
+        [HttpDelete]
+        public HttpResponseMessage DeleteJourneyWithComment(int id, string comment)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest);
+                }
+
+                var journeyToDelete = entities.Journeys.SingleOrDefault(j => j.ID == id);
+
+                if (journeyToDelete == null)
+                    return Request.CreateResponse(HttpStatusCode.NotFound);
+
+                string journeyTicketNumber = journeyToDelete.TicketNo;
+
+                entities.Journeys.Remove(journeyToDelete);
+                entities.SaveChanges();
+
+                //Thread.Sleep(10000);
+
+                var recordFromDeleteRecords = (from deleted in entities.DeletedRecords
+                                               where deleted.ticketNo == journeyTicketNumber
+                                               select deleted).SingleOrDefault();
+
+                //if (recordFromDeleteRecords != null) poruka = "IME:"+recordFromDeleteRecords.firstName;
+
+                recordFromDeleteRecords.Komentar = comment;
+
+                entities.SaveChangesAsync();
+                //Thread.Sleep(10000);
+                poruka = "NIJE problem";
+
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch(Exception)
+            {
+                //if (d is null) poruka = "D je null";
+                return Request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
         }
     }
 }
