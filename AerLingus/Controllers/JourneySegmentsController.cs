@@ -62,7 +62,7 @@ namespace AerLingus.Controllers
                 if (searchedJourney == null)
                     return View("Error", (object)(errors[404]));
 
-                return View("Delete");
+                return View("Delete",searchedJourney);
             }
             catch (Exception ex)
             {
