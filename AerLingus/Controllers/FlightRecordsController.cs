@@ -36,12 +36,12 @@ namespace AerLingus.Controllers
             fillErrors(errors);
         }
 
-        public ActionResult Upload(HttpPostedFileBase file)
+        public ActionResult Upload()
         {
             try
             {
-                ApiViewBag.UploadRequest.RequestIsComingFromController = true;
-                ApiViewBag.UploadRequest.RequestedFile = file;
+                //ApiViewBag.UploadRequest.RequestIsComingFromController = true;
+                //ApiViewBag.UploadRequest.RequestedFile = file;
 
                 FlightRecordsApiController api = new FlightRecordsApiController()
                 {
@@ -74,6 +74,72 @@ namespace AerLingus.Controllers
                 }
             }
             catch (Exception ex)
+            {
+                return View("Error", (object)("ERROR 500: " + ex.Message));
+            }
+        }
+
+        public ActionResult UploadUASCP()
+        {
+            try
+            {
+                //ApiViewBag.UploadRequest.RequestIsComingFromController = true;
+                //ApiViewBag.UploadRequest.RequestedFile = file;
+
+                FlightRecordsApiController api = new FlightRecordsApiController()
+                {
+                    Request = new HttpRequestMessage(),
+                    Configuration = new HttpConfiguration()
+                };
+
+                var returnedStatusCode = api.UploadUASCP().StatusCode;
+
+                if (returnedStatusCode == System.Net.HttpStatusCode.OK)
+                    return View("UploadSuccessful");
+                else
+                {
+                    object errorMessage = null;
+
+                    if (returnedStatusCode == System.Net.HttpStatusCode.NotFound)
+                        errorMessage = errors[404];
+                    else if (returnedStatusCode == System.Net.HttpStatusCode.NoContent)
+                        errorMessage = errors[204];
+                    else if (returnedStatusCode == System.Net.HttpStatusCode.NotAcceptable)
+                        errorMessage = errors[406];
+                    else if (returnedStatusCode == System.Net.HttpStatusCode.BadRequest)
+                        errorMessage = errors[400];
+                    else if (returnedStatusCode == System.Net.HttpStatusCode.PreconditionFailed)
+                        errorMessage = errors[412];
+                    else if (returnedStatusCode == System.Net.HttpStatusCode.Conflict)
+                        errorMessage = errors[409];
+                    else errorMessage = errors[500];
+                    return View("Error", errorMessage);
+                }
+            }
+            catch (Exception ex)
+            {
+                return View("Error", (object)("ERROR 500: " + ex.Message));
+            }
+        }
+
+        public ActionResult ChooseUpload(HttpPostedFileBase file)
+        {
+            string extension = Path.GetExtension(file.FileName);
+            try
+            {
+                ApiViewBag.UploadRequest.RequestedFile = file;
+                ApiViewBag.UploadRequest.RequestIsComingFromController = true;
+
+                if(extension == ".csv")
+                {
+                    return RedirectToAction("Upload");
+                }
+                else
+                {
+                    return RedirectToAction("UploadUASCP");
+                }
+            }
+            catch(Exception ex)
             {
                 return View("Error", (object)("ERROR 500: " + ex.Message));
             }
@@ -642,6 +708,11 @@ namespace AerLingus.Controllers
             errors.Add(409, "ERROR 409: Conflict");
             errors.Add(412, "ERROR 412: Precondition failed");
             errors.Add(500, "ERROR 500: Internal server error");                          
+        }
+
+        public ActionResult Error()
+        {
+            return View((object)("ERROR500: SO"));
         }
     }
 }

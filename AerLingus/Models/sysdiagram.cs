@@ -12,17 +12,12 @@ namespace AerLingus.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class JourneySegment
+    public partial class sysdiagram
     {
-        public string couponNo { get; set; }
-        public Nullable<System.DateTime> departureDate { get; set; }
-        public string origin { get; set; }
-        public string destination { get; set; }
-        public int ID { get; set; }
-        public string TicketNo { get; set; }
-        public Nullable<int> IDFR { get; set; }
-    
-        public virtual Flight_Records Flight_Records { get; set; }
-        public virtual MetaJourneySegment MetaJourneySegment { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

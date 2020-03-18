@@ -224,10 +224,10 @@
 <div class="Upload">
     <div class="row">
         <div class="col-md-6" id="fileupload">
-            <form action="http://localhost:54789/FlightRecords/Upload" method="post" name="file" enctype="multipart/form-data">
+            <form action="http://localhost:54789/FlightRecords/ChooseUpload" method="post" name="file" enctype="multipart/form-data">
                 <h3 class="drugiNaslov">Choose a file to upload</h3>
                 <div class="form-group" id="browse">
-                    <input type="file" accept=".csv" name="file" id="file" required />
+                    <input type="file" name="file" id="file" required />
                 </div>
                 <div class="form-group" id="uploadSubmit">
                     <input type="submit" id="dugmeSubmit" title="Submit" name="file"/>
@@ -235,14 +235,13 @@
             </form>
         </div>
 
-        <div id="mydrop" class="col-md-6" id="draganddrop">
+        @*<div id="mydrop" class="col-md-6" id="draganddrop">
             <form action="DragAndDrop" class="dropzone" id="dropzoneform" style="background-color:#E3FCFF;border:dashed">
                 <div>
                     <button class="form-control btn btn-info" type="submit" style="position:absolute;left:5%;right:5%;bottom:2%;top:75%; width:90%;">Save</button>
                 </div>
             </form>
-
-        </div>
+        </div>*@
     </div>
 </div>
 

@@ -251,6 +251,12 @@
       <DependentUpon>AerLingusDatabase.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\MetaJourneySegment.cs">
+      <DependentUpon>AerLingusDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sysdiagram.cs">
+      <DependentUpon>AerLingusDatabase.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Validations\SearchFlightRecordValidation.cs" />

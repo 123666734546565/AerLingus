@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="AerLingus_databaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="AerLingus_databaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <!--Errors Found During Generation:
 warning 6002: The table/view 'AerLingus_database.dbo.DeletedRecords' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="DeletedRecords">
@@ -82,6 +82,8 @@ warning 6002: The table/view 'AerLingus_database.dbo.DeletedRecords' does not ha
           <Property Name="exchangeRate" Type="float" />
           <Property Name="fareBasis" Type="nvarchar" MaxLength="10" />
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="30" />
+          <Property Name="DownloadCounter" Type="int" />
         </EntityType>
         <EntityType Name="FR_Batch_Files">
           <Key>
@@ -113,6 +115,24 @@ warning 6002: The table/view 'AerLingus_database.dbo.DeletedRecords' does not ha
           <Property Name="TicketNo" Type="nvarchar" MaxLength="14" />
           <Property Name="IDFR" Type="int" />
         </EntityType>
+        <EntityType Name="MetaJourneySegment">
+          <Key>
+            <PropertyRef Name="JourneySegmentID" />
+          </Key>
+          <Property Name="JourneySegmentID" Type="int" Nullable="false" />
+          <Property Name="HeaderMetaData" Type="xml" />
+          <Property Name="FooterMetaData" Type="xml" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
         <Association Name="FK_JourneySegment_Flight_Records">
           <End Role="Flight_Records" Type="Self.Flight_Records" Multiplicity="0..1" />
           <End Role="JourneySegment" Type="Self.JourneySegment" Multiplicity="*" />
@@ -125,11 +145,25 @@ warning 6002: The table/view 'AerLingus_database.dbo.DeletedRecords' does not ha
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_MetaJourneySegment_JourneySegment">
+          <End Role="JourneySegment" Type="Self.JourneySegment" Multiplicity="1" />
+          <End Role="MetaJourneySegment" Type="Self.MetaJourneySegment" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="JourneySegment">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MetaJourneySegment">
+              <PropertyRef Name="JourneySegmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="AerLingus_databaseModelStoreContainer">
           <EntitySet Name="Flight_Records" EntityType="Self.Flight_Records" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FR_Batch_Files" EntityType="Self.FR_Batch_Files" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Journey" EntityType="Self.Journey" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="JourneySegment" EntityType="Self.JourneySegment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MetaJourneySegment" EntityType="Self.MetaJourneySegment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DeletedRecords" EntityType="Self.DeletedRecords" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [DeletedRecords].[Datum] AS [Datum], 
@@ -172,9 +206,12 @@ warning 6002: The table/view 'AerLingus_database.dbo.DeletedRecords' does not ha
             <End Role="Flight_Records" EntitySet="Flight_Records" />
             <End Role="JourneySegment" EntitySet="JourneySegment" />
           </AssociationSet>
+          <AssociationSet Name="FK_MetaJourneySegment_JourneySegment" Association="Self.FK_MetaJourneySegment_JourneySegment">
+            <End Role="JourneySegment" EntitySet="JourneySegment" />
+            <End Role="MetaJourneySegment" EntitySet="MetaJourneySegment" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="AerLingus_databaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -215,6 +252,8 @@ warning 6002: The table/view 'AerLingus_database.dbo.DeletedRecords' does not ha
           <Property Name="fareBasis" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="JourneySegments" Relationship="Self.FK_JourneySegment_Flight_Records" FromRole="Flight_Records" ToRole="JourneySegment" />
+          <Property Name="Status" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="DownloadCounter" Type="Int32" />
         </EntityType>
         <EntityType Name="FR_Batch_Files">
           <Key>
@@ -246,6 +285,7 @@ warning 6002: The table/view 'AerLingus_database.dbo.DeletedRecords' does not ha
           <Property Name="TicketNo" Type="String" MaxLength="14" FixedLength="false" Unicode="true" />
           <Property Name="IDFR" Type="Int32" />
           <NavigationProperty Name="Flight_Records" Relationship="Self.FK_JourneySegment_Flight_Records" FromRole="JourneySegment" ToRole="Flight_Records" />
+          <NavigationProperty Name="MetaJourneySegment" Relationship="AerLingus_databaseModel.FK_MetaJourneySegment_JourneySegment" FromRole="JourneySegment" ToRole="MetaJourneySegment" />
         </EntityType>
         <EntityType Name="DeletedRecord">
           <Key>
@@ -308,7 +348,44 @@ warning 6002: The table/view 'AerLingus_database.dbo.DeletedRecords' does not ha
             <End Role="Flight_Records" EntitySet="Flight_Records" />
             <End Role="JourneySegment" EntitySet="JourneySegments" />
           </AssociationSet>
+          <EntitySet Name="sysdiagrams" EntityType="AerLingus_databaseModel.sysdiagram" />
+          <EntitySet Name="MetaJourneySegments" EntityType="AerLingus_databaseModel.MetaJourneySegment" />
+          <AssociationSet Name="FK_MetaJourneySegment_JourneySegment" Association="AerLingus_databaseModel.FK_MetaJourneySegment_JourneySegment">
+            <End Role="JourneySegment" EntitySet="JourneySegments" />
+            <End Role="MetaJourneySegment" EntitySet="MetaJourneySegments" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="MetaJourneySegment">
+          <Key>
+            <PropertyRef Name="JourneySegmentID" />
+          </Key>
+          <Property Name="JourneySegmentID" Type="Int32" Nullable="false" />
+          <Property Name="HeaderMetaData" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FooterMetaData" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="JourneySegment" Relationship="AerLingus_databaseModel.FK_MetaJourneySegment_JourneySegment" FromRole="MetaJourneySegment" ToRole="JourneySegment" />
+        </EntityType>
+        <Association Name="FK_MetaJourneySegment_JourneySegment">
+          <End Type="AerLingus_databaseModel.JourneySegment" Role="JourneySegment" Multiplicity="1" />
+          <End Type="AerLingus_databaseModel.MetaJourneySegment" Role="MetaJourneySegment" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="JourneySegment">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MetaJourneySegment">
+              <PropertyRef Name="JourneySegmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -318,6 +395,8 @@ warning 6002: The table/view 'AerLingus_database.dbo.DeletedRecords' does not ha
           <EntitySetMapping Name="Flight_Records">
             <EntityTypeMapping TypeName="AerLingus_databaseModel.Flight_Records">
               <MappingFragment StoreEntitySet="Flight_Records">
+                <ScalarProperty Name="DownloadCounter" ColumnName="DownloadCounter" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="identifierNo" ColumnName="identifierNo" />
                 <ScalarProperty Name="transactionType" ColumnName="transactionType" />
                 <ScalarProperty Name="otherFFPNo" ColumnName="otherFFPNo" />
@@ -423,6 +502,26 @@ warning 6002: The table/view 'AerLingus_database.dbo.DeletedRecords' does not ha
                 <ScalarProperty Name="exchangeRate" ColumnName="exchangeRate" />
                 <ScalarProperty Name="fareBasis" ColumnName="fareBasis" />
                 <ScalarProperty Name="IDDelete" ColumnName="IDDelete" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="AerLingus_databaseModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MetaJourneySegments">
+            <EntityTypeMapping TypeName="AerLingus_databaseModel.MetaJourneySegment">
+              <MappingFragment StoreEntitySet="MetaJourneySegment">
+                <ScalarProperty Name="FooterMetaData" ColumnName="FooterMetaData" />
+                <ScalarProperty Name="HeaderMetaData" ColumnName="HeaderMetaData" />
+                <ScalarProperty Name="JourneySegmentID" ColumnName="JourneySegmentID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -113,7 +113,7 @@ namespace AerLingus.Models
 
         [MaxLength(2)]
         [Display(Name = "Coupon Number")]
- 
+
         public string couponNo { get; set; }
 
         [Required]

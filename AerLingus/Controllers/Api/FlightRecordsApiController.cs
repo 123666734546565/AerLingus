@@ -140,6 +140,64 @@ namespace AerLingus.Controllers.Api
         }
 
         [HttpPost]
+        [Route("api/FlightRecordsApi/UploadUASCP")]
+        public HttpResponseMessage UploadUASCP()
+        {
+            try
+            {
+                if (ApiViewBag.UploadRequest.RequestIsComingFromController)
+                {
+                    ApiViewBag.UploadRequest.RequestIsComingFromController = false;
+
+                    HttpPostedFileBase file = ApiViewBag.UploadRequest.RequestedFile;
+
+                    if (file == null)
+                        return Request.CreateResponse(HttpStatusCode.NotFound);
+                    if (file.ContentLength == 0)
+                        return Request.CreateResponse(HttpStatusCode.NoContent);
+
+                    Stream stream = file.InputStream;
+
+                    StreamReader streamReader = new StreamReader(stream);
+
+                    string headerMetaData = streamReader.ReadLine();
+
+                    MetaJourneySegment metaJourneySegment = new MetaJourneySegment();
+
+                    metaJourneySegment.HeaderMetaData = headerMetaData.TrimEnd();
+
+                    string footerMetaData = string.Empty;
+
+                    while (!streamReader.EndOfStream)
+                    {
+                        footerMetaData = streamReader.ReadLine();
+                    }
+
+                    //ovo je hard codovano////////////////////
+                    metaJourneySegment.JourneySegmentID = 20;
+                    //////////////////////////////////////////
+
+                    metaJourneySegment.FooterMetaData = footerMetaData.TrimEnd();
+
+                    entities.MetaJourneySegments.Add(metaJourneySegment);
+                    entities.SaveChanges();
+
+                    return Request.CreateResponse(HttpStatusCode.OK);
+                }
+                else
+                {
+                    //ovo se treba zameniti
+                    return Request.CreateResponse(HttpStatusCode.Accepted);
+                }
+            }
+            catch (Exception ex)
+            {
+                poruka = ex.Message;
+                return Request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
+        }
+
+        [HttpPost]
         [Route("api/FlightRecordsApi/Upload")]
         public HttpResponseMessage Upload()
         {
