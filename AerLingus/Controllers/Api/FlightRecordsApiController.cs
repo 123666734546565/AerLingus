@@ -160,26 +160,44 @@ namespace AerLingus.Controllers.Api
 
                     StreamReader streamReader = new StreamReader(stream);
 
-                    string headerMetaData = streamReader.ReadLine();
+                    //////////////////////////////////////////////////////////////////////
+                    //////////////////////////////////////////////////////////////////////
+                                                                                      ////
+                    string headerMetaData = streamReader.ReadLine();                  ////
+                                                                                      ////
+                    MetaJourneySegment metaJourneySegment = new MetaJourneySegment(); ////
+                                                                                      ////
+                    metaJourneySegment.HeaderMetaData = headerMetaData.TrimEnd();     ////
+                                                                                      ////
+                    string footerMetaData = string.Empty;                             ////
+                                                                                      ////
+                    while (!streamReader.EndOfStream)                                 ////
+                    {                                                                 ////
+                        footerMetaData = streamReader.ReadLine();                     ////
+                    }                                                                 ////
+                                                                                      ////
+                    metaJourneySegment.JourneySegmentID = 20;                         ////
+                                                                                      ////
+                    metaJourneySegment.FooterMetaData = footerMetaData.TrimEnd();     ////
+                                                                                      ////
+                    entities.MetaJourneySegments.Add(metaJourneySegment);             ////
+                                                                                      ////
+                    //////////////////////////////////////////////////////////////////////
+                    //////////////////////////////////////////////////////////////////////
+                    
+                    stream.Position = 0;
 
-                    MetaJourneySegment metaJourneySegment = new MetaJourneySegment();
+                    streamReader.ReadLine();
 
-                    metaJourneySegment.HeaderMetaData = headerMetaData.TrimEnd();
-
-                    string footerMetaData = string.Empty;
+                    Flight_Records flightRecords = new Flight_Records();
 
                     while (!streamReader.EndOfStream)
                     {
-                        footerMetaData = streamReader.ReadLine();
+                        string record = streamReader.ReadLine();
+
+                        
                     }
 
-                    //ovo je hard codovano////////////////////
-                    metaJourneySegment.JourneySegmentID = 20;
-                    //////////////////////////////////////////
-
-                    metaJourneySegment.FooterMetaData = footerMetaData.TrimEnd();
-
-                    entities.MetaJourneySegments.Add(metaJourneySegment);
                     entities.SaveChanges();
 
                     return Request.CreateResponse(HttpStatusCode.OK);
