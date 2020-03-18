@@ -192,7 +192,6 @@ namespace AerLingus.Controllers.Api
             }
             catch (Exception ex)
             {
-                poruka = ex.Message;
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
         }
