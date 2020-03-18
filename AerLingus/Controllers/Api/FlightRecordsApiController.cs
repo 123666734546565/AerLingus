@@ -17,6 +17,7 @@ namespace AerLingus.Controllers.Api
 {
     public class FlightRecordsApiController : ApiController
     {
+        public string poruka;
         public string FailedRecords { get; set; }
         private AerLingus_databaseEntities entities;
 
@@ -195,9 +196,94 @@ namespace AerLingus.Controllers.Api
                     {
                         string record = streamReader.ReadLine();
 
-                        
-                    }
+                        //!!!!!!!  hard code
+                        for (int i =0; i <2; i++)
+                        {
+                            flightRecords.transactionType += record[i];
 
+                        }
+                        //!!!!!!!  hard code
+                        for (int i = 2; i <5; i++)
+                        {
+                            flightRecords.pnrNo += record[i];
+
+                        }
+                        for (int i = 25; i < 55; i++)
+                        {
+                            flightRecords.lastName += record[i];
+                        }
+                        for (int i = 55; i < 105; i++) {
+                            flightRecords.firstName += record[i];
+                        }
+                        string r = "";
+         
+                        for (int i = 123; i < 131; i++)
+                        {
+                            if (i == 126)
+                                r +="/";
+                            if(i==128)
+                                r += "/";
+                            if(i==130)
+                                r += "/";
+                           
+                            r += record[i];
+                            poruka = r;
+                        }
+                        flightRecords.departureDate = Convert.ToDateTime(r);
+
+                        for (int i = 139; i < 144; i++) {
+                            flightRecords.origin += record[i];
+                        }
+                        for (int i = 144; i < 149; i++)
+                        {
+                            flightRecords.destination += record[i];
+                        }
+
+                        for (int i = 149; i < 151; i++)
+                        {
+                            flightRecords.bookingClass += record[i];
+                        }
+                        for (int i = 151; i < 153; i++)
+                        {
+                            flightRecords.cabinClass += record[i];
+                        }
+                        for (int i = 117; i < 122; i++)
+                        {
+                            flightRecords.marketingFlightNo += record[i];
+                        }
+                        for (int i = 114; i < 117; i++)
+                        {
+                            flightRecords.marketingAirline += record[i];
+                        }
+                        for (int i = 109; i < 114; i++)
+                        {
+                            flightRecords.operatingFlightNo += record[i];
+                        }
+                        for (int i = 106; i < 109; i++)
+                        {
+                            flightRecords.operatingAirline += record[i];
+
+                        }
+                        for (int i = 176; i < 189; i++)
+                        {
+                            flightRecords.ticketNo += record[i];
+
+                        }
+                        for (int i = 189; i < 191; i++)
+                        {
+                            flightRecords.couponNo += record[i];
+
+                        }
+                        for (int i = 191; i < 199; i++)
+                        {
+                            flightRecords.fareBasis += record[i];
+
+                        }
+                    
+
+                    }
+                 
+                    entities.Flight_Records.Add(flightRecords);
                     entities.SaveChanges();
 
                     return Request.CreateResponse(HttpStatusCode.OK);
@@ -210,6 +296,7 @@ namespace AerLingus.Controllers.Api
             }
             catch (Exception ex)
             {
+                poruka =poruka + ex.Message;
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
         }
