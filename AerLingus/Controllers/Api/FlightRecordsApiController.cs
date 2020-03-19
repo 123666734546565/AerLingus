@@ -203,14 +203,13 @@ namespace AerLingus.Controllers.Api
 
                     stream.Position = 0;
 
-                    streamReader.ReadLine();
-
-                    Flight_Records flightRecords = new Flight_Records();
+                    streamReader.ReadLine();                 
 
                     int currentLine = 0;
 
                     while (currentLine <= lineCounter)
                     {
+                        Flight_Records flightRecords = new Flight_Records();
                         string record = streamReader.ReadLine();
 
                         for (int i = 0; i <= 1; i++)
@@ -313,7 +312,7 @@ namespace AerLingus.Controllers.Api
                             flightRecords.cabinClass += record[i];
                         }
 
-                        for (int i = 117; i < 122; i++)
+                        for (int i = 117; i <= 121; i++)
                         {
                             if (record[i] == ' ')
                                 continue;
@@ -329,7 +328,7 @@ namespace AerLingus.Controllers.Api
                             flightRecords.marketingAirline += record[i];
                         }
 
-                        for (int i = 109; i < 114; i++)
+                        for (int i = 109; i <= 113; i++)
                         {
                             if (record[i] == ' ')
                                 continue;
@@ -361,7 +360,7 @@ namespace AerLingus.Controllers.Api
                             flightRecords.couponNo += record[i];
                         }
 
-                        for (int i = 191; i < 199; i++)
+                        for (int i = 191; i <= 198; i++)
                         {
                             if (record[i] == ' ')
                                 continue;
