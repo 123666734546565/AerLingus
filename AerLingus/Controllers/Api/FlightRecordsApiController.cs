@@ -12,6 +12,7 @@ using System.Text;
 using AerLingus.Validations;
 using System.Threading.Tasks;
 using AerLingus.Helpers;
+using System.Globalization;
 
 namespace AerLingus.Controllers.Api
 {
@@ -190,100 +191,188 @@ namespace AerLingus.Controllers.Api
 
                     streamReader.ReadLine();
 
-                    Flight_Records flightRecords = new Flight_Records();
+                    int lineCounter = 0;
 
                     while (!streamReader.EndOfStream)
                     {
+                        streamReader.ReadLine();
+                        lineCounter++;
+                    }
+
+                    lineCounter -= 2;
+
+                    stream.Position = 0;
+
+                    streamReader.ReadLine();
+
+                    Flight_Records flightRecords = new Flight_Records();
+
+                    int currentLine = 0;
+
+                    while (currentLine <= lineCounter)
+                    {
                         string record = streamReader.ReadLine();
 
-                        //!!!!!!!  hard code
-                        for (int i =0; i <2; i++)
+                        for (int i = 0; i <= 1; i++)
                         {
+                            if (record[i] == ' ')
+                                continue;
+
                             flightRecords.transactionType += record[i];
-
                         }
+
                         //!!!!!!!  hard code
-                        for (int i = 2; i <5; i++)
+                        for (int i = 2; i < 5; i++)
                         {
-                            flightRecords.pnrNo += record[i];
+                            if (record[i] == ' ')
+                                continue;
 
+                            flightRecords.pnrNo += record[i];
                         }
+
                         for (int i = 25; i < 55; i++)
                         {
+                            if (record[i] == ' ')
+                                continue;
+
                             flightRecords.lastName += record[i];
                         }
-                        for (int i = 55; i < 105; i++) {
+
+                        for (int i = 55; i < 105; i++) 
+                        {
+                            if (record[i] == ' ')
+                                continue;
+
                             flightRecords.firstName += record[i];
                         }
-                        string r = "";
-         
-                        for (int i = 123; i < 131; i++)
-                        {
-                            if (i == 126)
-                                r +="/";
-                            if(i==128)
-                                r += "/";
-                            if(i==130)
-                                r += "/";
-                           
-                            r += record[i];
-                            poruka = r;
-                        }
-                        flightRecords.departureDate = Convert.ToDateTime(r);
 
-                        for (int i = 139; i < 144; i++) {
+                        string day = null;
+                        string month = "";
+                        string year = "";
+
+                        for(int i = 123; i <= 126; i++)
+                        {
+                            if (record[i] == ' ')
+                                continue;
+
+                            year = year + record[i];
+                        }
+                     
+
+                        for(int i = 127; i <= 128; i++)
+                        {
+                            if (record[i] == ' ')
+                                continue;
+
+                            month = month + record[i];
+                        }
+
+                        for(int i = 129; i <= 130; i++)
+                        {
+                            if (record[i] == ' ')
+                                continue;
+
+                            day = day + record[i];
+                        }
+
+                        string date = day + "/" + month + "/" + year;         
+                        
+                        DateTime dateTime = DateTime.ParseExact(date, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        
+                        flightRecords.departureDate = dateTime;
+                        
+                        for (int i = 139; i < 144; i++) 
+                        {
+                            if (record[i] == ' ')
+                                continue;
+
                             flightRecords.origin += record[i];
                         }
+
                         for (int i = 144; i < 149; i++)
                         {
+                            if (record[i] == ' ')
+                                continue;
+
                             flightRecords.destination += record[i];
                         }
 
                         for (int i = 149; i < 151; i++)
                         {
+                            if (record[i] == ' ')
+                                continue;
+
                             flightRecords.bookingClass += record[i];
                         }
+
                         for (int i = 151; i < 153; i++)
                         {
+                            if (record[i] == ' ')
+                                continue;
+
                             flightRecords.cabinClass += record[i];
                         }
+
                         for (int i = 117; i < 122; i++)
                         {
+                            if (record[i] == ' ')
+                                continue;
+
                             flightRecords.marketingFlightNo += record[i];
                         }
+                        
                         for (int i = 114; i < 117; i++)
                         {
+                            if (record[i] == ' ')
+                                continue;
+
                             flightRecords.marketingAirline += record[i];
                         }
+
                         for (int i = 109; i < 114; i++)
                         {
+                            if (record[i] == ' ')
+                                continue;
+
                             flightRecords.operatingFlightNo += record[i];
                         }
+
                         for (int i = 106; i < 109; i++)
                         {
-                            flightRecords.operatingAirline += record[i];
+                            if (record[i] == ' ')
+                                continue;
 
+                            flightRecords.operatingAirline += record[i];
                         }
+
                         for (int i = 176; i < 189; i++)
                         {
-                            flightRecords.ticketNo += record[i];
+                            if (record[i] == ' ')
+                                continue;
 
+                            flightRecords.ticketNo += record[i];
                         }
+
                         for (int i = 189; i < 191; i++)
                         {
-                            flightRecords.couponNo += record[i];
+                            if (record[i] == ' ')
+                                continue;
 
+                            flightRecords.couponNo += record[i];
                         }
+
                         for (int i = 191; i < 199; i++)
                         {
+                            if (record[i] == ' ')
+                                continue;
+
                             flightRecords.fareBasis += record[i];
-
                         }
-                    
 
-                    }
-                 
-                    entities.Flight_Records.Add(flightRecords);
+                        currentLine++;
+
+                        entities.Flight_Records.Add(flightRecords);
+                    } 
                     entities.SaveChanges();
 
                     return Request.CreateResponse(HttpStatusCode.OK);
