@@ -212,6 +212,8 @@ namespace AerLingus.Controllers.Api
                         Flight_Records flightRecords = new Flight_Records();
                         string record = streamReader.ReadLine();
 
+                        flightRecords.externalPaxID = "12345";
+
                         for (int i = 0; i <= 1; i++)
                         {
                             if (record[i] == ' ')
@@ -371,7 +373,10 @@ namespace AerLingus.Controllers.Api
                         currentLine++;
 
                         entities.Flight_Records.Add(flightRecords);
-                    } 
+                    }
+
+
+
                     entities.SaveChanges();
 
                     return Request.CreateResponse(HttpStatusCode.OK);
@@ -382,9 +387,24 @@ namespace AerLingus.Controllers.Api
                     return Request.CreateResponse(HttpStatusCode.Accepted);
                 }
             }
+            //catch (System.Data.Entity.Validation.DbEntityValidationException e)
+            //{
+            //    StreamWriter streamWriter = new StreamWriter(@"C:\Users\Aleksa\Desktop\greske.txt");
+            //    foreach (var eve in e.EntityValidationErrors)
+            //    {
+            //        streamWriter.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:",
+            //            eve.Entry.Entity.GetType().Name, eve.Entry.State);
+            //        foreach (var ve in eve.ValidationErrors)
+            //        {
+            //            streamWriter.WriteLine("- Property: \"{0}\", Error: \"{1}\"",
+            //                ve.PropertyName, ve.ErrorMessage);
+            //        }
+            //    }
+            //    return Request.CreateResponse(HttpStatusCode.InternalServerError);
+            //}
             catch (Exception ex)
             {
-                poruka =poruka + ex.Message;
+                poruka =poruka + ex.InnerException.InnerException.Message;
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
         }

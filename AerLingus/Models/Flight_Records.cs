@@ -81,7 +81,7 @@ namespace AerLingus.Models
         public string cabinClass { get; set; }
 
         [Required]
-        [MaxLength(4)]
+        [MaxLength(5)]
         [Display(Name = "Marketing Flight Number")]
         public string marketingFlightNo { get; set; }
 
@@ -91,7 +91,7 @@ namespace AerLingus.Models
         public string marketingAirline { get; set; }
 
         [Required]
-        [MaxLength(4)]
+        [MaxLength(5)]
         [Display(Name = "Operating Flight Number")]
         public string operatingFlightNo { get; set; }
 
