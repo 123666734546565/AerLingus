@@ -113,7 +113,7 @@ namespace AerLingus.Controllers
                     else if (returnedStatusCode == System.Net.HttpStatusCode.Conflict)
                         errorMessage = errors[409];
                     else errorMessage = errors[500];
-                    return View("Error", (object)api.poruka);
+                    return View("Error", errorMessage);
                 }
             }
             catch (Exception ex)

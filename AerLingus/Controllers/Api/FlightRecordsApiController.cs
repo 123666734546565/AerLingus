@@ -166,52 +166,78 @@ namespace AerLingus.Controllers.Api
                     //////////////////////////////////////////////////////////////////////
                                                                                       ////
                     string headerMetaData = streamReader.ReadLine();                  ////
-                                                                                      ////
+                    string header = string.Empty;
+
+                    for(int i = 12; i <= 13; i++)
+                    {
+                        header += headerMetaData[i];
+                    }
+
+                    if (header.ToUpper() != "UA")
+                        return Request.CreateResponse(HttpStatusCode.NotAcceptable);
+                    
                     MetaJourneySegment metaJourneySegment = new MetaJourneySegment(); ////
                                                                                       ////
                     metaJourneySegment.HeaderMetaData = headerMetaData.TrimEnd();     ////
                                                                                       ////
                     string footerMetaData = string.Empty;                             ////
-                                                                                      ////
+
+                    int lineCounter = 0;
+
                     while (!streamReader.EndOfStream)                                 ////
                     {                                                                 ////
-                        footerMetaData = streamReader.ReadLine();                     ////
+                        footerMetaData = streamReader.ReadLine();
+                        lineCounter++;
                     }                                                                 ////
-                                                                                      ////
+
                     metaJourneySegment.JourneySegmentID = 20;                         ////
-                                                                                      ////
+
                     metaJourneySegment.FooterMetaData = footerMetaData.TrimEnd();     ////
-                                                                                      ////
+
                     entities.MetaJourneySegments.Add(metaJourneySegment);             ////
-                                                                                      ////
+
                     //////////////////////////////////////////////////////////////////////
                     //////////////////////////////////////////////////////////////////////
-                    
+
+
                     stream.Position = 0;
 
                     streamReader.ReadLine();
 
-                    int lineCounter = 0;
+                    //int lineCounter = 0;
 
-                    while (!streamReader.EndOfStream)
+                    //while (!streamReader.EndOfStream)
+                    //{
+                    //    streamReader.ReadLine();
+                    //    lineCounter++;
+                    //}
+
+                    lineCounter--;
+
+                    //stream.Position = 0;
+
+                    //streamReader.ReadLine(); 
+
+                    string temp = string.Empty;
+                    int numberOfFooterRecords = 0;
+
+                    for(int i = 2; i <= 10; i++)
                     {
-                        streamReader.ReadLine();
-                        lineCounter++;
+                        temp += footerMetaData[i];
                     }
 
-                    lineCounter -= 2;
+                    numberOfFooterRecords = Convert.ToInt32(temp);
 
-                    stream.Position = 0;
-
-                    streamReader.ReadLine();                 
-
+                    if (numberOfFooterRecords != lineCounter)
+                        return Request.CreateResponse(HttpStatusCode.NotAcceptable);
+                    
                     int currentLine = 0;
-
+                    lineCounter--;
                     while (currentLine <= lineCounter)
                     {
                         Flight_Records flightRecords = new Flight_Records();
                         string record = streamReader.ReadLine();
-
+                        
                         flightRecords.externalPaxID = "12345";
 
                         for (int i = 0; i <= 1; i++)
@@ -222,16 +248,15 @@ namespace AerLingus.Controllers.Api
                             flightRecords.transactionType += record[i];
                         }
 
-                        //!!!!!!!  hard code
-                        for (int i = 2; i < 5; i++)
+                        for (int i = 203; i <= 208; i++)
                         {
                             if (record[i] == ' ')
                                 continue;
-
+                            
                             flightRecords.pnrNo += record[i];
                         }
 
-                        for (int i = 25; i < 55; i++)
+                        for (int i = 25; i <= 54; i++)
                         {
                             if (record[i] == ' ')
                                 continue;
@@ -239,7 +264,7 @@ namespace AerLingus.Controllers.Api
                             flightRecords.lastName += record[i];
                         }
 
-                        for (int i = 55; i < 105; i++) 
+                        for (int i = 55; i <= 104; i++) 
                         {
                             if (record[i] == ' ')
                                 continue;
@@ -310,7 +335,7 @@ namespace AerLingus.Controllers.Api
                         {
                             if (record[i] == ' ')
                                 continue;
-
+                            //nije required
                             flightRecords.cabinClass += record[i];
                         }
 
@@ -358,7 +383,7 @@ namespace AerLingus.Controllers.Api
                         {
                             if (record[i] == ' ')
                                 continue;
-
+                            //nije required
                             flightRecords.couponNo += record[i];
                         }
 
@@ -366,16 +391,16 @@ namespace AerLingus.Controllers.Api
                         {
                             if (record[i] == ' ')
                                 continue;
-
+                            //nije required
                             flightRecords.fareBasis += record[i];
                         }
 
                         currentLine++;
 
-                        entities.Flight_Records.Add(flightRecords);
+                        if(Validation.IsModelStateValid(flightRecords))
+                            entities.Flight_Records.Add(flightRecords);
+                        //if nije valid u handback bazu
                     }
-
-
 
                     entities.SaveChanges();
 
@@ -404,7 +429,7 @@ namespace AerLingus.Controllers.Api
             //}
             catch (Exception ex)
             {
-                poruka =poruka + ex.InnerException.InnerException.Message;
+                poruka = poruka + ex.Message;
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
         }

@@ -103,5 +103,24 @@ namespace AerLingus.Validations
             search.S_bookingClass = search.S_bookingClass.Trim();
             search.S_pnrNo = search.S_pnrNo.Trim();
         }
+
+        public static bool IsModelStateValid(Flight_Records record)
+        {
+            if (record.transactionType != null && record.transactionType.Length <= 2 &&
+                record.firstName != null && record.firstName.Length <= 30 &&
+                record.lastName != null && record.lastName.Length <= 30 &&
+                record.departureDate != null && record.departureDate != DateTime.MinValue &&
+                record.origin != null && record.origin.Length <= 3 &&
+                record.destination != null && record.destination.Length <= 3 &&
+                record.bookingClass != null && record.bookingClass.Length <= 2 &&
+                record.marketingFlightNo != null && record.marketingFlightNo.Length <= 5 &&
+                record.marketingAirline != null && record.marketingAirline.Length <= 2 &&
+                record.operatingFlightNo != null && record.operatingFlightNo.Length <= 5 &&
+                record.operatingAirline != null && record.operatingAirline.Length <= 2 &&
+                record.ticketNo != null && (record.ticketNo.Length == 13 || record.ticketNo.Length == 14) &&
+                record.pnrNo != null && record.pnrNo.Length <= 6)
+                return true;
+            else return false;
+        }
     }
 }
