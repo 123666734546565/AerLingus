@@ -22,19 +22,16 @@ namespace AerLingus.Models
         [Display(Name = "Identifier Number")]
         public string IdentifierNo { get; set; }
 
-
         [MinLength(13)]
         [MaxLength(14)]
         [Required]
         [Display(Name = "Ticket Number")]
         public string TicketNo { get; set; }
 
-
-        [MaxLength(30)]
+        [MaxLength(50)]
         [Required]
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
-
 
         [MaxLength(30)]
         [Required]

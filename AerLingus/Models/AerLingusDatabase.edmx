@@ -54,19 +54,19 @@ warning 6002: The table/view 'AerLingus_database.dbo.DeletedRecords' does not ha
           <Property Name="transactionType" Type="nvarchar" MaxLength="2" Nullable="false" />
           <Property Name="otherFFPNo" Type="nvarchar" MaxLength="30" />
           <Property Name="otherFFPScheme" Type="nvarchar" MaxLength="30" />
-          <Property Name="firstName" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="firstName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="lastName" Type="nvarchar" MaxLength="30" />
           <Property Name="partnerTransactionNo" Type="nvarchar" MaxLength="100" />
           <Property Name="bookingDate" Type="datetime" />
           <Property Name="departureDate" Type="date" Nullable="false" />
-          <Property Name="origin" Type="nvarchar" MaxLength="3" Nullable="false" />
-          <Property Name="destination" Type="nvarchar" MaxLength="3" Nullable="false" />
+          <Property Name="origin" Type="nvarchar" MaxLength="5" Nullable="false" />
+          <Property Name="destination" Type="nvarchar" MaxLength="5" Nullable="false" />
           <Property Name="bookingClass" Type="nvarchar" MaxLength="2" Nullable="false" />
-          <Property Name="cabinClass" Type="nvarchar" MaxLength="1" />
-          <Property Name="marketingFlightNo" Type="nvarchar" MaxLength="4" Nullable="false" />
-          <Property Name="marketingAirline" Type="nvarchar" MaxLength="2" Nullable="false" />
-          <Property Name="operatingFlightNo" Type="nvarchar" MaxLength="4" Nullable="false" />
-          <Property Name="operatingAirline" Type="nvarchar" MaxLength="2" Nullable="false" />
+          <Property Name="cabinClass" Type="nvarchar" MaxLength="2" />
+          <Property Name="marketingFlightNo" Type="nvarchar" MaxLength="5" Nullable="false" />
+          <Property Name="marketingAirline" Type="nvarchar" MaxLength="3" Nullable="false" />
+          <Property Name="operatingFlightNo" Type="nvarchar" MaxLength="5" Nullable="false" />
+          <Property Name="operatingAirline" Type="nvarchar" MaxLength="3" Nullable="false" />
           <Property Name="ticketNo" Type="nvarchar" MaxLength="14" />
           <Property Name="externalPaxID" Type="nvarchar" MaxLength="25" />
           <Property Name="couponNo" Type="nvarchar" MaxLength="2" />
@@ -93,13 +93,38 @@ warning 6002: The table/view 'AerLingus_database.dbo.DeletedRecords' does not ha
           <Property Name="Content" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Footer" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="HandbackRecord">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TransactionType" Type="nvarchar" MaxLength="2" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="30" />
+          <Property Name="DepartureDate" Type="nvarchar" MaxLength="12" />
+          <Property Name="Origin" Type="nvarchar" MaxLength="5" />
+          <Property Name="Destination" Type="nvarchar" MaxLength="5" />
+          <Property Name="BookingClass" Type="nvarchar" MaxLength="2" />
+          <Property Name="CabinClass" Type="nvarchar" MaxLength="2" />
+          <Property Name="MarketingFlightNo" Type="nvarchar" MaxLength="5" />
+          <Property Name="MarketingAirline" Type="nvarchar" MaxLength="3" />
+          <Property Name="OperatingFlightNo" Type="nvarchar" MaxLength="5" />
+          <Property Name="OperatingAirline" Type="nvarchar" MaxLength="3" />
+          <Property Name="TicketNo" Type="nvarchar" MaxLength="13" />
+          <Property Name="CouponNo" Type="nvarchar" MaxLength="2" />
+          <Property Name="PNRNo" Type="nvarchar" MaxLength="6" />
+          <Property Name="FareBasis" Type="nvarchar" MaxLength="8" />
+          <Property Name="Status" Type="nvarchar" MaxLength="30" />
+          <Property Name="DownloadCounter" Type="int" />
+          <Property Name="Description" Type="nvarchar" MaxLength="100" />
+        </EntityType>
         <EntityType Name="Journey">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="IdentifierNo" Type="nvarchar" MaxLength="16" />
           <Property Name="TicketNo" Type="nvarchar" MaxLength="14" />
-          <Property Name="FirstName" Type="nvarchar" MaxLength="30" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
           <Property Name="LastName" Type="nvarchar" MaxLength="30" />
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
@@ -109,8 +134,8 @@ warning 6002: The table/view 'AerLingus_database.dbo.DeletedRecords' does not ha
           </Key>
           <Property Name="couponNo" Type="nvarchar" MaxLength="2" />
           <Property Name="departureDate" Type="date" />
-          <Property Name="origin" Type="nvarchar" MaxLength="3" />
-          <Property Name="destination" Type="nvarchar" MaxLength="3" />
+          <Property Name="origin" Type="nvarchar" MaxLength="5" />
+          <Property Name="destination" Type="nvarchar" MaxLength="5" />
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TicketNo" Type="nvarchar" MaxLength="14" />
           <Property Name="IDFR" Type="int" />
@@ -160,6 +185,7 @@ warning 6002: The table/view 'AerLingus_database.dbo.DeletedRecords' does not ha
         <EntityContainer Name="AerLingus_databaseModelStoreContainer">
           <EntitySet Name="Flight_Records" EntityType="Self.Flight_Records" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FR_Batch_Files" EntityType="Self.FR_Batch_Files" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HandbackRecord" EntityType="Self.HandbackRecord" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Journey" EntityType="Self.Journey" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="JourneySegment" EntityType="Self.JourneySegment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MetaJourneySegment" EntityType="Self.MetaJourneySegment" Schema="dbo" store:Type="Tables" />
@@ -223,19 +249,19 @@ warning 6002: The table/view 'AerLingus_database.dbo.DeletedRecords' does not ha
           <Property Name="transactionType" Type="String" MaxLength="2" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="otherFFPNo" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Name="otherFFPScheme" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="firstName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="firstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="lastName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Name="partnerTransactionNo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="bookingDate" Type="DateTime" Precision="3" />
           <Property Name="departureDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="origin" Type="String" MaxLength="3" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="destination" Type="String" MaxLength="3" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="origin" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="destination" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="bookingClass" Type="String" MaxLength="2" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="cabinClass" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
-          <Property Name="marketingFlightNo" Type="String" MaxLength="4" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="marketingAirline" Type="String" MaxLength="2" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="operatingFlightNo" Type="String" MaxLength="4" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="operatingAirline" Type="String" MaxLength="2" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="cabinClass" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="marketingFlightNo" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="marketingAirline" Type="String" MaxLength="3" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="operatingFlightNo" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="operatingAirline" Type="String" MaxLength="3" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ticketNo" Type="String" MaxLength="14" FixedLength="false" Unicode="true" />
           <Property Name="externalPaxID" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
           <Property Name="couponNo" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
@@ -269,7 +295,7 @@ warning 6002: The table/view 'AerLingus_database.dbo.DeletedRecords' does not ha
           </Key>
           <Property Name="IdentifierNo" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
           <Property Name="TicketNo" Type="String" MaxLength="14" FixedLength="false" Unicode="true" />
-          <Property Name="FirstName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="LastName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
@@ -279,8 +305,8 @@ warning 6002: The table/view 'AerLingus_database.dbo.DeletedRecords' does not ha
           </Key>
           <Property Name="couponNo" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
           <Property Name="departureDate" Type="DateTime" Precision="0" />
-          <Property Name="origin" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
-          <Property Name="destination" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="origin" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="destination" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TicketNo" Type="String" MaxLength="14" FixedLength="false" Unicode="true" />
           <Property Name="IDFR" Type="Int32" />
@@ -354,6 +380,7 @@ warning 6002: The table/view 'AerLingus_database.dbo.DeletedRecords' does not ha
             <End Role="JourneySegment" EntitySet="JourneySegments" />
             <End Role="MetaJourneySegment" EntitySet="MetaJourneySegments" />
           </AssociationSet>
+          <EntitySet Name="HandbackRecords" EntityType="AerLingus_databaseModel.HandbackRecord" />
         </EntityContainer>
         <EntityType Name="sysdiagram">
           <Key>
@@ -386,6 +413,31 @@ warning 6002: The table/view 'AerLingus_database.dbo.DeletedRecords' does not ha
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="HandbackRecord">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TransactionType" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="DepartureDate" Type="String" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="Origin" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="Destination" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="BookingClass" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="CabinClass" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="MarketingFlightNo" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="MarketingAirline" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="OperatingFlightNo" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="OperatingAirline" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+          <Property Name="TicketNo" Type="String" MaxLength="13" FixedLength="false" Unicode="true" />
+          <Property Name="CouponNo" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+          <Property Name="PNRNo" Type="String" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="FareBasis" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="DownloadCounter" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -522,6 +574,32 @@ warning 6002: The table/view 'AerLingus_database.dbo.DeletedRecords' does not ha
                 <ScalarProperty Name="FooterMetaData" ColumnName="FooterMetaData" />
                 <ScalarProperty Name="HeaderMetaData" ColumnName="HeaderMetaData" />
                 <ScalarProperty Name="JourneySegmentID" ColumnName="JourneySegmentID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HandbackRecords">
+            <EntityTypeMapping TypeName="AerLingus_databaseModel.HandbackRecord">
+              <MappingFragment StoreEntitySet="HandbackRecord">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="DownloadCounter" ColumnName="DownloadCounter" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="FareBasis" ColumnName="FareBasis" />
+                <ScalarProperty Name="PNRNo" ColumnName="PNRNo" />
+                <ScalarProperty Name="CouponNo" ColumnName="CouponNo" />
+                <ScalarProperty Name="TicketNo" ColumnName="TicketNo" />
+                <ScalarProperty Name="OperatingAirline" ColumnName="OperatingAirline" />
+                <ScalarProperty Name="OperatingFlightNo" ColumnName="OperatingFlightNo" />
+                <ScalarProperty Name="MarketingAirline" ColumnName="MarketingAirline" />
+                <ScalarProperty Name="MarketingFlightNo" ColumnName="MarketingFlightNo" />
+                <ScalarProperty Name="CabinClass" ColumnName="CabinClass" />
+                <ScalarProperty Name="BookingClass" ColumnName="BookingClass" />
+                <ScalarProperty Name="Destination" ColumnName="Destination" />
+                <ScalarProperty Name="Origin" ColumnName="Origin" />
+                <ScalarProperty Name="DepartureDate" ColumnName="DepartureDate" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="TransactionType" ColumnName="TransactionType" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

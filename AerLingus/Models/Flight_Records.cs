@@ -41,7 +41,7 @@ namespace AerLingus.Models
         public string otherFFPScheme { get; set; }
 
         [Required]
-        [MaxLength(30)]
+        [MaxLength(50)]
         [Display(Name = "First Name")]
         public string firstName { get; set; }
 
@@ -62,12 +62,12 @@ namespace AerLingus.Models
         public System.DateTime departureDate { get; set; }
 
         [Required]
-        [MaxLength(3)]
+        [MaxLength(5)]
         [Display(Name = "Origin")]
         public string origin { get; set; }
 
         [Required]
-        [MaxLength(3)]
+        [MaxLength(5)]
         [Display(Name = "Destination")]
         public string destination { get; set; }
 
@@ -76,7 +76,7 @@ namespace AerLingus.Models
         [Display(Name = "Booking Class")]
         public string bookingClass { get; set; }
 
-        [MaxLength(1)]
+        [MaxLength(2)]
         [Display(Name = "Cabin Class")]
         public string cabinClass { get; set; }
 
@@ -86,7 +86,7 @@ namespace AerLingus.Models
         public string marketingFlightNo { get; set; }
 
         [Required]
-        [MaxLength(2)]
+        [MaxLength(3)]
         [Display(Name = "Marketing Airline")]
         public string marketingAirline { get; set; }
 
@@ -96,7 +96,7 @@ namespace AerLingus.Models
         public string operatingFlightNo { get; set; }
 
         [Required]
-        [MaxLength(2)]
+        [MaxLength(3)]
         [Display(Name = "Operating Airline")]
         public string operatingAirline { get; set; }
 

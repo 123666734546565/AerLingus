@@ -170,11 +170,14 @@ namespace AerLingus.Controllers.Api
 
                     for(int i = 12; i <= 13; i++)
                     {
+                        if (headerMetaData[i] == ' ')
+                            continue;
+
                         header += headerMetaData[i];
                     }
 
-                    if (header.ToUpper() != "UA")
-                        return Request.CreateResponse(HttpStatusCode.NotAcceptable);
+                    //if (header.ToUpper() != "UA")
+                    //    return Request.CreateResponse(HttpStatusCode.NotAcceptable);
                     
                     MetaJourneySegment metaJourneySegment = new MetaJourneySegment(); ////
                                                                                       ////
@@ -307,7 +310,7 @@ namespace AerLingus.Controllers.Api
                         
                         flightRecords.departureDate = dateTime;
                         
-                        for (int i = 139; i < 144; i++) 
+                        for (int i = 139; i <= 143; i++) 
                         {
                             if (record[i] == ' ')
                                 continue;
@@ -315,7 +318,7 @@ namespace AerLingus.Controllers.Api
                             flightRecords.origin += record[i];
                         }
 
-                        for (int i = 144; i < 149; i++)
+                        for (int i = 144; i <= 148; i++)
                         {
                             if (record[i] == ' ')
                                 continue;
@@ -323,7 +326,7 @@ namespace AerLingus.Controllers.Api
                             flightRecords.destination += record[i];
                         }
 
-                        for (int i = 149; i < 151; i++)
+                        for (int i = 149; i <= 150; i++)
                         {
                             if (record[i] == ' ')
                                 continue;
@@ -331,7 +334,7 @@ namespace AerLingus.Controllers.Api
                             flightRecords.bookingClass += record[i];
                         }
 
-                        for (int i = 151; i < 153; i++)
+                        for (int i = 151; i <= 152; i++)
                         {
                             if (record[i] == ' ')
                                 continue;
@@ -347,7 +350,7 @@ namespace AerLingus.Controllers.Api
                             flightRecords.marketingFlightNo += record[i];
                         }
                         
-                        for (int i = 114; i < 117; i++)
+                        for (int i = 114; i <= 116; i++)
                         {
                             if (record[i] == ' ')
                                 continue;
@@ -363,7 +366,7 @@ namespace AerLingus.Controllers.Api
                             flightRecords.operatingFlightNo += record[i];
                         }
 
-                        for (int i = 106; i < 109; i++)
+                        for (int i = 106; i <= 108; i++)
                         {
                             if (record[i] == ' ')
                                 continue;
@@ -371,7 +374,7 @@ namespace AerLingus.Controllers.Api
                             flightRecords.operatingAirline += record[i];
                         }
 
-                        for (int i = 176; i < 189; i++)
+                        for (int i = 176; i <= 188; i++)
                         {
                             if (record[i] == ' ')
                                 continue;
@@ -379,7 +382,7 @@ namespace AerLingus.Controllers.Api
                             flightRecords.ticketNo += record[i];
                         }
 
-                        for (int i = 189; i < 191; i++)
+                        for (int i = 189; i <= 190; i++)
                         {
                             if (record[i] == ' ')
                                 continue;
@@ -395,11 +398,21 @@ namespace AerLingus.Controllers.Api
                             flightRecords.fareBasis += record[i];
                         }
 
-                        currentLine++;
+                        currentLine++;          
 
-                        if(Validation.IsModelStateValid(flightRecords))
+                        if (Validation.IsModelStateValid(flightRecords))
+                        {
+                            flightRecords.DownloadCounter = 0;
                             entities.Flight_Records.Add(flightRecords);
-                        //if nije valid u handback bazu
+                        }
+                        else
+                        {
+                            HandbackRecord handbackRecord = new HandbackRecord();
+                            //hand
+
+
+
+                        }
                     }
 
                     entities.SaveChanges();

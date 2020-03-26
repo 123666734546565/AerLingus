@@ -14,6 +14,7 @@
         <EntityTypeShape EntityType="AerLingus_databaseModel.sysdiagram" Width="1.5" PointX="7.375" PointY="0.625" />
         <EntityTypeShape EntityType="AerLingus_databaseModel.MetaJourneySegment" Width="1.5" PointX="3.625" PointY="11.625" />
         <AssociationConnector Association="AerLingus_databaseModel.FK_MetaJourneySegment_JourneySegment" />
+        <EntityTypeShape EntityType="AerLingus_databaseModel.HandbackRecord" Width="1.5" PointX="8.375" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

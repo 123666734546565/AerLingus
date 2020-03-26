@@ -243,6 +243,9 @@
     <Compile Include="Models\FR_Batch_Files.cs">
       <DependentUpon>AerLingusDatabase.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\HandbackRecord.cs">
+      <DependentUpon>AerLingusDatabase.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Journey.cs">
       <DependentUpon>AerLingusDatabase.tt</DependentUpon>

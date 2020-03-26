@@ -32,5 +32,6 @@ namespace AerLingus.Models
         public virtual DbSet<DeletedRecord> DeletedRecords { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<MetaJourneySegment> MetaJourneySegments { get; set; }
+        public virtual DbSet<HandbackRecord> HandbackRecords { get; set; }
     }
 }
