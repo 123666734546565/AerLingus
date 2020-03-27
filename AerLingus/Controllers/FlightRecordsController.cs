@@ -527,6 +527,8 @@ namespace AerLingus.Controllers
                     record.PNRNo + " - " + record.Status + " - " + record.DownloadCounter + " - " + record.Description);
             }
 
+            stringWriter.Write("03" + (flightRecords.Count + handbackRecords.Count).ToString() + flightRecords.Count.ToString() + handbackRecords.Count.ToString());
+
             Response.ClearContent();
 
             Response.ContentType = "text/txt";
