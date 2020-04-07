@@ -509,21 +509,21 @@ namespace AerLingus.Controllers
 
             foreach(var record in flightRecords)
             {
-                stringWriter.WriteLine(record.transactionType + " - " + "UA" + " - " + record.lastName + " - " + record.firstName + 
-                    " - " + record.operatingAirline + " - " + record.operatingFlightNo + " - " + record.marketingAirline + " - " + 
-                    record.marketingFlightNo + " - " + record.departureDate.ToString() + " - " + record.origin + " - " + 
-                    record.destination + " - " + record.bookingClass + " - " + record.cabinClass + " - " + 
-                    record.ticketNo + " - " + record.couponNo + " - " + record.fareBasis + " - " + 
+                stringWriter.WriteLine(record.transactionType + "UA " + record.otherFFPNo + " " + record.lastName + " " + record.firstName + 
+                    " " + record.operatingAirline + " " + record.operatingFlightNo + " " + record.marketingAirline + " " + 
+                    record.marketingFlightNo + " " + record.departureDate.ToString() + " " + record.origin + " " + 
+                    record.destination + " " + record.bookingClass + " " + record.cabinClass + " " + 
+                    record.ticketNo + " " + record.couponNo + " " + record.fareBasis + " " + 
                     record.pnrNo + " - " + record.Status + " - " + record.DownloadCounter);
             }
 
             foreach (var record in handbackRecords)
             {
-                stringWriter.WriteLine(record.TransactionType + " - " + "UA" + " - " + record.LastName + " - " + record.FirstName +
-                    " - " + record.OperatingAirline + " - " + record.OperatingFlightNo + " - " + record.MarketingAirline + " - " +
-                    record.MarketingFlightNo + " - " + record.DepartureDate.ToString() + " - " + record.Origin + " - " +
-                    record.Destination + " - " + record.BookingClass + " - " + record.CabinClass + " - " +
-                    record.TicketNo + " - " + record.CouponNo + " - " + record.FareBasis + " - " +
+                stringWriter.WriteLine(record.TransactionType + "UA " + record.LastName + " " + record.FirstName +
+                    " " + record.OperatingAirline + " " + record.OperatingFlightNo + " " + record.MarketingAirline + " " +
+                    record.MarketingFlightNo + " " + record.DepartureDate.ToString() + " " + record.Origin + " " +
+                    record.Destination + " " + record.BookingClass + " " + record.CabinClass + " " +
+                    record.TicketNo + " " + record.CouponNo + " " + record.FareBasis + " " +
                     record.PNRNo + " - " + record.Status + " - " + record.DownloadCounter + " - " + record.Description);
             }
 

@@ -258,6 +258,7 @@ namespace AerLingus.Controllers.Api
                                 continue;
 
                             FFPNumber += record[i];
+                            flightRecords.otherFFPNo = FFPNumber;
                         }
 
                         flightRecords.externalPaxID = "12345";
@@ -660,6 +661,7 @@ namespace AerLingus.Controllers.Api
                                 continue;
 
                             FFPNumber += record[i];
+                            flightRecords.otherFFPNo = FFPNumber;
                         }
 
                         flightRecords.externalPaxID = "12345";
