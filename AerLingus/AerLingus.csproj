@@ -243,9 +243,6 @@
     <Compile Include="Models\FR_Batch_Files.cs">
       <DependentUpon>AerLingusDatabase.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\HandbackRecord.cs">
-      <DependentUpon>AerLingusDatabase.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Journey.cs">
       <DependentUpon>AerLingusDatabase.tt</DependentUpon>
@@ -254,10 +251,13 @@
       <DependentUpon>AerLingusDatabase.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\MetaJourneySegment.cs">
+    <Compile Include="Models\PreStagging.cs">
       <DependentUpon>AerLingusDatabase.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\sysdiagram.cs">
+    <Compile Include="Models\StaggingRejectedUA.cs">
+      <DependentUpon>AerLingusDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\StaggingUA.cs">
       <DependentUpon>AerLingusDatabase.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -113,7 +113,7 @@ namespace AerLingus.Controllers
                     else if (returnedStatusCode == System.Net.HttpStatusCode.Conflict)
                         errorMessage = errors[409];
                     else errorMessage = errors[500];
-                    return View("Error", errorMessage);
+                    return View("Error", (object)api.poruka);
                 }
             }
             catch (Exception ex)
@@ -462,81 +462,81 @@ namespace AerLingus.Controllers
 
         public ActionResult ExportFFP2()
         {
-            var hasFlightRecords = entities.Flight_Records.Any(fr => fr.Status == "Sent from UA" && fr.operatingAirline == "UA");
-            var hasHandbackRecords = entities.HandbackRecords.Any();
+            //var hasFlightRecords = entities.Flight_Records.Any(fr => fr.Status == "Sent from UA" && fr.operatingAirline == "UA");
+            //var hasHandbackRecords = entities.HandbackRecords.Any();
 
-            if (!hasFlightRecords && !hasHandbackRecords)
-                return View("Error", (object)("ERROR 204: No Content"));
+            //if (!hasFlightRecords && !hasHandbackRecords)
+            //    return View("Error", (object)("ERROR 204: No Content"));
 
-            List<Flight_Records> flightRecords = new List<Flight_Records>();
-            List<HandbackRecord> handbackRecords = new List<HandbackRecord>();
+            //List<Flight_Records> flightRecords = new List<Flight_Records>();
+            //List<HandbackRecord> handbackRecords = new List<HandbackRecord>();
 
-            if (hasFlightRecords)
-            {
-                flightRecords = entities.Flight_Records.Where(fr => fr.Status == "Sent from UA" && fr.operatingAirline == "UA").ToList();
+            //if (hasFlightRecords)
+            //{
+            //    flightRecords = entities.Flight_Records.Where(fr => fr.Status == "Sent from UA" && fr.operatingAirline == "UA").ToList();
             
-                for(int i = 0; i < flightRecords.Count; i++)
-                {
-                    flightRecords[i].DownloadCounter++;
-                }
-            }
+            //    for(int i = 0; i < flightRecords.Count; i++)
+            //    {
+            //        flightRecords[i].DownloadCounter++;
+            //    }
+            //}
 
-            if (hasHandbackRecords)
-            {
-                handbackRecords = entities.HandbackRecords.ToList();
+            //if (hasHandbackRecords)
+            //{
+            //    handbackRecords = entities.HandbackRecords.ToList();
 
-                for(int i = 0; i < handbackRecords.Count; i++)
-                {
-                    handbackRecords[i].DownloadCounter++;
-                }
-            }
+            //    for(int i = 0; i < handbackRecords.Count; i++)
+            //    {
+            //        handbackRecords[i].DownloadCounter++;
+            //    }
+            //}
 
-            entities.SaveChanges();
+            //entities.SaveChanges();
 
-            //StreamWriter streamWriter = new StreamWriter(@"C:\Users\Aleksa\Desktop\aleksa.txt");
-            StringWriter stringWriter = new StringWriter();
+            ////StreamWriter streamWriter = new StreamWriter(@"C:\Users\Aleksa\Desktop\aleksa.txt");
+            //StringWriter stringWriter = new StringWriter();
 
-            string day = string.Empty;
-            string month = string.Empty;
+            //string day = string.Empty;
+            //string month = string.Empty;
 
-            if (DateTime.Now.Day.ToString().StartsWith("0"))
-                day = "0";
+            //if (DateTime.Now.Day.ToString().StartsWith("0"))
+            //    day = "0";
 
-            if (DateTime.Now.Month.ToString().StartsWith("0"))
-                month = "0";
+            //if (DateTime.Now.Month.ToString().StartsWith("0"))
+            //    month = "0";
 
-            stringWriter.WriteLine("0102UA UA " + DateTime.Now.Year.ToString() + month + DateTime.Now.Month.ToString() + day + DateTime.Now.Day.ToString());
+            //stringWriter.WriteLine("0102UA UA " + DateTime.Now.Year.ToString() + month + DateTime.Now.Month.ToString() + day + DateTime.Now.Day.ToString());
 
-            foreach(var record in flightRecords)
-            {
-                stringWriter.WriteLine(record.transactionType + "UA " + record.otherFFPNo + " " + record.lastName + " " + record.firstName + 
-                    " " + record.operatingAirline + " " + record.operatingFlightNo + " " + record.marketingAirline + " " + 
-                    record.marketingFlightNo + " " + record.departureDate.ToString() + " " + record.origin + " " + 
-                    record.destination + " " + record.bookingClass + " " + record.cabinClass + " " + 
-                    record.ticketNo + " " + record.couponNo + " " + record.fareBasis + " " + 
-                    record.pnrNo + " - " + record.Status + " - " + record.DownloadCounter);
-            }
+            //foreach(var record in flightRecords)
+            //{
+            //    stringWriter.WriteLine(record.transactionType + "UA " + record.otherFFPNo + " " + record.lastName + " " + record.firstName + 
+            //        " " + record.operatingAirline + " " + record.operatingFlightNo + " " + record.marketingAirline + " " + 
+            //        record.marketingFlightNo + " " + record.departureDate.ToString() + " " + record.origin + " " + 
+            //        record.destination + " " + record.bookingClass + " " + record.cabinClass + " " + 
+            //        record.ticketNo + " " + record.couponNo + " " + record.fareBasis + " " + 
+            //        record.pnrNo + " - " + record.Status + " - " + record.DownloadCounter);
+            //}
 
-            foreach (var record in handbackRecords)
-            {
-                stringWriter.WriteLine(record.TransactionType + "UA " + record.LastName + " " + record.FirstName +
-                    " " + record.OperatingAirline + " " + record.OperatingFlightNo + " " + record.MarketingAirline + " " +
-                    record.MarketingFlightNo + " " + record.DepartureDate.ToString() + " " + record.Origin + " " +
-                    record.Destination + " " + record.BookingClass + " " + record.CabinClass + " " +
-                    record.TicketNo + " " + record.CouponNo + " " + record.FareBasis + " " +
-                    record.PNRNo + " - " + record.Status + " - " + record.DownloadCounter + " - " + record.Description);
-            }
+            //foreach (var record in handbackRecords)
+            //{
+            //    stringWriter.WriteLine(record.TransactionType + "UA " + record.LastName + " " + record.FirstName +
+            //        " " + record.OperatingAirline + " " + record.OperatingFlightNo + " " + record.MarketingAirline + " " +
+            //        record.MarketingFlightNo + " " + record.DepartureDate.ToString() + " " + record.Origin + " " +
+            //        record.Destination + " " + record.BookingClass + " " + record.CabinClass + " " +
+            //        record.TicketNo + " " + record.CouponNo + " " + record.FareBasis + " " +
+            //        record.PNRNo + " - " + record.Status + " - " + record.DownloadCounter + " - " + record.Description);
+            //}
 
-            stringWriter.Write("03" + (flightRecords.Count + handbackRecords.Count).ToString() + flightRecords.Count.ToString() + handbackRecords.Count.ToString());
+            //stringWriter.Write("03" + (flightRecords.Count + handbackRecords.Count).ToString() + flightRecords.Count.ToString() + handbackRecords.Count.ToString());
 
-            Response.ClearContent();
+            //Response.ClearContent();
 
-            Response.ContentType = "text/txt";
-            Response.AddHeader("content-disposition", "attachment;filename=MIFL.MIFLEINX.FM.ACCHNDBK" + DateTime.Now.ToString() + ".txt");
+            //Response.ContentType = "text/txt";
+            //Response.AddHeader("content-disposition", "attachment;filename=MIFL.MIFLEINX.FM.ACCHNDBK" + DateTime.Now.ToString() + ".txt");
 
-            Response.Write(stringWriter.ToString());
+            //Response.Write(stringWriter.ToString());
 
-            Response.End();
+            //Response.End();
 
             return View("UploadSuccessful");
         }

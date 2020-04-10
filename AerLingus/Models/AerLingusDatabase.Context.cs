@@ -30,8 +30,8 @@ namespace AerLingus.Models
         public virtual DbSet<Journey> Journeys { get; set; }
         public virtual DbSet<JourneySegment> JourneySegments { get; set; }
         public virtual DbSet<DeletedRecord> DeletedRecords { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
-        public virtual DbSet<MetaJourneySegment> MetaJourneySegments { get; set; }
-        public virtual DbSet<HandbackRecord> HandbackRecords { get; set; }
+        public virtual DbSet<PreStagging> PreStaggings { get; set; }
+        public virtual DbSet<StaggingRejectedUA> StaggingRejectedUAs { get; set; }
+        public virtual DbSet<StaggingUA> StaggingUAs { get; set; }
     }
 }

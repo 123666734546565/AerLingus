@@ -12,12 +12,11 @@ namespace AerLingus.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class MetaJourneySegment
+    public partial class PreStagging
     {
-        public int JourneySegmentID { get; set; }
+        public string RecordMetaData { get; set; }
+        public int PreStaggingID { get; set; }
         public string HeaderMetaData { get; set; }
         public string FooterMetaData { get; set; }
-    
-        public virtual JourneySegment JourneySegment { get; set; }
     }
 }

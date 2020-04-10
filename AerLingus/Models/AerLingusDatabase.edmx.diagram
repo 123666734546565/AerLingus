@@ -4,17 +4,16 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="597253332b4a420cb659314496802b0a" Name="Diagram1" ZoomLevel="75">
+      <Diagram DiagramId="597253332b4a420cb659314496802b0a" Name="Diagram1" ZoomLevel="94">
         <EntityTypeShape EntityType="AerLingus_databaseModel.Flight_Records" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
         <EntityTypeShape EntityType="AerLingus_databaseModel.FR_Batch_Files" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="AerLingus_databaseModel.Journey" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="AerLingus_databaseModel.JourneySegment" Width="1.5" PointX="3" PointY="3.625" IsExpanded="true" />
         <EntityTypeShape EntityType="AerLingus_databaseModel.DeletedRecord" Width="1.5" PointX="5.75" PointY="3.75" IsExpanded="true" />
         <AssociationConnector Association="AerLingus_databaseModel.FK_JourneySegment_Flight_Records" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="AerLingus_databaseModel.sysdiagram" Width="1.5" PointX="7.375" PointY="0.625" />
-        <EntityTypeShape EntityType="AerLingus_databaseModel.MetaJourneySegment" Width="1.5" PointX="3.625" PointY="11.625" />
-        <AssociationConnector Association="AerLingus_databaseModel.FK_MetaJourneySegment_JourneySegment" />
-        <EntityTypeShape EntityType="AerLingus_databaseModel.HandbackRecord" Width="1.5" PointX="8.375" PointY="3.75" />
+        <EntityTypeShape EntityType="AerLingus_databaseModel.PreStagging" Width="1.5" PointX="9.75" PointY="0.75" />
+        <EntityTypeShape EntityType="AerLingus_databaseModel.StaggingRejectedUA" Width="1.5" PointX="0.75" PointY="9.75" />
+        <EntityTypeShape EntityType="AerLingus_databaseModel.StaggingUA" Width="1.5" PointX="8.75" PointY="9.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

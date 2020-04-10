@@ -23,6 +23,5 @@ namespace AerLingus.Models
         public Nullable<int> IDFR { get; set; }
     
         public virtual Flight_Records Flight_Records { get; set; }
-        public virtual MetaJourneySegment MetaJourneySegment { get; set; }
     }
 }
