@@ -147,8 +147,8 @@ namespace AerLingus.Controllers.Api
         {
             try
             {
-                //if (ApiViewBag.UploadRequest.RequestIsComingFromController)
-                //{
+                if (ApiViewBag.UploadRequest.RequestIsComingFromController)
+                {
                     ApiViewBag.UploadRequest.RequestIsComingFromController = false;
 
                     HttpPostedFileBase file = ApiViewBag.UploadRequest.RequestedFile;
@@ -164,7 +164,7 @@ namespace AerLingus.Controllers.Api
 
                     string headerMetaData = streamReader.ReadLine();
 
-                    string footerMetaData = string.Empty;                             
+                    string footerMetaData = string.Empty;
 
                     int lineCounter = 0;
 
@@ -172,7 +172,7 @@ namespace AerLingus.Controllers.Api
                     {
                         footerMetaData = streamReader.ReadLine();
                         lineCounter++;
-                    } 
+                    }
 
                     stream.Position = 0;
 
@@ -182,7 +182,7 @@ namespace AerLingus.Controllers.Api
                     {
                         string record = streamReader.ReadLine();
 
-                        if(record != footerMetaData)
+                        if (record != footerMetaData)
                         {
                             PreStagging preStagging = new PreStagging();
                             preStagging.HeaderMetaData = headerMetaData;
@@ -194,7 +194,9 @@ namespace AerLingus.Controllers.Api
 
                     stream.Position = 0;
 
-                    string header = streamReader.ReadLine();
+                    streamReader.ReadLine();
+
+                    string header = string.Empty;
 
                     for (int i = 12; i <= 13; i++)
                     {
@@ -204,17 +206,13 @@ namespace AerLingus.Controllers.Api
                         header += headerMetaData[i];
                     }
 
-                //while (!streamReader.EndOfStream)
-                //{
-                //    streamReader.ReadLine();
-                //    lineCounter++;
-                //}
+                    //while (!streamReader.EndOfStream)
+                    //{
+                    //    streamReader.ReadLine();
+                    //    lineCounter++;
+                    //}
 
-                lineCounter--;
-
-                    //stream.Position = 0;
-
-                    //streamReader.ReadLine(); 
+                    lineCounter--;
 
                     string temp = string.Empty;
                     int numberOfFooterRecords = 0;
@@ -230,724 +228,1301 @@ namespace AerLingus.Controllers.Api
                         return Request.CreateResponse(HttpStatusCode.NotAcceptable);
 
                     int currentLine = 0;
-                    lineCounter--;
 
-                while (currentLine <= lineCounter)
-                {
-                    Flight_Records flightRecords = new Flight_Records();
-                    HandbackRecord handbackRecord = new HandbackRecord();
-                    string record = streamReader.ReadLine();
+                    //header data
+                    string recordTypeHeader = string.Empty;
+                    string fileTypeHeader = string.Empty;
+                    string deliverySequenceNoHeader = string.Empty;
+                    string sendingSystemHeader = string.Empty;
+                    string sendingAirLineHeader = string.Empty;
+                    string receivingAirlineHeader = string.Empty;
+                    string createDateHeader = string.Empty;
+                    string versionHeader = string.Empty;
+                    string carrierFileReferenceHeader = string.Empty;
+                    string fillerHeader = string.Empty;
 
+                    //footer data
+                    string recordTypeFooter = string.Empty;
+                    string totalNumberOfRecordsFooter = string.Empty;
+                    string numberOfAcceptedRecordsWithoutChangesFooter = string.Empty;
+                    string numberOfAcceptedRecordsWithChangesFooter = string.Empty;
+                    string numberOfRejectedRecordsFooter = string.Empty;
+                    string fillerFooter = string.Empty;
 
-                    if (header.ToUpper() == "UA")
-                    {
-                        flightRecords.Status = "Sent from UA";
-                        handbackRecord.Status = "Sent from UA";
-                    }
-
-                    string FFPNumber = string.Empty;
-
-                    for (int i = 5; i <= 24; i++)
-                    {
-                        if (record[i] == ' ')
-                            continue;
-
-                        FFPNumber += record[i];
-                        flightRecords.otherFFPNo = FFPNumber;
-                    }
-
-                    flightRecords.externalPaxID = "12345";
-
+                    //header
                     for (int i = 0; i <= 1; i++)
                     {
-                        if (record[i] == ' ')
-                            continue;
-
-                        flightRecords.transactionType += record[i];
-                        handbackRecord.TransactionType += record[i];
+                        recordTypeHeader += headerMetaData[i];
                     }
 
-                    for (int i = 203; i <= 208; i++)
+                    for (int i = 2; i <= 3; i++)
                     {
-                        if (record[i] == ' ')
-                            continue;
-
-                        flightRecords.pnrNo += record[i];
-                        handbackRecord.PNRNo += record[i];
+                        fileTypeHeader += headerMetaData[i];
                     }
 
-                    for (int i = 25; i <= 54; i++)
+                    for (int i = 4; i <= 8; i++)
                     {
-                        if (record[i] == ' ')
-                            continue;
-
-                        flightRecords.lastName += record[i];
-                        handbackRecord.LastName += record[i];
+                        deliverySequenceNoHeader += headerMetaData[i];
                     }
 
-                    for (int i = 55; i <= 104; i++)
+                    for (int i = 9; i <= 11; i++)
                     {
-                        if (record[i] == ' ')
-                            continue;
-
-                        flightRecords.firstName += record[i];
-                        handbackRecord.FirstName += record[i];
+                        sendingSystemHeader += headerMetaData[i];
                     }
 
-                    string day = null;
-                    string month = "";
-                    string year = "";
-
-                    for (int i = 123; i <= 126; i++)
+                    for (int i = 12; i <= 14; i++)
                     {
-                        if (record[i] == ' ')
-                            continue;
-
-                        year = year + record[i];
+                        sendingAirLineHeader += headerMetaData[i];
                     }
 
-
-                    for (int i = 127; i <= 128; i++)
+                    for (int i = 15; i <= 17; i++)
                     {
-                        if (record[i] == ' ')
-                            continue;
-
-                        month = month + record[i];
+                        receivingAirlineHeader += headerMetaData[i];
                     }
 
-                    for (int i = 129; i <= 130; i++)
+                    for (int i = 18; i <= 25; i++)
                     {
-                        if (record[i] == ' ')
-                            continue;
-
-                        day = day + record[i];
+                        createDateHeader += headerMetaData[i];
                     }
 
-                    string date = day + "/" + month + "/" + year;
-
-                    DateTime dateTime = DateTime.ParseExact(date, "dd/MM/yyyy", CultureInfo.InvariantCulture);
-
-                    flightRecords.departureDate = dateTime;
-                    handbackRecord.DepartureDate = date;
-
-                    for (int i = 139; i <= 143; i++)
+                    for (int i = 26; i <= 27; i++)
                     {
-                        if (record[i] == ' ')
-                            continue;
-
-                        flightRecords.origin += record[i];
-                        handbackRecord.Origin += record[i];
+                        versionHeader += headerMetaData[i];
                     }
 
-                    for (int i = 144; i <= 148; i++)
+                    for (int i = 28; i <= 43; i++)
                     {
-                        if (record[i] == ' ')
-                            continue;
-
-                        flightRecords.destination += record[i];
-                        handbackRecord.Destination += record[i];
+                        carrierFileReferenceHeader += headerMetaData[i];
                     }
 
-                    for (int i = 149; i <= 150; i++)
+                    for (int i = 44; i <= 499; i++)
                     {
-                        if (record[i] == ' ')
-                            continue;
-
-                        flightRecords.bookingClass += record[i];
-                        handbackRecord.BookingClass += record[i];
+                        fillerHeader += headerMetaData[i];
                     }
 
-                    for (int i = 151; i <= 152; i++)
+                    //footer
+                    for (int i = 0; i <= 1; i++)
                     {
-                        if (record[i] == ' ')
-                            continue;
-                        //nije required
-                        flightRecords.cabinClass += record[i];
-                        handbackRecord.CabinClass += record[i];
+                        recordTypeFooter += footerMetaData[i];
                     }
 
-                    for (int i = 117; i <= 121; i++)
+                    for (int i = 2; i <= 10; i++)
                     {
-                        if (record[i] == ' ')
-                            continue;
-
-                        flightRecords.marketingFlightNo += record[i];
-                        handbackRecord.MarketingFlightNo += record[i];
+                        totalNumberOfRecordsFooter += footerMetaData[i];
                     }
 
-                    for (int i = 114; i <= 116; i++)
+                    for (int i = 11; i <= 19; i++)
                     {
-                        if (record[i] == ' ')
-                            continue;
-
-                        flightRecords.marketingAirline += record[i];
-                        handbackRecord.MarketingAirline += record[i];
+                        numberOfAcceptedRecordsWithoutChangesFooter += footerMetaData[i];
                     }
 
-                    for (int i = 109; i <= 113; i++)
+                    for (int i = 20; i <= 28; i++)
                     {
-                        if (record[i] == ' ')
-                            continue;
-
-                        flightRecords.operatingFlightNo += record[i];
-                        handbackRecord.OperatingFlightNo += record[i];
+                        numberOfAcceptedRecordsWithChangesFooter += footerMetaData[i];
                     }
 
-                    for (int i = 106; i <= 108; i++)
+                    for (int i = 29; i <= 37; i++)
                     {
-                        if (record[i] == ' ')
-                            continue;
-
-                        flightRecords.operatingAirline += record[i];
-                        handbackRecord.OperatingAirline += record[i];
+                        numberOfRejectedRecordsFooter += footerMetaData[i];
                     }
 
-                    for (int i = 176; i <= 188; i++)
+                    for (int i = 38; i <= 499; i++)
                     {
-                        if (record[i] == ' ')
-                            continue;
-
-                        flightRecords.ticketNo += record[i];
-                        handbackRecord.TicketNo += record[i];
+                        fillerFooter += footerMetaData[i];
                     }
 
-                    for (int i = 189; i <= 190; i++)
+                    lineCounter--;
+
+                    while (currentLine <= lineCounter)
                     {
-                        if (record[i] == ' ')
-                            continue;
-                        //nije required
-                        flightRecords.couponNo += record[i];
-                        handbackRecord.CouponNo += record[i];
-                    }
+                        Flight_Records flightRecords = new Flight_Records();
+                        string record = streamReader.ReadLine();
+                        StaggingUA staggingUA = new StaggingUA();
+                        StaggingRejectedUA rejectedUA = new StaggingRejectedUA();
 
-                    for (int i = 191; i <= 198; i++)
-                    {
-                        if (record[i] == ' ')
-                            continue;
-                        //nije required
-                        flightRecords.fareBasis += record[i];
-                        handbackRecord.FareBasis += record[i];
-                    }
+                        //header
+                        staggingUA.RecordTypeHeader = recordTypeHeader;
+                        staggingUA.FileTypeHeader = fileTypeHeader;
+                        staggingUA.DeliverySequenceNoHeader = deliverySequenceNoHeader;
+                        staggingUA.SendingSystemHeader = sendingSystemHeader;
+                        staggingUA.SendingAirlineHeader = sendingAirLineHeader;
+                        staggingUA.ReceivingAirlineHeader = receivingAirlineHeader;
+                        staggingUA.CreateDateHeader = createDateHeader;
+                        staggingUA.VersionHeader = versionHeader;
+                        staggingUA.CarrierFileReferenceHeader = carrierFileReferenceHeader;
+                        staggingUA.FillerHeader = fillerHeader;
 
-                    string nameCheckOverride = string.Empty;
-                    nameCheckOverride = record[105].ToString();
+                        rejectedUA.RecordTypeHeader = staggingUA.RecordTypeHeader;
+                        rejectedUA.FileTypeHeader = staggingUA.FileTypeHeader;
+                        rejectedUA.DeliverySequenceNoHeader = staggingUA.DeliverySequenceNoHeader;
+                        rejectedUA.SendingSystemHeader = staggingUA.SendingSystemHeader;
+                        rejectedUA.SendingAirlineHeader = staggingUA.SendingAirlineHeader;
+                        rejectedUA.ReceivingAirlineHeader = staggingUA.ReceivingAirlineHeader;
+                        rejectedUA.CreateDateHeader = staggingUA.CreateDateHeader;
+                        rejectedUA.VersionHeader = staggingUA.VersionHeader;
+                        rejectedUA.CarrierFileReferenceHeader = staggingUA.CarrierFileReferenceHeader;
+                        rejectedUA.FillerHeader = staggingUA.FillerHeader;
 
-                    string authorizationNumber = string.Empty;
+                        //footer
+                        staggingUA.RecordTypeFooter = recordTypeFooter;
+                        staggingUA.TotalNumbersOfRecords = totalNumberOfRecordsFooter;
+                        staggingUA.NumberOfAcceptedRecordsWithoutChanges = numberOfAcceptedRecordsWithoutChangesFooter;
+                        staggingUA.NumberOfAcceptedRecordsWithChanges = numberOfAcceptedRecordsWithChangesFooter;
+                        staggingUA.NumberOfRejectedRecords = numberOfRejectedRecordsFooter;
+                        staggingUA.FillerFooter = fillerFooter;
 
-                    for (int i = 219; i <= 234; i++)
-                    {
-                        if (record[i] == ' ')
-                            continue;
+                        rejectedUA.RecordTypeFooter = staggingUA.RecordTypeFooter;
+                        rejectedUA.TotalNumbersOfRecords = staggingUA.TotalNumbersOfRecords;
+                        rejectedUA.NumberOfAcceptedRecordsWithoutChanges = staggingUA.NumberOfAcceptedRecordsWithoutChanges;
+                        rejectedUA.NumberOfAcceptedRecordsWithChanges = staggingUA.NumberOfAcceptedRecordsWithChanges;
+                        rejectedUA.NumberOfRejectedRecords = staggingUA.NumberOfRejectedRecords;
+                        rejectedUA.FillerFooter = staggingUA.FillerFooter;
 
-                        authorizationNumber += record[i];
-                    }
-
-                    //string seatNumber = string.Empty;
-
-                    //for (int i = 199; i <= 202; i++)
-                    //{
-                    //    if (record[i] == ' ')
-                    //        continue;
-
-                    //    seatNumber += record[i];
-                    //}
-
-                    currentLine++;
-
-                    //013
-                    if (Validation.IsModelStateValid(flightRecords))
-                    {
-                        //002
-                        if (header != "" && header == flightRecords.operatingAirline)
+                        if (header.ToUpper() == "UA")
                         {
-                            //015
-                            if (nameCheckOverride == "Y" || nameCheckOverride == "N")
+                            flightRecords.Status = "Sent from UA";
+                        }
+
+                        flightRecords.externalPaxID = "12345";
+
+                        for (int i = 0; i <= 1; i++)
+                        {
+                            staggingUA.RecordType += record[i];
+                            rejectedUA.RecordType += record[i];
+
+                            if (record[i] == ' ')
+                                continue;
+
+                            flightRecords.transactionType += record[i];
+                        }
+
+                        for (int i = 2; i <= 4; i++)
+                        {
+                            staggingUA.FFPProgram += record[i];
+                            rejectedUA.FFPProgram += record[i];
+                        }
+
+                        for (int i = 5; i <= 24; i++)
+                        {
+                            staggingUA.FFPMemberNumber += record[i];
+                            rejectedUA.FFPMemberNumber += record[i];
+                        }
+
+                        for (int i = 25; i <= 54; i++)
+                        {
+                            staggingUA.FFPMemberLastName += record[i];
+                            rejectedUA.FFPMemberLastName += record[i];
+
+                            if (record[i] == ' ')
+                                continue;
+
+                            flightRecords.lastName += record[i];
+                        }
+
+                        for (int i = 55; i <= 104; i++)
+                        {
+                            staggingUA.FFPMemberFirstName += record[i];
+                            rejectedUA.FFPMemberFirstName += record[i];
+
+                            if (record[i] == ' ')
+                                continue;
+
+                            flightRecords.firstName += record[i];
+                        }
+
+                        staggingUA.NameCheckOverride = record[105].ToString();
+                        rejectedUA.NameCheckOverride = record[105].ToString();
+
+                        for (int i = 106; i <= 108; i++)
+                        {
+                            staggingUA.OperatingAirlineCode += record[i];
+                            rejectedUA.OperatingAirlineCode += record[i];
+
+                            if (record[i] == ' ')
+                                continue;
+
+                            flightRecords.operatingAirline += record[i];
+                        }
+
+                        for (int i = 109; i <= 113; i++)
+                        {
+                            staggingUA.OperatingFlightNumber += record[i];
+                            rejectedUA.OperatingFlightNumber += record[i];
+
+                            if (record[i] == ' ')
+                                continue;
+
+                            flightRecords.operatingFlightNo += record[i];
+                        }
+
+                        for (int i = 114; i <= 116; i++)
+                        {
+                            staggingUA.MarketingAirlineCode += record[i];
+                            rejectedUA.MarketingAirlineCode += record[i];
+
+                            if (record[i] == ' ')
+                                continue;
+
+                            flightRecords.marketingAirline += record[i];
+                        }
+
+                        for (int i = 117; i <= 121; i++)
+                        {
+                            staggingUA.MarketingFlightNumber += record[i];
+                            rejectedUA.MarketingFlightNumber += record[i];
+
+                            if (record[i] == ' ')
+                                continue;
+
+                            flightRecords.marketingFlightNo += record[i];
+                        }
+
+                        staggingUA.CodeShareIndicator = record[122].ToString();
+                        rejectedUA.CodeShareIndicator = record[122].ToString();
+
+                        string day = null;
+                        string month = "";
+                        string year = "";
+
+                        for (int i = 123; i <= 126; i++)
+                        {
+                            if (record[i] == ' ')
+                                continue;
+
+                            year = year + record[i];
+                        }
+
+
+                        for (int i = 127; i <= 128; i++)
+                        {
+                            if (record[i] == ' ')
+                                continue;
+
+                            month = month + record[i];
+                        }
+
+                        for (int i = 129; i <= 130; i++)
+                        {
+                            if (record[i] == ' ')
+                                continue;
+
+                            day = day + record[i];
+                        }
+
+                        string date = day + "/" + month + "/" + year;
+
+                        DateTime dateTime = DateTime.ParseExact(date, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+
+                        staggingUA.FlightDepartureDate = year + month + day;
+                        rejectedUA.FlightDepartureDate = year + month + day;
+                        flightRecords.departureDate = dateTime;
+
+                        for (int i = 131; i <= 138; i++)
+                        {
+                            staggingUA.FlightArrivalDate += record[i];
+                            rejectedUA.FlightArrivalDate += record[i];
+                        }
+
+                        for (int i = 139; i <= 143; i++)
+                        {
+                            staggingUA.OriginAirportCode += record[i];
+                            rejectedUA.OriginAirportCode += record[i];
+
+                            if (record[i] == ' ')
+                                continue;
+
+                            flightRecords.origin += record[i];
+                        }
+
+                        for (int i = 144; i <= 148; i++)
+                        {
+                            staggingUA.DestinationAirportCode += record[i];
+                            rejectedUA.DestinationAirportCode += record[i];
+
+                            if (record[i] == ' ')
+                                continue;
+
+                            flightRecords.destination += record[i];
+                        }
+
+                        for (int i = 149; i <= 150; i++)
+                        {
+                            staggingUA.OperatingBookingClassCode += record[i];
+                            rejectedUA.OperatingBookingClassCode += record[i];
+
+                            if (record[i] == ' ')
+                                continue;
+
+                            flightRecords.bookingClass += record[i];
+                        }
+
+                        for (int i = 151; i <= 152; i++)
+                        {
+                            staggingUA.FlownCabinClassCode += record[i];
+                            rejectedUA.FlownCabinClassCode += record[i];
+
+                            if (record[i] == ' ')
+                                continue;
+
+                            flightRecords.cabinClass += record[i];
+                        }
+
+                        for (int i = 153; i <= 154; i++)
+                        {
+                            staggingUA.OperatingRevenueBookingClassCode += record[i];
+                            rejectedUA.OperatingRevenueBookingClassCode += record[i];
+                        }
+
+                        for (int i = 155; i <= 156; i++)
+                        {
+                            staggingUA.MarketingBookingClass += record[i];
+                            rejectedUA.MarketingBookingClass += record[i];
+                        }
+
+                        for (int i = 157; i <= 158; i++)
+                        {
+                            staggingUA.UpgradeIndicator += record[i];
+                            rejectedUA.UpgradeIndicator += record[i];
+                        }
+
+                        for (int i = 159; i <= 160; i++)
+                        {
+                            staggingUA.DowngradeIndicator += record[i];
+                            rejectedUA.DowngradeIndicator += record[i];
+                        }
+
+                        for (int i = 161; i <= 175; i++)
+                        {
+                            staggingUA.EntitlementNumber += record[i];
+                            rejectedUA.EntitlementNumber += record[i];
+                        }
+
+                        for (int i = 176; i <= 188; i++)
+                        {
+                            staggingUA.TicketNumber += record[i];
+                            rejectedUA.TicketNumber += record[i];
+
+                            if (record[i] == ' ')
+                                continue;
+
+                            flightRecords.ticketNo += record[i];
+                        }
+
+                        for (int i = 189; i <= 190; i++)
+                        {
+                            staggingUA.CouponNumber += record[i];
+                            rejectedUA.CouponNumber += record[i];
+
+                            if (record[i] == ' ')
+                                continue;
+
+                            flightRecords.couponNo += record[i];
+                        }
+
+                        for (int i = 191; i <= 198; i++)
+                        {
+                            staggingUA.FareBasisCode += record[i];
+                            rejectedUA.FareBasisCode += record[i];
+
+                            if (record[i] == ' ')
+                                continue;
+
+                            flightRecords.fareBasis += record[i];
+                        }
+
+                        for (int i = 199; i <= 202; i++)
+                        {
+                            staggingUA.SeatNumber += record[i];
+                            rejectedUA.SeatNumber += record[i];
+                        }
+
+                        for (int i = 203; i <= 208; i++)
+                        {
+                            staggingUA.PNRNumber += record[i];
+                            rejectedUA.PNRNumber += record[i];
+
+                            if (record[i] == ' ')
+                                continue;
+
+                            flightRecords.pnrNo += record[i];
+                        }
+
+                        staggingUA.UpdateCode = record[209].ToString();
+                        rejectedUA.UpdateCode = record[209].ToString();
+
+                        for (int i = 210; i <= 214; i++)
+                        {
+                            staggingUA.BaseFlightMiles += record[i];
+                            rejectedUA.BaseFlightMiles += record[i];
+                        }
+
+                        for (int i = 215; i <= 216; i++)
+                        {
+                            staggingUA.CheckInSourceCode += record[i];
+                            rejectedUA.CheckInSourceCode += record[i];
+                        }
+
+                        for (int i = 217; i <= 218; i++)
+                        {
+                            staggingUA.BookingSourceCode += record[i];
+                            rejectedUA.BookingSourceCode += record[i];
+                        }
+
+                        for (int i = 219; i <= 234; i++)
+                        {
+                            staggingUA.OperatingAirlineAuthorizationNo += record[i];
+                            rejectedUA.OperatingAirlineAuthorizationNo += record[i];
+                        }
+
+                        for (int i = 235; i <= 250; i++)
+                        {
+                            staggingUA.InternalAirlineReferenceNoFFPAirline += record[i];
+                            rejectedUA.InternalAirlineReferenceNoFFPAirline += record[i];
+                        }
+
+                        for (int i = 251; i <= 252; i++)
+                        {
+                            staggingUA.AccrualPostingStatus += record[i];
+                            rejectedUA.AccrualPostingStatus += record[i];
+                        }
+
+                        for (int i = 253; i <= 255; i++)
+                        {
+                            staggingUA.ResponseCode1 += record[i];
+                            rejectedUA.ResponseCode1 += record[i];
+                        }
+
+                        for (int i = 256; i <= 258; i++)
+                        {
+                            staggingUA.ResponseCode2 += record[i];
+                            rejectedUA.ResponseCode2 += record[i];
+                        }
+
+                        for (int i = 259; i <= 261; i++)
+                        {
+                            staggingUA.ResponseCode3 += record[i];
+                            rejectedUA.ResponseCode3 += record[i];
+                        }
+
+                        for (int i = 262; i <= 264; i++)
+                        {
+                            staggingUA.ResponseCode4 += record[i];
+                            rejectedUA.ResponseCode4 += record[i];
+                        }
+
+                        for (int i = 265; i <= 267; i++)
+                        {
+                            staggingUA.ResponseCode5 += record[i];
+                            rejectedUA.ResponseCode5 += record[i];
+                        }
+
+                        for (int i = 268; i <= 270; i++)
+                        {
+                            staggingUA.ResponseCode6 += record[i];
+                            rejectedUA.ResponseCode6 += record[i];
+                        }
+
+                        for (int i = 271; i <= 272; i++)
+                        {
+                            staggingUA.TierLever += record[i];
+                            rejectedUA.TierLever += record[i];
+                        }
+
+                        staggingUA.Gender = record[273].ToString();
+                        rejectedUA.Gender = record[273].ToString();
+
+                        for (int i = 274; i <= 399; i++)
+                        {
+                            staggingUA.Filler += record[i];
+                            rejectedUA.Filler += record[i];
+                        }
+
+                        for (int i = 400; i <= 499; i++)
+                        {
+                            staggingUA.AirlineAdditionalInformation += record[i];
+                            rejectedUA.AirlineAdditionalInformation += record[i];
+                        }
+
+                        currentLine++;
+
+                        //013
+                        if (Validation.IsModelStateValid(flightRecords))
+                        {
+                            //002
+                            if (header != "" && header == flightRecords.operatingAirline)
                             {
-                                //027
-                                if ((flightRecords.origin != "" && flightRecords.origin != null) ||
-                                    flightRecords.destination != "" && flightRecords.destination != null)
+                                //015
+                                if (staggingUA.NameCheckOverride == "Y" || staggingUA.NameCheckOverride == "N")
                                 {
-                                    //023
-                                    if (flightRecords.transactionType == "01" || flightRecords.transactionType == "02" ||
-                                        flightRecords.transactionType == "03" || flightRecords.transactionType == "04")
+                                    //027
+                                    if ((flightRecords.origin != "" && flightRecords.origin != null) ||
+                                        flightRecords.destination != "" && flightRecords.destination != null)
                                     {
-                                        //039
-                                        //if (seatNumber != string.Empty && seatNumber != null)
-                                        //{
-                                        //044
-                                        if (flightRecords.marketingAirline != "" && flightRecords.marketingAirline != null)
+                                        //023
+                                        if (flightRecords.transactionType == "01" || flightRecords.transactionType == "02" ||
+                                            flightRecords.transactionType == "03" || flightRecords.transactionType == "04")
                                         {
-                                            //051
-                                            if (FFPNumber != string.Empty && FFPNumber != null)
+                                            //039
+                                            //if (seatNumber != string.Empty && seatNumber != null)
+                                            //{
+                                            //044
+                                            if (flightRecords.marketingAirline != "" && flightRecords.marketingAirline != null)
                                             {
-                                                flightRecords.DownloadCounter = 0;
-                                                entities.Flight_Records.Add(flightRecords);
+                                                //051
+                                                if (staggingUA.FFPMemberNumber != string.Empty && staggingUA.FFPMemberNumber != null)
+                                                {
+                                                    entities.StaggingUAs.Add(staggingUA);
+                                                    entities.Flight_Records.Add(flightRecords);
+                                                }
+                                                else
+                                                {
+                                                    rejectedUA.Description = "051: Invalid FFP number";
+                                                    rejectedUA.DownloadCounter = 0;
+                                                    entities.StaggingRejectedUAs.Add(rejectedUA);
+                                                }
                                             }
                                             else
                                             {
-                                                handbackRecord.DownloadCounter = 0;
-                                                handbackRecord.Description = "051: Invalid FFP number";
-                                                entities.HandbackRecords.Add(handbackRecord);
+                                                rejectedUA.Description = "044: Invalid marketing airline code";
+                                                rejectedUA.DownloadCounter = 0;
+                                                entities.StaggingRejectedUAs.Add(rejectedUA);
                                             }
+                                            //}
+                                            //else
+                                            //{
+                                            //    handbackRecord.DownloadCounter = 0;
+                                            //    handbackRecord.Description = "039: Invalid seat number";
+                                            //    entities.HandbackRecords.Add(handbackRecord);
+                                            //}
                                         }
                                         else
                                         {
-                                            handbackRecord.DownloadCounter = 0;
-                                            handbackRecord.Description = "044: Invalid marketing airline code";
-                                            entities.HandbackRecords.Add(handbackRecord);
+                                            rejectedUA.Description = "023: Invalid transaction type";
+                                            rejectedUA.DownloadCounter = 0;
+                                            entities.StaggingRejectedUAs.Add(rejectedUA);
                                         }
-                                        //}
-                                        //else
-                                        //{
-                                        //    handbackRecord.DownloadCounter = 0;
-                                        //    handbackRecord.Description = "039: Invalid seat number";
-                                        //    entities.HandbackRecords.Add(handbackRecord);
-                                        //}
                                     }
                                     else
                                     {
-                                        handbackRecord.DownloadCounter = 0;
-                                        handbackRecord.Description = "023: Invalid transaction type";
-                                        entities.HandbackRecords.Add(handbackRecord);
+                                        rejectedUA.Description = "027: Invalid origin and/or destination airport code";
+                                        rejectedUA.DownloadCounter = 0;
+                                        entities.StaggingRejectedUAs.Add(rejectedUA);
                                     }
                                 }
                                 else
                                 {
-                                    handbackRecord.DownloadCounter = 0;
-                                    handbackRecord.Description = "027: Invalid origin and/or destination airport code";
-                                    entities.HandbackRecords.Add(handbackRecord);
+                                    rejectedUA.Description = "Invalid name check override.";
+                                    rejectedUA.DownloadCounter = 0;
+                                    entities.StaggingRejectedUAs.Add(rejectedUA);
                                 }
                             }
                             else
                             {
-                                handbackRecord.DownloadCounter = 0;
-                                handbackRecord.Description = "Invalid name check override";
-                                entities.HandbackRecords.Add(handbackRecord);
+                                rejectedUA.Description = "Header is incorrect.";
+                                rejectedUA.DownloadCounter = 0;
+                                entities.StaggingRejectedUAs.Add(rejectedUA);
                             }
                         }
                         else
                         {
-                            handbackRecord.DownloadCounter = 0;
-                            handbackRecord.Description = "Incorrect operating airline code";
-                            entities.HandbackRecords.Add(handbackRecord);
+                            rejectedUA.Description = "Mandatory fields data is missing or in invalid format";
+                            rejectedUA.DownloadCounter = 0;
+                            entities.StaggingRejectedUAs.Add(rejectedUA);
                         }
                     }
-                    else
-                    {
-                        handbackRecord.BookingClass = flightRecords.bookingClass;
-                        handbackRecord.DownloadCounter = 0;
-                        handbackRecord.Description = "Mandatory fields data is missing or in invalid format";
-                        entities.HandbackRecords.Add(handbackRecord);
-                    }
-                }
 
-                entities.SaveChanges();
+                    entities.SaveChanges();
 
                     return Request.CreateResponse(HttpStatusCode.OK);
-                //}
-            //    else
-            //    {
-            //        var currentRequest = HttpContext.Current;
+                }
+                else
+                {
+                    var currentRequest = HttpContext.Current;
 
-            //        var file = currentRequest.Request.Files[0];
+                    var file = currentRequest.Request.Files[0];
 
-            //        if (file == null)
-            //            return Request.CreateResponse(HttpStatusCode.NotFound);
-            //        if (file.ContentLength == 0)
-            //            return Request.CreateResponse(HttpStatusCode.NoContent);
+                    if (file == null)
+                        return Request.CreateResponse(HttpStatusCode.NotFound);
+                    if (file.ContentLength == 0)
+                        return Request.CreateResponse(HttpStatusCode.NoContent);
 
-            //        Stream stream = file.InputStream;
+                    Stream stream = file.InputStream;
+
+                    StreamReader streamReader = new StreamReader(stream);
 
-            //        StreamReader streamReader = new StreamReader(stream);
+                    string headerMetaData = streamReader.ReadLine();
+
+                    string footerMetaData = string.Empty;
 
-            //        //////////////////////////////////////////////////////////////////////
-            //        //////////////////////////////////////////////////////////////////////
-            //        ////
-            //        string headerMetaData = streamReader.ReadLine();                  ////
-            //        string header = string.Empty;
-
-            //        for (int i = 12; i <= 13; i++)
-            //        {
-            //            if (headerMetaData[i] == ' ')
-            //                continue;
-
-            //            header += headerMetaData[i];
-            //        }
-
-            //        //if (header.ToUpper() != "UA")
-            //        //    return Request.CreateResponse(HttpStatusCode.NotAcceptable);
-
-
-            //                                                                          ////
-            //        metaJourneySegment.HeaderMetaData = headerMetaData.TrimEnd();     ////
-            //                                                                          ////
-            //        string footerMetaData = string.Empty;                             ////
-
-            //        int lineCounter = 0;
-
-            //        while (!streamReader.EndOfStream)                                 ////
-            //        {                                                                 ////
-            //            footerMetaData = streamReader.ReadLine();
-            //            lineCounter++;
-            //        }                                                                 ////
-
-            //        metaJourneySegment.JourneySegmentID = 20;                         ////
-
-            //        metaJourneySegment.FooterMetaData = footerMetaData.TrimEnd();     ////
-
-            //////
-
-            //        //////////////////////////////////////////////////////////////////////
-            //        //////////////////////////////////////////////////////////////////////
-
-
-            //        stream.Position = 0;
-
-            //        streamReader.ReadLine();
-
-            //        //int lineCounter = 0;
-
-            //        //while (!streamReader.EndOfStream)
-            //        //{
-            //        //    streamReader.ReadLine();
-            //        //    lineCounter++;
-            //        //}
-
-            //        lineCounter--;
-
-            //        //stream.Position = 0;
-
-            //        //streamReader.ReadLine(); 
-
-            //        string temp = string.Empty;
-            //        int numberOfFooterRecords = 0;
-
-            //        for (int i = 2; i <= 10; i++)
-            //        {
-            //            temp += footerMetaData[i];
-            //        }
-
-            //        numberOfFooterRecords = Convert.ToInt32(temp);
-
-            //        if (numberOfFooterRecords != lineCounter)
-            //            return Request.CreateResponse(HttpStatusCode.NotAcceptable);
-
-            //        int currentLine = 0;
-            //        lineCounter--;
-
-            //        while (currentLine <= lineCounter)
-            //        {
-            //            Flight_Records flightRecords = new Flight_Records();
-            //            HandbackRecord handbackRecord = new HandbackRecord();
-            //            string record = streamReader.ReadLine();
-
-
-            //            if (header.ToUpper() == "UA")
-            //            {
-            //                flightRecords.Status = "Sent from UA";
-            //                handbackRecord.Status = "Sent from UA";
-            //            }
-
-            //            string FFPNumber = string.Empty;
-
-            //            for (int i = 5; i <= 24; i++)
-            //            {
-            //                if (record[i] == ' ')
-            //                    continue;
-
-            //                FFPNumber += record[i];
-            //                flightRecords.otherFFPNo = FFPNumber;
-            //            }
-
-            //            flightRecords.externalPaxID = "12345";
-
-            //            for (int i = 0; i <= 1; i++)
-            //            {
-            //                if (record[i] == ' ')
-            //                    continue;
-
-            //                flightRecords.transactionType += record[i];
-            //                handbackRecord.TransactionType += record[i];
-            //            }
-
-            //            for (int i = 203; i <= 208; i++)
-            //            {
-            //                if (record[i] == ' ')
-            //                    continue;
-
-            //                flightRecords.pnrNo += record[i];
-            //                handbackRecord.PNRNo += record[i];
-            //            }
-
-            //            for (int i = 25; i <= 54; i++)
-            //            {
-            //                if (record[i] == ' ')
-            //                    continue;
-
-            //                flightRecords.lastName += record[i];
-            //                handbackRecord.LastName += record[i];
-            //            }
-
-            //            for (int i = 55; i <= 104; i++)
-            //            {
-            //                if (record[i] == ' ')
-            //                    continue;
-
-            //                flightRecords.firstName += record[i];
-            //                handbackRecord.FirstName += record[i];
-            //            }
-
-            //            string day = null;
-            //            string month = "";
-            //            string year = "";
-
-            //            for (int i = 123; i <= 126; i++)
-            //            {
-            //                if (record[i] == ' ')
-            //                    continue;
-
-            //                year = year + record[i];
-            //            }
-
-
-            //            for (int i = 127; i <= 128; i++)
-            //            {
-            //                if (record[i] == ' ')
-            //                    continue;
-
-            //                month = month + record[i];
-            //            }
-
-            //            for (int i = 129; i <= 130; i++)
-            //            {
-            //                if (record[i] == ' ')
-            //                    continue;
-
-            //                day = day + record[i];
-            //            }
-
-            //            string date = day + "/" + month + "/" + year;
-
-            //            DateTime dateTime = DateTime.ParseExact(date, "dd/MM/yyyy", CultureInfo.InvariantCulture);
-
-            //            flightRecords.departureDate = dateTime;
-            //            handbackRecord.DepartureDate = date;
-
-            //            for (int i = 139; i <= 143; i++)
-            //            {
-            //                if (record[i] == ' ')
-            //                    continue;
-
-            //                flightRecords.origin += record[i];
-            //                handbackRecord.Origin += record[i];
-            //            }
-
-            //            for (int i = 144; i <= 148; i++)
-            //            {
-            //                if (record[i] == ' ')
-            //                    continue;
-
-            //                flightRecords.destination += record[i];
-            //                handbackRecord.Destination += record[i];
-            //            }
-
-            //            for (int i = 149; i <= 150; i++)
-            //            {
-            //                if (record[i] == ' ')
-            //                    continue;
-
-            //                flightRecords.bookingClass += record[i];
-            //                handbackRecord.BookingClass += record[i];
-            //            }
-
-            //            for (int i = 151; i <= 152; i++)
-            //            {
-            //                if (record[i] == ' ')
-            //                    continue;
-            //                //nije required
-            //                flightRecords.cabinClass += record[i];
-            //                handbackRecord.CabinClass += record[i];
-            //            }
-
-            //            for (int i = 117; i <= 121; i++)
-            //            {
-            //                if (record[i] == ' ')
-            //                    continue;
-
-            //                flightRecords.marketingFlightNo += record[i];
-            //                handbackRecord.MarketingFlightNo += record[i];
-            //            }
-
-            //            for (int i = 114; i <= 116; i++)
-            //            {
-            //                if (record[i] == ' ')
-            //                    continue;
-
-            //                flightRecords.marketingAirline += record[i];
-            //                handbackRecord.MarketingAirline += record[i];
-            //            }
-
-            //            for (int i = 109; i <= 113; i++)
-            //            {
-            //                if (record[i] == ' ')
-            //                    continue;
-
-            //                flightRecords.operatingFlightNo += record[i];
-            //                handbackRecord.OperatingFlightNo += record[i];
-            //            }
-
-            //            for (int i = 106; i <= 108; i++)
-            //            {
-            //                if (record[i] == ' ')
-            //                    continue;
-
-            //                flightRecords.operatingAirline += record[i];
-            //                handbackRecord.OperatingAirline += record[i];
-            //            }
-
-            //            for (int i = 176; i <= 188; i++)
-            //            {
-            //                if (record[i] == ' ')
-            //                    continue;
-
-            //                flightRecords.ticketNo += record[i];
-            //                handbackRecord.TicketNo += record[i];
-            //            }
-
-            //            for (int i = 189; i <= 190; i++)
-            //            {
-            //                if (record[i] == ' ')
-            //                    continue;
-            //                //nije required
-            //                flightRecords.couponNo += record[i];
-            //                handbackRecord.CouponNo += record[i];
-            //            }
-
-            //            for (int i = 191; i <= 198; i++)
-            //            {
-            //                if (record[i] == ' ')
-            //                    continue;
-            //                //nije required
-            //                flightRecords.fareBasis += record[i];
-            //                handbackRecord.FareBasis += record[i];
-            //            }
-
-            //            string nameCheckOverride = string.Empty;
-            //            nameCheckOverride = record[105].ToString();
-
-            //            string authorizationNumber = string.Empty;
-
-            //            for (int i = 219; i <= 234; i++)
-            //            {
-            //                if (record[i] == ' ')
-            //                    continue;
-
-            //                authorizationNumber += record[i];
-            //            }
-
-            //            //string seatNumber = string.Empty;
-
-            //            //for (int i = 199; i <= 202; i++)
-            //            //{
-            //            //    if (record[i] == ' ')
-            //            //        continue;
-
-            //            //    seatNumber += record[i];
-            //            //}
-
-            //            currentLine++;
-
-            //            //013
-            //            if (Validation.IsModelStateValid(flightRecords))
-            //            {
-            //                //002
-            //                if (header != "" && header == flightRecords.operatingAirline)
-            //                {
-            //                    //015
-            //                    if (nameCheckOverride == "Y" || nameCheckOverride == "N")
-            //                    {
-            //                        //027
-            //                        if ((flightRecords.origin != "" && flightRecords.origin != null) ||
-            //                            flightRecords.destination != "" && flightRecords.destination != null)
-            //                        {
-            //                            //023
-            //                            if (flightRecords.transactionType == "01" || flightRecords.transactionType == "02" ||
-            //                                flightRecords.transactionType == "03" || flightRecords.transactionType == "04")
-            //                            {
-            //                                //039
-            //                                //if (seatNumber != string.Empty && seatNumber != null)
-            //                                //{
-            //                                //044
-            //                                if (flightRecords.marketingAirline != "" && flightRecords.marketingAirline != null)
-            //                                {
-            //                                    //051
-            //                                    if (FFPNumber != string.Empty && FFPNumber != null)
-            //                                    {
-            //                                        flightRecords.DownloadCounter = 0;
-            //                                        entities.Flight_Records.Add(flightRecords);
-            //                                    }
-            //                                    else
-            //                                    {
-            //                                        handbackRecord.DownloadCounter = 0;
-            //                                        handbackRecord.Description = "051: Invalid FFP number";
-            //                                        entities.HandbackRecords.Add(handbackRecord);
-            //                                    }
-            //                                }
-            //                                else
-            //                                {
-            //                                    handbackRecord.DownloadCounter = 0;
-            //                                    handbackRecord.Description = "044: Invalid marketing airline code";
-            //                                    entities.HandbackRecords.Add(handbackRecord);
-            //                                }
-            //                                //}
-            //                                //else
-            //                                //{
-            //                                //    handbackRecord.DownloadCounter = 0;
-            //                                //    handbackRecord.Description = "039: Invalid seat number";
-            //                                //    entities.HandbackRecords.Add(handbackRecord);
-            //                                //}
-            //                            }
-            //                            else
-            //                            {
-            //                                handbackRecord.DownloadCounter = 0;
-            //                                handbackRecord.Description = "023: Invalid transaction type";
-            //                                entities.HandbackRecords.Add(handbackRecord);
-            //                            }
-            //                        }
-            //                        else
-            //                        {
-            //                            handbackRecord.DownloadCounter = 0;
-            //                            handbackRecord.Description = "027: Invalid origin and/or destination airport code";
-            //                            entities.HandbackRecords.Add(handbackRecord);
-            //                        }
-            //                    }
-            //                    else
-            //                    {
-            //                        handbackRecord.DownloadCounter = 0;
-            //                        handbackRecord.Description = "Invalid name check override";
-            //                        entities.HandbackRecords.Add(handbackRecord);
-            //                    }
-            //                }
-            //                else
-            //                {
-            //                    handbackRecord.DownloadCounter = 0;
-            //                    handbackRecord.Description = "Incorrect operating airline code";
-            //                    entities.HandbackRecords.Add(handbackRecord);
-            //                }
-            //            }
-            //            else
-            //            {
-            //                handbackRecord.BookingClass = flightRecords.bookingClass;
-            //                handbackRecord.DownloadCounter = 0;
-            //                handbackRecord.Description = "Mandatory fields data is missing or in invalid format";
-            //                entities.HandbackRecords.Add(handbackRecord);
-            //            }
-            //        }
-
-            //        entities.SaveChanges();
-
-            //        return Request.CreateResponse(HttpStatusCode.OK);
-            //    }
+                    int lineCounter = 0;
+
+                    while (!streamReader.EndOfStream)
+                    {
+                        footerMetaData = streamReader.ReadLine();
+                        lineCounter++;
+                    }
+
+                    stream.Position = 0;
+
+                    streamReader.ReadLine();
+
+                    while (!streamReader.EndOfStream)
+                    {
+                        string record = streamReader.ReadLine();
+
+                        if (record != footerMetaData)
+                        {
+                            PreStagging preStagging = new PreStagging();
+                            preStagging.HeaderMetaData = headerMetaData;
+                            preStagging.RecordMetaData = record;
+                            preStagging.FooterMetaData = footerMetaData;
+                            entities.PreStaggings.Add(preStagging);
+                        }
+                    }
+
+                    stream.Position = 0;
+
+                    streamReader.ReadLine();
+
+                    string header = string.Empty;
+
+                    for (int i = 12; i <= 13; i++)
+                    {
+                        if (headerMetaData[i] == ' ')
+                            continue;
+
+                        header += headerMetaData[i];
+                    }
+
+                    //while (!streamReader.EndOfStream)
+                    //{
+                    //    streamReader.ReadLine();
+                    //    lineCounter++;
+                    //}
+
+                    lineCounter--;
+
+                    string temp = string.Empty;
+                    int numberOfFooterRecords = 0;
+
+                    for (int i = 2; i <= 10; i++)
+                    {
+                        temp += footerMetaData[i];
+                    }
+
+                    numberOfFooterRecords = Convert.ToInt32(temp);
+
+                    if (numberOfFooterRecords != lineCounter)
+                        return Request.CreateResponse(HttpStatusCode.NotAcceptable);
+
+                    int currentLine = 0;
+
+                    //header data
+                    string recordTypeHeader = string.Empty;
+                    string fileTypeHeader = string.Empty;
+                    string deliverySequenceNoHeader = string.Empty;
+                    string sendingSystemHeader = string.Empty;
+                    string sendingAirLineHeader = string.Empty;
+                    string receivingAirlineHeader = string.Empty;
+                    string createDateHeader = string.Empty;
+                    string versionHeader = string.Empty;
+                    string carrierFileReferenceHeader = string.Empty;
+                    string fillerHeader = string.Empty;
+
+                    //footer data
+                    string recordTypeFooter = string.Empty;
+                    string totalNumberOfRecordsFooter = string.Empty;
+                    string numberOfAcceptedRecordsWithoutChangesFooter = string.Empty;
+                    string numberOfAcceptedRecordsWithChangesFooter = string.Empty;
+                    string numberOfRejectedRecordsFooter = string.Empty;
+                    string fillerFooter = string.Empty;
+
+                    //header
+                    for (int i = 0; i <= 1; i++)
+                    {
+                        recordTypeHeader += headerMetaData[i];
+                    }
+
+                    for (int i = 2; i <= 3; i++)
+                    {
+                        fileTypeHeader += headerMetaData[i];
+                    }
+
+                    for (int i = 4; i <= 8; i++)
+                    {
+                        deliverySequenceNoHeader += headerMetaData[i];
+                    }
+
+                    for (int i = 9; i <= 11; i++)
+                    {
+                        sendingSystemHeader += headerMetaData[i];
+                    }
+
+                    for (int i = 12; i <= 14; i++)
+                    {
+                        sendingAirLineHeader += headerMetaData[i];
+                    }
+
+                    for (int i = 15; i <= 17; i++)
+                    {
+                        receivingAirlineHeader += headerMetaData[i];
+                    }
+
+                    for (int i = 18; i <= 25; i++)
+                    {
+                        createDateHeader += headerMetaData[i];
+                    }
+
+                    for (int i = 26; i <= 27; i++)
+                    {
+                        versionHeader += headerMetaData[i];
+                    }
+
+                    for (int i = 28; i <= 43; i++)
+                    {
+                        carrierFileReferenceHeader += headerMetaData[i];
+                    }
+
+                    for (int i = 44; i <= 499; i++)
+                    {
+                        fillerHeader += headerMetaData[i];
+                    }
+
+                    //footer
+                    for (int i = 0; i <= 1; i++)
+                    {
+                        recordTypeFooter += footerMetaData[i];
+                    }
+
+                    for (int i = 2; i <= 10; i++)
+                    {
+                        totalNumberOfRecordsFooter += footerMetaData[i];
+                    }
+
+                    for (int i = 11; i <= 19; i++)
+                    {
+                        numberOfAcceptedRecordsWithoutChangesFooter += footerMetaData[i];
+                    }
+
+                    for (int i = 20; i <= 28; i++)
+                    {
+                        numberOfAcceptedRecordsWithChangesFooter += footerMetaData[i];
+                    }
+
+                    for (int i = 29; i <= 37; i++)
+                    {
+                        numberOfRejectedRecordsFooter += footerMetaData[i];
+                    }
+
+                    for (int i = 38; i <= 499; i++)
+                    {
+                        fillerFooter += footerMetaData[i];
+                    }
+
+                    lineCounter--;
+
+                    while (currentLine <= lineCounter)
+                    {
+                        Flight_Records flightRecords = new Flight_Records();
+                        string record = streamReader.ReadLine();
+                        StaggingUA staggingUA = new StaggingUA();
+                        StaggingRejectedUA rejectedUA = new StaggingRejectedUA();
+
+                        //header
+                        staggingUA.RecordTypeHeader = recordTypeHeader;
+                        staggingUA.FileTypeHeader = fileTypeHeader;
+                        staggingUA.DeliverySequenceNoHeader = deliverySequenceNoHeader;
+                        staggingUA.SendingSystemHeader = sendingSystemHeader;
+                        staggingUA.SendingAirlineHeader = sendingAirLineHeader;
+                        staggingUA.ReceivingAirlineHeader = receivingAirlineHeader;
+                        staggingUA.CreateDateHeader = createDateHeader;
+                        staggingUA.VersionHeader = versionHeader;
+                        staggingUA.CarrierFileReferenceHeader = carrierFileReferenceHeader;
+                        staggingUA.FillerHeader = fillerHeader;
+
+                        rejectedUA.RecordTypeHeader = staggingUA.RecordTypeHeader;
+                        rejectedUA.FileTypeHeader = staggingUA.FileTypeHeader;
+                        rejectedUA.DeliverySequenceNoHeader = staggingUA.DeliverySequenceNoHeader;
+                        rejectedUA.SendingSystemHeader = staggingUA.SendingSystemHeader;
+                        rejectedUA.SendingAirlineHeader = staggingUA.SendingAirlineHeader;
+                        rejectedUA.ReceivingAirlineHeader = staggingUA.ReceivingAirlineHeader;
+                        rejectedUA.CreateDateHeader = staggingUA.CreateDateHeader;
+                        rejectedUA.VersionHeader = staggingUA.VersionHeader;
+                        rejectedUA.CarrierFileReferenceHeader = staggingUA.CarrierFileReferenceHeader;
+                        rejectedUA.FillerHeader = staggingUA.FillerHeader;
+
+                        //footer
+                        staggingUA.RecordTypeFooter = recordTypeFooter;
+                        staggingUA.TotalNumbersOfRecords = totalNumberOfRecordsFooter;
+                        staggingUA.NumberOfAcceptedRecordsWithoutChanges = numberOfAcceptedRecordsWithoutChangesFooter;
+                        staggingUA.NumberOfAcceptedRecordsWithChanges = numberOfAcceptedRecordsWithChangesFooter;
+                        staggingUA.NumberOfRejectedRecords = numberOfRejectedRecordsFooter;
+                        staggingUA.FillerFooter = fillerFooter;
+
+                        rejectedUA.RecordTypeFooter = staggingUA.RecordTypeFooter;
+                        rejectedUA.TotalNumbersOfRecords = staggingUA.TotalNumbersOfRecords;
+                        rejectedUA.NumberOfAcceptedRecordsWithoutChanges = staggingUA.NumberOfAcceptedRecordsWithoutChanges;
+                        rejectedUA.NumberOfAcceptedRecordsWithChanges = staggingUA.NumberOfAcceptedRecordsWithChanges;
+                        rejectedUA.NumberOfRejectedRecords = staggingUA.NumberOfRejectedRecords;
+                        rejectedUA.FillerFooter = staggingUA.FillerFooter;
+
+                        if (header.ToUpper() == "UA")
+                        {
+                            flightRecords.Status = "Sent from UA";
+                        }
+
+                        flightRecords.externalPaxID = "12345";
+
+                        for (int i = 0; i <= 1; i++)
+                        {
+                            staggingUA.RecordType += record[i];
+                            rejectedUA.RecordType += record[i];
+
+                            if (record[i] == ' ')
+                                continue;
+
+                            flightRecords.transactionType += record[i];
+                        }
+
+                        for (int i = 2; i <= 4; i++)
+                        {
+                            staggingUA.FFPProgram += record[i];
+                            rejectedUA.FFPProgram += record[i];
+                        }
+
+                        for (int i = 5; i <= 24; i++)
+                        {
+                            staggingUA.FFPMemberNumber += record[i];
+                            rejectedUA.FFPMemberNumber += record[i];
+                        }
+
+                        for (int i = 25; i <= 54; i++)
+                        {
+                            staggingUA.FFPMemberLastName += record[i];
+                            rejectedUA.FFPMemberLastName += record[i];
+
+                            if (record[i] == ' ')
+                                continue;
+
+                            flightRecords.lastName += record[i];
+                        }
+
+                        for (int i = 55; i <= 104; i++)
+                        {
+                            staggingUA.FFPMemberFirstName += record[i];
+                            rejectedUA.FFPMemberFirstName += record[i];
+
+                            if (record[i] == ' ')
+                                continue;
+
+                            flightRecords.firstName += record[i];
+                        }
+
+                        staggingUA.NameCheckOverride = record[105].ToString();
+                        rejectedUA.NameCheckOverride = record[105].ToString();
+
+                        for (int i = 106; i <= 108; i++)
+                        {
+                            staggingUA.OperatingAirlineCode += record[i];
+                            rejectedUA.OperatingAirlineCode += record[i];
+
+                            if (record[i] == ' ')
+                                continue;
+
+                            flightRecords.operatingAirline += record[i];
+                        }
+
+                        for (int i = 109; i <= 113; i++)
+                        {
+                            staggingUA.OperatingFlightNumber += record[i];
+                            rejectedUA.OperatingFlightNumber += record[i];
+
+                            if (record[i] == ' ')
+                                continue;
+
+                            flightRecords.operatingFlightNo += record[i];
+                        }
+
+                        for (int i = 114; i <= 116; i++)
+                        {
+                            staggingUA.MarketingAirlineCode += record[i];
+                            rejectedUA.MarketingAirlineCode += record[i];
+
+                            if (record[i] == ' ')
+                                continue;
+
+                            flightRecords.marketingAirline += record[i];
+                        }
+
+                        for (int i = 117; i <= 121; i++)
+                        {
+                            staggingUA.MarketingFlightNumber += record[i];
+                            rejectedUA.MarketingFlightNumber += record[i];
+
+                            if (record[i] == ' ')
+                                continue;
+
+                            flightRecords.marketingFlightNo += record[i];
+                        }
+
+                        staggingUA.CodeShareIndicator = record[122].ToString();
+                        rejectedUA.CodeShareIndicator = record[122].ToString();
+
+                        string day = null;
+                        string month = "";
+                        string year = "";
+
+                        for (int i = 123; i <= 126; i++)
+                        {
+                            if (record[i] == ' ')
+                                continue;
+
+                            year = year + record[i];
+                        }
+
+
+                        for (int i = 127; i <= 128; i++)
+                        {
+                            if (record[i] == ' ')
+                                continue;
+
+                            month = month + record[i];
+                        }
+
+                        for (int i = 129; i <= 130; i++)
+                        {
+                            if (record[i] == ' ')
+                                continue;
+
+                            day = day + record[i];
+                        }
+
+                        string date = day + "/" + month + "/" + year;
+
+                        DateTime dateTime = DateTime.ParseExact(date, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+
+                        staggingUA.FlightDepartureDate = year + month + day;
+                        rejectedUA.FlightDepartureDate = year + month + day;
+                        flightRecords.departureDate = dateTime;
+
+                        for (int i = 131; i <= 138; i++)
+                        {
+                            staggingUA.FlightArrivalDate += record[i];
+                            rejectedUA.FlightArrivalDate += record[i];
+                        }
+
+                        for (int i = 139; i <= 143; i++)
+                        {
+                            staggingUA.OriginAirportCode += record[i];
+                            rejectedUA.OriginAirportCode += record[i];
+
+                            if (record[i] == ' ')
+                                continue;
+
+                            flightRecords.origin += record[i];
+                        }
+
+                        for (int i = 144; i <= 148; i++)
+                        {
+                            staggingUA.DestinationAirportCode += record[i];
+                            rejectedUA.DestinationAirportCode += record[i];
+
+                            if (record[i] == ' ')
+                                continue;
+
+                            flightRecords.destination += record[i];
+                        }
+
+                        for (int i = 149; i <= 150; i++)
+                        {
+                            staggingUA.OperatingBookingClassCode += record[i];
+                            rejectedUA.OperatingBookingClassCode += record[i];
+
+                            if (record[i] == ' ')
+                                continue;
+
+                            flightRecords.bookingClass += record[i];
+                        }
+
+                        for (int i = 151; i <= 152; i++)
+                        {
+                            staggingUA.FlownCabinClassCode += record[i];
+                            rejectedUA.FlownCabinClassCode += record[i];
+
+                            if (record[i] == ' ')
+                                continue;
+
+                            flightRecords.cabinClass += record[i];
+                        }
+
+                        for (int i = 153; i <= 154; i++)
+                        {
+                            staggingUA.OperatingRevenueBookingClassCode += record[i];
+                            rejectedUA.OperatingRevenueBookingClassCode += record[i];
+                        }
+
+                        for (int i = 155; i <= 156; i++)
+                        {
+                            staggingUA.MarketingBookingClass += record[i];
+                            rejectedUA.MarketingBookingClass += record[i];
+                        }
+
+                        for (int i = 157; i <= 158; i++)
+                        {
+                            staggingUA.UpgradeIndicator += record[i];
+                            rejectedUA.UpgradeIndicator += record[i];
+                        }
+
+                        for (int i = 159; i <= 160; i++)
+                        {
+                            staggingUA.DowngradeIndicator += record[i];
+                            rejectedUA.DowngradeIndicator += record[i];
+                        }
+
+                        for (int i = 161; i <= 175; i++)
+                        {
+                            staggingUA.EntitlementNumber += record[i];
+                            rejectedUA.EntitlementNumber += record[i];
+                        }
+
+                        for (int i = 176; i <= 188; i++)
+                        {
+                            staggingUA.TicketNumber += record[i];
+                            rejectedUA.TicketNumber += record[i];
+
+                            if (record[i] == ' ')
+                                continue;
+
+                            flightRecords.ticketNo += record[i];
+                        }
+
+                        for (int i = 189; i <= 190; i++)
+                        {
+                            staggingUA.CouponNumber += record[i];
+                            rejectedUA.CouponNumber += record[i];
+
+                            if (record[i] == ' ')
+                                continue;
+
+                            flightRecords.couponNo += record[i];
+                        }
+
+                        for (int i = 191; i <= 198; i++)
+                        {
+                            staggingUA.FareBasisCode += record[i];
+                            rejectedUA.FareBasisCode += record[i];
+
+                            if (record[i] == ' ')
+                                continue;
+
+                            flightRecords.fareBasis += record[i];
+                        }
+
+                        for (int i = 199; i <= 202; i++)
+                        {
+                            staggingUA.SeatNumber += record[i];
+                            rejectedUA.SeatNumber += record[i];
+                        }
+
+                        for (int i = 203; i <= 208; i++)
+                        {
+                            staggingUA.PNRNumber += record[i];
+                            rejectedUA.PNRNumber += record[i];
+
+                            if (record[i] == ' ')
+                                continue;
+
+                            flightRecords.pnrNo += record[i];
+                        }
+
+                        staggingUA.UpdateCode = record[209].ToString();
+                        rejectedUA.UpdateCode = record[209].ToString();
+
+                        for (int i = 210; i <= 214; i++)
+                        {
+                            staggingUA.BaseFlightMiles += record[i];
+                            rejectedUA.BaseFlightMiles += record[i];
+                        }
+
+                        for (int i = 215; i <= 216; i++)
+                        {
+                            staggingUA.CheckInSourceCode += record[i];
+                            rejectedUA.CheckInSourceCode += record[i];
+                        }
+
+                        for (int i = 217; i <= 218; i++)
+                        {
+                            staggingUA.BookingSourceCode += record[i];
+                            rejectedUA.BookingSourceCode += record[i];
+                        }
+
+                        for (int i = 219; i <= 234; i++)
+                        {
+                            staggingUA.OperatingAirlineAuthorizationNo += record[i];
+                            rejectedUA.OperatingAirlineAuthorizationNo += record[i];
+                        }
+
+                        for (int i = 235; i <= 250; i++)
+                        {
+                            staggingUA.InternalAirlineReferenceNoFFPAirline += record[i];
+                            rejectedUA.InternalAirlineReferenceNoFFPAirline += record[i];
+                        }
+
+                        for (int i = 251; i <= 252; i++)
+                        {
+                            staggingUA.AccrualPostingStatus += record[i];
+                            rejectedUA.AccrualPostingStatus += record[i];
+                        }
+
+                        for (int i = 253; i <= 255; i++)
+                        {
+                            staggingUA.ResponseCode1 += record[i];
+                            rejectedUA.ResponseCode1 += record[i];
+                        }
+
+                        for (int i = 256; i <= 258; i++)
+                        {
+                            staggingUA.ResponseCode2 += record[i];
+                            rejectedUA.ResponseCode2 += record[i];
+                        }
+
+                        for (int i = 259; i <= 261; i++)
+                        {
+                            staggingUA.ResponseCode3 += record[i];
+                            rejectedUA.ResponseCode3 += record[i];
+                        }
+
+                        for (int i = 262; i <= 264; i++)
+                        {
+                            staggingUA.ResponseCode4 += record[i];
+                            rejectedUA.ResponseCode4 += record[i];
+                        }
+
+                        for (int i = 265; i <= 267; i++)
+                        {
+                            staggingUA.ResponseCode5 += record[i];
+                            rejectedUA.ResponseCode5 += record[i];
+                        }
+
+                        for (int i = 268; i <= 270; i++)
+                        {
+                            staggingUA.ResponseCode6 += record[i];
+                            rejectedUA.ResponseCode6 += record[i];
+                        }
+
+                        for (int i = 271; i <= 272; i++)
+                        {
+                            staggingUA.TierLever += record[i];
+                            rejectedUA.TierLever += record[i];
+                        }
+
+                        staggingUA.Gender = record[273].ToString();
+                        rejectedUA.Gender = record[273].ToString();
+
+                        for (int i = 274; i <= 399; i++)
+                        {
+                            staggingUA.Filler += record[i];
+                            rejectedUA.Filler += record[i];
+                        }
+
+                        for (int i = 400; i <= 499; i++)
+                        {
+                            staggingUA.AirlineAdditionalInformation += record[i];
+                            rejectedUA.AirlineAdditionalInformation += record[i];
+                        }
+
+                        currentLine++;
+
+                        //013
+                        if (Validation.IsModelStateValid(flightRecords))
+                        {
+                            //002
+                            if (header != "" && header == flightRecords.operatingAirline)
+                            {
+                                //015
+                                if (staggingUA.NameCheckOverride == "Y" || staggingUA.NameCheckOverride == "N")
+                                {
+                                    //027
+                                    if ((flightRecords.origin != "" && flightRecords.origin != null) ||
+                                        flightRecords.destination != "" && flightRecords.destination != null)
+                                    {
+                                        //023
+                                        if (flightRecords.transactionType == "01" || flightRecords.transactionType == "02" ||
+                                            flightRecords.transactionType == "03" || flightRecords.transactionType == "04")
+                                        {
+                                            //039
+                                            //if (seatNumber != string.Empty && seatNumber != null)
+                                            //{
+                                            //044
+                                            if (flightRecords.marketingAirline != "" && flightRecords.marketingAirline != null)
+                                            {
+                                                //051
+                                                if (staggingUA.FFPMemberNumber != string.Empty && staggingUA.FFPMemberNumber != null)
+                                                {
+                                                    entities.StaggingUAs.Add(staggingUA);
+                                                    entities.Flight_Records.Add(flightRecords);
+                                                }
+                                                else
+                                                {
+                                                    rejectedUA.Description = "051: Invalid FFP number";
+                                                    rejectedUA.DownloadCounter = 0;
+                                                    entities.StaggingRejectedUAs.Add(rejectedUA);
+                                                }
+                                            }
+                                            else
+                                            {
+                                                rejectedUA.Description = "044: Invalid marketing airline code";
+                                                rejectedUA.DownloadCounter = 0;
+                                                entities.StaggingRejectedUAs.Add(rejectedUA);
+                                            }
+                                            //}
+                                            //else
+                                            //{
+                                            //    handbackRecord.DownloadCounter = 0;
+                                            //    handbackRecord.Description = "039: Invalid seat number";
+                                            //    entities.HandbackRecords.Add(handbackRecord);
+                                            //}
+                                        }
+                                        else
+                                        {
+                                            rejectedUA.Description = "023: Invalid transaction type";
+                                            rejectedUA.DownloadCounter = 0;
+                                            entities.StaggingRejectedUAs.Add(rejectedUA);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        rejectedUA.Description = "027: Invalid origin and/or destination airport code";
+                                        rejectedUA.DownloadCounter = 0;
+                                        entities.StaggingRejectedUAs.Add(rejectedUA);
+                                    }
+                                }
+                                else
+                                {
+                                    rejectedUA.Description = "Invalid name check override.";
+                                    rejectedUA.DownloadCounter = 0;
+                                    entities.StaggingRejectedUAs.Add(rejectedUA);
+                                }
+                            }
+                            else
+                            {
+                                rejectedUA.Description = "Header is incorrect.";
+                                rejectedUA.DownloadCounter = 0;
+                                entities.StaggingRejectedUAs.Add(rejectedUA);
+                            }
+                        }
+                        else
+                        {
+                            rejectedUA.Description = "Mandatory fields data is missing or in invalid format";
+                            rejectedUA.DownloadCounter = 0;
+                            entities.StaggingRejectedUAs.Add(rejectedUA);
+                        }
+                    }
+
+                    entities.SaveChanges();
+
+                    return Request.CreateResponse(HttpStatusCode.OK);
+                }
             }
             //catch (System.Data.Entity.Validation.DbEntityValidationException e)
             //{
@@ -966,7 +1541,7 @@ namespace AerLingus.Controllers.Api
             //}
             catch (Exception ex)
             {
-                poruka = poruka + ex.InnerException.InnerException.Message;
+                poruka = poruka + ex.Message;
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
         }
@@ -2398,8 +2973,5 @@ namespace AerLingus.Controllers.Api
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
         }
-
-
-
     }
 }
