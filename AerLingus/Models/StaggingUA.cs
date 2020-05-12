@@ -76,5 +76,7 @@ namespace AerLingus.Models
         public string FillerFooter { get; set; }
         public int ID { get; set; }
         public Nullable<int> DownloadCounter { get; set; }
+        public string Description { get; set; }
+        public Nullable<int> JourneySegmentID { get; set; }
     }
 }

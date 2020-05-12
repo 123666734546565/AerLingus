@@ -8,7 +8,6 @@ using AerLingus.Models;
 using System.IO;
 using System.Web;
 using Microsoft.VisualBasic;
-using System.Text;
 using AerLingus.Validations;
 using System.Threading.Tasks;
 using AerLingus.Helpers;
@@ -206,12 +205,6 @@ namespace AerLingus.Controllers.Api
                         header += headerMetaData[i];
                     }
 
-                    //while (!streamReader.EndOfStream)
-                    //{
-                    //    streamReader.ReadLine();
-                    //    lineCounter++;
-                    //}
-
                     lineCounter--;
 
                     string temp = string.Empty;
@@ -337,8 +330,22 @@ namespace AerLingus.Controllers.Api
                     {
                         Flight_Records flightRecords = new Flight_Records();
                         string record = streamReader.ReadLine();
-                        StaggingUA staggingUA = new StaggingUA();
                         StaggingRejectedUA rejectedUA = new StaggingRejectedUA();
+
+                        if (record.Length < 500)
+                        {
+                            rejectedUA.Header = headerMetaData;
+                            rejectedUA.Record = record;
+                            rejectedUA.Footer = footerMetaData;
+                            rejectedUA.Description = "Incorrect length.";
+                            rejectedUA.DownloadCounter = 0;
+                            entities.StaggingRejectedUAs.Add(rejectedUA);
+                            entities.SaveChanges();
+                            currentLine++;
+                            continue;
+                        }
+
+                        StaggingUA staggingUA = new StaggingUA();
 
                         //header
                         staggingUA.RecordTypeHeader = recordTypeHeader;
@@ -352,17 +359,6 @@ namespace AerLingus.Controllers.Api
                         staggingUA.CarrierFileReferenceHeader = carrierFileReferenceHeader;
                         staggingUA.FillerHeader = fillerHeader;
 
-                        rejectedUA.RecordTypeHeader = staggingUA.RecordTypeHeader;
-                        rejectedUA.FileTypeHeader = staggingUA.FileTypeHeader;
-                        rejectedUA.DeliverySequenceNoHeader = staggingUA.DeliverySequenceNoHeader;
-                        rejectedUA.SendingSystemHeader = staggingUA.SendingSystemHeader;
-                        rejectedUA.SendingAirlineHeader = staggingUA.SendingAirlineHeader;
-                        rejectedUA.ReceivingAirlineHeader = staggingUA.ReceivingAirlineHeader;
-                        rejectedUA.CreateDateHeader = staggingUA.CreateDateHeader;
-                        rejectedUA.VersionHeader = staggingUA.VersionHeader;
-                        rejectedUA.CarrierFileReferenceHeader = staggingUA.CarrierFileReferenceHeader;
-                        rejectedUA.FillerHeader = staggingUA.FillerHeader;
-
                         //footer
                         staggingUA.RecordTypeFooter = recordTypeFooter;
                         staggingUA.TotalNumbersOfRecords = totalNumberOfRecordsFooter;
@@ -370,13 +366,6 @@ namespace AerLingus.Controllers.Api
                         staggingUA.NumberOfAcceptedRecordsWithChanges = numberOfAcceptedRecordsWithChangesFooter;
                         staggingUA.NumberOfRejectedRecords = numberOfRejectedRecordsFooter;
                         staggingUA.FillerFooter = fillerFooter;
-
-                        rejectedUA.RecordTypeFooter = staggingUA.RecordTypeFooter;
-                        rejectedUA.TotalNumbersOfRecords = staggingUA.TotalNumbersOfRecords;
-                        rejectedUA.NumberOfAcceptedRecordsWithoutChanges = staggingUA.NumberOfAcceptedRecordsWithoutChanges;
-                        rejectedUA.NumberOfAcceptedRecordsWithChanges = staggingUA.NumberOfAcceptedRecordsWithChanges;
-                        rejectedUA.NumberOfRejectedRecords = staggingUA.NumberOfRejectedRecords;
-                        rejectedUA.FillerFooter = staggingUA.FillerFooter;
 
                         if (header.ToUpper() == "UA")
                         {
@@ -388,7 +377,6 @@ namespace AerLingus.Controllers.Api
                         for (int i = 0; i <= 1; i++)
                         {
                             staggingUA.RecordType += record[i];
-                            rejectedUA.RecordType += record[i];
 
                             if (record[i] == ' ')
                                 continue;
@@ -399,19 +387,16 @@ namespace AerLingus.Controllers.Api
                         for (int i = 2; i <= 4; i++)
                         {
                             staggingUA.FFPProgram += record[i];
-                            rejectedUA.FFPProgram += record[i];
                         }
 
                         for (int i = 5; i <= 24; i++)
                         {
                             staggingUA.FFPMemberNumber += record[i];
-                            rejectedUA.FFPMemberNumber += record[i];
                         }
 
                         for (int i = 25; i <= 54; i++)
                         {
                             staggingUA.FFPMemberLastName += record[i];
-                            rejectedUA.FFPMemberLastName += record[i];
 
                             if (record[i] == ' ')
                                 continue;
@@ -422,7 +407,6 @@ namespace AerLingus.Controllers.Api
                         for (int i = 55; i <= 104; i++)
                         {
                             staggingUA.FFPMemberFirstName += record[i];
-                            rejectedUA.FFPMemberFirstName += record[i];
 
                             if (record[i] == ' ')
                                 continue;
@@ -431,12 +415,10 @@ namespace AerLingus.Controllers.Api
                         }
 
                         staggingUA.NameCheckOverride = record[105].ToString();
-                        rejectedUA.NameCheckOverride = record[105].ToString();
 
                         for (int i = 106; i <= 108; i++)
                         {
                             staggingUA.OperatingAirlineCode += record[i];
-                            rejectedUA.OperatingAirlineCode += record[i];
 
                             if (record[i] == ' ')
                                 continue;
@@ -447,7 +429,6 @@ namespace AerLingus.Controllers.Api
                         for (int i = 109; i <= 113; i++)
                         {
                             staggingUA.OperatingFlightNumber += record[i];
-                            rejectedUA.OperatingFlightNumber += record[i];
 
                             if (record[i] == ' ')
                                 continue;
@@ -458,7 +439,6 @@ namespace AerLingus.Controllers.Api
                         for (int i = 114; i <= 116; i++)
                         {
                             staggingUA.MarketingAirlineCode += record[i];
-                            rejectedUA.MarketingAirlineCode += record[i];
 
                             if (record[i] == ' ')
                                 continue;
@@ -469,7 +449,6 @@ namespace AerLingus.Controllers.Api
                         for (int i = 117; i <= 121; i++)
                         {
                             staggingUA.MarketingFlightNumber += record[i];
-                            rejectedUA.MarketingFlightNumber += record[i];
 
                             if (record[i] == ' ')
                                 continue;
@@ -478,7 +457,6 @@ namespace AerLingus.Controllers.Api
                         }
 
                         staggingUA.CodeShareIndicator = record[122].ToString();
-                        rejectedUA.CodeShareIndicator = record[122].ToString();
 
                         string day = null;
                         string month = "";
@@ -514,19 +492,16 @@ namespace AerLingus.Controllers.Api
                         DateTime dateTime = DateTime.ParseExact(date, "dd/MM/yyyy", CultureInfo.InvariantCulture);
 
                         staggingUA.FlightDepartureDate = year + month + day;
-                        rejectedUA.FlightDepartureDate = year + month + day;
                         flightRecords.departureDate = dateTime;
 
                         for (int i = 131; i <= 138; i++)
                         {
                             staggingUA.FlightArrivalDate += record[i];
-                            rejectedUA.FlightArrivalDate += record[i];
                         }
 
                         for (int i = 139; i <= 143; i++)
                         {
                             staggingUA.OriginAirportCode += record[i];
-                            rejectedUA.OriginAirportCode += record[i];
 
                             if (record[i] == ' ')
                                 continue;
@@ -537,7 +512,6 @@ namespace AerLingus.Controllers.Api
                         for (int i = 144; i <= 148; i++)
                         {
                             staggingUA.DestinationAirportCode += record[i];
-                            rejectedUA.DestinationAirportCode += record[i];
 
                             if (record[i] == ' ')
                                 continue;
@@ -548,7 +522,6 @@ namespace AerLingus.Controllers.Api
                         for (int i = 149; i <= 150; i++)
                         {
                             staggingUA.OperatingBookingClassCode += record[i];
-                            rejectedUA.OperatingBookingClassCode += record[i];
 
                             if (record[i] == ' ')
                                 continue;
@@ -559,7 +532,6 @@ namespace AerLingus.Controllers.Api
                         for (int i = 151; i <= 152; i++)
                         {
                             staggingUA.FlownCabinClassCode += record[i];
-                            rejectedUA.FlownCabinClassCode += record[i];
 
                             if (record[i] == ' ')
                                 continue;
@@ -570,37 +542,31 @@ namespace AerLingus.Controllers.Api
                         for (int i = 153; i <= 154; i++)
                         {
                             staggingUA.OperatingRevenueBookingClassCode += record[i];
-                            rejectedUA.OperatingRevenueBookingClassCode += record[i];
                         }
 
                         for (int i = 155; i <= 156; i++)
                         {
                             staggingUA.MarketingBookingClass += record[i];
-                            rejectedUA.MarketingBookingClass += record[i];
                         }
 
                         for (int i = 157; i <= 158; i++)
                         {
                             staggingUA.UpgradeIndicator += record[i];
-                            rejectedUA.UpgradeIndicator += record[i];
                         }
 
                         for (int i = 159; i <= 160; i++)
                         {
                             staggingUA.DowngradeIndicator += record[i];
-                            rejectedUA.DowngradeIndicator += record[i];
                         }
 
                         for (int i = 161; i <= 175; i++)
                         {
                             staggingUA.EntitlementNumber += record[i];
-                            rejectedUA.EntitlementNumber += record[i];
                         }
 
                         for (int i = 176; i <= 188; i++)
                         {
                             staggingUA.TicketNumber += record[i];
-                            rejectedUA.TicketNumber += record[i];
 
                             if (record[i] == ' ')
                                 continue;
@@ -611,7 +577,6 @@ namespace AerLingus.Controllers.Api
                         for (int i = 189; i <= 190; i++)
                         {
                             staggingUA.CouponNumber += record[i];
-                            rejectedUA.CouponNumber += record[i];
 
                             if (record[i] == ' ')
                                 continue;
@@ -622,7 +587,6 @@ namespace AerLingus.Controllers.Api
                         for (int i = 191; i <= 198; i++)
                         {
                             staggingUA.FareBasisCode += record[i];
-                            rejectedUA.FareBasisCode += record[i];
 
                             if (record[i] == ' ')
                                 continue;
@@ -633,13 +597,11 @@ namespace AerLingus.Controllers.Api
                         for (int i = 199; i <= 202; i++)
                         {
                             staggingUA.SeatNumber += record[i];
-                            rejectedUA.SeatNumber += record[i];
                         }
 
                         for (int i = 203; i <= 208; i++)
                         {
                             staggingUA.PNRNumber += record[i];
-                            rejectedUA.PNRNumber += record[i];
 
                             if (record[i] == ' ')
                                 continue;
@@ -648,99 +610,82 @@ namespace AerLingus.Controllers.Api
                         }
 
                         staggingUA.UpdateCode = record[209].ToString();
-                        rejectedUA.UpdateCode = record[209].ToString();
 
                         for (int i = 210; i <= 214; i++)
                         {
                             staggingUA.BaseFlightMiles += record[i];
-                            rejectedUA.BaseFlightMiles += record[i];
                         }
 
                         for (int i = 215; i <= 216; i++)
                         {
                             staggingUA.CheckInSourceCode += record[i];
-                            rejectedUA.CheckInSourceCode += record[i];
                         }
 
                         for (int i = 217; i <= 218; i++)
                         {
                             staggingUA.BookingSourceCode += record[i];
-                            rejectedUA.BookingSourceCode += record[i];
                         }
 
                         for (int i = 219; i <= 234; i++)
                         {
                             staggingUA.OperatingAirlineAuthorizationNo += record[i];
-                            rejectedUA.OperatingAirlineAuthorizationNo += record[i];
                         }
 
                         for (int i = 235; i <= 250; i++)
                         {
                             staggingUA.InternalAirlineReferenceNoFFPAirline += record[i];
-                            rejectedUA.InternalAirlineReferenceNoFFPAirline += record[i];
                         }
 
                         for (int i = 251; i <= 252; i++)
                         {
                             staggingUA.AccrualPostingStatus += record[i];
-                            rejectedUA.AccrualPostingStatus += record[i];
                         }
 
                         for (int i = 253; i <= 255; i++)
                         {
                             staggingUA.ResponseCode1 += record[i];
-                            rejectedUA.ResponseCode1 += record[i];
                         }
 
                         for (int i = 256; i <= 258; i++)
                         {
                             staggingUA.ResponseCode2 += record[i];
-                            rejectedUA.ResponseCode2 += record[i];
                         }
 
                         for (int i = 259; i <= 261; i++)
                         {
                             staggingUA.ResponseCode3 += record[i];
-                            rejectedUA.ResponseCode3 += record[i];
                         }
 
                         for (int i = 262; i <= 264; i++)
                         {
                             staggingUA.ResponseCode4 += record[i];
-                            rejectedUA.ResponseCode4 += record[i];
                         }
 
                         for (int i = 265; i <= 267; i++)
                         {
                             staggingUA.ResponseCode5 += record[i];
-                            rejectedUA.ResponseCode5 += record[i];
                         }
 
                         for (int i = 268; i <= 270; i++)
                         {
                             staggingUA.ResponseCode6 += record[i];
-                            rejectedUA.ResponseCode6 += record[i];
                         }
 
                         for (int i = 271; i <= 272; i++)
                         {
                             staggingUA.TierLever += record[i];
-                            rejectedUA.TierLever += record[i];
                         }
 
                         staggingUA.Gender = record[273].ToString();
-                        rejectedUA.Gender = record[273].ToString();
 
                         for (int i = 274; i <= 399; i++)
                         {
                             staggingUA.Filler += record[i];
-                            rejectedUA.Filler += record[i];
                         }
 
                         for (int i = 400; i <= 499; i++)
                         {
                             staggingUA.AirlineAdditionalInformation += record[i];
-                            rejectedUA.AirlineAdditionalInformation += record[i];
                         }
 
                         currentLine++;
@@ -762,10 +707,6 @@ namespace AerLingus.Controllers.Api
                                         if (flightRecords.transactionType == "01" || flightRecords.transactionType == "02" ||
                                             flightRecords.transactionType == "03" || flightRecords.transactionType == "04")
                                         {
-                                            //039
-                                            //if (seatNumber != string.Empty && seatNumber != null)
-                                            //{
-                                            //044
                                             if (flightRecords.marketingAirline != "" && flightRecords.marketingAirline != null)
                                             {
                                                 //051
@@ -776,58 +717,51 @@ namespace AerLingus.Controllers.Api
                                                 }
                                                 else
                                                 {
-                                                    rejectedUA.Description = "051: Invalid FFP number";
-                                                    rejectedUA.DownloadCounter = 0;
-                                                    entities.StaggingRejectedUAs.Add(rejectedUA);
+                                                    staggingUA.Description = "051: Invalid FFP number";
+                                                    staggingUA.DownloadCounter = 0;
+                                                    entities.StaggingUAs.Add(staggingUA);
                                                 }
                                             }
                                             else
                                             {
-                                                rejectedUA.Description = "044: Invalid marketing airline code";
-                                                rejectedUA.DownloadCounter = 0;
-                                                entities.StaggingRejectedUAs.Add(rejectedUA);
+                                                staggingUA.Description = "044: Invalid marketing airline code";
+                                                staggingUA.DownloadCounter = 0;
+                                                entities.StaggingUAs.Add(staggingUA);
                                             }
-                                            //}
-                                            //else
-                                            //{
-                                            //    handbackRecord.DownloadCounter = 0;
-                                            //    handbackRecord.Description = "039: Invalid seat number";
-                                            //    entities.HandbackRecords.Add(handbackRecord);
-                                            //}
                                         }
                                         else
                                         {
-                                            rejectedUA.Description = "023: Invalid transaction type";
-                                            rejectedUA.DownloadCounter = 0;
-                                            entities.StaggingRejectedUAs.Add(rejectedUA);
+                                            staggingUA.Description = "023: Invalid transaction type";
+                                            staggingUA.DownloadCounter = 0;
+                                            entities.StaggingUAs.Add(staggingUA);
                                         }
                                     }
                                     else
                                     {
-                                        rejectedUA.Description = "027: Invalid origin and/or destination airport code";
-                                        rejectedUA.DownloadCounter = 0;
-                                        entities.StaggingRejectedUAs.Add(rejectedUA);
+                                        staggingUA.Description = "027: Invalid origin and/or destination airport code";
+                                        staggingUA.DownloadCounter = 0;
+                                        entities.StaggingUAs.Add(staggingUA);
                                     }
                                 }
                                 else
                                 {
-                                    rejectedUA.Description = "Invalid name check override.";
-                                    rejectedUA.DownloadCounter = 0;
-                                    entities.StaggingRejectedUAs.Add(rejectedUA);
+                                    staggingUA.Description = "Invalid name check override.";
+                                    staggingUA.DownloadCounter = 0;
+                                    entities.StaggingUAs.Add(staggingUA);
                                 }
                             }
                             else
                             {
-                                rejectedUA.Description = "Header is incorrect.";
-                                rejectedUA.DownloadCounter = 0;
-                                entities.StaggingRejectedUAs.Add(rejectedUA);
+                                staggingUA.Description = "Header is incorrect.";
+                                staggingUA.DownloadCounter = 0;
+                                entities.StaggingUAs.Add(staggingUA);
                             }
                         }
                         else
                         {
-                            rejectedUA.Description = "Mandatory fields data is missing or in invalid format";
-                            rejectedUA.DownloadCounter = 0;
-                            entities.StaggingRejectedUAs.Add(rejectedUA);
+                            staggingUA.Description = "Mandatory fields data is missing or in invalid format";
+                            staggingUA.DownloadCounter = 0;
+                            entities.StaggingUAs.Add(staggingUA);
                         }
                     }
 
@@ -1025,8 +959,22 @@ namespace AerLingus.Controllers.Api
                     {
                         Flight_Records flightRecords = new Flight_Records();
                         string record = streamReader.ReadLine();
-                        StaggingUA staggingUA = new StaggingUA();
                         StaggingRejectedUA rejectedUA = new StaggingRejectedUA();
+
+                        if (record.Length < 500)
+                        {
+                            rejectedUA.Header = headerMetaData;
+                            rejectedUA.Record = record;
+                            rejectedUA.Footer = footerMetaData;
+                            rejectedUA.Description = "Incorrect length.";
+                            rejectedUA.DownloadCounter = 0;
+                            entities.StaggingRejectedUAs.Add(rejectedUA);
+                            entities.SaveChanges();
+                            currentLine++;
+                            continue;
+                        }
+
+                        StaggingUA staggingUA = new StaggingUA();
 
                         //header
                         staggingUA.RecordTypeHeader = recordTypeHeader;
@@ -1040,17 +988,6 @@ namespace AerLingus.Controllers.Api
                         staggingUA.CarrierFileReferenceHeader = carrierFileReferenceHeader;
                         staggingUA.FillerHeader = fillerHeader;
 
-                        rejectedUA.RecordTypeHeader = staggingUA.RecordTypeHeader;
-                        rejectedUA.FileTypeHeader = staggingUA.FileTypeHeader;
-                        rejectedUA.DeliverySequenceNoHeader = staggingUA.DeliverySequenceNoHeader;
-                        rejectedUA.SendingSystemHeader = staggingUA.SendingSystemHeader;
-                        rejectedUA.SendingAirlineHeader = staggingUA.SendingAirlineHeader;
-                        rejectedUA.ReceivingAirlineHeader = staggingUA.ReceivingAirlineHeader;
-                        rejectedUA.CreateDateHeader = staggingUA.CreateDateHeader;
-                        rejectedUA.VersionHeader = staggingUA.VersionHeader;
-                        rejectedUA.CarrierFileReferenceHeader = staggingUA.CarrierFileReferenceHeader;
-                        rejectedUA.FillerHeader = staggingUA.FillerHeader;
-
                         //footer
                         staggingUA.RecordTypeFooter = recordTypeFooter;
                         staggingUA.TotalNumbersOfRecords = totalNumberOfRecordsFooter;
@@ -1058,13 +995,6 @@ namespace AerLingus.Controllers.Api
                         staggingUA.NumberOfAcceptedRecordsWithChanges = numberOfAcceptedRecordsWithChangesFooter;
                         staggingUA.NumberOfRejectedRecords = numberOfRejectedRecordsFooter;
                         staggingUA.FillerFooter = fillerFooter;
-
-                        rejectedUA.RecordTypeFooter = staggingUA.RecordTypeFooter;
-                        rejectedUA.TotalNumbersOfRecords = staggingUA.TotalNumbersOfRecords;
-                        rejectedUA.NumberOfAcceptedRecordsWithoutChanges = staggingUA.NumberOfAcceptedRecordsWithoutChanges;
-                        rejectedUA.NumberOfAcceptedRecordsWithChanges = staggingUA.NumberOfAcceptedRecordsWithChanges;
-                        rejectedUA.NumberOfRejectedRecords = staggingUA.NumberOfRejectedRecords;
-                        rejectedUA.FillerFooter = staggingUA.FillerFooter;
 
                         if (header.ToUpper() == "UA")
                         {
@@ -1076,7 +1006,6 @@ namespace AerLingus.Controllers.Api
                         for (int i = 0; i <= 1; i++)
                         {
                             staggingUA.RecordType += record[i];
-                            rejectedUA.RecordType += record[i];
 
                             if (record[i] == ' ')
                                 continue;
@@ -1087,19 +1016,16 @@ namespace AerLingus.Controllers.Api
                         for (int i = 2; i <= 4; i++)
                         {
                             staggingUA.FFPProgram += record[i];
-                            rejectedUA.FFPProgram += record[i];
                         }
 
                         for (int i = 5; i <= 24; i++)
                         {
                             staggingUA.FFPMemberNumber += record[i];
-                            rejectedUA.FFPMemberNumber += record[i];
                         }
 
                         for (int i = 25; i <= 54; i++)
                         {
                             staggingUA.FFPMemberLastName += record[i];
-                            rejectedUA.FFPMemberLastName += record[i];
 
                             if (record[i] == ' ')
                                 continue;
@@ -1110,7 +1036,6 @@ namespace AerLingus.Controllers.Api
                         for (int i = 55; i <= 104; i++)
                         {
                             staggingUA.FFPMemberFirstName += record[i];
-                            rejectedUA.FFPMemberFirstName += record[i];
 
                             if (record[i] == ' ')
                                 continue;
@@ -1119,12 +1044,10 @@ namespace AerLingus.Controllers.Api
                         }
 
                         staggingUA.NameCheckOverride = record[105].ToString();
-                        rejectedUA.NameCheckOverride = record[105].ToString();
 
                         for (int i = 106; i <= 108; i++)
                         {
                             staggingUA.OperatingAirlineCode += record[i];
-                            rejectedUA.OperatingAirlineCode += record[i];
 
                             if (record[i] == ' ')
                                 continue;
@@ -1135,7 +1058,6 @@ namespace AerLingus.Controllers.Api
                         for (int i = 109; i <= 113; i++)
                         {
                             staggingUA.OperatingFlightNumber += record[i];
-                            rejectedUA.OperatingFlightNumber += record[i];
 
                             if (record[i] == ' ')
                                 continue;
@@ -1146,7 +1068,6 @@ namespace AerLingus.Controllers.Api
                         for (int i = 114; i <= 116; i++)
                         {
                             staggingUA.MarketingAirlineCode += record[i];
-                            rejectedUA.MarketingAirlineCode += record[i];
 
                             if (record[i] == ' ')
                                 continue;
@@ -1157,7 +1078,6 @@ namespace AerLingus.Controllers.Api
                         for (int i = 117; i <= 121; i++)
                         {
                             staggingUA.MarketingFlightNumber += record[i];
-                            rejectedUA.MarketingFlightNumber += record[i];
 
                             if (record[i] == ' ')
                                 continue;
@@ -1166,7 +1086,6 @@ namespace AerLingus.Controllers.Api
                         }
 
                         staggingUA.CodeShareIndicator = record[122].ToString();
-                        rejectedUA.CodeShareIndicator = record[122].ToString();
 
                         string day = null;
                         string month = "";
@@ -1202,19 +1121,16 @@ namespace AerLingus.Controllers.Api
                         DateTime dateTime = DateTime.ParseExact(date, "dd/MM/yyyy", CultureInfo.InvariantCulture);
 
                         staggingUA.FlightDepartureDate = year + month + day;
-                        rejectedUA.FlightDepartureDate = year + month + day;
                         flightRecords.departureDate = dateTime;
 
                         for (int i = 131; i <= 138; i++)
                         {
                             staggingUA.FlightArrivalDate += record[i];
-                            rejectedUA.FlightArrivalDate += record[i];
                         }
 
                         for (int i = 139; i <= 143; i++)
                         {
                             staggingUA.OriginAirportCode += record[i];
-                            rejectedUA.OriginAirportCode += record[i];
 
                             if (record[i] == ' ')
                                 continue;
@@ -1225,7 +1141,6 @@ namespace AerLingus.Controllers.Api
                         for (int i = 144; i <= 148; i++)
                         {
                             staggingUA.DestinationAirportCode += record[i];
-                            rejectedUA.DestinationAirportCode += record[i];
 
                             if (record[i] == ' ')
                                 continue;
@@ -1236,7 +1151,6 @@ namespace AerLingus.Controllers.Api
                         for (int i = 149; i <= 150; i++)
                         {
                             staggingUA.OperatingBookingClassCode += record[i];
-                            rejectedUA.OperatingBookingClassCode += record[i];
 
                             if (record[i] == ' ')
                                 continue;
@@ -1247,7 +1161,6 @@ namespace AerLingus.Controllers.Api
                         for (int i = 151; i <= 152; i++)
                         {
                             staggingUA.FlownCabinClassCode += record[i];
-                            rejectedUA.FlownCabinClassCode += record[i];
 
                             if (record[i] == ' ')
                                 continue;
@@ -1258,37 +1171,31 @@ namespace AerLingus.Controllers.Api
                         for (int i = 153; i <= 154; i++)
                         {
                             staggingUA.OperatingRevenueBookingClassCode += record[i];
-                            rejectedUA.OperatingRevenueBookingClassCode += record[i];
                         }
 
                         for (int i = 155; i <= 156; i++)
                         {
                             staggingUA.MarketingBookingClass += record[i];
-                            rejectedUA.MarketingBookingClass += record[i];
                         }
 
                         for (int i = 157; i <= 158; i++)
                         {
                             staggingUA.UpgradeIndicator += record[i];
-                            rejectedUA.UpgradeIndicator += record[i];
                         }
 
                         for (int i = 159; i <= 160; i++)
                         {
                             staggingUA.DowngradeIndicator += record[i];
-                            rejectedUA.DowngradeIndicator += record[i];
                         }
 
                         for (int i = 161; i <= 175; i++)
                         {
                             staggingUA.EntitlementNumber += record[i];
-                            rejectedUA.EntitlementNumber += record[i];
                         }
 
                         for (int i = 176; i <= 188; i++)
                         {
                             staggingUA.TicketNumber += record[i];
-                            rejectedUA.TicketNumber += record[i];
 
                             if (record[i] == ' ')
                                 continue;
@@ -1299,7 +1206,6 @@ namespace AerLingus.Controllers.Api
                         for (int i = 189; i <= 190; i++)
                         {
                             staggingUA.CouponNumber += record[i];
-                            rejectedUA.CouponNumber += record[i];
 
                             if (record[i] == ' ')
                                 continue;
@@ -1310,7 +1216,6 @@ namespace AerLingus.Controllers.Api
                         for (int i = 191; i <= 198; i++)
                         {
                             staggingUA.FareBasisCode += record[i];
-                            rejectedUA.FareBasisCode += record[i];
 
                             if (record[i] == ' ')
                                 continue;
@@ -1321,13 +1226,11 @@ namespace AerLingus.Controllers.Api
                         for (int i = 199; i <= 202; i++)
                         {
                             staggingUA.SeatNumber += record[i];
-                            rejectedUA.SeatNumber += record[i];
                         }
 
                         for (int i = 203; i <= 208; i++)
                         {
                             staggingUA.PNRNumber += record[i];
-                            rejectedUA.PNRNumber += record[i];
 
                             if (record[i] == ' ')
                                 continue;
@@ -1336,99 +1239,82 @@ namespace AerLingus.Controllers.Api
                         }
 
                         staggingUA.UpdateCode = record[209].ToString();
-                        rejectedUA.UpdateCode = record[209].ToString();
 
                         for (int i = 210; i <= 214; i++)
                         {
                             staggingUA.BaseFlightMiles += record[i];
-                            rejectedUA.BaseFlightMiles += record[i];
                         }
 
                         for (int i = 215; i <= 216; i++)
                         {
                             staggingUA.CheckInSourceCode += record[i];
-                            rejectedUA.CheckInSourceCode += record[i];
                         }
 
                         for (int i = 217; i <= 218; i++)
                         {
                             staggingUA.BookingSourceCode += record[i];
-                            rejectedUA.BookingSourceCode += record[i];
                         }
 
                         for (int i = 219; i <= 234; i++)
                         {
                             staggingUA.OperatingAirlineAuthorizationNo += record[i];
-                            rejectedUA.OperatingAirlineAuthorizationNo += record[i];
                         }
 
                         for (int i = 235; i <= 250; i++)
                         {
                             staggingUA.InternalAirlineReferenceNoFFPAirline += record[i];
-                            rejectedUA.InternalAirlineReferenceNoFFPAirline += record[i];
                         }
 
                         for (int i = 251; i <= 252; i++)
                         {
                             staggingUA.AccrualPostingStatus += record[i];
-                            rejectedUA.AccrualPostingStatus += record[i];
                         }
 
                         for (int i = 253; i <= 255; i++)
                         {
                             staggingUA.ResponseCode1 += record[i];
-                            rejectedUA.ResponseCode1 += record[i];
                         }
 
                         for (int i = 256; i <= 258; i++)
                         {
                             staggingUA.ResponseCode2 += record[i];
-                            rejectedUA.ResponseCode2 += record[i];
                         }
 
                         for (int i = 259; i <= 261; i++)
                         {
                             staggingUA.ResponseCode3 += record[i];
-                            rejectedUA.ResponseCode3 += record[i];
                         }
 
                         for (int i = 262; i <= 264; i++)
                         {
                             staggingUA.ResponseCode4 += record[i];
-                            rejectedUA.ResponseCode4 += record[i];
                         }
 
                         for (int i = 265; i <= 267; i++)
                         {
                             staggingUA.ResponseCode5 += record[i];
-                            rejectedUA.ResponseCode5 += record[i];
                         }
 
                         for (int i = 268; i <= 270; i++)
                         {
                             staggingUA.ResponseCode6 += record[i];
-                            rejectedUA.ResponseCode6 += record[i];
                         }
 
                         for (int i = 271; i <= 272; i++)
                         {
                             staggingUA.TierLever += record[i];
-                            rejectedUA.TierLever += record[i];
                         }
 
                         staggingUA.Gender = record[273].ToString();
-                        rejectedUA.Gender = record[273].ToString();
 
                         for (int i = 274; i <= 399; i++)
                         {
                             staggingUA.Filler += record[i];
-                            rejectedUA.Filler += record[i];
                         }
 
                         for (int i = 400; i <= 499; i++)
                         {
                             staggingUA.AirlineAdditionalInformation += record[i];
-                            rejectedUA.AirlineAdditionalInformation += record[i];
                         }
 
                         currentLine++;
@@ -1464,58 +1350,51 @@ namespace AerLingus.Controllers.Api
                                                 }
                                                 else
                                                 {
-                                                    rejectedUA.Description = "051: Invalid FFP number";
-                                                    rejectedUA.DownloadCounter = 0;
-                                                    entities.StaggingRejectedUAs.Add(rejectedUA);
+                                                    staggingUA.Description = "051: Invalid FFP number";
+                                                    staggingUA.DownloadCounter = 0;
+                                                    entities.StaggingUAs.Add(staggingUA);
                                                 }
                                             }
                                             else
                                             {
-                                                rejectedUA.Description = "044: Invalid marketing airline code";
-                                                rejectedUA.DownloadCounter = 0;
-                                                entities.StaggingRejectedUAs.Add(rejectedUA);
+                                                staggingUA.Description = "044: Invalid marketing airline code";
+                                                staggingUA.DownloadCounter = 0;
+                                                entities.StaggingUAs.Add(staggingUA);
                                             }
-                                            //}
-                                            //else
-                                            //{
-                                            //    handbackRecord.DownloadCounter = 0;
-                                            //    handbackRecord.Description = "039: Invalid seat number";
-                                            //    entities.HandbackRecords.Add(handbackRecord);
-                                            //}
                                         }
                                         else
                                         {
-                                            rejectedUA.Description = "023: Invalid transaction type";
-                                            rejectedUA.DownloadCounter = 0;
-                                            entities.StaggingRejectedUAs.Add(rejectedUA);
+                                            staggingUA.Description = "023: Invalid transaction type";
+                                            staggingUA.DownloadCounter = 0;
+                                            entities.StaggingUAs.Add(staggingUA);
                                         }
                                     }
                                     else
                                     {
-                                        rejectedUA.Description = "027: Invalid origin and/or destination airport code";
-                                        rejectedUA.DownloadCounter = 0;
-                                        entities.StaggingRejectedUAs.Add(rejectedUA);
+                                        staggingUA.Description = "027: Invalid origin and/or destination airport code";
+                                        staggingUA.DownloadCounter = 0;
+                                        entities.StaggingUAs.Add(staggingUA);
                                     }
                                 }
                                 else
                                 {
-                                    rejectedUA.Description = "Invalid name check override.";
-                                    rejectedUA.DownloadCounter = 0;
-                                    entities.StaggingRejectedUAs.Add(rejectedUA);
+                                    staggingUA.Description = "Invalid name check override.";
+                                    staggingUA.DownloadCounter = 0;
+                                    entities.StaggingUAs.Add(staggingUA);
                                 }
                             }
                             else
                             {
-                                rejectedUA.Description = "Header is incorrect.";
-                                rejectedUA.DownloadCounter = 0;
-                                entities.StaggingRejectedUAs.Add(rejectedUA);
+                                staggingUA.Description = "Header is incorrect.";
+                                staggingUA.DownloadCounter = 0;
+                                entities.StaggingUAs.Add(staggingUA);
                             }
                         }
                         else
                         {
-                            rejectedUA.Description = "Mandatory fields data is missing or in invalid format";
-                            rejectedUA.DownloadCounter = 0;
-                            entities.StaggingRejectedUAs.Add(rejectedUA);
+                            staggingUA.Description = "Mandatory fields data is missing or in invalid format";
+                            staggingUA.DownloadCounter = 0;
+                            entities.StaggingUAs.Add(staggingUA);
                         }
                     }
 

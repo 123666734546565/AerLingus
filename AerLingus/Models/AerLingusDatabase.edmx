@@ -127,66 +127,9 @@ warning 6002: The table/view 'AerLingus_database.dbo.DeletedRecords' does not ha
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="RecordTypeHeader" Type="nchar" MaxLength="2" />
-          <Property Name="FileTypeHeader" Type="nchar" MaxLength="2" />
-          <Property Name="DeliverySequenceNoHeader" Type="nchar" MaxLength="5" />
-          <Property Name="SendingSystemHeader" Type="nchar" MaxLength="3" />
-          <Property Name="SendingAirlineHeader" Type="nchar" MaxLength="3" />
-          <Property Name="ReceivingAirlineHeader" Type="nchar" MaxLength="3" />
-          <Property Name="CreateDateHeader" Type="nchar" MaxLength="8" />
-          <Property Name="VersionHeader" Type="nchar" MaxLength="2" />
-          <Property Name="CarrierFileReferenceHeader" Type="nchar" MaxLength="16" />
-          <Property Name="FillerHeader" Type="nchar" MaxLength="456" />
-          <Property Name="RecordType" Type="nchar" MaxLength="2" />
-          <Property Name="FFPProgram" Type="nchar" MaxLength="3" />
-          <Property Name="FFPMemberNumber" Type="nchar" MaxLength="20" />
-          <Property Name="FFPMemberLastName" Type="nchar" MaxLength="30" />
-          <Property Name="FFPMemberFirstName" Type="nchar" MaxLength="50" />
-          <Property Name="NameCheckOverride" Type="nchar" MaxLength="1" />
-          <Property Name="OperatingAirlineCode" Type="nchar" MaxLength="3" />
-          <Property Name="OperatingFlightNumber" Type="nchar" MaxLength="5" />
-          <Property Name="MarketingAirlineCode" Type="nchar" MaxLength="3" />
-          <Property Name="MarketingFlightNumber" Type="nchar" MaxLength="5" />
-          <Property Name="CodeShareIndicator" Type="nchar" MaxLength="1" />
-          <Property Name="FlightDepartureDate" Type="nchar" MaxLength="8" />
-          <Property Name="FlightArrivalDate" Type="nchar" MaxLength="8" />
-          <Property Name="OriginAirportCode" Type="nchar" MaxLength="5" />
-          <Property Name="DestinationAirportCode" Type="nchar" MaxLength="5" />
-          <Property Name="OperatingBookingClassCode" Type="nchar" MaxLength="2" />
-          <Property Name="FlownCabinClassCode" Type="nchar" MaxLength="2" />
-          <Property Name="OperatingRevenueBookingClassCode" Type="nchar" MaxLength="2" />
-          <Property Name="MarketingBookingClass" Type="nchar" MaxLength="2" />
-          <Property Name="UpgradeIndicator" Type="nchar" MaxLength="2" />
-          <Property Name="DowngradeIndicator" Type="nchar" MaxLength="2" />
-          <Property Name="EntitlementNumber" Type="nchar" MaxLength="15" />
-          <Property Name="TicketNumber" Type="nchar" MaxLength="14" />
-          <Property Name="CouponNumber" Type="nchar" MaxLength="2" />
-          <Property Name="FareBasisCode" Type="nchar" MaxLength="8" />
-          <Property Name="SeatNumber" Type="nchar" MaxLength="4" />
-          <Property Name="PNRNumber" Type="nchar" MaxLength="6" />
-          <Property Name="UpdateCode" Type="nchar" MaxLength="1" />
-          <Property Name="BaseFlightMiles" Type="nchar" MaxLength="5" />
-          <Property Name="CheckInSourceCode" Type="nchar" MaxLength="2" />
-          <Property Name="BookingSourceCode" Type="nchar" MaxLength="2" />
-          <Property Name="OperatingAirlineAuthorizationNo" Type="nchar" MaxLength="16" />
-          <Property Name="InternalAirlineReferenceNoFFPAirline" Type="nchar" MaxLength="16" />
-          <Property Name="AccrualPostingStatus" Type="nchar" MaxLength="2" />
-          <Property Name="ResponseCode1" Type="nchar" MaxLength="3" />
-          <Property Name="ResponseCode2" Type="nchar" MaxLength="3" />
-          <Property Name="ResponseCode3" Type="nchar" MaxLength="3" />
-          <Property Name="ResponseCode4" Type="nchar" MaxLength="3" />
-          <Property Name="ResponseCode5" Type="nchar" MaxLength="3" />
-          <Property Name="ResponseCode6" Type="nchar" MaxLength="3" />
-          <Property Name="TierLever" Type="nchar" MaxLength="2" />
-          <Property Name="Gender" Type="nchar" MaxLength="1" />
-          <Property Name="Filler" Type="nchar" MaxLength="126" />
-          <Property Name="AirlineAdditionalInformation" Type="nchar" MaxLength="100" />
-          <Property Name="RecordTypeFooter" Type="nchar" MaxLength="2" />
-          <Property Name="TotalNumbersOfRecords" Type="nchar" MaxLength="9" />
-          <Property Name="NumberOfAcceptedRecordsWithoutChanges" Type="nchar" MaxLength="9" />
-          <Property Name="NumberOfAcceptedRecordsWithChanges" Type="nchar" MaxLength="9" />
-          <Property Name="NumberOfRejectedRecords" Type="nchar" MaxLength="9" />
-          <Property Name="FillerFooter" Type="nchar" MaxLength="462" />
+          <Property Name="Header" Type="nvarchar" MaxLength="500" />
+          <Property Name="Record" Type="nvarchar" MaxLength="500" />
+          <Property Name="Footer" Type="nvarchar" MaxLength="500" />
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="100" />
           <Property Name="DownloadCounter" Type="int" />
@@ -255,7 +198,9 @@ warning 6002: The table/view 'AerLingus_database.dbo.DeletedRecords' does not ha
           <Property Name="NumberOfAcceptedRecordsWithChanges" Type="nchar" MaxLength="9" />
           <Property Name="NumberOfRejectedRecords" Type="nchar" MaxLength="9" />
           <Property Name="FillerFooter" Type="nchar" MaxLength="462" />
+          <Property Name="Description" Type="nvarchar" MaxLength="100" />
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="JourneySegmentID" Type="int" />
           <Property Name="DownloadCounter" Type="int" />
         </EntityType>
         <Association Name="FK_JourneySegment_Flight_Records">
@@ -473,69 +418,12 @@ warning 6002: The table/view 'AerLingus_database.dbo.DeletedRecords' does not ha
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="RecordTypeHeader" Type="String" MaxLength="2" FixedLength="true" Unicode="true" />
-          <Property Name="FileTypeHeader" Type="String" MaxLength="2" FixedLength="true" Unicode="true" />
-          <Property Name="DeliverySequenceNoHeader" Type="String" MaxLength="5" FixedLength="true" Unicode="true" />
-          <Property Name="SendingSystemHeader" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
-          <Property Name="SendingAirlineHeader" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
-          <Property Name="ReceivingAirlineHeader" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
-          <Property Name="CreateDateHeader" Type="String" MaxLength="8" FixedLength="true" Unicode="true" />
-          <Property Name="VersionHeader" Type="String" MaxLength="2" FixedLength="true" Unicode="true" />
-          <Property Name="CarrierFileReferenceHeader" Type="String" MaxLength="16" FixedLength="true" Unicode="true" />
-          <Property Name="FillerHeader" Type="String" MaxLength="456" FixedLength="true" Unicode="true" />
-          <Property Name="RecordType" Type="String" MaxLength="2" FixedLength="true" Unicode="true" />
-          <Property Name="FFPProgram" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
-          <Property Name="FFPMemberNumber" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
-          <Property Name="FFPMemberLastName" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
-          <Property Name="FFPMemberFirstName" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
-          <Property Name="NameCheckOverride" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
-          <Property Name="OperatingAirlineCode" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
-          <Property Name="OperatingFlightNumber" Type="String" MaxLength="5" FixedLength="true" Unicode="true" />
-          <Property Name="MarketingAirlineCode" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
-          <Property Name="MarketingFlightNumber" Type="String" MaxLength="5" FixedLength="true" Unicode="true" />
-          <Property Name="CodeShareIndicator" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
-          <Property Name="FlightDepartureDate" Type="String" MaxLength="8" FixedLength="true" Unicode="true" />
-          <Property Name="FlightArrivalDate" Type="String" MaxLength="8" FixedLength="true" Unicode="true" />
-          <Property Name="OriginAirportCode" Type="String" MaxLength="5" FixedLength="true" Unicode="true" />
-          <Property Name="DestinationAirportCode" Type="String" MaxLength="5" FixedLength="true" Unicode="true" />
-          <Property Name="OperatingBookingClassCode" Type="String" MaxLength="2" FixedLength="true" Unicode="true" />
-          <Property Name="FlownCabinClassCode" Type="String" MaxLength="2" FixedLength="true" Unicode="true" />
-          <Property Name="OperatingRevenueBookingClassCode" Type="String" MaxLength="2" FixedLength="true" Unicode="true" />
-          <Property Name="MarketingBookingClass" Type="String" MaxLength="2" FixedLength="true" Unicode="true" />
-          <Property Name="UpgradeIndicator" Type="String" MaxLength="2" FixedLength="true" Unicode="true" />
-          <Property Name="DowngradeIndicator" Type="String" MaxLength="2" FixedLength="true" Unicode="true" />
-          <Property Name="EntitlementNumber" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
-          <Property Name="TicketNumber" Type="String" MaxLength="14" FixedLength="true" Unicode="true" />
-          <Property Name="CouponNumber" Type="String" MaxLength="2" FixedLength="true" Unicode="true" />
-          <Property Name="FareBasisCode" Type="String" MaxLength="8" FixedLength="true" Unicode="true" />
-          <Property Name="SeatNumber" Type="String" MaxLength="4" FixedLength="true" Unicode="true" />
-          <Property Name="PNRNumber" Type="String" MaxLength="6" FixedLength="true" Unicode="true" />
-          <Property Name="UpdateCode" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
-          <Property Name="BaseFlightMiles" Type="String" MaxLength="5" FixedLength="true" Unicode="true" />
-          <Property Name="CheckInSourceCode" Type="String" MaxLength="2" FixedLength="true" Unicode="true" />
-          <Property Name="BookingSourceCode" Type="String" MaxLength="2" FixedLength="true" Unicode="true" />
-          <Property Name="OperatingAirlineAuthorizationNo" Type="String" MaxLength="16" FixedLength="true" Unicode="true" />
-          <Property Name="InternalAirlineReferenceNoFFPAirline" Type="String" MaxLength="16" FixedLength="true" Unicode="true" />
-          <Property Name="AccrualPostingStatus" Type="String" MaxLength="2" FixedLength="true" Unicode="true" />
-          <Property Name="ResponseCode1" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
-          <Property Name="ResponseCode2" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
-          <Property Name="ResponseCode3" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
-          <Property Name="ResponseCode4" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
-          <Property Name="ResponseCode5" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
-          <Property Name="ResponseCode6" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
-          <Property Name="TierLever" Type="String" MaxLength="2" FixedLength="true" Unicode="true" />
-          <Property Name="Gender" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
-          <Property Name="Filler" Type="String" MaxLength="126" FixedLength="true" Unicode="true" />
-          <Property Name="AirlineAdditionalInformation" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
-          <Property Name="RecordTypeFooter" Type="String" MaxLength="2" FixedLength="true" Unicode="true" />
-          <Property Name="TotalNumbersOfRecords" Type="String" MaxLength="9" FixedLength="true" Unicode="true" />
-          <Property Name="NumberOfAcceptedRecordsWithoutChanges" Type="String" MaxLength="9" FixedLength="true" Unicode="true" />
-          <Property Name="NumberOfAcceptedRecordsWithChanges" Type="String" MaxLength="9" FixedLength="true" Unicode="true" />
-          <Property Name="NumberOfRejectedRecords" Type="String" MaxLength="9" FixedLength="true" Unicode="true" />
-          <Property Name="FillerFooter" Type="String" MaxLength="462" FixedLength="true" Unicode="true" />
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="DownloadCounter" Type="Int32" />
+          <Property Name="Header" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Record" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Footer" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="StaggingUA">
           <Key>
@@ -603,6 +491,8 @@ warning 6002: The table/view 'AerLingus_database.dbo.DeletedRecords' does not ha
           <Property Name="FillerFooter" Type="String" MaxLength="462" FixedLength="true" Unicode="true" />
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="DownloadCounter" Type="Int32" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="JourneySegmentID" Type="Int32" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -735,75 +625,20 @@ warning 6002: The table/view 'AerLingus_database.dbo.DeletedRecords' does not ha
           <EntitySetMapping Name="StaggingRejectedUAs">
             <EntityTypeMapping TypeName="AerLingus_databaseModel.StaggingRejectedUA">
               <MappingFragment StoreEntitySet="StaggingRejectedUA">
+                <ScalarProperty Name="Footer" ColumnName="Footer" />
+                <ScalarProperty Name="Record" ColumnName="Record" />
+                <ScalarProperty Name="Header" ColumnName="Header" />
                 <ScalarProperty Name="DownloadCounter" ColumnName="DownloadCounter" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="FillerFooter" ColumnName="FillerFooter" />
-                <ScalarProperty Name="NumberOfRejectedRecords" ColumnName="NumberOfRejectedRecords" />
-                <ScalarProperty Name="NumberOfAcceptedRecordsWithChanges" ColumnName="NumberOfAcceptedRecordsWithChanges" />
-                <ScalarProperty Name="NumberOfAcceptedRecordsWithoutChanges" ColumnName="NumberOfAcceptedRecordsWithoutChanges" />
-                <ScalarProperty Name="TotalNumbersOfRecords" ColumnName="TotalNumbersOfRecords" />
-                <ScalarProperty Name="RecordTypeFooter" ColumnName="RecordTypeFooter" />
-                <ScalarProperty Name="AirlineAdditionalInformation" ColumnName="AirlineAdditionalInformation" />
-                <ScalarProperty Name="Filler" ColumnName="Filler" />
-                <ScalarProperty Name="Gender" ColumnName="Gender" />
-                <ScalarProperty Name="TierLever" ColumnName="TierLever" />
-                <ScalarProperty Name="ResponseCode6" ColumnName="ResponseCode6" />
-                <ScalarProperty Name="ResponseCode5" ColumnName="ResponseCode5" />
-                <ScalarProperty Name="ResponseCode4" ColumnName="ResponseCode4" />
-                <ScalarProperty Name="ResponseCode3" ColumnName="ResponseCode3" />
-                <ScalarProperty Name="ResponseCode2" ColumnName="ResponseCode2" />
-                <ScalarProperty Name="ResponseCode1" ColumnName="ResponseCode1" />
-                <ScalarProperty Name="AccrualPostingStatus" ColumnName="AccrualPostingStatus" />
-                <ScalarProperty Name="InternalAirlineReferenceNoFFPAirline" ColumnName="InternalAirlineReferenceNoFFPAirline" />
-                <ScalarProperty Name="OperatingAirlineAuthorizationNo" ColumnName="OperatingAirlineAuthorizationNo" />
-                <ScalarProperty Name="BookingSourceCode" ColumnName="BookingSourceCode" />
-                <ScalarProperty Name="CheckInSourceCode" ColumnName="CheckInSourceCode" />
-                <ScalarProperty Name="BaseFlightMiles" ColumnName="BaseFlightMiles" />
-                <ScalarProperty Name="UpdateCode" ColumnName="UpdateCode" />
-                <ScalarProperty Name="PNRNumber" ColumnName="PNRNumber" />
-                <ScalarProperty Name="SeatNumber" ColumnName="SeatNumber" />
-                <ScalarProperty Name="FareBasisCode" ColumnName="FareBasisCode" />
-                <ScalarProperty Name="CouponNumber" ColumnName="CouponNumber" />
-                <ScalarProperty Name="TicketNumber" ColumnName="TicketNumber" />
-                <ScalarProperty Name="EntitlementNumber" ColumnName="EntitlementNumber" />
-                <ScalarProperty Name="DowngradeIndicator" ColumnName="DowngradeIndicator" />
-                <ScalarProperty Name="UpgradeIndicator" ColumnName="UpgradeIndicator" />
-                <ScalarProperty Name="MarketingBookingClass" ColumnName="MarketingBookingClass" />
-                <ScalarProperty Name="OperatingRevenueBookingClassCode" ColumnName="OperatingRevenueBookingClassCode" />
-                <ScalarProperty Name="FlownCabinClassCode" ColumnName="FlownCabinClassCode" />
-                <ScalarProperty Name="OperatingBookingClassCode" ColumnName="OperatingBookingClassCode" />
-                <ScalarProperty Name="DestinationAirportCode" ColumnName="DestinationAirportCode" />
-                <ScalarProperty Name="OriginAirportCode" ColumnName="OriginAirportCode" />
-                <ScalarProperty Name="FlightArrivalDate" ColumnName="FlightArrivalDate" />
-                <ScalarProperty Name="FlightDepartureDate" ColumnName="FlightDepartureDate" />
-                <ScalarProperty Name="CodeShareIndicator" ColumnName="CodeShareIndicator" />
-                <ScalarProperty Name="MarketingFlightNumber" ColumnName="MarketingFlightNumber" />
-                <ScalarProperty Name="MarketingAirlineCode" ColumnName="MarketingAirlineCode" />
-                <ScalarProperty Name="OperatingFlightNumber" ColumnName="OperatingFlightNumber" />
-                <ScalarProperty Name="OperatingAirlineCode" ColumnName="OperatingAirlineCode" />
-                <ScalarProperty Name="NameCheckOverride" ColumnName="NameCheckOverride" />
-                <ScalarProperty Name="FFPMemberFirstName" ColumnName="FFPMemberFirstName" />
-                <ScalarProperty Name="FFPMemberLastName" ColumnName="FFPMemberLastName" />
-                <ScalarProperty Name="FFPMemberNumber" ColumnName="FFPMemberNumber" />
-                <ScalarProperty Name="FFPProgram" ColumnName="FFPProgram" />
-                <ScalarProperty Name="RecordType" ColumnName="RecordType" />
-                <ScalarProperty Name="FillerHeader" ColumnName="FillerHeader" />
-                <ScalarProperty Name="CarrierFileReferenceHeader" ColumnName="CarrierFileReferenceHeader" />
-                <ScalarProperty Name="VersionHeader" ColumnName="VersionHeader" />
-                <ScalarProperty Name="CreateDateHeader" ColumnName="CreateDateHeader" />
-                <ScalarProperty Name="ReceivingAirlineHeader" ColumnName="ReceivingAirlineHeader" />
-                <ScalarProperty Name="SendingAirlineHeader" ColumnName="SendingAirlineHeader" />
-                <ScalarProperty Name="SendingSystemHeader" ColumnName="SendingSystemHeader" />
-                <ScalarProperty Name="DeliverySequenceNoHeader" ColumnName="DeliverySequenceNoHeader" />
-                <ScalarProperty Name="FileTypeHeader" ColumnName="FileTypeHeader" />
-                <ScalarProperty Name="RecordTypeHeader" ColumnName="RecordTypeHeader" />
-              </MappingFragment>
+                </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="StaggingUAs">
             <EntityTypeMapping TypeName="AerLingus_databaseModel.StaggingUA">
               <MappingFragment StoreEntitySet="StaggingUA">
+                <ScalarProperty Name="JourneySegmentID" ColumnName="JourneySegmentID" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="DownloadCounter" ColumnName="DownloadCounter" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="FillerFooter" ColumnName="FillerFooter" />
